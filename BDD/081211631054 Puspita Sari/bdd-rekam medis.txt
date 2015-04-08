@@ -1,0 +1,45 @@
+REKAM MEDIS
+•	Input Rekam Medis Baru
+	Feature		: Input rekam medis baru
+	Scenario	: Input rekam medis dengan pengisian field benar
+	Given		: Dokter telah menerima notifikasi dari reservasi
+	When		: Dokter menekan tombol “OK”
+	Then		: Sistem menampilkan data pasien
+	When		: Dokter memilih tombol “ input rekam medis baru “
+	Then		: Sistem menampilkan form rekam medis
+	When		: Dokter mengisi field yang di sediakan
+	And		: Dokter menginput field “keluhan” dengan "muntah-muntah dan demam"
+	And		: Dokter menginput field “diagnosa” dengan "typus"
+	And		: Dokter menginput field “tindakan” dengan "cek darah di laboratorium"
+	And		: Dokter menginput field “catatan lain” "tidak ada"
+	And		: Dokter menginput field “alergi obat” dengan "tidak ada"
+	And		: Dokter menginput field “tekanan darah” dengan "normal (120/80 mmhg)
+	And		: Dokter menekan tombol “OK”
+	Then		: Sistem menyimpan rekam medis baru kedalam data base
+
+	Feature		: Input rekam medis baru
+	Scenario	: Input rekam medis dengan pengisian field salah/ kurang
+	Given		: Dokter telah menerima notifikasi dari reservasi
+	When		: Dokter menekan tombol “OK”
+	Then		: Sistem menampilkan data pasien dan ada tombol input rekam medis baru
+	When		: Dokter memilih tombol “ input rekam medis baru “
+	Then		: Sistem menampilkan form rekam medis
+        When		: Dokter mengisi field yang di sediakan
+	And		: Dokter menginput field “keluhan” dengan "muntah-muntah dan demam"
+	And		: Dokter menginput field “diagnosa” dengan "typus"
+	And		: Dokter menginput field “tindakan” dengan "cek darah di laboratorium"
+	And		: Dokter menginput field “catatan lain” "tidak ada"
+	And		: Dokter menginput field “alergi obat” dengan "tidak ada"
+	And		: Dokter menekan tombol “OK”
+	Then		: Sistem menampilkan notifikasi “data belum lengkap” 
+
+•	History Rekam Medis
+	Feature		: History rekam medis
+	Scenario	: Melihat History Rekam Medis
+	Given		: Dokter telah menerima notifikasi dari reservasi
+	When		: Dokter menekan tombol “OK”
+	Then		: Sistem menampilkan data pasien
+	When		: Dokter memilih tombol “ history rekam medis “
+	Then		: sistem menampilkan catatan kesehatan pasien
+	When		: Dokter memilih tombol “OK”
+	Then		: History rekam medis tertutup
