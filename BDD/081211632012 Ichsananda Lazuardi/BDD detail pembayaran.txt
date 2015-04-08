@@ -1,0 +1,29 @@
+feature :pembayaran
+skenario 1 :biaya yang diinputkan dokter jika kondisi benar
+given :dokter sudah login saat selesai memeriksa pasien
+
+when :dokter memilih menu pembayaran
+then :menampilkan layout menu pembayaran
+when :dokter menginput biaya :
+      pemeriksaan 		Rp.100000
+      obat suntik		Rp. 25000
+      
+and :dokter menekan tombol kirim untuk mengirim ke reservasi
+then :menampilkan notifikasi "apakah biaya yang diinputkan sudah benar?"
+and :menekan tombol konfirmasi benar
+then :menampilkan notifikasi pengiriman sukses
+
+
+feature :pembayaran
+skenario 2 :biaya yang diinputkan dokter jika kondisi ada yang salah
+given :dokter sudah login saat selesai memeriksa pasien
+
+when :dokter memilih menu pembayaran
+then :menampilkan layout menu pembayaran
+when :dokter menginput biaya :
+      pemeriksaan 		Rp.100000
+      obat suntik		Rp. 25000
+and :dokter menekan tombol kirim untuk mengirim ke reservasi
+then :menampilkan notifikasi "apakah biaya yang diinputkan sudah benar?"
+and :menekan tombol konfirmasi salah
+then :menampilkan layout menu pembayaran
