@@ -1,0 +1,46 @@
+Feature		: Penginputan resep
+Story		: Digunakan untuk menginputkan resep yang dikirim oleh doter ke apotek atau mengisi id reservasi
+
+Scenario 1: Mengirim resep ke apoteker dan sukses
+Given		: Dokter masuk pada menu resep setelah melakukan pemeriksaan
+When		: Dokter memasukan nama obat (Paracetamol)
+And		: Memasukan jumlah (3 strip)
+And		: Memasukan dosis (tablet)
+And		: Memasukan keterangan (3x1)
+And		: Menekan tombol kirim ke apoteker 
+Then 		: Muncul notifikasi "apakah resep sudah benar ?"
+When 		: Dokter menekan tombol "yes"
+Then 		: Mengirim resep ke apoteker
+
+Scenario 2 : Mengirim resep ke apoteker dan gagal
+Given		: Dokter masuk pada menu resep setelah melakukan pemeriksaan
+When		: Dokter memasukan nama obat (Paracetamol)
+And		: Memasukan jumlah (3 strip)
+And		: Memasukan dosis (tablet)
+And		: Memasukan keterangan (3x1)
+And		: Menekan tombol kirim ke apoteker 
+Then 		: Muncul notifikasi "apakah resep sudah benar ?"
+When 		: Dokter menekan tombol "no"
+Then 		: Kembali ke menu resep
+
+Scenario 3 : Mengirim resep ke reservasi dan sukses
+Given		: Dokter masuk pada menu resep setelah melakukan pemeriksaan
+When		: Dokter memasukan nama obat (Paracetamol)
+And		: Memasukan jumlah (3 strip)
+And		: Memasukan dosis (tablet)
+And		: Memasukan keterangan (3x1)
+And		: Menekan tombol kirim ke reservasi 
+Then 		: Muncul notifikasi "apakah resep sudah benar ?"
+When 		: Dokter menekan tombol "yes"
+Then 		: Mengisi id resep yang akan dikirim ke reservasi
+
+Scenario 4 : Mengirim resep ke reservasi dan gagal
+Given		: Dokter masuk pada menu resep setelah melakukan pemeriksaan
+When		: Dokter memasukan nama obat (Paracetamol)
+And		: Memasukan jumlah (3 strip)
+And		: Memasukan dosis (tablet)
+And		: Memasukan keterangan (3x1)
+And		: Menekan tombol kirim ke reservasi 
+Then 		: Muncul notifikasi "apakah resep sudah benar ?"
+When 		: Dokter menekan tombol "no"
+Then 		: Kembali ke menu resep
