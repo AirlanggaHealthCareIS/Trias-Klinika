@@ -1,0 +1,12 @@
+Fitur 	: Pelayanan Apotek
+Skenario: melayani pembelian obat yang dikirim oleh dokter untuk pasien
+
+Given 	: Apoteker berada pada menu apoteker 
+Then 	: sistem menerima notifikasi  resep 1 dari dokter
+When	: Apoteker Menekan button ok pada notifikasi resep 1 yang masuk
+Then 	: Sistem Menampilkan list resep
+When	: Apoteker memilih resep 1 
+And 	: Apoteker menekan button cetak
+Then	: Sistem mencetak resep yang dipilih apoteker
+When	: Sistem menutup resep secara otomatis pada list resep masuk.
+
