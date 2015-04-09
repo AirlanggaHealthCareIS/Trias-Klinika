@@ -1,0 +1,13 @@
+Fitur	: Mengatur antrean sistem
+Skenario: Reservasi memanggil pasien pada daftar antrean teratas pada setiapp dokter
+
+Given	: Reservasi berada di fitur antrean
+When	: Reservasi memasukkan ID pasien Imin pada dokter Puspita
+Then	: Sistem memasukkan ID pasien Imin ke list antrean dokter Puspita
+And	: Menampilkan ID pasien Imin pada list antrean dokter Puspita
+When	: Reservasi memanggil ID pasien teratas, misal Iis pada dokter Satria
+And	: Iis siap berkonsultasi dengan dokter Satria
+Then	: Sistem mengirim ID pasien Iis ke dokter Satria
+When	: Reservasi memanggil ID pasien teratas, misal Iis pada dokter Satria
+And	: Iis belum siap berkonsultasi dengan dokter Satria
+Then	: Sistem mereset ID pasien Iis ke list antrean terbawah
