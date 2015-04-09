@@ -1,0 +1,63 @@
+Story	   : Login
+Feature	   : User Melakukan login ke dalam sistem untuk masuk ke 
+	     halaman utama aplikasi
+Scenario 1 : Login sukses dan user = dokter
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'fatichfaz'
+and	   : memasukkan password dengan 'ganteng'
+and	   : user menekan tombol login
+then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
+	     username dan password yang telah dimasukkan
+when	   : sistem menemukan kombinasi username dan password yang
+	     dimasukkan user pada basis data
+and	   : user di identifikasi sebagai dokter oleh sistem
+then	   : sistem akan menampilkan halaman utama dokter
+
+Scenario 2 : Login sukses dan user = reservasi
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'g-mon'
+and	   : memasukkan password dengan 'gembul'
+and	   : user menekan tombol login
+then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
+	     username dan password yang telah dimasukkan
+when	   : sistem menemukan kombinasi username dan password yang
+	     dimasukkan user pada basis data
+and	   : user di identifikasi sebagai reservasi oleh sistem
+then	   : sistem akan menampilkan halaman utama reservasi
+
+Scenario 3 : Login sukses dan user = apoteker
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'masicun'
+and	   : memasukkan password dengan 'namamu'
+and	   : user menekan tombol login
+then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
+	     username dan password yang telah dimasukkan
+when	   : sistem menemukan kombinasi username dan password yang
+	     dimasukkan user pada basis data
+and	   : user di identifikasi sebagai apoteker oleh sistem
+then	   : sistem akan menampilkan halaman utama apoteker
+
+Scenario 4 : Login tidak sukses karena kombinasi username dan password 
+	     tidak ada dalam basis data
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'bonek'
+and	   : memasukkan password dengan 'ikhlas'
+and	   : user menekan tombol login
+then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
+	     username dan password yang telah dimasukkan
+when	   : sistem tidak menemukan kombinasi username dan password 
+	     yang dimasukkan user pada basis data
+then 	   : Sistem mengeluarkan notifikasi bahwa kombinasi username 
+	     dan password salah
+
+Scenario 4 : Login tidak sukses karena salah satu field tidak terisi
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'sabar'
+and	   : user menekan tombol login
+then 	   : Sistem mengeluarkan notifikasi bahwa data yang dimasukkan
+	     belum lengkap
