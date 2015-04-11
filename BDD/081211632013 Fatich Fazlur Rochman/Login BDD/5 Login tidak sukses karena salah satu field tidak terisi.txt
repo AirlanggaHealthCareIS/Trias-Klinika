@@ -1,0 +1,7 @@
+Scenario 5 : Login tidak sukses karena salah satu field tidak terisi
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'sabar'
+and	   : user menekan tombol login
+then 	   : Sistem mengeluarkan notifikasi bahwa data yang dimasukkan
+	     belum lengkap

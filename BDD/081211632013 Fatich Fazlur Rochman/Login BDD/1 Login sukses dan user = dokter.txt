@@ -1,0 +1,15 @@
+Story	   : Login
+Feature	   : User Melakukan login ke dalam sistem untuk masuk ke 
+	     halaman utama aplikasi
+Scenario 1 : Login sukses dan user = dokter
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'D0001'
+and	   : memasukkan password dengan 'lima'
+and	   : user menekan tombol login
+then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
+	     username dan password yang telah dimasukkan
+when	   : sistem menemukan kombinasi username dan password yang
+	     dimasukkan user pada basis data
+and	   : user di identifikasi sebagai dokter oleh sistem
+then	   : sistem akan menampilkan halaman utama dokter

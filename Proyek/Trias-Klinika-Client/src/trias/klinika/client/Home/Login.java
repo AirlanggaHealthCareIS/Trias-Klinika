@@ -5,6 +5,13 @@
  */
 package trias.klinika.client.Home;
 
+import trias.klinika.client.Home.LoginLogika;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Faz
@@ -14,10 +21,15 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    LoginLogika LL = new LoginLogika();
     public Login() {
+        try {
+            LL.Awal();
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,60 +40,82 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        judul = new javax.swing.JLabel();
+        user = new javax.swing.JLabel();
+        pass = new javax.swing.JLabel();
+        username = new javax.swing.JTextField();
+        password = new javax.swing.JPasswordField();
+        login = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel1.setText("Login");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 10, 56, 28);
+        judul.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        judul.setText("Login");
+        jPanel1.add(judul);
+        judul.setBounds(10, 10, 56, 28);
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jLabel3.setText("Username");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(160, 110, 48, 14);
+        user.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        user.setText("Username");
+        jPanel1.add(user);
+        user.setBounds(20, 100, 48, 14);
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jLabel4.setText("Password");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(160, 140, 50, 14);
-        jPanel1.add(jTextField1);
-        jTextField1.setBounds(220, 110, 110, 20);
-        jPanel1.add(jPasswordField1);
-        jPasswordField1.setBounds(220, 140, 110, 20);
+        pass.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        pass.setText("Password");
+        jPanel1.add(pass);
+        pass.setBounds(20, 130, 50, 14);
+        jPanel1.add(username);
+        username.setBounds(80, 100, 110, 20);
+        jPanel1.add(password);
+        password.setBounds(80, 130, 110, 20);
 
-        jButton1.setText("Login");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(260, 170, 73, 23);
+        login.setText("Login");
+        login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginActionPerformed(evt);
+            }
+        });
+        jPanel1.add(login);
+        login.setBounds(120, 160, 73, 23);
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Faz\\Downloads\\11119885_1044200968941754_593227732_n.jpg")); // NOI18N
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 0, 400, 310);
+        logo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
+        jPanel1.add(logo);
+        logo.setBounds(210, 0, 150, 70);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+        String cek = LL.Cek(username.getText(), password.getText());
+        if (!"Sukses".equals(cek)) {
+            JOptionPane.showMessageDialog(this, cek);
+        }
+        else {
+            cek = LL.Proses(username.getText(), password.getText());
+            if (!"dokter".equals(cek) & !"reservasi".equals(cek) & !"apotek".equals(cek)) {
+                JOptionPane.showMessageDialog(this, cek);
+            }
+            else {
+                LL.Eksekusi(cek);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_loginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,19 +148,22 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                Login loginform;
+                loginform = new Login();
+                loginform.setLocation(500, 200);
+                loginform.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel judul;
+    private javax.swing.JButton login;
+    private javax.swing.JLabel logo;
+    private javax.swing.JLabel pass;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JLabel user;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

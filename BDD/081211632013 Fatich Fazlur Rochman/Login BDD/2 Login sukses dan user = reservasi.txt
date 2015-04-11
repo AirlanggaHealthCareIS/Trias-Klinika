@@ -1,0 +1,12 @@
+Scenario 2 : Login sukses dan user = reservasi
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'R0001'
+and	   : memasukkan password dengan 'cantik'
+and	   : user menekan tombol login
+then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
+	     username dan password yang telah dimasukkan
+when	   : sistem menemukan kombinasi username dan password yang
+	     dimasukkan user pada basis data
+and	   : user di identifikasi sebagai reservasi oleh sistem
+then	   : sistem akan menampilkan halaman utama reservasi
