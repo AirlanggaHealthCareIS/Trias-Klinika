@@ -1,0 +1,11 @@
+Author : Chusnul Islamiyah
+
+Laporan Keuangan Apotek Harian
+Fitur : Laporan Keuangan Apotek Harian
+Skenario : Memberikan informasi mengenai laporan keuangn yang terdapat di apotek.
+Given 	: Apoteker berada pada menu laporan keuangan apotek.
+When	: Apoteker Memilih jenis laporan harian.
+Then 	:  Sistem Menampilkan laporan harian
+When	: Apoteker menekan button cetak
+Then	: Sistem mencetak laporan keuangan harian yang dipilih apoteker
+
