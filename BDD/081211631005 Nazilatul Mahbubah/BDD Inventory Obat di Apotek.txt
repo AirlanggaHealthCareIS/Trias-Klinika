@@ -94,6 +94,7 @@ And	: Memilih tombol “delete”
 Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
 When	: Memilih tombol “tidak”
 Then	:  Kembali ke menu inventory
+
 Scenario 9 	: Mengupdate stok obat di apotek dan sukses
 Given	: User berada dalam menu inventory obat
 When	: Memilih obat yang akan di update
