@@ -1,0 +1,10 @@
+Scenario 10	: Mengupdate stok obat di apotek dan gagal
+Given	: User berada dalam menu inventory obat
+When	: Memilih obat yang akan di update
+And	: Memilih tombol “update”
+Then	: Menampilkan form yang akan diupdate user
+When	: Mengisi form yang ingin di update
+And	: Memilih tombol “save”
+Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
+When	: Memilih tombol “tidak”
+Then	: Kembali mengeluarkan form yang akan di update

@@ -1,0 +1,7 @@
+Scenario 8	: Menghapus stok obat di apotek dan gagal
+Given	: User berada dalam menu inventory obat
+When	: Memilih obat yang akan di hapus
+And	: Memilih tombol “delete”
+Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
+When	: Memilih tombol “tidak”
+Then	:  Kembali ke menu inventory

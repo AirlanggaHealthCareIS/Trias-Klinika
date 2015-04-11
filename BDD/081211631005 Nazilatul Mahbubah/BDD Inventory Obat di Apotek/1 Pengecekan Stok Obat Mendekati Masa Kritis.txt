@@ -1,0 +1,4 @@
+Scenario 1 : User melakukan pengecekan stok obat mendekati masa kritis
+Given	: User berada dalam menu inventory obat
+When	: Memilih tombol “masa kritis”
+Then 	: Sistem mengurutkan stok obat berdasarkan stok paling sedikit dan menampilkannya

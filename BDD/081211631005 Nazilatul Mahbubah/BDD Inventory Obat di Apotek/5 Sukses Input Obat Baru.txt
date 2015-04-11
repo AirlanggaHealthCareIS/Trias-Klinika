@@ -1,0 +1,18 @@
+Scenario 5 : Menginputkan stok obat baru dan sukses
+Given	: User berada dalam menu inventory obat
+When 	: Memilih tombol “input”
+Then	: Sistem mengeluarkan pilihan “ obat baru” atau “obat lama”
+When	: Memilih tombol “obat baru”
+Then	: Mengeluarkan form untuk mengisikan data obat
+When	: Mengisi field nama obat dengan nama "Terivis"
+And	: Mengisi field jenis obat dengan jenis "Syrup"
+And	: Mengisi field quantity dengan "30 buah"
+And	: Memilih tanggal saat memasukkan obat baru "04 April 2015"
+And	: Memilih tanggal kadaluarsa obat "04 April 2019"
+And	: Memilih obat itu untuk dokter spesialis apa diisi dengan "Spesialisasi Mata"
+And	: Mengisi harga obat per piece dengan "11.000"
+And	: Mengisi deskripsi obat dengan "obat ini digunakan untuk menderita sakit mata dengan indikasi mata merah berair penggunaannya dua tetes dalam sekali pemakaian"
+And	: Memilih tombol “save”
+Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
+When	: Memilih tombol “ya”
+Then	: Data akan terupdate di database
