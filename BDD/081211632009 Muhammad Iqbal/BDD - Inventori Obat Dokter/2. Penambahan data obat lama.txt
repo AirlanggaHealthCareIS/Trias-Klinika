@@ -1,9 +1,0 @@
-Sekenario 2 = Penambahan data obat lama, user = dokter
-Given	    = Dokter masuk kehalaman inventori obat dokter
-When	    = Memilih obat lama yang ada di database yang akan di tambah
-and	    = Menginputkan kuantiti obat "Antasida" yang akan di tambah
-and	    = Memilih tanggal masuk "5 April 2015"
-and	    = Memilih Masa Pakai "10 september2020"
-and	    = menekan tombol "OK"
-Then	    = Data obat "Antasida" akan bertambah di database
-and	    = Menampilkan data obat "Antasida" yang telah terupdate di tabel
