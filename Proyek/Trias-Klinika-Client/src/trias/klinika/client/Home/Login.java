@@ -5,26 +5,38 @@
  */
 package trias.klinika.client.Home;
 
-import trias.klinika.client.Home.LoginLogika;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import trias.klinika.api.entitas.LoginEntitas;
+import trias.klinika.api.sevice.LoginService;
+import trias.klinika.client.apotek.Menu_Apotek;
+import trias.klinika.client.dokter.Menu_Dokter;
+import trias.klinika.client.reservasi.Menu_Reservasi;
 
 /**
  *
  * @author Faz
  */
 public class Login extends javax.swing.JFrame {
+    
+    private String [] pesan = {"Sistem Error","User Belum Terdaftar","Password Salah","Login Sukses"};
+    private int indeks = 0;
+    private String ip;
+    private Registry registry;
+    private LoginService service;
 
     /**
      * Creates new form Login
      */
-    LoginLogika LL = new LoginLogika();
+    
     public Login() {
         try {
-            LL.Awal();
+            Awal();
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,22 +113,108 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String cek = LL.Cek(username.getText(), password.getText());
+        String cek = Cek(username.getText(), password.getText());
         if (!"Sukses".equals(cek)) {
             JOptionPane.showMessageDialog(this, cek);
         }
         else {
-            cek = LL.Proses(username.getText(), password.getText());
+            cek = Proses(username.getText(), password.getText());
             if (!"dokter".equals(cek) & !"reservasi".equals(cek) & !"apotek".equals(cek)) {
                 JOptionPane.showMessageDialog(this, cek);
             }
             else {
-                LL.Eksekusi(cek);
+                try {
+                    Eksekusi(cek);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotBoundException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.dispose();
             }
         }
     }//GEN-LAST:event_loginActionPerformed
 
+    public void Awal() throws RemoteException, NotBoundException {
+        ip = JOptionPane.showInputDialog("Masukkan IP Address: ");
+        registry = LocateRegistry.getRegistry(ip,4444);
+        service = (LoginService) registry.lookup("service");
+    }
+    
+    public String Cek(String username, String password) {
+        String a;
+        if ("".equals(username)) {
+            a = "Masukkan Username Dahulu";
+        }
+        else if ("".equals(password)) {
+            a = "Masukkan Password Dahulu";
+        }
+        else {
+            a = "Sukses";
+        }
+        return a;
+    }
+    
+    public String Proses (String username, String password) {
+        LoginEntitas users = new LoginEntitas();
+        users.setusername(username);
+        users.setpassword(password);
+        String sebagai = username.substring(0, 1);
+        if (null != sebagai) switch (sebagai) {
+            case "D":
+                users.setsebagai("dokter");
+                users.setfielduser("id_dokter");
+                users.setfieldpass("password_dokter");
+                break;
+            case "R":
+                users.setsebagai("reservasi");
+                users.setfielduser("id_reservasi");
+                users.setfieldpass("password_reservasi");
+                break;
+            case "A":
+                users.setsebagai("apotek");
+                users.setfielduser("id_apotek");
+                users.setfieldpass("password_apotek");
+                break;
+        }
+        try {
+            indeks = service.CheckPassword(users);
+            if (indeks == 3) {
+                pesan[indeks] = users.getsebagai();
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pesan[indeks];
+    }
+    
+    public void Eksekusi (String users) throws RemoteException, NotBoundException {
+        if (null != users) switch (users) {
+            case "dokter":{
+                Menu_Dokter menu = new Menu_Dokter();
+                menu.setTitle(ip);
+                menu.setLocation(500, 200);
+                menu.setVisible(true);
+                break;
+            }
+            case "reservasi":{
+                Menu_Reservasi menu = new Menu_Reservasi();
+                menu.setTitle(ip);
+                menu.setLocation(500, 200);
+                menu.setVisible(true);
+                break;
+            }
+            case "apotek":{
+                Menu_Apotek menu = new Menu_Apotek();
+                menu.setTitle(ip);
+                menu.setLocation(500, 200);
+                menu.setVisible(true);
+                break;
+            }
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
