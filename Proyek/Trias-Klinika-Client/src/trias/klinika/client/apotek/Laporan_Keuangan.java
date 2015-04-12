@@ -8,7 +8,7 @@
  *
  * Created on Mar 28, 2015, 3:23:30 PM
  */
-package trias.klinika.apotek;
+package trias.klinika.client.apotek;
 
 /**
  *
@@ -66,8 +66,6 @@ public class Laporan_Keuangan extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
-
-        jLabel3.setIcon(new javax.swing.ImageIcon("D:\\DOCUMEN IIS\\6 MSTERI SEMESTER\\Pengembangan Sistem Informasi\\received_1044200968941754.jpeg")); // NOI18N
 
         jButton1.setText("Cetak");
 

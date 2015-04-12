@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import trias.klinika.api.entitas.RincianPembayaran;
 import trias.klinika.api.sevice.pembayaranService;
-import trias.klinika.client.tabell.tabelPembayaran;
+import trias.klinika.client.tabel.tabelPembayaran;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

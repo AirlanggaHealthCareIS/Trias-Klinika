@@ -7,9 +7,11 @@ package trias.klinika.client.dokter;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import trias.klinika.client.dokter.form_pembayaran;
+import trias.klinika.client.dokter.GUI_inventori_obat_Dokter;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import trias.klinika.api.sevice.pembayaranService;
+import trias.klinika.api.sevice.InventoriObatDokterService;
 /**
  *
  * @author Faz
@@ -21,7 +23,10 @@ public class Menu_Dokter extends javax.swing.JFrame {
     
     Registry registry = LocateRegistry.getRegistry(localhost, 4444);
     final pembayaranService service1 = (pembayaranService)registry.lookup("service1");
+    final InventoriObatDokterService service2 =(InventoriObatDokterService)registry.lookup("service2"); 
     form_pembayaran fp = new form_pembayaran(service1);
+    GUI_inventori_obat_Dokter GIOD = new GUI_inventori_obat_Dokter(service2);
+    
     
     public Menu_Dokter ()throws RemoteException,NotBoundException {
         initComponents();
@@ -40,6 +45,7 @@ public class Menu_Dokter extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        IOD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +58,13 @@ public class Menu_Dokter extends javax.swing.JFrame {
 
         jLabel1.setText("Menu Dokter");
 
+        IOD.setText("Inventori Obat Dokter");
+        IOD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IODActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -60,11 +73,13 @@ public class Menu_Dokter extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(IOD))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(146, 146, 146)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(172, Short.MAX_VALUE))
+                        .addComponent(jLabel1)))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -72,7 +87,9 @@ public class Menu_Dokter extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(IOD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(178, Short.MAX_VALUE))
         );
 
@@ -96,9 +113,17 @@ public class Menu_Dokter extends javax.swing.JFrame {
        fp.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void IODActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IODActionPerformed
+       GIOD.setTitle(this.getTitle());
+       GIOD.setLocation(500, 200);
+       GIOD.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_IODActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton IOD;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
