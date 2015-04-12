@@ -1,0 +1,12 @@
+Sekenario 3 = Penambahan data obat baru, user = dokter
+Given	    = Dokter masuk kehalaman inventori obat dokter
+When	    = Menginputkan jenis obat baru yang akan di tambah
+and	    = Menginputkan nama obat dengan "canesten" 
+and	    = Menginputkan jenis obat dengan "gel"
+and	    = Menginputkan kuantiti obat dengan "20"
+and	    = Memilih taggal masuk obat "8 januari 2015"
+and	    = Memilih masa pakai obat "20 desember 2020"
+and	    = Menginputkan deskripsi obat "obat untuk otot"
+and	    = menekan tombol "OK"
+Then	    = Data obat "canesten" akan bertambah di database
+and	    = Menampilkan data obat "CTM" yang telah terupdate di tabel

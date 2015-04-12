@@ -1,0 +1,10 @@
+Story	    = Inventori Obat Dokter
+Fitur	    = Pengurangan dan penambahan data obat di inventori obat dokter
+
+Sekenario 1 = Pengurangan data obat, user = dokter
+Given	    = Dokter masuk kehalaman inventori obat dokter
+When	    = memilih obat "ambeven" yang akan di kurangi
+and	    = Menginputkan jumlah obat "ambeven" yang akan di kurangi
+and	    = menekan tombol "OK"
+Then	    = Data obat "ambeven" akan berkurang di database
+and	    = Menampilkan data obat "ambeven" yang telah terupdate di tabel
