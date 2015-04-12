@@ -1,0 +1,10 @@
+Feature		: Reservasi dapat melihat daftar pasien yang memiliki tanggungan biaya
+Skenario 3	: Pasien tidak datang ke reservasi
+Given	: Reservasi telah login
+And	: Dokter telah melakukan pemeriksaan
+And	: Dokter mengirimkan data ke Reservasi
+When	: System menampilkan daftar pasien yang memiliki tanggungan biaya
+Then	: Reservasi memanggil nama pasien pada daftar
+When	: Pasien yang dipanggil tidak datang
+Then	: Reservasi menekan tombol “Tidak Hadir”
+And	: Sistem memberikan tanda khusus kepada pasien.

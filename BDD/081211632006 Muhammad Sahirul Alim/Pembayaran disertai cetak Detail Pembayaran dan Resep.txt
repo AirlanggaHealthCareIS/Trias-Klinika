@@ -1,0 +1,17 @@
+Skenario 2	: Pasien datang ke reservasi dan mencetak tagihan biaya dokter disertai resep
+Feature		: Reservasi dapat melihat daftar pasien yang memiliki tanggungan biaya
+Skenario	: Pasien datang ke reservasi dan mencetak tagihan biaya dokter disertai resep
+
+Given	: Reservasi telah login
+And	: Dokter telah melakukan pemeriksaan
+And	: Dokter mengirimkan data ke Reservasi
+When	: System menampilkan daftar pasien yang memiliki tanggungan biaya
+Then	: Reservasi memanggil nama pasien pada daftar
+When	: Pasien yang dipanggil datang dan melakukan pembayaran
+Then	: Reservasi melayani pembayaran
+And	: Reservasi menginformasikan detail biaya jasa secara lisan
+When	: Reservasi menekan tombol “Cetak”
+Then	: Sistem melakukan pengecakan pada isi kiriman dari dokter
+When	: Sistem menemukan isi kiriman mengandung ID transaksi disertai ID resep
+Then 	: Sistem melakukan print detail transaksi disertai resep di bawahnya
+And	: Sistem menghapus nama pasien dari list
