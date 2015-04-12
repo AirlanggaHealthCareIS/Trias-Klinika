@@ -83,7 +83,7 @@ public class LoginLogika {
         return pesan[indeks];
     }
     
-    public void Eksekusi (String users) {
+    public void Eksekusi (String users) throws RemoteException, NotBoundException {
         if (null != users) switch (users) {
             case "dokter":{
                 Menu_Dokter menu = new Menu_Dokter();
