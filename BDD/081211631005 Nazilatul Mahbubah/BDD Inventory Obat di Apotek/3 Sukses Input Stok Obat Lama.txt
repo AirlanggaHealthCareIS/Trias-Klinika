@@ -1,12 +1,12 @@
-Scenario 3 : Menginputkan stok obat lama dan sukses
+Scenario 3 : Menginputkan stok obat lama dan sukses (untuk id_obat = O0001)
 Given	: User berada dalam menu inventory obat
 When 	: Memilih tombol “input”
 Then	: Sistem mengeluarkan pilihan “ obat baru” atau “obat lama”
 When	: Memilih tombol “obat lama”
 Then	: Mengeluarkan form untuk mengisikan data obat
-When	: Mengisi field quantity dengan "30 buah"
-And	: Memilih tanggal saat memasukkan obat baru "04 April 2015"
-And	: Memilih tanggal kadaluarsa obat "04 April 2019"
+When	: Mengisi field quantity dengan "12"
+And	: Memilih tanggal saat memasukkan obat baru "01 April 2015"
+And	: Memilih tanggal kadaluarsa obat "11 Desember 2020"
 And	: Memilih tombol “save”
 Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
 When	: Memilih tombol “ya”

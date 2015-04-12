@@ -5,18 +5,44 @@
  */
 
 package trias.klinika.client.apotek;
-
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import trias.klinika.api.sevice.InventoryObatApotekService;
+import trias.klinika.client.tabel.tabelInventoryObatApotek;
+import trias.klinika.api.entitas.InventoryObatApotekEntitas;
+import trias.klinika.client.apotek.interface_input;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import trias.klinika.client.apotek.interface_notif_input;
 /**
  *
  * @author Azmil
  */
 public class interface_inventory extends javax.swing.JFrame {
+   
+   // int a;
+    
+    private InventoryObatApotekService IOAS;
+    private String [] isi;
+    private tabelInventoryObatApotek tioa = new tabelInventoryObatApotek();
+    interface_notif_input notif;
 
     /**
      * Creates new form interface_inventory
      */
-    public interface_inventory() {
+    public interface_inventory(InventoryObatApotekService IOAS) throws RemoteException {
+        this.IOAS = IOAS;
+        try{
+            tioa.setData(this.IOAS.getobat());
+        }
+        catch (RemoteException exception){
+            exception.printStackTrace();
+        }
         initComponents();
+        notif = new interface_notif_input(IOAS);
+        table_obat.setModel(tioa);
     }
 
     /**
@@ -39,6 +65,7 @@ public class interface_inventory extends javax.swing.JFrame {
         update = new javax.swing.JButton();
         kadaluarsa = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        refresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setForeground(new java.awt.Color(255, 255, 0));
@@ -101,6 +128,15 @@ public class interface_inventory extends javax.swing.JFrame {
         kadaluarsa.setForeground(new java.awt.Color(0, 0, 255));
         kadaluarsa.setText("Cek Kadaluarsa");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\Kuliah\\1.jpg")); // NOI18N
+
+        refresh.setText("Refresh");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -125,9 +161,10 @@ public class interface_inventory extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cekkritis, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kadaluarsa))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cekkritis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(kadaluarsa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(refresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -145,7 +182,9 @@ public class interface_inventory extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addComponent(cekkritis)
                         .addGap(76, 76, 76)
-                        .addComponent(kadaluarsa)))
+                        .addComponent(kadaluarsa)
+                        .addGap(78, 78, 78)
+                        .addComponent(refresh)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Input)
@@ -170,7 +209,11 @@ public class interface_inventory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void InputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputActionPerformed
-        // TODO add your handling code here:
+        notif.setTitle(this.getTitle());
+        notif.setLocation(500, 200);
+        notif.setVisible(true);
+        this.dispose();
+// TODO add your handling code here:
     }//GEN-LAST:event_InputActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
@@ -181,40 +224,11 @@ public class interface_inventory extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cekkritisActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(interface_inventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(interface_inventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(interface_inventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(interface_inventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+       
+// TODO add your handling code here:
+    }//GEN-LAST:event_refreshActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new interface_inventory().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Input;
@@ -226,6 +240,7 @@ public class interface_inventory extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton kadaluarsa;
+    private javax.swing.JButton refresh;
     private javax.swing.JTable table_obat;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
