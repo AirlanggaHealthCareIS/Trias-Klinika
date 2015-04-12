@@ -1,0 +1,11 @@
+Rekam Medis
+•	History Rekam Medis
+	Feature		: History rekam medis
+	Scenario	: Melihat History Rekam Medis
+	Given		: Dokter telah menerima notifikasi dari reservasi
+	When		: Dokter menekan tombol “OK”
+	Then		: Sistem menampilkan data pasien
+	When		: Dokter memilih tombol “ history rekam medis “
+	Then		: sistem menampilkan catatan kesehatan pasien
+	When		: Dokter memilih tombol “OK”
+	Then		: History rekam medis tertutup
