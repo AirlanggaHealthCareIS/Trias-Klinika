@@ -17,10 +17,10 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class Resep extends javax.swing.JFrame {
-    private ServiceResep sr;
-    private String[] isi;
-    private int harga = 0;
-    private TabelResep tr = new TabelResep(); 
+//    private ServiceResep sr;
+//    private String[] isi;
+//    private int harga = 0;
+//    private TabelResep tr = new TabelResep(); 
 
     /**
      * Creates new form Resep
@@ -390,10 +390,10 @@ public class Resep extends javax.swing.JFrame {
             
         }
         else{
-               RincianResep RR = new RincianResep();
-               RR.setID_OBAT(obat.getSelectedItem().toString().substring(0, 6));
-               String a = obat.getSelectedItem().toString();
-               RR.setNAMA_OBAT(obat.getSelectedItem().toString().substring(5));
+//               RincianResep RR = new RincianResep();
+//               RR.setID_OBAT(obat.getSelectedItem().toString().substring(0, 6));
+//               String a = obat.getSelectedItem().toString();
+//               RR.setNAMA_OBAT(obat.getSelectedItem().toString().substring(5));
                
              }            // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
