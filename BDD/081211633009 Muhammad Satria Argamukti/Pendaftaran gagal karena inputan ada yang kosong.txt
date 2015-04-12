@@ -1,0 +1,10 @@
+Featured	: Pendaftaran
+Scenario	: Inputan data salah atau masih ada field yang belum terisi maka data tidak tersimpan
+
+Given 		: Reservasi Login dan berada di tampilan menu pendaftaran
+When		: Reservasi input data “Nama” dengan “Jimsky007”
+And		: input data “Nomor Telepon” dengan “085A7311121B17”
+And		: input data “Tanggal Lahir” dengan “09/07/1994”
+And		: Memilih “Lazuardi Sp.D.” dari ”Pilih Dokter”
+And		: Menekan tombol “simpan”
+Then		: Muncul Notifikasi “Erorr, Mohon cek data inputan”
