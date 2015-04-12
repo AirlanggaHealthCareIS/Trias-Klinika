@@ -1,0 +1,11 @@
+Feature		: Penginputan resep
+Story		: Digunakan untuk menginputkan resep yang dikirim oleh doter ke apotek atau mengisi id reservasi
+Given		: Dokter masuk pada menu resep setelah melakukan pemeriksaan
+When		: Dokter memasukan nama obat (Paracetamol)
+And		: Memasukan jumlah (3 strip)
+And		: Memasukan dosis (tablet)
+And		: Memasukan keterangan (3x1)
+And		: Menekan tombol kirim ke apoteker 
+Then 		: Muncul notifikasi "apakah resep sudah benar ?"
+When 		: Dokter menekan tombol "yes"
+Then 		: Mengirim resep ke apoteker
