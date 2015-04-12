@@ -12,6 +12,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.api.sevice.InventoriObatDokterService;
+import trias.klinika.api.sevice.serviceRekam;
 /**
  *
  * @author Faz
@@ -24,8 +25,11 @@ public class Menu_Dokter extends javax.swing.JFrame {
     Registry registry = LocateRegistry.getRegistry(localhost, 4444);
     final pembayaranService service1 = (pembayaranService)registry.lookup("service1");
     final InventoriObatDokterService service2 =(InventoriObatDokterService)registry.lookup("service2"); 
+    final serviceRekam service3 = (serviceRekam)registry.lookup("service3");
     form_pembayaran fp = new form_pembayaran(service1);
     GUI_inventori_obat_Dokter GIOD = new GUI_inventori_obat_Dokter(service2);
+    datapasien dp = new datapasien (service3);
+    
     
     
     public Menu_Dokter ()throws RemoteException,NotBoundException {
@@ -46,6 +50,7 @@ public class Menu_Dokter extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         IOD = new javax.swing.JButton();
+        rekammedis = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,6 +70,13 @@ public class Menu_Dokter extends javax.swing.JFrame {
             }
         });
 
+        rekammedis.setText("Rekam Medis");
+        rekammedis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rekammedisActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -72,13 +84,16 @@ public class Menu_Dokter extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(IOD))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(146, 146, 146)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rekammedis)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(IOD)))))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -90,7 +105,9 @@ public class Menu_Dokter extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                     .addComponent(IOD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(rekammedis, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,6 +137,13 @@ public class Menu_Dokter extends javax.swing.JFrame {
        GIOD.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_IODActionPerformed
+
+private void rekammedisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekammedisActionPerformed
+       dp.setTitle(this.getTitle());
+       dp.setLocation(500, 200);
+       dp.setVisible(true);
+       this.dispose();
+}//GEN-LAST:event_rekammedisActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -127,5 +151,6 @@ public class Menu_Dokter extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton rekammedis;
     // End of variables declaration//GEN-END:variables
 }
