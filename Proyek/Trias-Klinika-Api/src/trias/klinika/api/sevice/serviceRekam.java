@@ -17,5 +17,6 @@ public interface serviceRekam extends Remote {
     PasienEntity getdata(String id) throws RemoteException;
     List<rekammedisEntyty> getdatarekam (String id) throws RemoteException;
     rekammedisEntyty getdatadetail(String id) throws RemoteException;
+    void ok(rekammedisEntyty rekammedisEntyty)throws RemoteException;
     
 }

@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package trias.klinika.server.service;
+import com.mysql.jdbc.PreparedStatement;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import trias.klinika.server.utilitas.Koneksidatabase;
  * @author Acer
  */
 public class queryRekammedis extends UnicastRemoteObject implements serviceRekam {
+   
     public queryRekammedis () throws RemoteException {
         
     }
@@ -121,10 +123,12 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
                 
                 rekammedisEntity.setDiagnosa(result.getString("DIAGNOSA"));
                 rekammedisEntity.setKeluhan(result.getString("KELUHAN"));
-                rekammedisEntity.setTindakan(result.getString("TINDAKAN"));
-                rekammedisEntity.setCatatan_lain(result.getString("CATATAN_LAIN"));
                 rekammedisEntity.setAlergi(result.getString("ALERGI_OBAT"));
+                rekammedisEntity.setTindakan(result.getString("TINDAKAN"));
                 rekammedisEntity.setTekanan_darah(result.getInt("TEKANAN_DARAH"));
+                rekammedisEntity.setCatatan_lain(result.getString("CATATAN_LAIN"));
+                
+                
                 
                 
 
@@ -145,7 +149,36 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
             }
         }
     }
-    
-    
-    
+
+    @Override
+    public void ok(rekammedisEntyty rekammedisEntyty) throws RemoteException {
+       System.out.println("Reservasi melakukan proses insert");
+        PreparedStatement statement = null;
+        try {
+            statement = (PreparedStatement) Koneksidatabase.getConnection().prepareStatement(
+                    "INSERT INTO rekam_medis (ID_REKAM_MEDIS, DIAGNOSA, KELUHAN, TINDAKAN, CATATAN_LAIN, ALERGI_OBAT, TEKANAN_DARAH)"
+                    + "values (?, ?, ?, ?, ?, ?, ?)");
+
+            statement.setString(1, rekammedisEntyty.getId_rekam());
+            statement.setString(2, rekammedisEntyty.getDiagnosa());
+            statement.setString(3, rekammedisEntyty.getKeluhan());
+            statement.setString(4, rekammedisEntyty.getTindakan());
+            statement.setString(5, rekammedisEntyty.getCatatan_lain());
+            statement.setString(6, rekammedisEntyty.getAlergi());
+            statement.setInt(7, rekammedisEntyty.getTekanan_darah());
+            
+            System.out.println(statement.toString());
+            statement.executeUpdate();
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                }
+            }
+        } 
+    }
 }

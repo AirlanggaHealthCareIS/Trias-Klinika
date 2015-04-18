@@ -13,6 +13,7 @@ package trias.klinika.client.dokter;
 import java.rmi.RemoteException;
 import trias.klinika.api.entitas.rekammedisEntyty;
 import trias.klinika.api.sevice.serviceRekam;
+import trias.klinika.client.dokter.datapasien;
 
 /**
  *
@@ -20,9 +21,13 @@ import trias.klinika.api.sevice.serviceRekam;
  */
 public class detail_rekam_medis extends javax.swing.JFrame {
     serviceRekam sr;
+   
+    
     /** Creates new form rekam_medis */
+    
     public detail_rekam_medis(serviceRekam sr, String ID) throws RemoteException {
         this.sr = sr ;
+        
         rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
         rekammedisEntity = sr.getdatadetail(ID);
         initComponents();
@@ -76,6 +81,12 @@ public class detail_rekam_medis extends javax.swing.JFrame {
 
         jLabel5.setText("Tindakan            :");
 
+        idrm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idrmActionPerformed(evt);
+            }
+        });
+
         keluhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 keluhanActionPerformed(evt);
@@ -107,6 +118,11 @@ public class detail_rekam_medis extends javax.swing.JFrame {
         });
 
         jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Alergi                         :");
 
@@ -229,6 +245,21 @@ private void diagnosaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 private void catatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catatanActionPerformed
 // TODO add your handling code here:
 }//GEN-LAST:event_catatanActionPerformed
+
+private void idrmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idrmActionPerformed
+
+}//GEN-LAST:event_idrmActionPerformed
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    this.dispose();
+             datapasien B = null ;
+        try {
+            B = new datapasien(sr);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+            B.setVisible(true);
+}//GEN-LAST:event_jButton1ActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
