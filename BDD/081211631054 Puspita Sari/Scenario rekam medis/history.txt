@@ -1,11 +1,24 @@
 Rekam Medis
-•	History Rekam Medis
+•	History Rekam Medis benar
 	Feature		: History rekam medis
 	Scenario	: Melihat History Rekam Medis
 	Given		: Dokter telah menerima notifikasi dari reservasi
 	When		: Dokter menekan tombol “OK”
 	Then		: Sistem menampilkan data pasien
 	When		: Dokter memilih tombol “ history rekam medis “
-	Then		: sistem menampilkan catatan kesehatan pasien
+	Then		: sistem menampilkan id rekam medis dan tanggal periksa
+	When		: Dokter memilih tabel "id" dan "tanggal" pada tabel yang di sediakan
+	And		: Dokter menekan tombol "ok"
+	Then		: sistem menampilkan rekam medis yang di inginkan
+
+History Rekam Medis salah
+
+	Feature		: History rekam medis
+	Scenario	: Melihat History Rekam Medis
+	Given		: Dokter telah menerima notifikasi dari reservasi
+	When		: Dokter menekan tombol “OK”
+	Then		: Sistem menampilkan data pasien
+	When		: Dokter memilih tombol “ history rekam medis “
+	Then		: sistem menampilkan "id" rekam medis dan "tanggal" periksa
 	When		: Dokter memilih tombol “OK”
-	Then		: History rekam medis tertutup
+	Then		: sistem menampilkan pesan " pilih table id dan tanggal"
