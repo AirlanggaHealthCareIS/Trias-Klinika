@@ -17,7 +17,8 @@ public class ListPembayaranEntitas implements Serializable {
     private int biayaTindakan;
     private int totalBayar;
     private int biayaKonsultasi;
-    private int idTransaksi;
+    private String idPemeriksaan;
+    private String tglPemeriksaan;
     
     public String getnamaPasien() {
         return namaPasien;
@@ -55,8 +56,18 @@ public class ListPembayaranEntitas implements Serializable {
     public void settotalBayar(int totalBayar){
         this.totalBayar = totalBayar;
     }
-    public int getidTransaksi(){
-        return idTransaksi;
+    public String getidPemeriksaan(){
+        return idPemeriksaan;
+    }
+    public void setidPemeriksaan(String idPemeriksaan){
+        this.idPemeriksaan = idPemeriksaan;
+        
+    }
+    public String gettglPemeriksaan(){
+        return tglPemeriksaan;
+    }
+    public void settglPemeriksaan(String tglPemeriksaan){
+        this.tglPemeriksaan = tglPemeriksaan;
     }
     
 }
