@@ -31,9 +31,6 @@ public class InventoryObatApotekEntitas implements Serializable {
     public void setIdObat (String id_obat){
         this.id_obat = id_obat;
     }
-    public String id_obat(){
-        return id_obat;
-    }
     public String getNamaObat(){
         return nama_obat;
     }
