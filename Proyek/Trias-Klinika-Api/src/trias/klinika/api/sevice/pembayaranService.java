@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import trias.klinika.api.entitas.PembayaranEntitas;
 import java.rmi.Remote;
 import trias.klinika.api.entitas.RincianPembayaran;
+import trias.klinika.api.entitas.RincianPembayaranEntitas;
 
 /**
  *
@@ -17,7 +18,8 @@ import trias.klinika.api.entitas.RincianPembayaran;
 public interface pembayaranService extends Remote {
     String [] obat (String [] pk)throws RemoteException;
     void Save (PembayaranEntitas PE)throws RemoteException;
-    void save (RincianPembayaran RP,PembayaranEntitas PE, int i)throws RemoteException;
+    void save (RincianPembayaranEntitas RPE)throws RemoteException;
     int biaya (int harga, String id)throws RemoteException;
+    int d (int id) throws RemoteException;
      
 }

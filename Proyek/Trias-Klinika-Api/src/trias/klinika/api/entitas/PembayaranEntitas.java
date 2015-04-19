@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author ICUN
  */
-public class PembayaranEntitas {
+public class PembayaranEntitas implements Serializable{
     
     private int BIAYA_DOKTER;
     private int TOTAL_BIAYA;

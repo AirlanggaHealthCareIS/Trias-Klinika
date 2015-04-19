@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package trias.klinika.api.entitas;
-
+import java.io.Serializable;
 /**
  *
  * @author ICUN

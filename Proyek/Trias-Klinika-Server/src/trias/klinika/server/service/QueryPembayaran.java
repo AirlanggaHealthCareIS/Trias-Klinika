@@ -7,6 +7,7 @@ package trias.klinika.server.service;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,6 +15,7 @@ import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.server.utilitas.Koneksidatabase;
 import trias.klinika.api.entitas.PembayaranEntitas;
 import trias.klinika.api.entitas.RincianPembayaran;
+import trias.klinika.api.entitas.RincianPembayaranEntitas;
 
 /**
  *
@@ -24,6 +26,8 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
     public QueryPembayaran() throws RemoteException {
         
     }
+    
+    
     
     @Override
     public String[] obat(String [] pk) throws RemoteException {
@@ -69,16 +73,45 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
     }
     
     @Override
-    public void Save (PembayaranEntitas PE){
-        Statement statement = null;
+    public void Save (PembayaranEntitas PE)throws RemoteException {
+        System.out.println("masukan pembayaran");
+       PreparedStatement statement = null;
+        
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement(
+            
+       "INSERT INTO `PEMBAYARAN`(`ID_PEMBAYARAN`, `BIAYA_DOKTER`, `JUMLAH_PEMBAYARAN`) VALUE ("+PE.getnomer_transaksi()+","+PE.getBIAYA_DOKTER()+","+PE.getTOTAL_BIAYA()+")");
+            System.out.println(statement.toString());
+            statement.executeUpdate();   
+                  
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            
+           
+        }finally{
+            if(statement != null){
+                try{
+                   statement.close();
+                }catch(SQLException exception){
+                    exception.printStackTrace();
+                }
+            }
+        } 
+    }
+    
+    @Override
+    public void save (RincianPembayaranEntitas RPE)throws RemoteException{
+        System.out.println("masukan detail pembayaran");
+        PreparedStatement statement = null;
+       
         
         try {
            
-            statement = Koneksidatabase.getConnection().createStatement();
+            statement = Koneksidatabase.getConnection().prepareStatement(
             
-            ResultSet result = statement.executeQuery
-            ("INSERT INTO `PEMBAYARAN`(`ID_PEMBAYARAN`, `BIAYA_DOKTER`, `JUMLAH_PEMBAYARAN`) VALUE (["+PE.getnomer_transaksi()+"],["+PE.getBIAYA_DOKTER()+"],["+PE.getTOTAL_BIAYA()+"]");
-            
+            "INSERT INTO `RINCIAN_PEMBAYARAN`(`ID_RINCIAN_PEMBAYARAN`, `ID_PEMBAYARAN`, `ID_OBAT_DOKTER`) VALUE ("+RPE.getID_RINCIAN_PEMBAYARAN()+","+RPE.getID_PEMBAYARAN()+",'"+RPE.getID_OBAT_DOKTER()+"')");
+             System.out.println(statement.toString());
+             statement.executeUpdate();   
                   
         }catch (SQLException exception) {
             exception.printStackTrace();
@@ -91,41 +124,12 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
                     exception.printStackTrace();
                 }
             }
-            
-            
-      
-}
-    }
-    
-    @Override
-    public void save (RincianPembayaran RP,PembayaranEntitas PE, int i){
-        Statement statement = null;
-        
-        try {
-           
-            statement = Koneksidatabase.getConnection().createStatement();
-            
-            ResultSet result = statement.executeQuery
-            ("INSERT INTO `RINCIAN_PEMBAYARAN`(`ID_RINCIAN_PEMBAYARAN`, `ID_PEMBAYARAN`, `ID_OBAT_DOKTER`) VALUE (["+i+"],["+PE.getnomer_transaksi()+"],["+RP.getID_OBAT()+"]");
-            
-                  
-        }catch (SQLException exception) {
-            exception.printStackTrace();
-           
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException exception) {
-                    exception.printStackTrace();
-                }
-            }
     }
         
     }
     
     @Override
-    public int biaya (int harga, String id){
+    public int biaya (int harga, String id)throws RemoteException{
         Statement statement = null;
         
         try {
@@ -155,6 +159,38 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
         return harga;
         
     }
+    
+    @Override
+    public int d (int id) throws RemoteException {
+        System.out.println("Client Melakukan Proses Get By Id");
 
-}    
+        Statement statement = null;
+        try{
+           statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+                ("SELECT ID_PEMBAYARAN FROM pembayaran ");
+            
+            result.last();
+            id = result.getInt("ID_PEMBAYARAN");
+             
+               
+
+        }catch(SQLException exception){
+          exception.printStackTrace();
+        
+        }finally{
+            if(statement != null){
+                try{
+                    statement.close();
+                }catch(SQLException exception){
+                   exception.printStackTrace();
+                }
+            }
+        }
+        return id;
+    }
+}
+
+    
     

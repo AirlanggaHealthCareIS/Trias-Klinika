@@ -26,12 +26,19 @@ public class tabelPembayaran extends AbstractTableModel{
         list.add(RP);
         fireTableDataChanged();
     }
+     public void delete(int row){
+        list.remove(row);
+        fireTableDataChanged();
+    }
+    
     @Override
     public String getColumnName(int column){
         switch (column){
             case 0:
-                return "Tindakan";
+                return "Id Obat";
             case 1:
+                return "Tindakan";
+            case 2:
                 return "Biaya";
             default :
                 return null;
@@ -46,15 +53,17 @@ public class tabelPembayaran extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){
             case 0:
-                return list.get(rowIndex).getNAMA_OBAT();
+                return list.get(rowIndex).getID_OBAT();
             case 1:
+                return list.get(rowIndex).getNAMA_OBAT();
+            case 2:
                 return list.get(rowIndex).getHARGA_OBAT();
             default:
                 return null;
