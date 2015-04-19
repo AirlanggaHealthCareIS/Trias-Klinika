@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import trias.klinika.api.sevice.InventoryObatApotekService;
+import trias.klinika.api.sevice.LaporanKeuanganService;
 import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.client.apotek.interface_inventory;
 
@@ -22,7 +23,10 @@ String localhost = this.getTitle();
     
     Registry registry = LocateRegistry.getRegistry(localhost, 4444);
     final  InventoryObatApotekService service4 = (InventoryObatApotekService)registry.lookup("service4");
+    final  LaporanKeuanganService service7 = (LaporanKeuanganService)registry.lookup("service7");
+    
     interface_inventory ii = new interface_inventory(service4);
+    Laporan_Keuangan lk = new Laporan_Keuangan(service7);
     /**
      * Creates new form Menu_Apotek
      */
@@ -42,6 +46,7 @@ String localhost = this.getTitle();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         inventory = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +56,13 @@ String localhost = this.getTitle();
         inventory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inventoryActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Laporan Keuangan");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -65,7 +77,9 @@ String localhost = this.getTitle();
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(inventory)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addComponent(inventory))))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -75,7 +89,9 @@ String localhost = this.getTitle();
                 .addComponent(jLabel1)
                 .addGap(39, 39, 39)
                 .addComponent(inventory)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -101,10 +117,18 @@ String localhost = this.getTitle();
         //TODO add your handling code here:
     }//GEN-LAST:event_inventoryActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        lk.setTitle(this.getTitle());
+        lk.setLocation(500, 200);
+        lk.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton inventory;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

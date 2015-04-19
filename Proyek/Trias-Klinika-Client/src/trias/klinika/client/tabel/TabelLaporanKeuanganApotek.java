@@ -22,8 +22,8 @@ public class TabelLaporanKeuanganApotek extends AbstractTableModel {
     public LaporanKeuanganApotekEntitas get(int row){
         return list.get(row);
     }
-    public void insert (LaporanKeuanganApotekEntitas IOD){
-       list.add(IOD);
+    public void insert (LaporanKeuanganApotekEntitas LKAE){
+       list.add(LKAE);
        fireTableDataChanged();
     }
     public void setData(List<LaporanKeuanganApotekEntitas> list) {
@@ -37,14 +37,10 @@ public class TabelLaporanKeuanganApotek extends AbstractTableModel {
             case 0:
                 return "TGL_PEMERIKSAAN";
             case 1:
-                return "NAMA_OBAT";
+                return "ID_RESEP";
             case 2:
-                return "ID_OBAT_KELUAR";
+                return "ID_APOTEK";
             case 3:
-                return "JUMLAH_OBAT";
-            case 4:
-                return "HARGA_OBAT";
-            case 5:
                 return "TOTAL_HARGA";
             default :
                 return null;
@@ -59,7 +55,7 @@ public class TabelLaporanKeuanganApotek extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 4;
     }
 
     @Override
@@ -68,17 +64,15 @@ public class TabelLaporanKeuanganApotek extends AbstractTableModel {
             case 0:
                 return list.get(rowIndex).getTGL_PEMERIKSAAN();
             case 1:
-                return list.get(rowIndex).getNAMA_OBAT();
+                return list.get(rowIndex).getID_RESEP();
             case 2:
-                return list.get(rowIndex).getID_OBAT_KELUAR();
+                return list.get(rowIndex).getID_APOTEK();
             case 3:
-                return list.get(rowIndex).getJUMLAH_OBAT();
-            case 4:
-                return list.get(rowIndex).getHARGA_OBAT();
-            case 5:
                 return list.get(rowIndex).getTOTAL_HARGA();
-            default:
+            default :
                 return null;
+   
+                
         }
     }
 }
