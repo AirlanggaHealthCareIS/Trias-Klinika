@@ -75,13 +75,54 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
     }
    
    @Override
+   public List<InventoriObatDokterEntitas> getobat1() throws RemoteException {
+        System.out.println("Client melakukan penambahan obat lama");
+
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.kuantitas_obat, do.tgl_masuk_obat, do.masa_pakai_obat, jo.nama_jenis_obat FROM obat as o, detail_obat as do, jenis_obat as jo, dibagi as d where o.id_obat = do.id_obat and o.id_obat = d.id_obat");
+            
+            List<InventoriObatDokterEntitas> list = new ArrayList<InventoriObatDokterEntitas>();
+
+            while(result.next()){
+                InventoriObatDokterEntitas inventoriObatDokterEntitas = new InventoriObatDokterEntitas();
+                inventoriObatDokterEntitas.setnamaobat(result.getString("nama_obat"));
+                inventoriObatDokterEntitas.setjenisobat(result.getString("nama_jenis_obat"));
+                
+                list.add(inventoriObatDokterEntitas);
+            }
+
+            result.close();
+            
+            return list;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+   
+   @Override
     public void insertObatBaru(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException {
         System.out.println("Dokter melakukan proses insert");
 
         PreparedStatement statement = null;
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO obat (id_obat, id_spesialis, nama_obat, harga_obat, deskripsi_obat)"
+                    "INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT)"
                     + "values (?, ?, ?, ?, ?)");
 
             statement.setString(1, inventoriobatDokterEntitas.idobat());
@@ -89,6 +130,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             statement.setString(3, inventoriobatDokterEntitas.getnamaobat());
             statement.setInt(4, inventoriobatDokterEntitas.gethargaobat());
             statement.setString(5, inventoriobatDokterEntitas.deskripsi());
+            System.out.println(statement.toString());
             
 
             statement.executeUpdate();
@@ -108,7 +150,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
         PreparedStatement statement1 = null;
         try {
             statement1 = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO detail_obat (id_detail_obat, id_obat, kuantitas_obat, tgl_masuk_obat, masa_pakai_obat, ruangan_obat)"
+                    "INSERT INTO detail_obat (ID_DETAIL_OBAT, ID_OBAT, KUANTITAS_OBAT, TGL_MASUK_OBAT, MASA_PAKAI_OBAT, RUANGAN_OBAT)"
                     + "values (?, ?, ?, ?, ?, ?)");
 
             statement1.setString(1, inventoriobatDokterEntitas.iddetailobat());
@@ -117,8 +159,9 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             statement1.setString(4, inventoriobatDokterEntitas.gettglmasuk());
             statement1.setString(5, inventoriobatDokterEntitas.getmasapakai());
             statement1.setString(6, inventoriobatDokterEntitas.ruanganobat());
+            System.out.println(statement1.toString());
 
-            statement.executeUpdate();
+            statement1.executeUpdate();
 
             
         } catch (SQLException exception) {
@@ -135,14 +178,14 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
         PreparedStatement statement2 = null;
         try {
             statement2 = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO jenis_obat (id_jenis_obat, nama_jenis_obat)"
+                    "INSERT INTO dibagi (ID_OBAT, ID_JENIS_OBAT)"
                     + "values (?, ?)");
 
             statement2.setString(1, inventoriobatDokterEntitas.idjenisobat());
             statement2.setString(2, inventoriobatDokterEntitas.getjenisobat());
+            System.out.println(statement.toString());
             
-
-            statement.executeUpdate();
+            statement2.executeUpdate();
 
             
         } catch (SQLException exception) {
@@ -166,7 +209,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat FROM obat as o , detail_obat as do where do.id_obat  = o.id_obat and do.ruangan_obat = 'Ruang 2' ORDER BY id_obat");
+            ResultSet result = statement.executeQuery("SELECT o.ID_OBAT, o.NAMA_OBAT FROM obat as o , detail_obat as do where do.id_obat  = o.id_obat and do.ruangan_obat = 'Ruang 2' ORDER BY id_obat");
             
             result.last();
             ob = new String [result.getRow()];
@@ -194,5 +237,50 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             }
         }
     }
+   
+    @Override
+    public String[] Dropdownjenis(String[] ob) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT * from `jenis_obat`");
+            
+            result.last();
+            ob = new String [result.getRow()];
+            result.first();
+
+            for (int i=0;i<ob.length;i++){
+                ob [i] = result.getString("id_jenis_obat")+" - "+result.getString("nama_jenis_obat");
+                result.next();
+            }
+
+            result.close();
+            
+            return ob;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void insertObatLama(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+   
     
 }

@@ -5,6 +5,8 @@
 package trias.klinika.client.dokter;
 
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -38,6 +40,8 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         Dropdown();
         tabel.setModel(tiod);
         
+        Dropdownjenis();
+        
     }
 
     /**
@@ -70,7 +74,6 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         NO = new javax.swing.JLabel();
         textNO = new javax.swing.JTextField();
         JO = new javax.swing.JLabel();
-        textJO = new javax.swing.JTextField();
         KO = new javax.swing.JLabel();
         textKO = new javax.swing.JTextField();
         OK = new javax.swing.JButton();
@@ -84,15 +87,17 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         textHO = new javax.swing.JTextField();
         TM1 = new javax.swing.JLabel();
         IDO = new javax.swing.JTextField();
+        dropJO = new javax.swing.JComboBox();
+        textruang = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(830, 700));
+        setMinimumSize(new java.awt.Dimension(1147, 557));
         getContentPane().setLayout(null);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(661, 0, 150, 100);
+        jLabel2.setBounds(980, 0, 150, 100);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -100,7 +105,7 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Inventori.png"))); // NOI18N
         jLabel1.setText("Inventori Obat Dokter");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 651, 91);
+        jLabel1.setBounds(10, 0, 980, 100);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel3.setText("List Obat");
@@ -121,15 +126,21 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabel);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 120, 800, 100);
+        jScrollPane1.setBounds(10, 120, 1110, 100);
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 0));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/-.png"))); // NOI18N
         jLabel4.setText("Pengurangan Data Obat");
 
         dropmin.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        dropmin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat...", "Amoxilin", "Salbutamol", "Promag", "Combantrin" }));
+        dropmin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat..." }));
+        dropmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dropminActionPerformed(evt);
+            }
+        });
 
         textmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,7 +193,7 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
                     .addComponent(dropmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(OK2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 324, Short.MAX_VALUE))
+                .addGap(0, 174, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -196,18 +207,19 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 230, 400, 420);
+        jPanel1.setBounds(10, 230, 400, 280);
 
         jPanel3.setBackground(new java.awt.Color(0, 153, 0));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/+.png"))); // NOI18N
         jLabel5.setText("Penambahan Data Obat");
 
         dropadd.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -219,7 +231,12 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         });
 
         droplama.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        droplama.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat...", "Amoxilin", "Salbutamol", "Promag", "Combantrin" }));
+        droplama.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat..." }));
+        droplama.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                droplamaItemStateChanged(evt);
+            }
+        });
         droplama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 droplamaActionPerformed(evt);
@@ -240,12 +257,6 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
 
         JO.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         JO.setText("Jenis Obat");
-
-        textJO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textJOActionPerformed(evt);
-            }
-        });
 
         KO.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         KO.setText("Kuantiti Obat");
@@ -291,103 +302,125 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         TM1.setText("Tgl Masuk");
 
         IDO.setEditable(false);
-        IDO.setText("O0026");
+        IDO.setText("O0036");
+        IDO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDOActionPerformed(evt);
+            }
+        });
+
+        dropJO.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        dropJO.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "jenis obat..." }));
+        dropJO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dropJOActionPerformed(evt);
+            }
+        });
+
+        textruang.setEditable(false);
+        textruang.setText("Ruangan");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TM1)
-                                    .addComponent(MP))
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(texttglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(texttglmasapakai, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(judul)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(dropadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(droplama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5)
+                                .addComponent(droplama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textruang, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(IDO, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JO)
+                                    .addComponent(NO))
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(textNO)
+                                    .addComponent(dropJO, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(TM1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(texttglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(MP)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(texttglmasapakai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(KO)
                                     .addComponent(HO))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(textKO, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                                    .addComponent(textHO))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(textKO)
+                                    .addComponent(textHO, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addComponent(deskripsi)
-                                .addGap(36, 36, 36)
+                                .addGap(10, 10, 10)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(OK))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JO)
-                                    .addComponent(NO))
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textJO, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(textNO, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(IDO, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(28, Short.MAX_VALUE))))
+                                .addComponent(OK)))))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(7, 7, 7)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dropadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(droplama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(judul)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NO)
-                    .addComponent(textNO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dropadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(droplama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(IDO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JO)
-                    .addComponent(textJO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(KO)
-                    .addComponent(textKO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textHO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(HO))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(judul)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TM1)
-                    .addComponent(texttglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(NO)
+                            .addComponent(textNO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TM1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(texttglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MP)
-                    .addComponent(texttglmasapakai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(deskripsi)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(OK, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JO)
+                            .addComponent(dropJO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(MP))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(KO)
+                            .addComponent(textKO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textHO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(HO)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(texttglmasapakai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(OK, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deskripsi))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -403,16 +436,16 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(410, 230, 400, 420);
+        jPanel3.setBounds(410, 230, 710, 280);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/2.png"))); // NOI18N
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(0, 0, 820, 660);
+        jLabel6.setBounds(0, 0, 1150, 660);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -426,19 +459,32 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
     }//GEN-LAST:event_okminActionPerformed
 
     private void OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKActionPerformed
-        if(textNO.getText()==""|textJO.getText()==""|textKO.getText()==""|texttglmasuk.getDate()==null|texttglmasapakai.getDate()==null|deskripsi.getText()==""){
+        if(textNO.getText().isEmpty()||dropJO.getSelectedItem().toString()=="jenis obat"||textKO.getText().isEmpty()||textHO.getText().isEmpty()||texttglmasuk.getDate()==null||texttglmasapakai.getDate()==null||textdeskripsi.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
+            
         }
         else {
             InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
                IODE.setidobat(IDO.getText());
                IODE.setnamaobat(textNO.getText());
-               IODE.setjenisobat(textJO.getText());
+               IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0, 9));
+               String a = dropJO.getSelectedItem().toString();
+               IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
                IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
-               IODE.settglmasuk(texttglmasuk.getDate().toString());
-               IODE.setmasapakai(texttglmasapakai.getDate().toString());
-               IODE.setdeskripsi(deskripsi.toString());
-               IODE.setidspesialis("S002");
+               IODE.sethargaobat(Integer.parseInt(textHO.getText()));
+               Date date = new Date(texttglmasuk.getDate().getTime());
+               System.out.println(date.toString());
+               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+               String tgl = sdf.format(date);
+               IODE.settglmasuk(tgl);
+               System.out.println(tgl);
+               Date date1 = new Date(texttglmasapakai.getDate().getTime());
+               SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+               String tgl1 = sdf1.format(date1);
+               IODE.setmasapakai(tgl1);
+               IODE.setdeskripsi(textdeskripsi.getText());
+               IODE.setiddetailobat("DO0028");
+               IODE.setidspesialis("S0002");
                IODE.setruanganobat("Ruang 2");
                
                tiod.insert(IODE);
@@ -454,10 +500,6 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
     private void textKOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKOActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textKOActionPerformed
-
-    private void textJOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textJOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textJOActionPerformed
 
     private void textNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNOActionPerformed
         // TODO add your handling code here:
@@ -491,7 +533,7 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
             NO.setEnabled(true);
             textNO.setEnabled(true);
             JO.setEnabled(true);
-            textJO.setEnabled(true);
+            dropJO.setEnabled(true);
             KO.setEnabled(true);
             textKO.setEnabled(true);
             HO.setEnabled(true);
@@ -515,6 +557,23 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textHOActionPerformed
 
+    private void IDOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDOActionPerformed
+
+    private void dropJOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropJOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dropJOActionPerformed
+
+    private void dropminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dropminActionPerformed
+
+    private void droplamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_droplamaItemStateChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_droplamaItemStateChanged
+
     public void reset(){
         droplama.setEnabled(false);
         judul.setEnabled(false);
@@ -522,12 +581,12 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         textNO.setEnabled(false);
         textNO.setText("");
         JO.setEnabled(false);
-        textJO.setEnabled(false);
-        textJO.setText("");
+        dropJO.setEnabled(false);
         KO.setEnabled(false);
         textKO.setEnabled(false);
         textKO.setText("");
         HO.setEnabled(false);
+        HO.setText("");
         texttglmasuk.setEnabled(false);
         MP.setEnabled(false);
         texttglmasapakai.setEnabled(false);
@@ -544,6 +603,14 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
             droplama.addItem(isi[i]);
         }
     }
+    
+    private void Dropdownjenis() throws RemoteException{
+        isi = IODS.Dropdownjenis(isi);
+    
+        for (int i=0;i<isi.length;i++){
+            dropJO.addItem(isi[i]);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HO;
     private javax.swing.JTextField IDO;
@@ -555,6 +622,7 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
     private javax.swing.JButton OK2;
     private javax.swing.JLabel TM1;
     private javax.swing.JLabel deskripsi;
+    private javax.swing.JComboBox dropJO;
     private javax.swing.JComboBox dropadd;
     private javax.swing.JComboBox droplama;
     private javax.swing.JComboBox dropmin;
@@ -574,11 +642,11 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
     private javax.swing.JButton okmin;
     private javax.swing.JTable tabel;
     private javax.swing.JTextField textHO;
-    private javax.swing.JTextField textJO;
     private javax.swing.JTextField textKO;
     private javax.swing.JTextField textNO;
     private javax.swing.JTextArea textdeskripsi;
     private javax.swing.JTextField textmin;
+    private javax.swing.JTextField textruang;
     private com.toedter.calendar.JDateChooser texttglmasapakai;
     private com.toedter.calendar.JDateChooser texttglmasuk;
     // End of variables declaration//GEN-END:variables

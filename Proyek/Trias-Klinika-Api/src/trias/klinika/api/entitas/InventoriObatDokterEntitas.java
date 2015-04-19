@@ -48,7 +48,7 @@ public class InventoriObatDokterEntitas implements Serializable {
     }
     
     public int gethargaobat(){
-        return kuantitiobat;
+        return hargaobat;
     }
     
     public void sethargaobat(int hargaobat){

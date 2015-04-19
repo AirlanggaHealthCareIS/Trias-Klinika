@@ -17,7 +17,9 @@ import trias.klinika.api.entitas.InventoriObatDokterEntitas;
 public interface InventoriObatDokterService extends Remote {
     
     List<InventoriObatDokterEntitas> getobat() throws RemoteException;
+    List<InventoriObatDokterEntitas> getobat1() throws RemoteException;
     void insertObatBaru(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
+    void insertObatLama(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
     String[] Dropdownobat(String [] ob) throws RemoteException;
-    
+    String[] Dropdownjenis(String [] ob) throws RemoteException;
 }
