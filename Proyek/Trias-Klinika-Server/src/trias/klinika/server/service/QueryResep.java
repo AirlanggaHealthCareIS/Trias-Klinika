@@ -36,7 +36,7 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
             statement = Koneksidatabase.getConnection().createStatement();
             
             ResultSet result = statement.executeQuery
-            ("SELECT ID_OBAT,NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = 'S0001'");
+            ("SELECT ID_OBAT, NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = 'S0001'");
             
             result.last();
             pk = new String [result.getRow()];
@@ -70,7 +70,7 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
         
         statement = Koneksidatabase.getConnection().createStatement();
         ResultSet result = statement.executeQuery
-                    ("INSERT INTO `resep`(`ID_RESEP`, `ID_APOTEK`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES (["+RE.getNO_resep()+"],["+RE.getID_apotek()+"],["+RE.getharga()+"],["+RE.getSTATUS_RESEP()+"]) ");
+                    ("INSERT INTO `resep`(`ID_RESEP`, `ID_APOTEK`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES (["+RE.getID_resep()+"],["+RE.getID_apotek()+"],["+RE.getharga()+"],["+RE.getSTATUS_RESEP()+"]) ");
     }
     
     public void save (ResepEntity RE, String ID) throws RemoteException, SQLException {
@@ -78,7 +78,7 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
         
         statement = Koneksidatabase.getConnection().createStatement();
         ResultSet result = statement.executeQuery
-                            ("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES (["+RE.getID_obat()+"],["+RE.getNO_resep()+"],["+RE.getID_obat()+"],["+RE.getjumlah()+"],["+RE.getjumlah_terpenuhi()+"]) ");
+                            ("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES (["+RE.getID_obat()+"],["+RE.getID_resep()+"],["+RE.getID_obat()+"],["+RE.getjumlah()+"],["+RE.getjumlah_terpenuhi()+"]) ");
         }
 
     @Override
@@ -91,4 +91,34 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public RincianResep getdetail  (RincianResep RR) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT o.HARGA_OBAT FROM OBAT as o WHERE ID_OBAT = '"+RR.getID_OBAT()+"'");
+            
+            
+            
+           result.first();
+           RR.setHARGA_OBAT(result.getInt("HARGA_OBAT"));
+          
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+           
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+    }
+        return RR;
+        
+    }
 }

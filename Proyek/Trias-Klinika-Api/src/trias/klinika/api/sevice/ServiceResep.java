@@ -19,5 +19,5 @@ public interface ServiceResep {
     String [] obat (String [] pk)throws RemoteException;
     void Save (ResepEntity RE)throws RemoteException;
     void save (RincianResep RR,ResepEntity RE, int i)throws RemoteException;
-    
+    RincianResep getdetail  (RincianResep RR) throws RemoteException;
 }
