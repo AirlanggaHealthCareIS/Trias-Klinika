@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.sevice.LoginService;
+import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.client.apotek.Menu_Apotek;
 import trias.klinika.client.dokter.Menu_Dokter;
 import trias.klinika.client.reservasi.Menu_Reservasi;
@@ -28,7 +29,9 @@ public class Login extends javax.swing.JFrame {
     private int indeks = 0;
     private String ip;
     private Registry registry;
-    private LoginService service;
+    private LoginService service1;
+    private ListPetugasService service5;
+    private LoginEntitas users = new LoginEntitas();
 
     /**
      * Creates new form Login
@@ -52,7 +55,6 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        judul = new javax.swing.JLabel();
         user = new javax.swing.JLabel();
         pass = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
@@ -65,24 +67,19 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setLayout(null);
 
-        judul.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        judul.setText("Login");
-        jPanel1.add(judul);
-        judul.setBounds(10, 10, 56, 28);
-
         user.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         user.setText("Username");
         jPanel1.add(user);
-        user.setBounds(20, 100, 48, 14);
+        user.setBounds(10, 90, 60, 30);
 
         pass.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         pass.setText("Password");
         jPanel1.add(pass);
-        pass.setBounds(20, 130, 50, 14);
+        pass.setBounds(10, 130, 60, 30);
         jPanel1.add(username);
-        username.setBounds(80, 100, 110, 20);
+        username.setBounds(70, 90, 140, 30);
         jPanel1.add(password);
-        password.setBounds(80, 130, 110, 20);
+        password.setBounds(70, 130, 140, 30);
 
         login.setText("Login");
         login.addActionListener(new java.awt.event.ActionListener() {
@@ -91,22 +88,22 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(login);
-        login.setBounds(120, 160, 73, 23);
+        login.setBounds(70, 170, 90, 30);
 
         logo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
         jPanel1.add(logo);
-        logo.setBounds(210, 0, 150, 70);
+        logo.setBounds(60, 0, 150, 70);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -124,10 +121,9 @@ public class Login extends javax.swing.JFrame {
             }
             else {
                 try {
-                    Eksekusi(cek);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NotBoundException ex) {
+                    Eksekusi(cek , username.getText());
+                    service5.Ubah_Status_Login(users);
+                } catch (RemoteException | NotBoundException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 this.dispose();
@@ -138,7 +134,8 @@ public class Login extends javax.swing.JFrame {
     public void Awal() throws RemoteException, NotBoundException {
         ip = JOptionPane.showInputDialog("Masukkan IP Address: ");
         registry = LocateRegistry.getRegistry(ip,4444);
-        service = (LoginService) registry.lookup("service");
+        service1 = (LoginService) registry.lookup("service1");
+        service5 = (ListPetugasService) registry.lookup("service5");
     }
     
     public String Cek(String username, String password) {
@@ -156,7 +153,6 @@ public class Login extends javax.swing.JFrame {
     }
     
     public String Proses (String username, String password) {
-        LoginEntitas users = new LoginEntitas();
         users.setusername(username);
         users.setpassword(password);
         String sebagai = username.substring(0, 1);
@@ -165,20 +161,23 @@ public class Login extends javax.swing.JFrame {
                 users.setsebagai("dokter");
                 users.setfielduser("id_dokter");
                 users.setfieldpass("password_dokter");
+                users.setfieldstatus("status_dokter");
                 break;
             case "R":
                 users.setsebagai("reservasi");
                 users.setfielduser("id_reservasi");
                 users.setfieldpass("password_reservasi");
+                users.setfieldstatus("status_reservasi");
                 break;
             case "A":
                 users.setsebagai("apotek");
                 users.setfielduser("id_apotek");
                 users.setfieldpass("password_apotek");
+                users.setfieldstatus("status_apotek");
                 break;
         }
         try {
-            indeks = service.CheckPassword(users);
+            indeks = service1.CheckPassword(users);
             if (indeks == 3) {
                 pesan[indeks] = users.getsebagai();
             }
@@ -188,10 +187,10 @@ public class Login extends javax.swing.JFrame {
         return pesan[indeks];
     }
     
-    public void Eksekusi (String users) throws RemoteException, NotBoundException {
+    public void Eksekusi (String users , String id) throws RemoteException, NotBoundException {
         if (null != users) switch (users) {
             case "dokter":{
-                Menu_Dokter menu = new Menu_Dokter();
+                Menu_Dokter menu = new Menu_Dokter(id);
                 menu.setTitle(ip);
                 menu.setLocation(500, 200);
                 menu.setVisible(true);
@@ -242,6 +241,8 @@ public class Login extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -256,7 +257,6 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel judul;
     private javax.swing.JButton login;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel pass;

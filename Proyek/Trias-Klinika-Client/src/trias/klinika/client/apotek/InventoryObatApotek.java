@@ -431,13 +431,13 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             IOAE.setRuangObat("Apotek");
             
             tioa.insert(IOAE);
-            try{
-                IOAS.insertObatBaru(IOAE);
-            }
-            catch (RemoteException ex){
-                Logger.getLogger(interface_input.class.getName()).log(Level.SEVERE, null, ex);
-                
-            }
+//            try{
+//                IOAS.insertObatBaru(IOAE);
+//            }
+//            catch (RemoteException ex){
+//                Logger.getLogger(interface_input.class.getName()).log(Level.SEVERE, null, ex);
+//                
+//            }
             }
 // TODO add your handling code here:
     }//GEN-LAST:event_inputActionPerformed
@@ -468,14 +468,14 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             IOAE.setMasaPakai(masa_pakai.getDate().toString());
             IOAE.setRuangObat("Apotek");
             
-            tioa.tambah(IOAE);
-            try{
-                IOAS.tambahObat(IOAE);
-            }
-            catch (RemoteException ex){
-                Logger.getLogger(interface_input.class.getName()).log(Level.SEVERE, null, ex);
-                
-            }
+//            tioa.tambah(IOAE);
+//            try{
+//                IOAS.tambahObat(IOAE);
+//            }
+//            catch (RemoteException ex){
+//                Logger.getLogger(interface_input.class.getName()).log(Level.SEVERE, null, ex);
+//                
+//            }
             }
 // TODO add your handling code here:
     }//GEN-LAST:event_tambahActionPerformed

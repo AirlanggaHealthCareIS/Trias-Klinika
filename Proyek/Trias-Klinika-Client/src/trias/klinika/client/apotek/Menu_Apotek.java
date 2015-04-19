@@ -12,7 +12,7 @@ import java.rmi.registry.Registry;
 import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.api.sevice.LaporanKeuanganService;
 import trias.klinika.api.sevice.pembayaranService;
-import trias.klinika.client.apotek.interface_inventory;
+//import trias.klinika.client.apotek.interface_inventory;
 
 /**
  *
@@ -25,7 +25,7 @@ String localhost = this.getTitle();
     final  InventoryObatApotekService service4 = (InventoryObatApotekService)registry.lookup("service4");
     final  LaporanKeuanganService service7 = (LaporanKeuanganService)registry.lookup("service7");
     
-    interface_inventory ii = new interface_inventory(service4);
+    //interface_inventory ii = new interface_inventory(service4);
     Laporan_Keuangan lk = new Laporan_Keuangan(service7);
     /**
      * Creates new form Menu_Apotek
@@ -109,10 +109,10 @@ String localhost = this.getTitle();
     }// </editor-fold>//GEN-END:initComponents
 
     private void inventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryActionPerformed
-        ii.setTitle(this.getTitle());
-        ii.setLocation(500, 200);
-        ii.setVisible(true);
-        this.dispose();
+//        ii.setTitle(this.getTitle());
+//        ii.setLocation(500, 200);
+//        ii.setVisible(true);
+//        this.dispose();
 // 
         //TODO add your handling code here:
     }//GEN-LAST:event_inventoryActionPerformed

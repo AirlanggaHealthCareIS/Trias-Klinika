@@ -30,11 +30,11 @@ public class Menu_Dokter extends javax.swing.JFrame {
     GUI_inventori_obat_Dokter GIOD = new GUI_inventori_obat_Dokter(service2);
     datapasien dp = new datapasien (service3);
     
+    String user;
     
-    
-    public Menu_Dokter ()throws RemoteException,NotBoundException {
+    public Menu_Dokter (String user)throws RemoteException,NotBoundException {
         initComponents();
-        
+        this.user = user;
     }
 
     /**

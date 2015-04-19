@@ -1,4 +1,4 @@
-package trias.klinika.client.tabell;
+package trias.klinika.client.tabel;
 
 
 import java.util.ArrayList;
