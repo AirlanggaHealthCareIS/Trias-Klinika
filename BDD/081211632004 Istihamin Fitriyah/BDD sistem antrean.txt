@@ -1,5 +1,5 @@
 Fitur	: Mengatur antrean sistem
-Skenario: Reservasi memanggil pasien pada daftar antrean teratas pada setiapp dokter
+Skenario: Reservasi memanggil pasien pada daftar antrean teratas pada setiap dokter
 
 Given	: Reservasi berada di fitur antrean
 When	: Reservasi memasukkan ID pasien Imin pada dokter Puspita
