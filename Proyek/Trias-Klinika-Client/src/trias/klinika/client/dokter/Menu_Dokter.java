@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package trias.klinika.client.dokter;
+//import pin2.datapasien;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import trias.klinika.client.dokter.form_pembayaran;
@@ -28,7 +29,7 @@ public class Menu_Dokter extends javax.swing.JFrame {
     final serviceRekam service3 = (serviceRekam)registry.lookup("service3");
     form_pembayaran fp = new form_pembayaran(service1);
     Inventori_Obat_Dokter GIOD = new Inventori_Obat_Dokter(service2);
-    datapasien dp = new datapasien (service3);
+//    datapasien dp = new datapasien (service3);
     
     String user;
     
@@ -139,9 +140,9 @@ public class Menu_Dokter extends javax.swing.JFrame {
     }//GEN-LAST:event_IODActionPerformed
 
 private void rekammedisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekammedisActionPerformed
-       dp.setTitle(this.getTitle());
-       dp.setLocation(500, 200);
-       dp.setVisible(true);
+//       dp.setTitle(this.getTitle());
+  //     dp.setLocation(500, 200);
+    //   dp.setVisible(true);
        this.dispose();
 }//GEN-LAST:event_rekammedisActionPerformed
     
