@@ -18,16 +18,18 @@ import trias.klinika.api.entitas.InventoriObatDokterEntitas;
  *
  * @author iqbal
  */
-public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
+public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     int a;
     
     private InventoriObatDokterService IODS;
     private String[] isi;
     private tabelinventoriobtdokter tiod = new tabelinventoriobtdokter();
+
     /**
-     * Creates new form GUI_inventori_obat_Dokter
+     * Creates new form Inventori_Obat_Dokter
      */
-    public GUI_inventori_obat_Dokter(InventoriObatDokterService IODS) throws RemoteException {
+    
+    public Inventori_Obat_Dokter(InventoriObatDokterService IODS) throws RemoteException {
         this.IODS = IODS;
         
         try {
@@ -41,7 +43,6 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         tabel.setModel(tiod);
         
         Dropdownjenis();
-        
     }
 
     /**
@@ -53,8 +54,8 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel = new javax.swing.JTable();
@@ -91,21 +92,20 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         textruang = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1147, 557));
         getContentPane().setLayout(null);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(980, 0, 150, 100);
-
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 102, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Inventori.png"))); // NOI18N
         jLabel1.setText("Inventori Obat Dokter");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(10, 0, 980, 100);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(980, 0, 150, 100);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel3.setText("List Obat");
@@ -436,19 +436,24 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 258, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         getContentPane().add(jPanel3);
         jPanel3.setBounds(410, 230, 710, 280);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/2.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameDokter.png"))); // NOI18N
+        jLabel6.setText("jLabel6");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(0, 0, 1150, 660);
+        jLabel6.setBounds(0, 0, 1140, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void dropminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dropminActionPerformed
 
     private void textminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textminActionPerformed
         // TODO add your handling code here:
@@ -458,56 +463,9 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_okminActionPerformed
 
-    private void OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKActionPerformed
-        if(textNO.getText().isEmpty()||dropJO.getSelectedItem().toString()=="jenis obat"||textKO.getText().isEmpty()||textHO.getText().isEmpty()||texttglmasuk.getDate()==null||texttglmasapakai.getDate()==null||textdeskripsi.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
-            
-        }
-        else {
-            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-               IODE.setidobat(IDO.getText());
-               IODE.setnamaobat(textNO.getText());
-               IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0, 9));
-               String a = dropJO.getSelectedItem().toString();
-               IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
-               IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
-               IODE.sethargaobat(Integer.parseInt(textHO.getText()));
-               Date date = new Date(texttglmasuk.getDate().getTime());
-               System.out.println(date.toString());
-               SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-               String tgl = sdf.format(date);
-               IODE.settglmasuk(tgl);
-               System.out.println(tgl);
-               Date date1 = new Date(texttglmasapakai.getDate().getTime());
-               SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-               String tgl1 = sdf1.format(date1);
-               IODE.setmasapakai(tgl1);
-               IODE.setdeskripsi(textdeskripsi.getText());
-               IODE.setiddetailobat("DO0028");
-               IODE.setidspesialis("S0002");
-               IODE.setruanganobat("Ruang 2");
-               
-               tiod.insert(IODE);
-            try {
-                IODS.insertObatBaru(IODE);
-            } catch (RemoteException ex) {
-                Logger.getLogger(GUI_inventori_obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-       
-    }//GEN-LAST:event_OKActionPerformed
-
-    private void textKOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKOActionPerformed
+    private void OK2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OK2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textKOActionPerformed
-
-    private void textNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textNOActionPerformed
-
-    private void droplamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_droplamaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_droplamaActionPerformed
+    }//GEN-LAST:event_OK2ActionPerformed
 
     private void dropaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropaddActionPerformed
         // TODO add your handling code here:
@@ -528,7 +486,7 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         }
         else if(dropadd.getSelectedItem().toString()=="Obat Baru"){
             reset();
-            a = 1; 
+            a = 1;
             judul.setEnabled(true);
             NO.setEnabled(true);
             textNO.setEnabled(true);
@@ -549,9 +507,61 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_dropaddActionPerformed
 
-    private void OK2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OK2ActionPerformed
+    private void droplamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_droplamaItemStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_OK2ActionPerformed
+
+    }//GEN-LAST:event_droplamaItemStateChanged
+
+    private void droplamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_droplamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_droplamaActionPerformed
+
+    private void textNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textNOActionPerformed
+
+    private void textKOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textKOActionPerformed
+
+    private void OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKActionPerformed
+        if(textNO.getText().isEmpty()||dropJO.getSelectedItem().toString()=="jenis obat"||textKO.getText().isEmpty()||textHO.getText().isEmpty()||texttglmasuk.getDate()==null||texttglmasapakai.getDate()==null||textdeskripsi.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
+
+        }
+        else {
+            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
+            IODE.setidobat(IDO.getText());
+            IODE.setnamaobat(textNO.getText());
+            IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0, 9));
+            String a = dropJO.getSelectedItem().toString();
+            IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
+            IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
+            IODE.sethargaobat(Integer.parseInt(textHO.getText()));
+            Date date = new Date(texttglmasuk.getDate().getTime());
+            System.out.println(date.toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl = sdf.format(date);
+            IODE.settglmasuk(tgl);
+            System.out.println(tgl);
+            Date date1 = new Date(texttglmasapakai.getDate().getTime());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl1 = sdf1.format(date1);
+            IODE.setmasapakai(tgl1);
+            IODE.setdeskripsi(textdeskripsi.getText());
+            IODE.setiddetailobat("DO0028");
+            IODE.setidspesialis("S0002");
+            IODE.setruanganobat("Ruang 2");
+
+            tiod.insert(IODE);
+            try {
+                IODS.insertObatBaru(IODE);
+            } catch (RemoteException ex) {
+                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_OKActionPerformed
 
     private void textHOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textHOActionPerformed
         // TODO add your handling code here:
@@ -564,15 +574,6 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
     private void dropJOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropJOActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dropJOActionPerformed
-
-    private void dropminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropminActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dropminActionPerformed
-
-    private void droplamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_droplamaItemStateChanged
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_droplamaItemStateChanged
 
     public void reset(){
         droplama.setEnabled(false);
@@ -611,6 +612,7 @@ public class GUI_inventori_obat_Dokter extends javax.swing.JFrame {
             dropJO.addItem(isi[i]);
         }
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HO;
     private javax.swing.JTextField IDO;

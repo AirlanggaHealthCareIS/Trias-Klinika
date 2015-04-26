@@ -24,6 +24,7 @@ import trias.klinika.api.sevice.LoginService;
 import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.client.apotek.Menu_Apotek;
 import trias.klinika.client.dokter.Menu_Dokter;
+import trias.klinika.client.dokter.UtamaDokter;
 import trias.klinika.client.reservasi.utamaReservasi;
 
 /**
@@ -75,26 +76,33 @@ public class Login extends javax.swing.JFrame implements Runnable {
         username = new javax.swing.JTextField();
         password = new javax.swing.JPasswordField();
         login = new javax.swing.JButton();
-        logo = new javax.swing.JLabel();
+        judul = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1147, 557));
         jPanel1.setLayout(null);
 
-        user.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        user.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         user.setText("Username");
         jPanel1.add(user);
-        user.setBounds(10, 90, 60, 30);
+        user.setBounds(630, 240, 110, 30);
 
-        pass.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        pass.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         pass.setText("Password");
         jPanel1.add(pass);
-        pass.setBounds(10, 130, 60, 30);
+        pass.setBounds(630, 300, 100, 30);
+
+        username.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jPanel1.add(username);
-        username.setBounds(70, 90, 140, 30);
+        username.setBounds(740, 240, 180, 30);
+
+        password.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jPanel1.add(password);
-        password.setBounds(70, 130, 140, 30);
+        password.setBounds(740, 300, 180, 30);
 
         login.setText("Login");
         login.addActionListener(new java.awt.event.ActionListener() {
@@ -103,22 +111,34 @@ public class Login extends javax.swing.JFrame implements Runnable {
             }
         });
         jPanel1.add(login);
-        login.setBounds(70, 170, 90, 30);
+        login.setBounds(960, 260, 70, 50);
 
-        logo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
-        jPanel1.add(logo);
-        logo.setBounds(60, 0, 150, 70);
+        judul.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
+        judul.setForeground(new java.awt.Color(255, 255, 255));
+        judul.setText("Login");
+        jPanel1.add(judul);
+        judul.setBounds(500, 130, 120, 60);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/doctor.png"))); // NOI18N
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(500, 220, 130, 140);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/BGlogin.png"))); // NOI18N
+        jLabel3.setText("  ");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(0, 0, 1150, 562);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1147, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -239,10 +259,13 @@ public class Login extends javax.swing.JFrame implements Runnable {
     public void Eksekusi (String cek , LoginEntitas users) throws RemoteException, NotBoundException {
         if (null != cek) switch (cek) {
             case "dokter":{
-                Menu_Dokter menu = new Menu_Dokter(cek);
+                UtamaDokter menu = new UtamaDokter(users);
                 menu.setTitle(ip);
-                menu.setLocation(500, 200);
                 menu.setVisible(true);
+//                Menu_Dokter menu = new Menu_Dokter(cek);
+//                menu.setTitle(ip);
+//                menu.setLocation(500, 200);
+//                menu.setVisible(true);
                 break;
             }
             case "reservasi":{
@@ -346,9 +369,11 @@ public class Login extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel judul;
     private javax.swing.JButton login;
-    private javax.swing.JLabel logo;
     private javax.swing.JLabel pass;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel user;

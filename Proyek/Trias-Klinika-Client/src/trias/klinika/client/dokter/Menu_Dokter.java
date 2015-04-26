@@ -7,7 +7,7 @@ package trias.klinika.client.dokter;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import trias.klinika.client.dokter.form_pembayaran;
-import trias.klinika.client.dokter.GUI_inventori_obat_Dokter;
+import trias.klinika.client.dokter.Inventori_Obat_Dokter;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import trias.klinika.api.sevice.pembayaranService;
@@ -27,7 +27,7 @@ public class Menu_Dokter extends javax.swing.JFrame {
     final InventoriObatDokterService service2 =(InventoriObatDokterService)registry.lookup("service2"); 
     final serviceRekam service3 = (serviceRekam)registry.lookup("service3");
     form_pembayaran fp = new form_pembayaran(service1);
-    GUI_inventori_obat_Dokter GIOD = new GUI_inventori_obat_Dokter(service2);
+    Inventori_Obat_Dokter GIOD = new Inventori_Obat_Dokter(service2);
     datapasien dp = new datapasien (service3);
     
     String user;
