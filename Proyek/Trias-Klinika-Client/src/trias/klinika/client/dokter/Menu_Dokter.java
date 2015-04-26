@@ -4,15 +4,19 @@
  * and open the template in the editor.
  */
 package trias.klinika.client.dokter;
+//import pin2.datapasien;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import trias.klinika.client.dokter.form_pembayaran;
 import trias.klinika.client.dokter.Inventori_Obat_Dokter;
+import trias.klinika.client.dokter.input_resep;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.api.sevice.serviceRekam;
+import trias.klinika.api.sevice.ServiceResep;
+
 /**
  *
  * @author Faz
@@ -26,9 +30,12 @@ public class Menu_Dokter extends javax.swing.JFrame {
     final pembayaranService service1 = (pembayaranService)registry.lookup("service1");
     final InventoriObatDokterService service2 =(InventoriObatDokterService)registry.lookup("service2"); 
     final serviceRekam service3 = (serviceRekam)registry.lookup("service3");
+    final ServiceResep service4 = (ServiceResep)registry.lookup("service4");
     form_pembayaran fp = new form_pembayaran(service1);
     Inventori_Obat_Dokter GIOD = new Inventori_Obat_Dokter(service2);
-    datapasien dp = new datapasien (service3);
+    input_resep ir = new input_resep(service4);
+    
+//    datapasien dp = new datapasien (service3);
     
     String user;
     
@@ -51,6 +58,7 @@ public class Menu_Dokter extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         IOD = new javax.swing.JButton();
         rekammedis = new javax.swing.JButton();
+        resep = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,6 +85,13 @@ public class Menu_Dokter extends javax.swing.JFrame {
             }
         });
 
+        resep.setText("Resep");
+        resep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resepActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -84,30 +99,33 @@ public class Menu_Dokter extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rekammedis)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(IOD)))))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rekammedis, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(IOD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(resep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(jLabel1)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                     .addComponent(IOD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(28, 28, 28)
-                .addComponent(rekammedis, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addGap(53, 53, 53)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rekammedis, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resep, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,11 +157,18 @@ public class Menu_Dokter extends javax.swing.JFrame {
     }//GEN-LAST:event_IODActionPerformed
 
 private void rekammedisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekammedisActionPerformed
-       dp.setTitle(this.getTitle());
-       dp.setLocation(500, 200);
-       dp.setVisible(true);
+//       dp.setTitle(this.getTitle());
+  //     dp.setLocation(500, 200);
+    //   dp.setVisible(true);
        this.dispose();
 }//GEN-LAST:event_rekammedisActionPerformed
+
+    private void resepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resepActionPerformed
+       ir.setTitle(this.getTitle());
+       ir.setLocation(500, 200);
+       ir.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_resepActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -152,5 +177,6 @@ private void rekammedisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton rekammedis;
+    private javax.swing.JButton resep;
     // End of variables declaration//GEN-END:variables
 }

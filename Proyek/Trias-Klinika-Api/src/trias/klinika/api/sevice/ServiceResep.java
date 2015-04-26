@@ -20,4 +20,5 @@ public interface ServiceResep {
     void Save (ResepEntity RE)throws RemoteException;
     void save (RincianResep RR,ResepEntity RE, int i)throws RemoteException;
     RincianResep getdetail  (RincianResep RR) throws RemoteException;
+    ResepEntity getdetail (ResepEntity RE) throws RemoteException;
 }
