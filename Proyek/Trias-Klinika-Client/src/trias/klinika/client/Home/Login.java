@@ -126,7 +126,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/BGlogin.png"))); // NOI18N
         jLabel3.setText("  ");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(0, 0, 1150, 562);
+        jLabel3.setBounds(0, 0, 1150, 560);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
