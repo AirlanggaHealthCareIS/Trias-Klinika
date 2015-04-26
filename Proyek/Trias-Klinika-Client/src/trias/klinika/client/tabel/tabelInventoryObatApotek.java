@@ -32,6 +32,10 @@ public class tabelInventoryObatApotek extends AbstractTableModel{
         this.list = list;
         fireTableDataChanged();
     }
+    public void tambah (InventoryObatApotekEntitas inventory){
+        list.add(inventory);
+        fireTableDataChanged();
+    }
     @Override
     public String getColumnName (int column){
         switch (column){
