@@ -1,6 +1,8 @@
 package trias.klinika.client.reservasi;
 
 
+
+
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,28 +13,20 @@ import trias.klinika.api.entitas.EntitasPendaftaran;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
 import trias.klinika.api.sevice.PendaftaranService;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Satria
  */
-public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
+public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TriasKlinika_Pendaftaran
      */
     
-    int j;
     
     private PendaftaranService PS;
     private String[] isi;
     private Object golongan_darah;
-    
     
     public TriasKlinika_Pendaftaran(PendaftaranService PS)throws RemoteException {
         this.PS = PS;
@@ -50,6 +44,20 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
+        id_pemeriksaan = new javax.swing.JTextField();
+        tombol_simpan = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        cetak_id_card = new javax.swing.JCheckBox();
+        no_antrian = new javax.swing.JTextField();
+        tgl_lahir_pasien = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
+        gol_darah = new javax.swing.JComboBox();
+        tgl_pemeriksaan = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        id_pasien = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        tombol_keluar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -58,49 +66,24 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
         alamat_pasien = new javax.swing.JTextField();
         no_telp_pasien = new javax.swing.JTextField();
         pilih_dokter = new javax.swing.JComboBox();
-        jLabel5 = new javax.swing.JLabel();
-        tombol_simpan = new javax.swing.JButton();
-        cetak_id_card = new javax.swing.JCheckBox();
-        tgl_lahir_pasien = new com.toedter.calendar.JDateChooser();
-        gol_darah = new javax.swing.JComboBox();
-        jLabel7 = new javax.swing.JLabel();
-        id_pasien = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        tombol_keluar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        id_pemeriksaan = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        no_antrian = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        tgl_pemeriksaan = new com.toedter.calendar.JDateChooser();
+        back = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 204, 255));
-        setForeground(java.awt.Color.cyan);
-
-        jLabel1.setText("Nama ");
-
-        jLabel2.setText("Tanggal Lahir");
-
-        jLabel3.setText("Nomor Telepon");
-
-        jLabel4.setText("Alamat ");
-
-        nama_pasien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nama_pasienActionPerformed(evt);
-            }
-        });
-
-        pilih_dokter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Dokter" }));
-        pilih_dokter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pilih_dokterActionPerformed(evt);
-            }
-        });
+        setMinimumSize(new java.awt.Dimension(1147, 557));
+        setPreferredSize(new java.awt.Dimension(1147, 557));
+        getContentPane().setLayout(null);
 
         jLabel5.setText("Pilih Dokter");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(354, 85, 53, 14);
+
+        id_pemeriksaan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                id_pemeriksaanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(id_pemeriksaan);
+        id_pemeriksaan.setBounds(481, 120, 85, 20);
 
         tombol_simpan.setText("Simpan");
         tombol_simpan.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +91,12 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
                 tombol_simpanActionPerformed(evt);
             }
         });
+        getContentPane().add(tombol_simpan);
+        tombol_simpan.setBounds(920, 460, 90, 23);
+
+        jLabel10.setText("Nomor Antrian");
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(354, 161, 69, 14);
 
         cetak_id_card.setText("Cetak ID Card");
         cetak_id_card.addActionListener(new java.awt.event.ActionListener() {
@@ -115,8 +104,18 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
                 cetak_id_cardActionPerformed(evt);
             }
         });
+        getContentPane().add(cetak_id_card);
+        cetak_id_card.setBounds(920, 410, 93, 23);
+        getContentPane().add(no_antrian);
+        no_antrian.setBounds(481, 158, 85, 20);
 
         tgl_lahir_pasien.setDateFormatString("yyyy mm, date");
+        getContentPane().add(tgl_lahir_pasien);
+        tgl_lahir_pasien.setBounds(125, 234, 118, 20);
+
+        jLabel11.setText("Tanggal Pemeriksaan");
+        getContentPane().add(jLabel11);
+        jLabel11.setBounds(354, 199, 101, 14);
 
         gol_darah.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Golongan", "O", "AB", "A", "B" }));
         gol_darah.addActionListener(new java.awt.event.ActionListener() {
@@ -124,16 +123,28 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
                 gol_darahActionPerformed(evt);
             }
         });
+        getContentPane().add(gol_darah);
+        gol_darah.setBounds(125, 293, 91, 20);
+
+        tgl_pemeriksaan.setDateFormatString("yyyy mm, date");
+        getContentPane().add(tgl_pemeriksaan);
+        tgl_pemeriksaan.setBounds(481, 196, 118, 20);
 
         jLabel7.setText("Golongan Darah");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(18, 296, 77, 14);
 
         id_pasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 id_pasienActionPerformed(evt);
             }
         });
+        getContentPane().add(id_pasien);
+        id_pasien.setBounds(125, 82, 118, 20);
 
         jLabel8.setText("ID");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(18, 85, 11, 14);
 
         tombol_keluar.setText("Keluar");
         tombol_keluar.addActionListener(new java.awt.event.ActionListener() {
@@ -141,178 +152,96 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
                 tombol_keluarActionPerformed(evt);
             }
         });
+        getContentPane().add(tombol_keluar);
+        tombol_keluar.setBounds(1040, 460, 80, 23);
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\Satria\\Desktop\\received_1044200968941754.jpeg")); // NOI18N
+        jLabel1.setText("Nama ");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(18, 123, 36, 14);
 
-        jLabel6.setText("ID Pemeriksaan");
+        jLabel2.setText("Tanggal Lahir");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(18, 240, 64, 14);
 
-        id_pemeriksaan.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("Nomor Telepon");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(18, 199, 72, 14);
+
+        jLabel4.setText("Alamat ");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(18, 161, 36, 14);
+
+        nama_pasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                id_pemeriksaanActionPerformed(evt);
+                nama_pasienActionPerformed(evt);
             }
         });
+        getContentPane().add(nama_pasien);
+        nama_pasien.setBounds(125, 120, 118, 20);
+        getContentPane().add(alamat_pasien);
+        alamat_pasien.setBounds(125, 158, 118, 20);
+        getContentPane().add(no_telp_pasien);
+        no_telp_pasien.setBounds(125, 196, 118, 20);
 
-        jLabel10.setText("Nomor Antrian");
+        pilih_dokter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Dokter" }));
+        pilih_dokter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pilih_dokterActionPerformed(evt);
+            }
+        });
+        getContentPane().add(pilih_dokter);
+        pilih_dokter.setBounds(481, 82, 129, 20);
 
-        jLabel11.setText("Tanggal Pemeriksaan");
+        jLabel6.setText("ID Pemeriksaan");
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(354, 123, 74, 14);
 
-        tgl_pemeriksaan.setDateFormatString("yyyy mm, date");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tgl_lahir_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(no_telp_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(alamat_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nama_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(id_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(111, 111, 111)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(no_antrian, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(id_pemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(pilih_dokter, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tgl_pemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(gol_darah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cetak_id_card)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tombol_simpan)
-                        .addGap(18, 18, 18)
-                        .addComponent(tombol_keluar)))
-                .addGap(25, 25, 25))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(id_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel8))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(nama_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel6))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(alamat_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel10)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(pilih_dokter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(id_pemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(no_antrian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(no_telp_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel11))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tgl_lahir_pasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(tgl_pemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel2))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(gol_darah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addComponent(cetak_id_card)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tombol_simpan)
-                    .addComponent(tombol_keluar))
-                .addContainerGap(67, Short.MAX_VALUE))
-        );
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameReservasi.png"))); // NOI18N
+        getContentPane().add(back);
+        back.setBounds(0, -170, 1520, 900);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nama_pasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama_pasienActionPerformed
+    private void id_pemeriksaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_pemeriksaanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nama_pasienActionPerformed
-
-    private void pilih_dokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilih_dokterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pilih_dokterActionPerformed
+    }//GEN-LAST:event_id_pemeriksaanActionPerformed
 
     private void tombol_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tombol_simpanActionPerformed
         // TODO add your handling code here:
-        
+
         if (pilih_dokter.getSelectedItem()== "Pilih Dokter"){
-            JOptionPane.showMessageDialog(this, "Harus pilih dokter");            
+            JOptionPane.showMessageDialog(this, "Harus pilih dokter");
         }
         else if(nama_pasien.getText()==""|alamat_pasien.getText()==""|tgl_lahir_pasien.getDate()==null|no_telp_pasien.getText()==""|gol_darah.getSelectedItem()== "Pilih Golongan"){
             JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
         }
         else{EntitasPendaftaran EP = new EntitasPendaftaran();
-             PemeriksaanEntitas PE = new PemeriksaanEntitas();
-             EP.setID_PASIEN(id_pasien.getText().toString());
-             EP.setNAMA_PASIEN(nama_pasien.getText().toString());
-             EP.setALAMAT_PASIEN(alamat_pasien.getText().toString());
-             Date date = new Date(tgl_lahir_pasien.getDate().getTime());
-             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-             String tgl = sdf.format(date);
-             EP.setTGL_LAHIR_PASIEN(tgl);
-             EP.setNO_TELP_PASIEN(no_telp_pasien.getText().toString());
-             EP.setGOL_DARAH(gol_darah.getSelectedItem().toString());
-             
-             PE.setID_PEMERIKSAAN(id_pemeriksaan.getText().toString());
-             Date date1 = new Date(tgl_pemeriksaan.getDate().getTime());
-             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-             String tgl_pemeriksaan = sdf1.format(date1);
-             PE.setTGL_PEMERIKSAAN(tgl_pemeriksaan);
-             PE.setNO_ANTRIAN(id_pasien.getText().toString());
-             PE.setID_DOKTER(pilih_dokter.getSelectedItem().toString().substring(0,5));
-             
+            PemeriksaanEntitas PE = new PemeriksaanEntitas();
+            EP.setID_PASIEN(id_pasien.getText().toString());
+            EP.setNAMA_PASIEN(nama_pasien.getText().toString());
+            EP.setALAMAT_PASIEN(alamat_pasien.getText().toString());
+            Date date = new Date(tgl_lahir_pasien.getDate().getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl = sdf.format(date);
+            EP.setTGL_LAHIR_PASIEN(tgl);
+            EP.setNO_TELP_PASIEN(no_telp_pasien.getText().toString());
+            EP.setGOL_DARAH(gol_darah.getSelectedItem().toString());
+
+            PE.setID_PEMERIKSAAN(id_pemeriksaan.getText().toString());
+            Date date1 = new Date(tgl_pemeriksaan.getDate().getTime());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl_pemeriksaan = sdf1.format(date1);
+            PE.setTGL_PEMERIKSAAN(tgl_pemeriksaan);
+            PE.setNO_ANTRIAN(id_pasien.getText().toString());
+            PE.setID_DOKTER(pilih_dokter.getSelectedItem().toString().substring(0,5));
+
             try {
                 PS.Save(EP, PE);
             } catch (RemoteException ex) {
                 Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Data tersimpan"); 
+            JOptionPane.showMessageDialog(this, "Data tersimpan");
         }
     }//GEN-LAST:event_tombol_simpanActionPerformed
 
@@ -332,10 +261,13 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tombol_keluarActionPerformed
 
-    private void id_pemeriksaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_pemeriksaanActionPerformed
+    private void nama_pasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama_pasienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_id_pemeriksaanActionPerformed
+    }//GEN-LAST:event_nama_pasienActionPerformed
 
+    private void pilih_dokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilih_dokterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pilih_dokterActionPerformed
     private void Dropdown() throws RemoteException{
     isi = PS.pilih_dokter(isi);
     
@@ -344,8 +276,10 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
     }
     
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamat_pasien;
+    private javax.swing.JLabel back;
     private javax.swing.JCheckBox cetak_id_card;
     private javax.swing.JComboBox gol_darah;
     private javax.swing.JTextField id_pasien;
@@ -360,7 +294,6 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nama_pasien;
     private javax.swing.JTextField no_antrian;
     private javax.swing.JTextField no_telp_pasien;

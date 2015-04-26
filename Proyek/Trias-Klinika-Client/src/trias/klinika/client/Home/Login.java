@@ -24,7 +24,7 @@ import trias.klinika.api.sevice.LoginService;
 import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.client.apotek.Menu_Apotek;
 import trias.klinika.client.dokter.Menu_Dokter;
-import trias.klinika.client.reservasi.Utama;
+import trias.klinika.client.reservasi.utamaReservasi;
 
 /**
  *
@@ -250,7 +250,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
 //                menu.setTitle(ip);
 //                menu.setLocation(500, 200);
 //                menu.setVisible(true);
-                Utama menu = new Utama(this.users);
+                utamaReservasi menu = new utamaReservasi(this.users);
                 menu.setTitle(ip);
                 menu.setVisible(true);
                 break;
