@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface LoginService extends Remote {
     int CheckPassword (LoginEntitas login) throws RemoteException;
+    LoginEntitas getNama(LoginEntitas login) throws RemoteException;
 }

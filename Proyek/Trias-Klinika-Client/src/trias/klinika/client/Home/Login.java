@@ -5,25 +5,32 @@
  */
 package trias.klinika.client.Home;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import trias.klinika.api.entitas.LoginEntitas;
+import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.LoginService;
 import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.client.apotek.Menu_Apotek;
 import trias.klinika.client.dokter.Menu_Dokter;
-import trias.klinika.client.reservasi.Menu_Reservasi;
+import trias.klinika.client.reservasi.Utama;
 
 /**
  *
  * @author Faz
  */
-public class Login extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame implements Runnable {
     
     private String [] pesan = {"Sistem Error","User Belum Terdaftar","Password Salah","Login Sukses"};
     private int indeks = 0;
@@ -32,6 +39,14 @@ public class Login extends javax.swing.JFrame {
     private LoginService service1;
     private ListPetugasService service5;
     private LoginEntitas users = new LoginEntitas();
+    public ObjectInputStream readC;
+    public ObjectOutputStream writeC;
+    public Thread clientThread;
+    Socket client;
+    ServerSocket server;
+    int port = 2013;
+    Date jam;
+    String cek;
 
     /**
      * Creates new form Login
@@ -110,7 +125,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String cek = Cek(username.getText(), password.getText());
+        cek = Cek(username.getText(), password.getText());
         if (!"Sukses".equals(cek)) {
             JOptionPane.showMessageDialog(this, cek);
         }
@@ -120,13 +135,10 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, cek);
             }
             else {
-                try {
-                    Eksekusi(cek , username.getText());
-                    service5.Ubah_Status_Login(users);
-                } catch (RemoteException | NotBoundException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                this.dispose();
+                koneksi();
+                clientThread = new Thread(this);
+                clientThread.start();
+                kirim(new pesan("login", users.getusername(), "loginIsi", "SERVER"));
             }
         }
     }//GEN-LAST:event_loginActionPerformed
@@ -136,6 +148,18 @@ public class Login extends javax.swing.JFrame {
         registry = LocateRegistry.getRegistry(ip,4444);
         service1 = (LoginService) registry.lookup("service1");
         service5 = (ListPetugasService) registry.lookup("service5");
+    }
+    
+    public String setTanggal () {
+        Date skrg = new java.util.Date();
+        java.text.SimpleDateFormat kal = new
+        java.text.SimpleDateFormat("dd/MM/yyyy");
+        return kal.format(skrg);
+    }
+    
+    public String setJam (Date jam) {
+        jam = new Date();
+        return jam.getHours()+":"+jam.getMinutes()+":"+jam.getSeconds();
     }
     
     public String Cek(String username, String password) {
@@ -162,18 +186,21 @@ public class Login extends javax.swing.JFrame {
                 users.setfielduser("id_dokter");
                 users.setfieldpass("password_dokter");
                 users.setfieldstatus("status_dokter");
+                users.setfieldnama("nama_dokter");
                 break;
             case "R":
                 users.setsebagai("reservasi");
                 users.setfielduser("id_reservasi");
                 users.setfieldpass("password_reservasi");
                 users.setfieldstatus("status_reservasi");
+                users.setfieldnama("nama_reservasi");
                 break;
             case "A":
                 users.setsebagai("apotek");
                 users.setfielduser("id_apotek");
                 users.setfieldpass("password_apotek");
                 users.setfieldstatus("status_apotek");
+                users.setfieldnama("nama_apotek");
                 break;
         }
         try {
@@ -187,19 +214,44 @@ public class Login extends javax.swing.JFrame {
         return pesan[indeks];
     }
     
-    public void Eksekusi (String users , String id) throws RemoteException, NotBoundException {
-        if (null != users) switch (users) {
+    public void koneksi() {
+        try {
+            client = new Socket(ip, port);
+            writeC = new ObjectOutputStream(client.getOutputStream());
+            writeC.flush();
+            readC = new ObjectInputStream(client.getInputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void kirim (pesan msg) {
+        try {
+            writeC.writeObject(msg);
+            writeC.flush();
+            System.out.println("Outgoing : "+msg.toString());
+        } 
+        catch (IOException ex) {
+            System.out.println("Exception SocketClient send()");
+        }
+    }
+    
+    public void Eksekusi (String cek , LoginEntitas users) throws RemoteException, NotBoundException {
+        if (null != cek) switch (cek) {
             case "dokter":{
-                Menu_Dokter menu = new Menu_Dokter(id);
+                Menu_Dokter menu = new Menu_Dokter(cek);
                 menu.setTitle(ip);
                 menu.setLocation(500, 200);
                 menu.setVisible(true);
                 break;
             }
             case "reservasi":{
-                Menu_Reservasi menu = new Menu_Reservasi();
+//                Menu_Reservasi menu = new Menu_Reservasi();
+//                menu.setTitle(ip);
+//                menu.setLocation(500, 200);
+//                menu.setVisible(true);
+                Utama menu = new Utama(this.users);
                 menu.setTitle(ip);
-                menu.setLocation(500, 200);
                 menu.setVisible(true);
                 break;
             }
@@ -253,6 +305,44 @@ public class Login extends javax.swing.JFrame {
                 loginform.setVisible(true);
             }
         });
+    }
+    
+    @Override
+    public void run() {
+        while (true) {
+            try{
+                pesan msg = null;
+                try {
+                    msg = (pesan) readC.readObject();
+                } 
+                catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(msg.tipe.equals("pesan")){
+                    
+                }
+                else if (msg.tipe.equals("login")) {
+                    users = service1.getNama(users);
+                    JOptionPane.showMessageDialog(this, users.getnamauser()+" Berhasil Login pada "+setTanggal()+" "+setJam(jam));
+                    try {
+                        Eksekusi(cek , users);
+                    } catch (RemoteException | NotBoundException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    service5.Ubah_Status_Login(users);
+                    this.dispose();
+                }
+                else if (msg.tipe.equals("signup")) {
+                    JOptionPane.showMessageDialog(this, "Username ini Telah dipakai Login di Tempat Lain");
+                }
+                
+                else if (msg.tipe.equals("newuser")) {
+                }
+            }
+            catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

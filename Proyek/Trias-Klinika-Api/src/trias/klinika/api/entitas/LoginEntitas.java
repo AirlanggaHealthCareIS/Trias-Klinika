@@ -14,9 +14,11 @@ public class LoginEntitas implements Serializable {
     private String username;
     private String password;
     private String sebagai;
+    private String namauser;
     private String fielduser;
     private String fieldpass;
     private String fieldstatus;
+    private String fieldnama;
     
     public String getsebagai() {
         return sebagai;
@@ -34,6 +36,14 @@ public class LoginEntitas implements Serializable {
         this.fieldstatus = fieldstatus;
     }
     
+    public String getfieldnama() {
+        return fieldnama;
+    }
+
+    public void setfieldnama(String fieldnama) {
+        this.fieldnama = fieldnama;
+    }
+    
     public String getfielduser() {
         return fielduser;
     }
@@ -48,6 +58,14 @@ public class LoginEntitas implements Serializable {
 
     public void setfieldpass(String fieldpass) {
         this.fieldpass = fieldpass;
+    }
+    
+    public String getnamauser() {
+        return namauser;
+    }
+
+    public void setnamauser(String namauser) {
+        this.namauser = namauser;
     }
 
     public String getusername() {

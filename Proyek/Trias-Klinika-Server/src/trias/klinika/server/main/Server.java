@@ -15,6 +15,7 @@ import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import trias.klinika.server.service.QueryAntrean;
 import trias.klinika.server.service.QueryInventoriObatDokter;
 import trias.klinika.server.service.QueryInventoryObatApotek;
 import trias.klinika.server.service.QueryListPembayaran;
@@ -87,7 +88,7 @@ class ServerThread extends Thread {
  * @author fazbam
  */
 public class Server extends javax.swing.JFrame implements Runnable {
-    public ServerThread clients[];
+    public ServerThread clients [];
     public ServerSocket serverpesan = null;
     public Thread       thread = null;
     public int clientCount = 0, port = 2013;
@@ -116,16 +117,18 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryInventoryObatApotek queryobatapotek = new QueryInventoryObatApotek (){};
         QueryPendaftaran querypendaftaran = new QueryPendaftaran (){};
         QueryListPembayaran querylistpembayaran = new QueryListPembayaran(){};
+        QueryAntrean QueryAntrean = new QueryAntrean() {};
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
 
-        server.rebind("service", queryLogin);
-        server.rebind("service1", queryPembayaran);
-        server.rebind("service2", queryInventoriObatDokter);
-        server.rebind("service3", QueryRekamMedis);
-        server.rebind("service4", queryobatapotek);
-        server.rebind("service5", querypendaftaran);
-        server.rebind("service6", querylistpembayaran);
-        server.rebind("service7", querylistpetugas);
+        server.rebind("service1", queryLogin);
+        server.rebind("service2", querypendaftaran);
+        server.rebind("service3", QueryAntrean);
+        server.rebind("service4", queryPembayaran);
+        server.rebind("service4.1", querylistpembayaran);
+        server.rebind("service5", querylistpetugas);
+        server.rebind("service6", QueryRekamMedis);
+        server.rebind("service10", queryobatapotek);
+        server.rebind("service13", queryInventoriObatDokter);
         System.out.println("Server Berjalan");
         
         clients = new ServerThread [50];

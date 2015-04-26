@@ -15,6 +15,7 @@ import trias.klinika.server.service.QueryPendaftaran;
 import trias.klinika.server.service.queryRekammedis;
 import trias.klinika.server.service.QueryListPembayaran;
 import trias.klinika.server.service.QueryAntrean;
+import trias.klinika.server.service.QueryListPetugas;
 /**
  *
  * @author FazBam
@@ -33,15 +34,17 @@ public class Main {
         QueryPendaftaran querypendaftaran = new QueryPendaftaran (){};
         QueryListPembayaran querylistpembayaran = new QueryListPembayaran(){};
         QueryAntrean QueryAntrean = new QueryAntrean() {};
+        QueryListPetugas querylistpetugas = new QueryListPetugas(){};
 
-        server.rebind("service", queryLogin);
-        server.rebind("service1", queryPembayaran);
-        server.rebind("service2", queryInventoriObatDokter);
-        server.rebind("service3", QueryRekamMedis);
-        server.rebind("service4", queryobatapotek);
-        server.rebind("service5", querypendaftaran);
-        server.rebind("service6", querylistpembayaran);
-        server.rebind("service7", QueryAntrean);
+        server.rebind("service1", queryLogin);
+        server.rebind("service2", querypendaftaran);
+        server.rebind("service3", QueryAntrean);
+        server.rebind("service4", queryPembayaran);
+        server.rebind("service4.1", querylistpembayaran);
+        server.rebind("service5", querylistpetugas);
+        server.rebind("service6", QueryRekamMedis);
+        server.rebind("service10", queryobatapotek);
+        server.rebind("service13", queryInventoriObatDokter);
 
         System.out.println("Server berhasil berjalan");
     }

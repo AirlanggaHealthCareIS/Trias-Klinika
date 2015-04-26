@@ -24,9 +24,10 @@ public class Antrean extends javax.swing.JInternalFrame {
     /**
      * Creates new form Antrean
      */
-    public Antrean(DokterService DS)throws RemoteException {
+    public Antrean(DokterService DS, TabelDokter tabeldokter)throws RemoteException {
 //        public Antrean(Dokter_Service DS) {
         this.DS=DS;
+        this.tabeldokter = tabeldokter;
         
 //        
 //        try {

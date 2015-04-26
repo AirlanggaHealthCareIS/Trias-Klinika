@@ -25,7 +25,7 @@ public class QueryLogin extends UnicastRemoteObject implements LoginService{
     public QueryLogin() throws RemoteException {
     }
 
-//    @Override
+    @Override
     public int CheckPassword(LoginEntitas login) throws RemoteException {
         Statement statement = null;
         
@@ -66,6 +66,35 @@ public class QueryLogin extends UnicastRemoteObject implements LoginService{
                 }
             }
         }
+    }
+    
+    @Override
+    public LoginEntitas getNama(LoginEntitas login) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT "+login.getfieldnama()+" FROM "+login.getsebagai()+" WHERE "+login.getfielduser()+" = '"+login.getusername()+"'");
+            
+            result.first();
+            
+            login.setnamauser(result.getString(login.getfieldnama()));
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+        return login;
     }
     
 }

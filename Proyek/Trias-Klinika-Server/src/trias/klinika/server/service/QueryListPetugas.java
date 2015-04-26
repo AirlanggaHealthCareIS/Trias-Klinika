@@ -30,7 +30,6 @@ public class QueryListPetugas extends UnicastRemoteObject implements ListPetugas
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
                     "UPDATE "+login.getsebagai()+" SET "+login.getfieldstatus()+" = 1 WHERE "+login.getfielduser()+" = '"+login.getusername()+"'");
-            System.out.println(statement.toString());
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(QueryListPetugas.class.getName()).log(Level.SEVERE, null, ex);
