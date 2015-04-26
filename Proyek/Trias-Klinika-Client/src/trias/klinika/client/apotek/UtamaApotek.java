@@ -126,7 +126,7 @@ private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat
        }
             catch (Exception ex){
                     JOptionPane.showMessageDialog(null, ex);
-            System.out.println("sukses ya");
+            System.out.println("semangat ya");
                     
        }
         // TODO add your handling code here:
