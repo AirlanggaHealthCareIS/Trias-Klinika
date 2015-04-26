@@ -37,14 +37,18 @@ public class utamaReservasi extends javax.swing.JFrame {
     Registry registry = LocateRegistry.getRegistry(localhost, 4444);
     final  PendaftaranService service2 = (PendaftaranService)registry.lookup("service2");
     final  DokterService service7 = (DokterService)registry.lookup("service3");
+    final  ListPembayaranService service12 = (ListPembayaranService)registry.lookup("service12");
     Antrean Pe = new Antrean(service7,tabeldokter);
     TriasKlinika_Pendaftaran daft = new TriasKlinika_Pendaftaran(service2);
+    TriasKlinika_ListPembayaran LP = new TriasKlinika_ListPembayaran(service12);
+    private ListPembayaranService LPS;
     private DokterService DS;
     private PendaftaranService PS;
     private String[] isi;
     LoginEntitas LE;
     private JInternalFrame internalFrame1 = new JInternalFrame("Frame Antrean");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pendaftaran");
+    private JInternalFrame internalFrame3 = new JInternalFrame("Frame List Pembayaran");
     /**
      * Creates new form Utama
      */
@@ -94,11 +98,14 @@ public class utamaReservasi extends javax.swing.JFrame {
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
+        jToggleButton3 = new javax.swing.JToggleButton();
         nama = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1366, 768));
         setUndecorated(true);
+
+        jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
 
         jToggleButton1.setText("Antrean");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -114,8 +121,12 @@ public class utamaReservasi extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(getBackground());
-        jLabel1.setText("jLabel1");
+        jToggleButton3.setText("List Pembayaran");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,27 +134,27 @@ public class utamaReservasi extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jDesktopPane2)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 391, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jDesktopPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         nama.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -153,13 +164,11 @@ public class utamaReservasi extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nama)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,8 +176,8 @@ public class utamaReservasi extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(nama)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         pack();
@@ -238,6 +247,32 @@ public class utamaReservasi extends javax.swing.JFrame {
             System.out.println("syeemangat choy");
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            jDesktopPane2.removeAll();
+            jDesktopPane2.add(internalFrame3);
+            System.out.println("2");
+            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame3.getUI();
+            Container north = (Container)ui.getNorthPane();
+            north.remove(0);
+            north.validate();
+            north.repaint();
+            System.out.println("3");
+            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().getMouseListeners()){
+                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().removeMouseListener(listener);
+            }
+            internalFrame3.setSelected(true);
+
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, ex);
+            System.out.println("syeemangat choy");
+        }
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
     public void internal_frame (){
         
            internalFrame1.add(Pe.getContentPane());
@@ -256,13 +291,21 @@ public class utamaReservasi extends javax.swing.JFrame {
            internalFrame2.setSize(1146,577);
  
            internalFrame2.setVisible(true);
+           
+           internalFrame3.add(LP.getContentPane());
+    
+           internalFrame3.pack();
+      
+           internalFrame3.setSize(1146,577);
+ 
+           internalFrame3.setVisible(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JLabel nama;
     // End of variables declaration//GEN-END:variables
 }

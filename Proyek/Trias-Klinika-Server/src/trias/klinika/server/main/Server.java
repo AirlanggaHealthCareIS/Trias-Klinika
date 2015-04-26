@@ -124,7 +124,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service2", querypendaftaran);
         server.rebind("service3", QueryAntrean);
         server.rebind("service4", queryPembayaran);
-        server.rebind("service4.1", querylistpembayaran);
+        server.rebind("service12", querylistpembayaran);
         server.rebind("service5", querylistpetugas);
         server.rebind("service6", QueryRekamMedis);
         server.rebind("service10", queryobatapotek);
@@ -415,6 +415,10 @@ public class Server extends javax.swing.JFrame implements Runnable {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
