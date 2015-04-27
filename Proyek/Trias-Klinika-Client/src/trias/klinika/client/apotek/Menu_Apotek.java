@@ -26,7 +26,7 @@ String localhost = this.getTitle();
     final  LaporanKeuanganService service7 = (LaporanKeuanganService)registry.lookup("service7");
     
     //interface_inventory ii = new interface_inventory(service4);
-    Laporan_Keuangan lk = new Laporan_Keuangan(service7);
+//    Laporan_Keuangan lk = new Laporan_Keuangan(service7);
     /**
      * Creates new form Menu_Apotek
      */
@@ -118,9 +118,9 @@ String localhost = this.getTitle();
     }//GEN-LAST:event_inventoryActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        lk.setTitle(this.getTitle());
-        lk.setLocation(500, 200);
-        lk.setVisible(true);
+//        lk.setTitle(this.getTitle());
+//        lk.setLocation(500, 200);
+//        lk.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

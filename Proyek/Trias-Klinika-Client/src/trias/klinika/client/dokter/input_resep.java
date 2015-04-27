@@ -318,7 +318,7 @@ public class input_resep extends javax.swing.JInternalFrame {
                
                 
             } catch (RemoteException ex) {
-                Logger.getLogger(menginput_resep.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
             }
                TR.insert(RE);
                //totalHarga = totalHarga +RP.getHARGA_OBAT();
@@ -345,7 +345,7 @@ public class input_resep extends javax.swing.JInternalFrame {
                 }
                 JOptionPane.showMessageDialog(null, "Data Berhasil Terkirim ","Sukses",JOptionPane.OK_OPTION);
             } catch (RemoteException ex) {
-            Logger.getLogger(menginput_resep.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
         }
            
         }

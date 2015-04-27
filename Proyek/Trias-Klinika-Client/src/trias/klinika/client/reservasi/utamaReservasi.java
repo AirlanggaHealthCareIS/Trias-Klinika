@@ -38,7 +38,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     final  PendaftaranService service2 = (PendaftaranService)registry.lookup("service2");
     final  DokterService service7 = (DokterService)registry.lookup("service3");
     final  ListPembayaranService service12 = (ListPembayaranService)registry.lookup("service12");
-    Antrean Pe = new Antrean(service7,tabeldokter);
+    Antrean Pe = new Antrean(service7);
     TriasKlinika_Pendaftaran daft = new TriasKlinika_Pendaftaran(service2);
     TriasKlinika_ListPembayaran LP = new TriasKlinika_ListPembayaran(service12);
     private ListPembayaranService LPS;
