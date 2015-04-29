@@ -43,15 +43,15 @@ public class UtamaDokter extends javax.swing.JFrame {
     final  InventoriObatDokterService service13 = (InventoriObatDokterService)registry.lookup("service13");
     final  pembayaranService service4 = (pembayaranService)registry.lookup("service4");
     final serviceRekam service6 = (serviceRekam)registry.lookup("service6");
-    final ServiceResep service7 = (ServiceResep)registry.lookup("service7");
+    //final ServiceResep service7 = (ServiceResep)registry.lookup("service7");
     Inventori_Obat_Dokter iod = new Inventori_Obat_Dokter(service13);
     form_pembayaran fp = new form_pembayaran(service4);
     datapasien sr = new datapasien(service6);
-    input_resep ir = new input_resep(service7);
+    //input_resep ir = new input_resep(service7);
     private InventoriObatDokterService IODS;
     private pembayaranService FP;
-    private datapasien dp;
-    private input_resep IR;
+    private serviceRekam SR;
+    //private ServiceResep IR;
     private String[] isi;
     LoginEntitas LE;
     
@@ -105,7 +105,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
+        jToggleButton4 = new javax.swing.JToggleButton();
         nama = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -140,10 +140,10 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Resep");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButton4.setText("Resep");
+        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jToggleButton4ActionPerformed(evt);
             }
         });
 
@@ -160,7 +160,7 @@ public class UtamaDokter extends javax.swing.JFrame {
                             .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jToggleButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
@@ -174,8 +174,8 @@ public class UtamaDokter extends javax.swing.JFrame {
                 .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -300,10 +300,7 @@ public class UtamaDokter extends javax.swing.JFrame {
 
 private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
 // TODO add your handling code here:
-}//GEN-LAST:event_jToggleButton3ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try
+    try
         {
             //        Kecil satu = new Kecil();
             //        Besar dua = new Besar();
@@ -314,9 +311,9 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
             System.out.println("1 haha .. cemingut ^_^");
             //           Antrean satu = new Antrean(DS);
             System.out.println("1.1");
-            JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
+            JInternalFrame internalFrame2 = new JInternalFrame("Data Pasien");
             System.out.println("1.2");
-            internalFrame2.add(fp.getContentPane());
+            internalFrame2.add(sr.getContentPane());
             System.out.println("1.3");
             internalFrame2.pack();
             System.out.println("1.4");
@@ -349,17 +346,68 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         {
             JOptionPane.showMessageDialog(null, ex);
             System.out.println("syeemangat choy");
-        }// TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }
+}//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+        // TODO add your handling code here:
+//        try
+//        {
+//            //        Kecil satu = new Kecil();
+//            //        Besar dua = new Besar();
+//            //        jDesktopPane1.add(imin);
+//            //        imin.setVisible(true);
+//            //            Pe.setTitle(this.getTitle());
+//            //            Pe.setVisible(true);
+//            System.out.println("1 haha .. cemingut ^_^");
+//            //           Antrean satu = new Antrean(DS);
+//            System.out.println("1.1");
+//            JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
+//            System.out.println("1.2");
+//            internalFrame2.add(ir.getContentPane());
+//            System.out.println("1.3");
+//            internalFrame2.pack();
+//            System.out.println("1.4");
+//            internalFrame2.setSize(1146,577);
+//            System.out.println("1.5");
+//            internalFrame2.setVisible(true);
+//            System.out.println("1.6");
+//
+//            //            JComboBox JCB = new JComboBox();
+//            //            isi = DS.Dropdowndokter(isi);
+//            //        for (int i=0;i<isi.length;i++){
+//                //            JCB.addItem(isi[i]);
+//                //        }
+//            jDesktopPane2.add(internalFrame2);
+//            //           internalFrame1.setClosable(true);
+//            System.out.println("2");
+//            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
+//            Container north = (Container)ui.getNorthPane();
+//            north.remove(0);
+//            north.validate();
+//            north.repaint();
+//            System.out.println("3");
+//            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
+//                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
+//            }
+//            internalFrame2.setSelected(true);
+//
+//        }
+//        catch(Exception ex)
+//        {
+//            JOptionPane.showMessageDialog(null, ex);
+//            System.out.println("syeemangat choy");
+//        }
+    }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JLabel nama;
     // End of variables declaration//GEN-END:variables
 }
