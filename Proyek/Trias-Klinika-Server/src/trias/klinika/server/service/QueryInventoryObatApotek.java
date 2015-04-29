@@ -155,53 +155,53 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void cekKritis(InventoryObatApotekEntitas inventory) throws RemoteException {
-        System.out.println("Proses Kategorisasi Stok Obat Mendekati Masa Kritis");
-        PreparedStatement statement = null;
-        try {
-            statement = Koneksidatabase.getConnection().prepareStatement("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY kuantitas_obat");
-            statement.executeUpdate();
-        }
-        catch (SQLException exception){
-            exception.printStackTrace();
-        }
-        finally {
-            if(statement != null){
-                try {
-                    statement.close();
-                }
-                catch (SQLException exception){
-                    exception.printStackTrace();
-                }
-            }
-        }
-        //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public void cekKritis(InventoryObatApotekEntitas inventory) throws RemoteException {
+//        System.out.println("Proses Kategorisasi Stok Obat Mendekati Masa Kritis");
+//        PreparedStatement statement = null;
+//        try {
+//            statement = Koneksidatabase.getConnection().prepareStatement("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY kuantitas_obat");
+//            statement.executeUpdate();
+//        }
+//        catch (SQLException exception){
+//            exception.printStackTrace();
+//        }
+//        finally {
+//            if(statement != null){
+//                try {
+//                    statement.close();
+//                }
+//                catch (SQLException exception){
+//                    exception.printStackTrace();
+//                }
+//            }
+//        }
+//        //To change body of generated methods, choose Tools | Templates.
+//    }
 
-    @Override
-    public void cekExpired(InventoryObatApotekEntitas inventory) throws RemoteException {
-        System.out.println("Proses Kategorisasi Stok Obat Mendekati Masa Expired");
-        PreparedStatement statement = null;
-        try {
-            statement = Koneksidatabase.getConnection().prepareStatement("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY masa_pakai_obat");
-            statement.executeUpdate();
-        }
-        catch (SQLException exception){
-            exception.printStackTrace();
-        }
-        finally {
-            if(statement != null){
-                try {
-                    statement.close();
-                }
-                catch (SQLException exception){
-                    exception.printStackTrace();
-                }
-            }
-        }
-        //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public void cekExpired(InventoryObatApotekEntitas inventory) throws RemoteException {
+//        System.out.println("Proses Kategorisasi Stok Obat Mendekati Masa Expired");
+//        PreparedStatement statement = null;
+//        try {
+//            statement = Koneksidatabase.getConnection().prepareStatement("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY masa_pakai_obat");
+//            statement.executeUpdate();
+//        }
+//        catch (SQLException exception){
+//            exception.printStackTrace();
+//        }
+//        finally {
+//            if(statement != null){
+//                try {
+//                    statement.close();
+//                }
+//                catch (SQLException exception){
+//                    exception.printStackTrace();
+//                }
+//            }
+//        }
+//        //To change body of generated methods, choose Tools | Templates.
+//    }
 
     @Override
     public void tambahObat(InventoryObatApotekEntitas inventory) throws RemoteException {
@@ -287,6 +287,88 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
             return null;
         }
         finally {
+            if(statement != null){
+                try{
+                    statement.close();
+                }
+                catch (SQLException exception){
+                    exception.printStackTrace();
+                }
+            }
+        }
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<InventoryObatApotekEntitas> cekKritis() throws RemoteException {
+                System.out.println("Client melakukan proses get-all untuk cek kritis");
+        Statement statement = null;
+        try{
+            statement = Koneksidatabase.getConnection().createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY kuantitas_obat");
+            List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
+            while (result.next()){
+                InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
+                inventory.setNamaObat(result.getString("nama_obat"));
+                inventory.setJenisObat(result.getString("nama_jenis_obat"));
+                inventory.setQty(result.getInt("kuantitas_obat"));
+                inventory.setHargaObat(result.getInt("harga_obat"));
+                inventory.setTglMasuk(result.getString("tgl_masuk_obat"));
+                inventory.setMasaPakai(result.getString("masa_pakai_obat"));
+                inventory.setDeskripsi(result.getString("deskripsi_obat"));
+                inventory.setIdObat(result.getString("id_obat"));
+                
+                list.add(inventory);
+            }
+            result.close();
+            return list;
+        }
+        catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+        finally{
+            if(statement != null){
+                try{
+                    statement.close();
+                }
+                catch (SQLException exception){
+                    exception.printStackTrace();
+                }
+            }
+        }
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<InventoryObatApotekEntitas> cekExpired() throws RemoteException {
+        System.out.println("Client melakukan proses get-all untuk cek mendekati expired");
+        Statement statement = null;
+        try{
+            statement = Koneksidatabase.getConnection().createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY masa_pakai_obat");
+            List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
+            while (result.next()){
+                InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
+                inventory.setNamaObat(result.getString("nama_obat"));
+                inventory.setJenisObat(result.getString("nama_jenis_obat"));
+                inventory.setQty(result.getInt("kuantitas_obat"));
+                inventory.setHargaObat(result.getInt("harga_obat"));
+                inventory.setTglMasuk(result.getString("tgl_masuk_obat"));
+                inventory.setMasaPakai(result.getString("masa_pakai_obat"));
+                inventory.setDeskripsi(result.getString("deskripsi_obat"));
+                inventory.setIdObat(result.getString("id_obat"));
+                
+                list.add(inventory);
+            }
+            result.close();
+            return list;
+        }
+        catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+        finally{
             if(statement != null){
                 try{
                     statement.close();

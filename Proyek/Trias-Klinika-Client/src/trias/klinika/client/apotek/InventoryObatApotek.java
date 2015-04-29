@@ -241,6 +241,11 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         kadaluarsa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         kadaluarsa.setForeground(new java.awt.Color(0, 0, 255));
         kadaluarsa.setText("Cek Kadaluarsa");
+        kadaluarsa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kadaluarsaActionPerformed(evt);
+            }
+        });
         getContentPane().add(kadaluarsa);
         kadaluarsa.setBounds(1016, 118, 113, 23);
 
@@ -330,7 +335,13 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jenis_obatActionPerformed
 
     private void cekkritisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekkritisActionPerformed
-        // TODO add your handling code here:
+        try {
+            List<InventoryObatApotekEntitas> list = IOAS.cekKritis();
+            tioa.setData(list);
+        } catch (RemoteException exception) {
+            exception.printStackTrace();
+        }
+// TODO add your handling code here:
     }//GEN-LAST:event_cekkritisActionPerformed
 
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
@@ -413,6 +424,16 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         deskripsi.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_clearActionPerformed
+
+    private void kadaluarsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kadaluarsaActionPerformed
+       try {
+            List<InventoryObatApotekEntitas> list = IOAS.cekExpired();
+            tioa.setData(list);
+        } catch (RemoteException exception) {
+            exception.printStackTrace();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kadaluarsaActionPerformed
 private void refresh (){
         try {
             List<InventoryObatApotekEntitas> list = IOAS.getobat();

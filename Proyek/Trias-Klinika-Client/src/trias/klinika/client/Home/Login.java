@@ -22,7 +22,7 @@ import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.LoginService;
 import trias.klinika.api.sevice.ListPetugasService;
-import trias.klinika.client.apotek.Menu_Apotek;
+import trias.klinika.client.apotek.UtamaApotek;
 import trias.klinika.client.dokter.Menu_Dokter;
 import trias.klinika.client.dokter.UtamaDokter;
 import trias.klinika.client.reservasi.utamaReservasi;
@@ -279,7 +279,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
                 break;
             }
             case "apotek":{
-                Menu_Apotek menu = new Menu_Apotek();
+                UtamaApotek menu = new UtamaApotek();
                 menu.setTitle(ip);
                 menu.setLocation(500, 200);
                 menu.setVisible(true);

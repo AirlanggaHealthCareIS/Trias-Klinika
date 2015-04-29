@@ -21,8 +21,8 @@ public interface InventoryObatApotekService extends Remote{
     void insertObatBaru (InventoryObatApotekEntitas inventory) throws RemoteException;
     void updateObat (InventoryObatApotekEntitas inventory) throws RemoteException;
     void deleteObat (InventoryObatApotekEntitas inventory) throws RemoteException;
-    void cekKritis (InventoryObatApotekEntitas inventory) throws RemoteException;
-    void cekExpired (InventoryObatApotekEntitas inventory) throws RemoteException;
+    List<InventoryObatApotekEntitas> cekKritis () throws RemoteException;
+    List<InventoryObatApotekEntitas> cekExpired () throws RemoteException;
     void tambahObat (InventoryObatApotekEntitas inventory) throws RemoteException;
     String [] DropdownJenis (String [] jenis) throws RemoteException;
     String [] DropdownSpesialis (String [] spesialis) throws RemoteException;
