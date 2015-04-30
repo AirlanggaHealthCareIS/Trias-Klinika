@@ -24,6 +24,7 @@ import java.rmi.registry.Registry;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
+import trias.klinika.api.sevice.PasienService;
 import trias.klinika.client.tabel.TabelDokter;
 
 /**
@@ -36,13 +37,15 @@ public class utamaReservasi extends javax.swing.JFrame {
     private TabelDokter tabeldokter = new TabelDokter();
     Registry registry = LocateRegistry.getRegistry(localhost, 4444);
     final  PendaftaranService service2 = (PendaftaranService)registry.lookup("service2");
-    final  DokterService service7 = (DokterService)registry.lookup("service3");
     final  ListPembayaranService service12 = (ListPembayaranService)registry.lookup("service12");
-    Antrean Pe = new Antrean(service7);
+    final  DokterService service3 = (DokterService)registry.lookup("service3");
+    final  PasienService service7 = (PasienService)registry.lookup("service7");
+    Antrean Pe = new Antrean(service3,service7);
+    private DokterService DS;
+    private PasienService PaSer;
     TriasKlinika_Pendaftaran daft = new TriasKlinika_Pendaftaran(service2);
     TriasKlinika_ListPembayaran LP = new TriasKlinika_ListPembayaran(service12);
     private ListPembayaranService LPS;
-    private DokterService DS;
     private PendaftaranService PS;
     private String[] isi;
     LoginEntitas LE;

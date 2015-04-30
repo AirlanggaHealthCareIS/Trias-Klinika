@@ -18,7 +18,68 @@ public class QueryPasien extends UnicastRemoteObject implements PasienService{
     public QueryPasien() throws RemoteException {
     }
 
+    @Override
+    public PasienEntity insertIDPasien(PasienEntity a) throws RemoteException {
+        System.out.println("proses insert Pasien");
+        PreparedStatement statement = null;
+        try{
+            statement = Koneksidatabase.getConnection().prepareStatement(
+                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_REKAM_MEDIS, ID_RESERVASI, ID_PASIEN, ID_DOKTER	ID_RESEP, ID_PEMBAYARAN, TGL_PEMERIKSAAN, NO_ANTREAN) values(null,null,null,?,null,null,null,null,null)");
+            statement.setString(1, a.getid_pasien());
 
+            
+            statement.execute();
+            return a;
+        }
+        catch(SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+        finally{
+            if(statement != null){
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                }
+            }
+        }
+    }
+
+    @Override
+    public int getIDPasien() throws RemoteException{
+        System.out.println("melakukan proses get ID_PASIEN");
+        
+        PreparedStatement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement(
+                    "SELECT ID_PASIEN FROM PASIEN");
+//            statement.setString(1,a);
+            ResultSet result = statement.executeQuery();
+            
+            int a=0;
+            
+            if(result.next()){
+                a = (result.getInt("ID_PASIEN"));
+            }
+            return a;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return 0;
+        }
+        finally{
+            if(statement != null){
+                try{
+                    statement.close();
+                }
+                catch(SQLException exception){
+                    exception.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
     @Override
     public List<PasienEntity> getPasienEntitys() throws RemoteException {
         System.out.println("c");
@@ -39,16 +100,16 @@ public class QueryPasien extends UnicastRemoteObject implements PasienService{
                     PasienEntity a = new PasienEntity();
                     System.out.println("a.1");
                     a.setid_pasien(result.getString("ID_PASIEN"));
-                    System.out.println("a.2");
-                    a.setid_pasien(result.getString("NAMA_PASIEN"));
+                    System.out.println(a.getid_pasien());
+                    a.setNama(result.getString("NAMA_PASIEN"));
                     System.out.println("a.3");
-                    a.setid_pasien(result.getString("TGL_LAHIR_PASIEN"));
+                    a.SetTanggal(result.getString("TGL_LAHIR_PASIEN"));
                     System.out.println("a.4");
-                    a.setid_pasien(result.getString("NO_TELP_PASIEN"));
+                    a.setNoTLP(result.getString("NO_TELP_PASIEN"));
                     System.out.println("a.5");
-                    a.setid_pasien(result.getString("ALAMAT_PASIEN"));
+                    a.setAlamat(result.getString("ALAMAT_PASIEN"));
                     System.out.println("a.6");
-                    a.setid_pasien(result.getString("GOL_DARAH"));
+                    a.setGolDarah(result.getString("GOL_DARAH"));
                     System.out.println("a.7");
                     list.add(a);
                 }
@@ -129,11 +190,7 @@ public class QueryPasien extends UnicastRemoteObject implements PasienService{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public PasienEntity insertPasien(PasienEntity a) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
+   
     @Override
     public void updatePasien(PasienEntity b) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet.");

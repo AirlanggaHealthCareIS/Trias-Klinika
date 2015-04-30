@@ -10,13 +10,11 @@ import trias.klinika.api.entitas.PasienEntity;
  * @author Sahirul
  */
 public interface PasienService extends Remote{
-    /**
-     *
-     * @return
-     * @throws RemoteException
-     */
+ 
+   
+    int getIDPasien() throws RemoteException;
     List<PasienEntity> getPasienEntitys() throws RemoteException;
-    PasienEntity insertPasien (PasienEntity a) throws RemoteException;
+    PasienEntity insertIDPasien (PasienEntity a) throws RemoteException;
     void updatePasien(PasienEntity b) throws RemoteException;
     boolean deletePasien(int IdDokter) throws RemoteException;
     PasienEntity getPasienEntity (int IdDokter) throws RemoteException;

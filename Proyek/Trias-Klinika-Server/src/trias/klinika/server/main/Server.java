@@ -16,6 +16,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import trias.klinika.server.service.QueryAntrean;
+import trias.klinika.server.service.QueryPasien;
 import trias.klinika.server.service.QueryInventoriObatDokter;
 import trias.klinika.server.service.QueryInventoryObatApotek;
 import trias.klinika.server.service.QueryListPembayaran;
@@ -118,11 +119,13 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryPendaftaran querypendaftaran = new QueryPendaftaran (){};
         QueryListPembayaran querylistpembayaran = new QueryListPembayaran(){};
         QueryAntrean QueryAntrean = new QueryAntrean() {};
+        QueryPasien QueryPasien = new QueryPasien() {};
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
 
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
         server.rebind("service3", QueryAntrean);
+        server.rebind("service7", QueryPasien);
         server.rebind("service4", queryPembayaran);
         server.rebind("service12", querylistpembayaran);
         server.rebind("service5", querylistpetugas);
