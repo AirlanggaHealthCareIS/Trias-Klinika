@@ -25,6 +25,7 @@ import trias.klinika.server.service.QueryLogin;
 import trias.klinika.server.service.QueryPembayaran;
 import trias.klinika.server.service.QueryPendaftaran;
 import trias.klinika.server.service.queryRekammedis;
+import trias.klinika.server.service.queryLaporanKeuanganApotek;
 
 class ServerThread extends Thread { 
 	
@@ -120,8 +121,10 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryListPembayaran querylistpembayaran = new QueryListPembayaran(){};
         QueryAntrean QueryAntrean = new QueryAntrean() {};
         QueryPasien QueryPasien = new QueryPasien() {};
+        queryLaporanKeuanganApotek querylaporankeuanganapotek = new queryLaporanKeuanganApotek(){};
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
-
+        
+        
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
         server.rebind("service3", QueryAntrean);
@@ -132,6 +135,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service6", QueryRekamMedis);
         server.rebind("service10", queryobatapotek);
         server.rebind("service13", queryInventoriObatDokter);
+        server.rebind("service9_c_1", querylaporankeuanganapotek);
         System.out.println("Server Berjalan");
         
         clients = new ServerThread [50];

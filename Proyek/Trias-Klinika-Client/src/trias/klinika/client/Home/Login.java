@@ -281,7 +281,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
             case "apotek":{
                 UtamaApotek menu = new UtamaApotek();
                 menu.setTitle(ip);
-                menu.setLocation(500, 200);
+            //    menu.setLocation(500, 200);
                 menu.setVisible(true);
                 break;
             }

@@ -22,6 +22,8 @@ import java.rmi.registry.Registry;
 import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.client.tabel.tabelInventoryObatApotek;
+import trias.klinika.api.sevice.LaporanKeuanganService;
+import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
 /**
  *
  * @author Azmil
@@ -30,13 +32,20 @@ public class UtamaApotek extends javax.swing.JFrame {
 String localhost = this.getTitle();
 private tabelInventoryObatApotek tabelInventory = new tabelInventoryObatApotek();
 Registry registry = LocateRegistry.getRegistry(localhost, 4444);
-final InventoryObatApotekService service10 = (InventoryObatApotekService)registry.lookup("servie10");
+final InventoryObatApotekService service10 = (InventoryObatApotekService)registry.lookup("service10");
 InventoryObatApotek interfaceObat = new InventoryObatApotek (service10);
 private InventoryObatApotekService IOAS;
 private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
-    /**
-     * Creates new form UtamaApotek
-     */
+
+private TabelLaporanKeuanganApotek TLKA = new TabelLaporanKeuanganApotek();
+final LaporanKeuanganService service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
+LaporanKeuanganApotek laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
+private LaporanKeuanganService LKS;
+private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
+   
+
+
+
     public UtamaApotek() throws RemoteException,NotBoundException{
         initComponents();
         internal_frame ();
@@ -62,6 +71,7 @@ private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat
         inventory = new javax.swing.JButton();
         nama = new javax.swing.JTextField();
         internalFrame = new javax.swing.JDesktopPane();
+        laporankeuangan = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,6 +108,15 @@ private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat
         getContentPane().add(internalFrame);
         internalFrame.setBounds(220, 190, 1147, 570);
 
+        laporankeuangan.setText("Laporan Keuangan Apotek");
+        laporankeuangan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laporankeuanganActionPerformed(evt);
+            }
+        });
+        getContentPane().add(laporankeuangan);
+        laporankeuangan.setBounds(20, 260, 160, 23);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.setMinimumSize(new java.awt.Dimension(1366, 768));
@@ -132,6 +151,30 @@ private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat
         // TODO add your handling code here:
     }//GEN-LAST:event_inventoryActionPerformed
 
+    private void laporankeuanganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporankeuanganActionPerformed
+         try
+        {
+            
+            internalFrame.removeAll();
+           internalFrame.add(internalFrame2);
+           System.out.println("2");
+           BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
+           Container north = (Container)ui.getNorthPane();
+            north.remove(0);
+            north.validate();
+            north.repaint();
+            System.out.println("2");
+            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
+                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
+            }
+            internalFrame2.setSelected(true);
+       }
+            catch (Exception ex){
+                    JOptionPane.showMessageDialog(null, ex);
+            System.out.println("semangat ya");
+        }
+    }//GEN-LAST:event_laporankeuanganActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -144,12 +187,21 @@ public void internal_frame (){
            internalFrame1.setSize(1146,577);
          
            internalFrame1.setVisible(true);
+           
+           internalFrame2.add(laporankeuanganapotek.getContentPane());
+    
+           internalFrame2.pack();
+      
+           internalFrame2.setSize(1146,577);
+ 
+           internalFrame2.setVisible(true);
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane internalFrame;
     private javax.swing.JButton inventory;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton laporankeuangan;
     private javax.swing.JTextField nama;
     // End of variables declaration//GEN-END:variables
 }
