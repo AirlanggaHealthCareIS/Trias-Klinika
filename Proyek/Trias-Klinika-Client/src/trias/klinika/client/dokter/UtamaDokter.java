@@ -43,15 +43,15 @@ public class UtamaDokter extends javax.swing.JFrame {
     final  InventoriObatDokterService service13 = (InventoriObatDokterService)registry.lookup("service13");
     final  pembayaranService service4 = (pembayaranService)registry.lookup("service4");
     final serviceRekam service6 = (serviceRekam)registry.lookup("service6");
-    //final ServiceResep service7 = (ServiceResep)registry.lookup("service7");
+    final ServiceResep service7 = (ServiceResep)registry.lookup("service7");
     Inventori_Obat_Dokter iod = new Inventori_Obat_Dokter(service13);
     form_pembayaran fp = new form_pembayaran(service4);
     datapasien sr = new datapasien(service6);
-    //input_resep ir = new input_resep(service7);
+    input_resep ir = new input_resep(service7);
     private InventoriObatDokterService IODS;
     private pembayaranService FP;
     private serviceRekam SR;
-    //private ServiceResep IR;
+    private ServiceResep IR;
     private String[] isi;
     LoginEntitas LE;
     
@@ -351,53 +351,53 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         // TODO add your handling code here:
-//        try
-//        {
-//            //        Kecil satu = new Kecil();
-//            //        Besar dua = new Besar();
-//            //        jDesktopPane1.add(imin);
-//            //        imin.setVisible(true);
-//            //            Pe.setTitle(this.getTitle());
-//            //            Pe.setVisible(true);
-//            System.out.println("1 haha .. cemingut ^_^");
-//            //           Antrean satu = new Antrean(DS);
-//            System.out.println("1.1");
-//            JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
-//            System.out.println("1.2");
-//            internalFrame2.add(ir.getContentPane());
-//            System.out.println("1.3");
-//            internalFrame2.pack();
-//            System.out.println("1.4");
-//            internalFrame2.setSize(1146,577);
-//            System.out.println("1.5");
-//            internalFrame2.setVisible(true);
-//            System.out.println("1.6");
-//
-//            //            JComboBox JCB = new JComboBox();
-//            //            isi = DS.Dropdowndokter(isi);
-//            //        for (int i=0;i<isi.length;i++){
-//                //            JCB.addItem(isi[i]);
-//                //        }
-//            jDesktopPane2.add(internalFrame2);
-//            //           internalFrame1.setClosable(true);
-//            System.out.println("2");
-//            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
-//            Container north = (Container)ui.getNorthPane();
-//            north.remove(0);
-//            north.validate();
-//            north.repaint();
-//            System.out.println("3");
-//            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
-//                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
-//            }
-//            internalFrame2.setSelected(true);
-//
-//        }
-//        catch(Exception ex)
-//        {
-//            JOptionPane.showMessageDialog(null, ex);
-//            System.out.println("syeemangat choy");
-//        }
+        try
+        {
+            //        Kecil satu = new Kecil();
+            //        Besar dua = new Besar();
+            //        jDesktopPane1.add(imin);
+            //        imin.setVisible(true);
+            //            Pe.setTitle(this.getTitle());
+            //            Pe.setVisible(true);
+            System.out.println("1 haha .. cemingut ^_^");
+            //           Antrean satu = new Antrean(DS);
+            System.out.println("1.1");
+            JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
+            System.out.println("1.2");
+            internalFrame2.add(ir.getContentPane());
+            System.out.println("1.3");
+            internalFrame2.pack();
+            System.out.println("1.4");
+            internalFrame2.setSize(1146,577);
+            System.out.println("1.5");
+            internalFrame2.setVisible(true);
+            System.out.println("1.6");
+
+            //            JComboBox JCB = new JComboBox();
+            //            isi = DS.Dropdowndokter(isi);
+            //        for (int i=0;i<isi.length;i++){
+                //            JCB.addItem(isi[i]);
+                //        }
+            jDesktopPane2.add(internalFrame2);
+            //           internalFrame1.setClosable(true);
+            System.out.println("2");
+            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
+            Container north = (Container)ui.getNorthPane();
+            north.remove(0);
+            north.validate();
+            north.repaint();
+            System.out.println("3");
+            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
+                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
+            }
+            internalFrame2.setSelected(true);
+
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, ex);
+            System.out.println("syeemangat choy");
+        }
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

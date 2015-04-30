@@ -9,6 +9,7 @@ package trias.klinika.api.sevice;
 import trias.klinika.api.entitas.ResepEntity;
 import java.rmi.RemoteException;
 import java.rmi.Remote;
+import java.sql.SQLException;
 import trias.klinika.api.entitas.RincianResep;
 
 /**
@@ -17,8 +18,8 @@ import trias.klinika.api.entitas.RincianResep;
  */
 public interface ServiceResep {
     String [] obat (String [] pk)throws RemoteException;
-    void Save (ResepEntity RE)throws RemoteException;
-    void save (RincianResep RR,ResepEntity RE, int i)throws RemoteException;
+    void Save (ResepEntity RE)throws RemoteException, SQLException;
+    void save (RincianResep RR,ResepEntity RE, int i)throws RemoteException, SQLException;
     RincianResep getdetail  (RincianResep RR) throws RemoteException;
     ResepEntity getdetail (ResepEntity RE) throws RemoteException;
 }

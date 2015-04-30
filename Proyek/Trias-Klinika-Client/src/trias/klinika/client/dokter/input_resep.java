@@ -68,6 +68,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         kirimreservasi = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1147, 557));
@@ -167,7 +168,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             }
         });
 
-        tambah.setIcon(new javax.swing.ImageIcon("D:\\SEMESTER 6\\PENGEMBANGAN SISTEM INFORMASI\\gambar\\add.png")); // NOI18N
+        tambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/add.png"))); // NOI18N
         tambah.setText("TAMBAH");
         tambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +203,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(obat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
@@ -238,7 +239,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(82, 315, 975, 91);
 
-        hapus.setIcon(new javax.swing.ImageIcon("D:\\SEMESTER 6\\PENGEMBANGAN SISTEM INFORMASI\\gambar\\delete.png")); // NOI18N
+        hapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/delete.png"))); // NOI18N
         hapus.setText("HAPUS");
         hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,12 +248,10 @@ public class input_resep extends javax.swing.JInternalFrame {
         });
         getContentPane().add(hapus);
         hapus.setBounds(82, 424, 99, 33);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\SEMESTER 6\\PENGEMBANGAN SISTEM INFORMASI\\Untitled-2.png")); // NOI18N
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(958, 0, 154, 91);
+        jLabel1.setBounds(958, 0, 0, 0);
 
-        kirimapoteker.setIcon(new javax.swing.ImageIcon("D:\\SEMESTER 6\\PENGEMBANGAN SISTEM INFORMASI\\gambar\\kirim.png")); // NOI18N
+        kirimapoteker.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/kirim.png"))); // NOI18N
         kirimapoteker.setText("KIRIM KE APOTEKER");
         kirimapoteker.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,7 +261,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         getContentPane().add(kirimapoteker);
         kirimapoteker.setBounds(881, 424, 176, 33);
 
-        kirimreservasi.setIcon(new javax.swing.ImageIcon("D:\\SEMESTER 6\\PENGEMBANGAN SISTEM INFORMASI\\gambar\\kirim.png")); // NOI18N
+        kirimreservasi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/kirim.png"))); // NOI18N
         kirimreservasi.setText("KIRIM KE RESERVASI");
         kirimreservasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,19 +272,20 @@ public class input_resep extends javax.swing.JInternalFrame {
         kirimreservasi.setBounds(881, 468, 176, 33);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel7.setIcon(new javax.swing.ImageIcon("D:\\SEMESTER 6\\PENGEMBANGAN SISTEM INFORMASI\\gambar\\resepj.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/resepj.png"))); // NOI18N
         jLabel7.setText("RESEP");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(10, 0, 190, 108);
+        jLabel7.setBounds(0, 0, 210, 108);
         getContentPane().add(jLabel4);
         jLabel4.setBounds(703, 20, 0, 0);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("D:\\New folder\\Gambar\\J-IntFrameDokter.png")); // NOI18N
-        jLabel6.setMaximumSize(new java.awt.Dimension(1145, 557));
-        jLabel6.setMinimumSize(new java.awt.Dimension(1145, 557));
-        jLabel6.setPreferredSize(new java.awt.Dimension(1145, 557));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(924, 10, 160, 90);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameDokter.png"))); // NOI18N
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(4, 0, 1130, 520);
+        jLabel6.setBounds(-20, 0, 1140, 580);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -309,23 +309,25 @@ public class input_resep extends javax.swing.JInternalFrame {
                RE.setID_obat(obat.getSelectedItem().toString().substring(0, 6));
                RE.setnama_obat(obat.getName());
                RE.setnama_obat(obat.getSelectedItem().toString().substring(6));
+              
+         try {
+             RE.setharga(SR.getdetail(RE).getharga());
+         } catch (RemoteException ex) {
+             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         try {
+             RE.setsatuan_jenis(SR.getdetail(RE).getsatuan_jenis());
+         } catch (RemoteException ex) {
+             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+         }
                
-               
-            
-            try {
-                
-                RE.setharga(SR.getdetail(RE).getharga());
-               
-                
-            } catch (RemoteException ex) {
-                Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-            }
                TR.insert(RE);
-               //totalHarga = totalHarga +RP.getHARGA_OBAT();
-               //total.setText(Integer.toString(totalHarga));
-             //RP.setHARGA_OBAT(ps.biaya(harga, RP.getID_OBAT()));  
-               
-             }// TODO add your handling code here:
+               try {
+                   SR.Save(RE);
+                   
+                   } catch (RemoteException ex) {
+                        Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+               }}
     }//GEN-LAST:event_tambahActionPerformed
 
     private void kirimapotekerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimapotekerActionPerformed
@@ -399,6 +401,7 @@ public class input_resep extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

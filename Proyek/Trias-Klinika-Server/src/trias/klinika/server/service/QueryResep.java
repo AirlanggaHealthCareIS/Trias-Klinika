@@ -26,8 +26,6 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
     public QueryResep() throws RemoteException {
         
     }
-    
-    
     public String[] obat(String [] pk) throws RemoteException {
         Statement statement = null;
         
@@ -65,46 +63,22 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
         }
     }
     
-    public void save (ResepEntity RE) throws RemoteException, SQLException {
-        Statement statement = null;
-        
-        statement = Koneksidatabase.getConnection().createStatement();
-        ResultSet result = statement.executeQuery
-                    ("INSERT INTO `resep`(`ID_RESEP`, `ID_APOTEK`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES (["+RE.getID_resep()+"],["+RE.getID_apotek()+"],["+RE.getharga()+"],["+RE.getSTATUS_RESEP()+"]) ");
-    }
-    
-    public void save (ResepEntity RE, String ID) throws RemoteException, SQLException {
-        Statement statement = null;
-        
-        statement = Koneksidatabase.getConnection().createStatement();
-        ResultSet result = statement.executeQuery
-                            ("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES (["+RE.getID_obat()+"],["+RE.getID_resep()+"],["+RE.getID_obat()+"],["+RE.getjumlah()+"],["+RE.getjumlah_terpenuhi()+"]) ");
-        }
 
     @Override
-    public void Save(ResepEntity RE) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void save(RincianResep RR, ResepEntity RE, int i) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public RincianResep getdetail  (RincianResep RR) throws RemoteException {
-        Statement statement = null;
+    public ResepEntity getdetail(ResepEntity RE) throws RemoteException {
+               Statement statement = null;
         
         try {
            
             statement = Koneksidatabase.getConnection().createStatement();
             
             ResultSet result = statement.executeQuery
-            ("SELECT o.HARGA_OBAT FROM OBAT as o WHERE ID_OBAT = '"+RR.getID_OBAT()+"'");
+            ("SELECT o.HARGA_OBAT FROM OBAT as o WHERE ID_OBAT = '"+RE.getID_obat()+"'");
             
             
             
            result.first();
-           RR.setHARGA_OBAT(result.getInt("HARGA_OBAT"));
+           RE.setharga(result.getInt("HARGA_OBAT"));
           
         }catch (SQLException exception) {
             exception.printStackTrace();
@@ -118,7 +92,33 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
                 }
             }
     }
-        return RR;
+        return RE;
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void Save(ResepEntity RE) throws RemoteException, SQLException {
+        Statement statement = null;
         
+        statement = Koneksidatabase.getConnection().createStatement();
+        ResultSet result = statement.executeQuery
+                    ("INSERT INTO `resep`(`ID_RESEP`, `ID_APOTEK`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES (["+RE.getID_resep()+"],["+RE.getID_apotek()+"],["+RE.getharga()+"],["+RE.getSTATUS_RESEP()+"]) ");
+    
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void save(RincianResep RR, ResepEntity RE, int i) throws RemoteException, SQLException {
+        Statement statement = null;
+        
+        statement = Koneksidatabase.getConnection().createStatement();
+        ResultSet result = statement.executeQuery
+                            ("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES (["+RE.getID_obat()+"],["+RE.getID_resep()+"],["+RE.getID_obat()+"],["+RE.getjumlah()+"],["+RE.getjumlah_terpenuhi()+"]) ");
+        //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public RincianResep getdetail(RincianResep RR) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
