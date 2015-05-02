@@ -3,6 +3,8 @@ package trias.klinika.client.reservasi;
 
 
 
+
+
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,11 +29,17 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private PendaftaranService PS;
     private String[] isi;
     private Object golongan_darah;
-    
+    String aipasien;
+    String aipemeriksaan;
     public TriasKlinika_Pendaftaran(PendaftaranService PS)throws RemoteException {
         this.PS = PS;
-        
+        auto_increment_pasien();
+        auto_increment_pemeriksaan();
         initComponents();
+        
+        id_pasien.setText(aipasien);
+        id_pemeriksaan.setText(aipemeriksaan);
+        
         Dropdown();
     }
 
@@ -218,7 +226,6 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         }
         else{EntitasPendaftaran EP = new EntitasPendaftaran();
             PemeriksaanEntitas PE = new PemeriksaanEntitas();
-            EP.setID_PASIEN(id_pasien.getText().toString());
             EP.setNAMA_PASIEN(nama_pasien.getText().toString());
             EP.setALAMAT_PASIEN(alamat_pasien.getText().toString());
             Date date = new Date(tgl_lahir_pasien.getDate().getTime());
@@ -228,7 +235,6 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             EP.setNO_TELP_PASIEN(no_telp_pasien.getText().toString());
             EP.setGOL_DARAH(gol_darah.getSelectedItem().toString());
 
-            PE.setID_PEMERIKSAAN(id_pemeriksaan.getText().toString());
             Date date1 = new Date(tgl_pemeriksaan.getDate().getTime());
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
             String tgl_pemeriksaan = sdf1.format(date1);
@@ -274,7 +280,13 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     for (int i=0;i<isi.length;i++){
         pilih_dokter.addItem(isi[i]);
     }
+    }
     
+    private void auto_increment_pasien () throws RemoteException { 
+       aipasien = PS.auto_increment_pasien(aipasien);
+    }
+    private void auto_increment_pemeriksaan () throws RemoteException { 
+       aipasien = PS.auto_increment_pemeriksaan(aipemeriksaan);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

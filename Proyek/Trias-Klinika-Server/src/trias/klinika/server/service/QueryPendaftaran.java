@@ -1,5 +1,7 @@
 package trias.klinika.server.service;
 
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -123,5 +125,74 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             }
                
     }
-  
+    
+    }   
+    public String auto_increment_pemeriksaan(String  aiperiksa) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT ID_PEMERIKSAAN FROM PEMERIKSAAN");
+            
+            
+            result.last();
+            aiperiksa = result.getString("ID_PEMERIKSAAN");
+            int a = Integer.parseInt(aiperiksa.substring(5));
+            a++;
+            aiperiksa = aiperiksa.substring(0, 5)+ a ;
+            result.close();
+            
+            return aiperiksa;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return aiperiksa;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    }
+    }
+    public String auto_increment_pasien(String  aipasien) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT ID_PASIEN FROM PASIEN");
+            
+            
+            result.last();
+            aipasien = result.getString("ID_PASIEN");
+            int a = Integer.parseInt(aipasien.substring(4));
+            a++;
+            aipasien = aipasien.substring(0, 6)+ a ;
+            
+            result.close();
+            return aipasien;
+            
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return aipasien;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    }    
     }}
