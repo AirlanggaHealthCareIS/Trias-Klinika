@@ -106,6 +106,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -116,8 +117,11 @@ public class UtamaDokter extends javax.swing.JFrame {
 
         jPanel1.setMinimumSize(new java.awt.Dimension(1366, 557));
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 557));
+        jPanel1.setLayout(null);
 
         jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
+        jPanel1.add(jDesktopPane2);
+        jDesktopPane2.setBounds(155, 0, 1147, 557);
 
         jToggleButton1.setText("Inventori Obat Dokter");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +129,8 @@ public class UtamaDokter extends javax.swing.JFrame {
                 jToggleButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jToggleButton1);
+        jToggleButton1.setBounds(10, 0, 139, 46);
 
         jToggleButton2.setText("Pembayaran");
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +138,8 @@ public class UtamaDokter extends javax.swing.JFrame {
                 jToggleButton2ActionPerformed(evt);
             }
         });
+        jPanel1.add(jToggleButton2);
+        jToggleButton2.setBounds(10, 77, 139, 41);
 
         jToggleButton3.setText("Rekam Medis");
         jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -139,6 +147,8 @@ public class UtamaDokter extends javax.swing.JFrame {
                 jToggleButton3ActionPerformed(evt);
             }
         });
+        jPanel1.add(jToggleButton3);
+        jToggleButton3.setBounds(10, 148, 139, 41);
 
         jToggleButton4.setText("Resep");
         jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -146,38 +156,12 @@ public class UtamaDokter extends javax.swing.JFrame {
                 jToggleButton4ActionPerformed(evt);
             }
         });
+        jPanel1.add(jToggleButton4);
+        jToggleButton4.setBounds(10, 207, 139, 41);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(0, 0, 1370, 560);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 200, 1366, 557);
@@ -403,6 +387,7 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;

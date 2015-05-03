@@ -114,6 +114,45 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             }
         }
     }
+   @Override
+   public List<InventoriObatDokterEntitas> getobat2() throws RemoteException {
+        System.out.println("Client melakukan pengurangan  obat lama");
+
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("UPDATE `detail_obat` SET `KUANTITAS_OBAT`= 100 WHERE `KUANTITAS_OBAT` = 12 ");
+            
+            List<InventoriObatDokterEntitas> list = new ArrayList<InventoriObatDokterEntitas>();
+
+            while(result.next()){
+                InventoriObatDokterEntitas inventoriObatDokterEntitas = new InventoriObatDokterEntitas();
+                inventoriObatDokterEntitas.setkuantitiobat(result.getInt("kuantitas_obat"));
+                
+                list.add(inventoriObatDokterEntitas);
+            }
+
+            result.close();
+            
+            return list;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
    
    @Override
     public void insertObatBaru(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException {

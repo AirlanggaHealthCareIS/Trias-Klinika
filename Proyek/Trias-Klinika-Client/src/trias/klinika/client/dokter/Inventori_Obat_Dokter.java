@@ -453,6 +453,8 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
 
     private void dropminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropminActionPerformed
         // TODO add your handling code here:
+        dropmin.getSelectedItem().toString();
+        
     }//GEN-LAST:event_dropminActionPerformed
 
     private void textminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textminActionPerformed
@@ -465,6 +467,21 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
 
     private void OK2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OK2ActionPerformed
         // TODO add your handling code here:
+        if(textmin.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Masukan data yang mau di kurangi");
+        }
+        else {
+            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
+            
+            IODE.setnamaobat(textmin.getText());
+            
+            tiod.insert(IODE);
+            try {
+                IODS.insertObatBaru(IODE);
+            } catch (RemoteException ex) {
+                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_OK2ActionPerformed
 
     private void dropaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropaddActionPerformed

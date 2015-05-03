@@ -18,6 +18,7 @@ public interface InventoriObatDokterService extends Remote {
     
     List<InventoriObatDokterEntitas> getobat() throws RemoteException;
     List<InventoriObatDokterEntitas> getobat1() throws RemoteException;
+    List<InventoriObatDokterEntitas> getobat2() throws RemoteException;
     void insertObatBaru(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
     void insertObatLama(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
     String[] Dropdownobat(String [] ob) throws RemoteException;
