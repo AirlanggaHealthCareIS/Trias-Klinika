@@ -37,6 +37,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
     String tanggalinsertnow = "";
     int d;
     boolean a = true;
+    String idia = "";
 
     /**
      * Creates new form form_pembayaran
@@ -66,16 +67,9 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         this.ps = ps;
         
         initComponents();
-        
         Dropdown();
         tabel.setModel(tp);
-        
-        
-        nomert.setText(tanggalinsertnow);
-        
-        
-        
-        
+              
         
         DateFormat dateFormat = new SimpleDateFormat("dd");
         Date date=Calendar.getInstance().getTime();
@@ -85,15 +79,15 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         
         DateFormat YearFormat = new SimpleDateFormat("yyyy");
         Date Year=Calendar.getInstance().getTime();
-        
-        
-        
         tgl.setText(dateFormat.format(date)+"-"+MonthFormat.format(Month)+"-"+YearFormat.format(Year));
         tanggalinsertnow = YearFormat.format(Year)+"-"+MonthFormat.format(Month)+"-"+dateFormat.format(date);
         
         d = ps.d(d);
         d++;
         nomert.setText(Integer.toString(d));
+        
+        idia = ps.ID(idia);
+        id.setText(idia);
         
 
 
@@ -138,8 +132,6 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         tgl = new javax.swing.JTextField();
         hapus = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         nomert = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -148,11 +140,12 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel = new javax.swing.JTable();
-        jTextField3 = new javax.swing.JTextField();
+        id = new javax.swing.JTextField();
         obat = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1147, 557));
@@ -165,17 +158,17 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(total);
-        total.setBounds(930, 450, 180, 20);
+        total.setBounds(910, 400, 200, 30);
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel8.setText("Biaya Dokter");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(60, 400, 110, 22);
+        jLabel8.setBounds(570, 350, 150, 28);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel5.setText("Rp.");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(900, 450, 17, 20);
+        jLabel5.setBounds(870, 410, 30, 20);
 
         biayadok.setEditable(false);
         biayadok.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -184,10 +177,10 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         biayadok.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 biayadokInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         biayadok.addActionListener(new java.awt.event.ActionListener() {
@@ -196,9 +189,10 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(biayadok);
-        biayadok.setBounds(820, 400, 296, 20);
+        biayadok.setBounds(820, 350, 296, 30);
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/kirim.png"))); // NOI18N
         jButton3.setText("Kirim");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,13 +200,14 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(520, 510, 71, 23);
+        jButton3.setBounds(990, 470, 110, 50);
 
         tgl.setEditable(false);
         getContentPane().add(tgl);
-        tgl.setBounds(10, 133, 107, 20);
+        tgl.setBounds(10, 110, 140, 30);
 
         hapus.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        hapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/delete.png"))); // NOI18N
         hapus.setText("Hapus Obat");
         hapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,45 +215,37 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(hapus);
-        hapus.setBounds(10, 363, 97, 23);
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setText("TRIAS KLINIKA");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(55, 16, 183, 28);
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel2.setText("Jalan Buntu XI");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(55, 50, 183, 14);
+        hapus.setBounds(20, 320, 150, 40);
 
         jLabel10.setIcon(new javax.swing.ImageIcon("D:\\trias.jpg")); // NOI18N
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(971, 1, 154, 120);
+        jLabel10.setBounds(980, 0, 154, 90);
 
+        nomert.setEditable(false);
         nomert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nomertActionPerformed(evt);
             }
         });
         getContentPane().add(nomert);
-        nomert.setBounds(958, 133, 163, 20);
+        nomert.setBounds(960, 120, 163, 20);
 
-        jLabel3.setText("031 - 870xxxxx/ 031 - 594xxxx");
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabel3.setText("Form Pembayaran");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(55, 70, 183, 14);
+        jLabel3.setBounds(390, 20, 300, 42);
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setText("ID Pasien");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(848, 167, 70, 14);
+        jLabel6.setBounds(840, 150, 70, 17);
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(10, 120, 1111, 2);
+        jSeparator1.setBounds(10, 92, 1111, 2);
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setText("Nomer transaksi");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(848, 136, 100, 14);
+        jLabel7.setBounds(840, 120, 110, 17);
 
         tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -274,12 +261,17 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabel);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 261, 1111, 91);
+        jScrollPane1.setBounds(10, 220, 1111, 91);
 
-        jTextField3.setEditable(false);
-        jTextField3.setText("P0001");
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(958, 164, 163, 20);
+        id.setEditable(false);
+        id.setText("P0001");
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
+        getContentPane().add(id);
+        id.setBounds(960, 150, 163, 20);
 
         obat.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         obat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat" }));
@@ -289,14 +281,15 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(obat);
-        obat.setBounds(29, 221, 80, 20);
+        obat.setBounds(40, 170, 160, 30);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("TOTAL");
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel4.setText("TOTAL BIAYA");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(700, 450, 63, 17);
+        jLabel4.setBounds(570, 410, 130, 17);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/+.png"))); // NOI18N
         jButton1.setText("Tambah Obat");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,11 +297,15 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(131, 220, 110, 23);
+        jButton1.setBounds(220, 160, 140, 50);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameDokter.png"))); // NOI18N
         getContentPane().add(jLabel9);
         jLabel9.setBounds(0, 0, 1130, 570);
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/obat.png"))); // NOI18N
+        getContentPane().add(jLabel11);
+        jLabel11.setBounds(6, 154, 40, 70);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -423,6 +420,10 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
+
     private void Dropdown() throws RemoteException{
     isi = ps.obat(isi);
     
@@ -431,15 +432,20 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
     }
     
 }
+    public void ID (String idp) throws RemoteException {
+        idp = ps.ID(idp);
+        
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField biayadok;
     private javax.swing.JButton hapus;
+    private javax.swing.JTextField id;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -449,7 +455,6 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField nomert;
     private javax.swing.JComboBox obat;
     private javax.swing.JTable tabel;

@@ -190,7 +190,36 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
         }
         return id;
     }
-}
+    
+    public String ID (String idp) throws RemoteException {
+        System.out.println("Client Melakukan Proses Get By Id");
 
+        Statement statement = null;
+        try{
+           statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+                ("select id_pasien from pemeriksaan ");
+            
+            result.last();
+            idp = result.getString("id_pasien");
+             
+               
+
+        }catch(SQLException exception){
+          exception.printStackTrace();
+        
+        }finally{
+            if(statement != null){
+                try{
+                    statement.close();
+                }catch(SQLException exception){
+                   exception.printStackTrace();
+                }
+            }
+        }
+       return idp; 
+}
+}
     
     
