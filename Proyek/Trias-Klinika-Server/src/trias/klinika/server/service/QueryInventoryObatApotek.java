@@ -37,6 +37,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
+                inventory.setIdObat(result.getString("id_obat"));
                 inventory.setNamaObat(result.getString("nama_obat"));
                 inventory.setJenisObat(result.getString("nama_jenis_obat"));
                 inventory.setQty(result.getInt("kuantitas_obat"));
@@ -44,7 +45,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
                 inventory.setTglMasuk(result.getString("tgl_masuk_obat"));
                 inventory.setMasaPakai(result.getString("masa_pakai_obat"));
                 inventory.setDeskripsi(result.getString("deskripsi_obat"));
-                inventory.setIdObat(result.getString("id_obat"));
+                
                 
                 list.add(inventory);
             }
@@ -155,54 +156,6 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         //To change body of generated methods, choose Tools | Templates.
     }
 
-//    @Override
-//    public void cekKritis(InventoryObatApotekEntitas inventory) throws RemoteException {
-//        System.out.println("Proses Kategorisasi Stok Obat Mendekati Masa Kritis");
-//        PreparedStatement statement = null;
-//        try {
-//            statement = Koneksidatabase.getConnection().prepareStatement("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY kuantitas_obat");
-//            statement.executeUpdate();
-//        }
-//        catch (SQLException exception){
-//            exception.printStackTrace();
-//        }
-//        finally {
-//            if(statement != null){
-//                try {
-//                    statement.close();
-//                }
-//                catch (SQLException exception){
-//                    exception.printStackTrace();
-//                }
-//            }
-//        }
-//        //To change body of generated methods, choose Tools | Templates.
-//    }
-
-//    @Override
-//    public void cekExpired(InventoryObatApotekEntitas inventory) throws RemoteException {
-//        System.out.println("Proses Kategorisasi Stok Obat Mendekati Masa Expired");
-//        PreparedStatement statement = null;
-//        try {
-//            statement = Koneksidatabase.getConnection().prepareStatement("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY masa_pakai_obat");
-//            statement.executeUpdate();
-//        }
-//        catch (SQLException exception){
-//            exception.printStackTrace();
-//        }
-//        finally {
-//            if(statement != null){
-//                try {
-//                    statement.close();
-//                }
-//                catch (SQLException exception){
-//                    exception.printStackTrace();
-//                }
-//            }
-//        }
-//        //To change body of generated methods, choose Tools | Templates.
-//    }
-
     @Override
     public void tambahObat(InventoryObatApotekEntitas inventory) throws RemoteException {
         System.out.println("Proses Melakukan Penambahan Stok Obat Lama");
@@ -237,7 +190,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("select nama_jenis_obat from jenis_obat");
+            ResultSet result = statement.executeQuery("select * from jenis_obat");
             result.last();
             jenis = new String [result.getRow()];
             result.first();
@@ -270,7 +223,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try {
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("select nama_spesialis from spesialis");
+            ResultSet result = statement.executeQuery("select * from spesialis");
             result.last();
             spesialis = new String [result.getRow()];
             result.first();
@@ -305,10 +258,11 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY kuantitas_obat");
+            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.kuantitas_obat, do.tgl_masuk_obat, do.masa_pakai_obat, jo.nama_jenis_obat FROM obat as o, detail_obat as do, jenis_obat as jo, dibagi as d WHERE do.ruangan_obat = 'Apotek'ORDER BY kuantitas_obat");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
+                 inventory.setIdObat(result.getString("id_obat"));
                 inventory.setNamaObat(result.getString("nama_obat"));
                 inventory.setJenisObat(result.getString("nama_jenis_obat"));
                 inventory.setQty(result.getInt("kuantitas_obat"));
@@ -316,7 +270,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
                 inventory.setTglMasuk(result.getString("tgl_masuk_obat"));
                 inventory.setMasaPakai(result.getString("masa_pakai_obat"));
                 inventory.setDeskripsi(result.getString("deskripsi_obat"));
-                inventory.setIdObat(result.getString("id_obat"));
+                
                 
                 list.add(inventory);
             }
@@ -346,10 +300,11 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM detail_obat WHERE ruangan_obat = 'apotek' ORDER BY masa_pakai_obat");
+            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.kuantitas_obat, do.tgl_masuk_obat, do.masa_pakai_obat, jo.nama_jenis_obat FROM obat as o, detail_obat as do, jenis_obat as jo, dibagi as d WHERE do.ruangan_obat = 'Apotek'ORDER BY masa_pakai_obat");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
+                inventory.setIdObat(result.getString("id_obat"));
                 inventory.setNamaObat(result.getString("nama_obat"));
                 inventory.setJenisObat(result.getString("nama_jenis_obat"));
                 inventory.setQty(result.getInt("kuantitas_obat"));
@@ -357,7 +312,6 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
                 inventory.setTglMasuk(result.getString("tgl_masuk_obat"));
                 inventory.setMasaPakai(result.getString("masa_pakai_obat"));
                 inventory.setDeskripsi(result.getString("deskripsi_obat"));
-                inventory.setIdObat(result.getString("id_obat"));
                 
                 list.add(inventory);
             }

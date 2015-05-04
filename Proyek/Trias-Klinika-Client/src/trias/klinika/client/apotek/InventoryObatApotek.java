@@ -8,6 +8,8 @@ package trias.klinika.client.apotek;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +52,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                     id_obat.setText(IOAE.getIdObat());
                     qty.setText(Integer.toString(IOAE.getQty()));
                     harga.setText(Integer.toString(IOAE.getHargaObat()));
-                    deskripsi.setText(IOAE.getDeskripsi());        
+                    deskripsi.setText(IOAE.getDeskripsi()); 
+                    tgl_masuk.setDate(Date.valueOf(IOAE.getTglMasuk()));
+                    masa_pakai.setDate(Date.valueOf(IOAE.getMasaPakai()));
                     }
             }
         });
@@ -92,7 +96,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         tambah = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         update = new javax.swing.JButton();
-        back = new javax.swing.JButton();
         clear = new javax.swing.JButton();
         tabel = new javax.swing.JScrollPane();
         table_obat = new javax.swing.JTable();
@@ -137,14 +140,11 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
 
-        jenis_obat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jenis_obat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jenis_obatActionPerformed(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -285,10 +285,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         getContentPane().add(update);
         update.setBounds(1016, 254, 113, 23);
 
-        back.setText("Back");
-        getContentPane().add(back);
-        back.setBounds(1016, 321, 113, 23);
-
         clear.setText("Clear");
         clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,7 +333,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     private void cekkritisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekkritisActionPerformed
         try {
             List<InventoryObatApotekEntitas> list = IOAS.cekKritis();
+            tioa.removeTableModelListener(table_obat);
             tioa.setData(list);
+            table_obat.setModel(tioa);
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
@@ -383,6 +381,16 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             IOAE.setTglMasuk(tgl_masuk.getDate().toString());
             IOAE.setMasaPakai(masa_pakai.getDate().toString());
             IOAE.setRuangObat("Apotek");
+            java.util.Date date = new java.util.Date(tgl_masuk.getDate().getTime());
+            System.out.println(date.toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl = sdf.format(date);
+            IOAE.setTglMasuk(tgl);
+            System.out.println(tgl);
+            java.util.Date date1 = new java.util.Date(masa_pakai.getDate().getTime());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl1 = sdf1.format(date1);
+            IOAE.setMasaPakai(tgl1);
 
             tioa.tambah(IOAE);
             try {
@@ -447,12 +455,13 @@ private void refresh (){
         isi = IOAS.DropdownSpesialis(isi);
         for (int i=0;i<isi.length;i++){
             jenis_obat.addItem(isi[i]);
+        }
+        for (int i=0;i<isi.length;i++){
             jComboBox1.addItem(isi[i]);
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back;
     private javax.swing.JButton cekkritis;
     private javax.swing.JButton clear;
     private javax.swing.JButton delete;
