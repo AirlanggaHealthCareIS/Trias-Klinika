@@ -79,7 +79,7 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
         jScrollPane1 = new javax.swing.JScrollPane();
         history = new javax.swing.JTable();
         detail1 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        save = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         catatan = new javax.swing.JTextField();
@@ -90,11 +90,12 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
         keluhan = new javax.swing.JTextField();
         alergi = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        rekammedis = new javax.swing.JLabel();
         diagnosa = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         tindakan = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        reset = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
@@ -198,14 +199,14 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
         getContentPane().add(detail1);
         detail1.setBounds(490, 460, 77, 23);
 
-        jButton1.setText("SAVE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        save.setText("SAVE");
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(640, 410, 86, 37);
+        getContentPane().add(save);
+        save.setBounds(640, 410, 86, 37);
 
         jLabel9.setText("Catatan Lain    :");
         getContentPane().add(jLabel9);
@@ -261,10 +262,10 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
         getContentPane().add(jLabel13);
         jLabel13.setBounds(920, 60, 130, 14);
 
-        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 24));
-        jLabel14.setText("REKAM MEDIS PASIEN");
-        getContentPane().add(jLabel14);
-        jLabel14.setBounds(695, 11, 295, 41);
+        rekammedis.setFont(new java.awt.Font("Times New Roman", 0, 24));
+        rekammedis.setText("REKAM MEDIS PASIEN");
+        getContentPane().add(rekammedis);
+        rekammedis.setBounds(695, 11, 295, 41);
 
         diagnosa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,6 +284,15 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
         jLabel16.setText("Diagnosa                 :");
         getContentPane().add(jLabel16);
         jLabel16.setBounds(920, 260, 99, 14);
+
+        reset.setText("RESET");
+        reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetActionPerformed(evt);
+            }
+        });
+        getContentPane().add(reset);
+        reset.setBounds(490, 500, 80, 30);
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameDokter.png"))); // NOI18N
         jLabel17.setMaximumSize(new java.awt.Dimension(1147, 557));
@@ -329,7 +339,7 @@ private void detail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     
 }//GEN-LAST:event_detail1ActionPerformed
 
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
 // TODO add your handling code here:
            
         if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
@@ -353,6 +363,13 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
         
         this.dispose();
+        irm.setText("");
+        diagnosa.setText("");
+        keluhan.setText("");
+        tindakan.setText("");
+        tekanan.setText("");
+        alergi.setText("");
+        catatan.setText("");
     
 //            if(textNO.getText()==""|textJO.getText()==""|textKO.getText()==""|texttglmasuk.getDate()==null|texttglmasapakai.getDate()==null|deskripsi.getText()==""){
 //            JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
@@ -377,7 +394,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 //            }
 //        }
 //             
-}//GEN-LAST:event_jButton1ActionPerformed
+}//GEN-LAST:event_saveActionPerformed
 
 private void catatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catatanActionPerformed
 // TODO add your handling code here:
@@ -400,6 +417,20 @@ private void irmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:eve
 // TODO add your handling code here:
 }//GEN-LAST:event_irmActionPerformed
 
+private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+// TODO add your handling code here:
+      
+        irm.setText("");
+        diagnosa.setText("");
+        keluhan.setText("");
+        tindakan.setText("");
+        tekanan.setText("");
+        alergi.setText("");
+        catatan.setText("");
+        rekammedis.setEnabled(true);
+        save.setEnabled(true);
+}//GEN-LAST:event_resetActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ID;
     private javax.swing.JTextField alamat;
@@ -410,13 +441,11 @@ private void irmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:eve
     private javax.swing.JTextField gol;
     private javax.swing.JTable history;
     private javax.swing.JTextField irm;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -433,6 +462,9 @@ private void irmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:eve
     private javax.swing.JTextField keluhan;
     private javax.swing.JTextField nama;
     private javax.swing.JTextField noTlp;
+    private javax.swing.JLabel rekammedis;
+    private javax.swing.JButton reset;
+    private javax.swing.JButton save;
     private javax.swing.JTextField tanggalLahir;
     private javax.swing.JTextField tekanan;
     private javax.swing.JTextField tindakan;
