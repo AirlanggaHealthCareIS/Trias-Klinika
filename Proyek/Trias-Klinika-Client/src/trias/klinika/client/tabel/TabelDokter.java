@@ -24,6 +24,11 @@ public class TabelDokter extends AbstractTableModel{
         fireTableDataChanged();
     }
     
+    public void insert (Dokter Dok){
+        list.add(Dok);
+        fireTableDataChanged();
+    }
+    
     public String getColumnName(int column){
         switch (column){
             case 0 :return "nama dokter";

@@ -6,6 +6,7 @@
 package trias.klinika.client.dokter;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -323,9 +324,8 @@ public class input_resep extends javax.swing.JInternalFrame {
                
                TR.insert(RE);
                try {
-                   SR.Save(RE);
-                   
-                   } catch (RemoteException ex) {
+                   SR.Save(RE);    
+                   } catch (RemoteException | SQLException ex) {
                         Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
                }}
     }//GEN-LAST:event_tambahActionPerformed
@@ -346,7 +346,7 @@ public class input_resep extends javax.swing.JInternalFrame {
                     
                 }
                 JOptionPane.showMessageDialog(null, "Data Berhasil Terkirim ","Sukses",JOptionPane.OK_OPTION);
-            } catch (RemoteException ex) {
+            } catch (RemoteException | SQLException ex) {
             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
         }
            

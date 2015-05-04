@@ -8,6 +8,8 @@ package trias.klinika.api.sevice;
 import java.rmi.Remote;
 import trias.klinika.api.entitas.LoginEntitas;
 import java.rmi.RemoteException;
+import java.util.List;
+import trias.klinika.api.entitas.Dokter;
 
 /**
  *
@@ -16,4 +18,6 @@ import java.rmi.RemoteException;
 public interface ListPetugasService extends Remote {
     void Ubah_Status_Login (LoginEntitas login) throws RemoteException;
     void Ubah_Status_Logout (LoginEntitas login) throws RemoteException;
+    List<Dokter> AmbilDokterOnline() throws RemoteException;
+    Dokter AmbilData(String Id) throws RemoteException;
 }

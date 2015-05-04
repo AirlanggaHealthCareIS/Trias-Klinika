@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import trias.klinika.api.entitas.Dokter;
 import trias.klinika.api.entitas.PasienEntity;
 import trias.klinika.api.sevice.DokterService;
+import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.api.sevice.PasienService;
 import trias.klinika.client.tabel.TabelDokter;
 //import trias.klinika.api.sevice.PemeriksaanService;
@@ -18,19 +19,20 @@ import trias.klinika.client.tabel.TabelDokter;
 
 public class Antrean extends javax.swing.JInternalFrame {
 
-    private TabelDokter tabeldokter = new TabelDokter();
+    public TabelDokter tabeldokter = new TabelDokter();
     private DokterService DoSer;
     public DokterService DS;
     public PasienService PaSer;
     private String[] isi;
+    private ListPetugasService LPS;
 //    private PemeriksaanService PS;
     
-    public Antrean(DokterService DS, PasienService PaSer)throws RemoteException {
+    public Antrean(ListPetugasService LPS, PasienService PaSer)throws RemoteException {
 
-        this.DS=DS;
+        this.LPS=LPS;
         this.PaSer=PaSer;
         initComponents();
-        tabeldokter.setData(this.DS.getDokters());
+        tabeldokter.setData(LPS.AmbilDokterOnline());
 
          jTable2.setModel(tabeldokter);
 

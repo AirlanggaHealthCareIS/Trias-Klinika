@@ -33,7 +33,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     String aipemeriksaan;
     public TriasKlinika_Pendaftaran(PendaftaranService PS)throws RemoteException {
         this.PS = PS;
-        auto_increment_pasien();
+        //auto_increment_pasien();
         auto_increment_pemeriksaan();
         initComponents();
         

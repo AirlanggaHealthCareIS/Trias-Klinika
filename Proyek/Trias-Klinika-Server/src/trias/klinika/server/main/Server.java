@@ -24,6 +24,7 @@ import trias.klinika.server.service.QueryListPetugas;
 import trias.klinika.server.service.QueryLogin;
 import trias.klinika.server.service.QueryPembayaran;
 import trias.klinika.server.service.QueryPendaftaran;
+import trias.klinika.server.service.QueryResep;
 import trias.klinika.server.service.queryRekammedis;
 import trias.klinika.server.service.queryLaporanKeuanganApotek;
 
@@ -123,12 +124,14 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryPasien QueryPasien = new QueryPasien() {};
         queryLaporanKeuanganApotek querylaporankeuanganapotek = new queryLaporanKeuanganApotek(){};
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
+        QueryResep queryResep = new QueryResep();
         
         
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
         server.rebind("service3", QueryAntrean);
-        server.rebind("service7", QueryPasien);
+        server.rebind("service14", QueryPasien);
+        server.rebind("service7", queryResep);
         server.rebind("service4", queryPembayaran);
         server.rebind("service12", querylistpembayaran);
         server.rebind("service5", querylistpetugas);

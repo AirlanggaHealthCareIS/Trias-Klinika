@@ -10,6 +10,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseListener;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.JInternalFrame;
@@ -21,9 +23,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
+import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.api.sevice.PasienService;
 import trias.klinika.client.tabel.TabelDokter;
 
@@ -39,8 +44,9 @@ public class utamaReservasi extends javax.swing.JFrame {
     final  PendaftaranService service2 = (PendaftaranService)registry.lookup("service2");
     final  ListPembayaranService service12 = (ListPembayaranService)registry.lookup("service12");
     final  DokterService service3 = (DokterService)registry.lookup("service3");
-    final  PasienService service7 = (PasienService)registry.lookup("service7");
-    Antrean Pe = new Antrean(service3,service7);
+    final  PasienService service14 = (PasienService)registry.lookup("service14");
+    final  ListPetugasService service5 = (ListPetugasService)registry.lookup("service5");
+    Antrean Pe = new Antrean(service5,service14);
     private DokterService DS;
     private PasienService PaSer;
     TriasKlinika_Pendaftaran daft = new TriasKlinika_Pendaftaran(service2);
@@ -52,6 +58,10 @@ public class utamaReservasi extends javax.swing.JFrame {
     private JInternalFrame internalFrame1 = new JInternalFrame("Frame Antrean");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pendaftaran");
     private JInternalFrame internalFrame3 = new JInternalFrame("Frame List Pembayaran");
+    public ObjectInputStream readC;
+    public ObjectOutputStream writeC;
+    public Thread clientThread;
+    
     /**
      * Creates new form Utama
      */
@@ -67,8 +77,10 @@ public class utamaReservasi extends javax.swing.JFrame {
 //        new Utama().setVisible(true);
 //    }
     
-    public utamaReservasi(LoginEntitas LE)throws RemoteException,NotBoundException {
+    public utamaReservasi(LoginEntitas LE, Thread clientThread, ObjectInputStream readC, ObjectOutputStream writeC)throws RemoteException,NotBoundException {
         this.LE = LE;
+        this.readC = readC;
+        this.writeC = writeC;
         initComponents();
         internal_frame();
         nama.setText(LE.getnamauser());
@@ -187,121 +199,84 @@ public class utamaReservasi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        // TODO add your handling code here:
-        try
-        {
-            jDesktopPane2.removeAll();
-            jDesktopPane2.add(internalFrame2);
-            System.out.println("2");
-            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
-            Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("3");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
-            }
+        try{    
             internalFrame2.setSelected(true);
-
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
             System.out.println("syeemangat choy");
         }
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-        try
-        {
-            //        Kecil satu = new Kecil();
-            //        Besar dua = new Besar();
-            //        jDesktopPane1.add(imin);
-            //        imin.setVisible(true);
-            //            Pe.setTitle(this.getTitle());
-            //            Pe.setVisible(true);
-
-            //            JComboBox JCB = new JComboBox();
-            //            isi = DS.Dropdowndokter(isi);
-            //        for (int i=0;i<isi.length;i++){
-                //            JCB.addItem(isi[i]);
-                //        }
-            jDesktopPane2.removeAll();
-            jDesktopPane2.add(internalFrame1);
-            //           internalFrame1.setClosable(true);
-            System.out.println("2");
-            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame1.getUI();
-            Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("3");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
-            }
+        try{
             internalFrame1.setSelected(true);
-
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
-            System.out.println("syeemangat choy");
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-        // TODO add your handling code here:
-        try
-        {
-            jDesktopPane2.removeAll();
-            jDesktopPane2.add(internalFrame3);
-            System.out.println("2");
-            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame3.getUI();
-            Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("3");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().removeMouseListener(listener);
-            }
+        try {
             internalFrame3.setSelected(true);
-
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
-            System.out.println("syeemangat choy");
         }
     }//GEN-LAST:event_jToggleButton3ActionPerformed
     public void internal_frame (){
         
-           internalFrame1.add(Pe.getContentPane());
-        
-           internalFrame1.pack();
-         
-           internalFrame1.setSize(1146,577);
-         
-           internalFrame1.setVisible(true);
+        internalFrame1.add(Pe.getContentPane());
+        internalFrame1.pack();
+        internalFrame1.setSize(1146,577);
+        internalFrame1.setVisible(true);
+        jDesktopPane2.add(internalFrame1);
+        BasicInternalFrameUI ui1 = (BasicInternalFrameUI)internalFrame1.getUI();
+        Container north1 = (Container)ui1.getNorthPane();
+        north1.remove(0);
+        north1.validate();
+        north1.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
+        }
      
-     
-           internalFrame2.add(daft.getContentPane());
-    
-           internalFrame2.pack();
-      
-           internalFrame2.setSize(1146,577);
- 
-           internalFrame2.setVisible(true);
+        internalFrame2.add(daft.getContentPane());
+        internalFrame2.pack();
+        internalFrame2.setSize(1146,577);
+        internalFrame2.setVisible(true);
+        jDesktopPane2.add(internalFrame2);
+        BasicInternalFrameUI ui2 = (BasicInternalFrameUI)internalFrame2.getUI();
+        Container north2 = (Container)ui2.getNorthPane();
+        north2.remove(0);
+        north2.validate();
+        north2.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
+        }
            
-           internalFrame3.add(LP.getContentPane());
+        internalFrame3.add(LP.getContentPane());
+        internalFrame3.pack();
+        internalFrame3.setSize(1146,577);
+        internalFrame3.setVisible(true);
+        jDesktopPane2.add(internalFrame3);
+        BasicInternalFrameUI ui3 = (BasicInternalFrameUI)internalFrame3.getUI();
+        Container north3 = (Container)ui3.getNorthPane();
+        north3.remove(0);
+        north3.validate();
+        north3.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().removeMouseListener(listener);
+        }
+    }
     
-           internalFrame3.pack();
-      
-           internalFrame3.setSize(1146,577);
- 
-           internalFrame3.setVisible(true);
+    public void updatelist (String Id, String Nama) {
+        JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
+        try {
+            Pe.tabeldokter.insert(service5.AmbilData(Id));
+        } catch (RemoteException ex) {
+            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane2;
