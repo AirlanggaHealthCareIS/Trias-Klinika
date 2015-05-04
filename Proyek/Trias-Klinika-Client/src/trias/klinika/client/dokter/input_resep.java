@@ -11,12 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import trias.klinika.api.entitas.InventoriObatDokterEntitas;
 import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.entitas.ResepEntity;
+import trias.klinika.api.entitas.RincianPembayaran;
 import trias.klinika.api.sevice.ServiceResep;
 import trias.klinika.api.entitas.RincianResep;
+import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.api.sevice.ServiceResep;
+import trias.klinika.client.apotek.InventoryObatApotek;
 import trias.klinika.client.tabell.TabelResep;
 /**
  *
@@ -27,12 +32,17 @@ public class input_resep extends javax.swing.JInternalFrame {
     private String[] isi;
     private TabelResep TR = new TabelResep();
     private Object ID_Apotek;
-
+    DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
     /**
      * Creates new form input_resep
      */
     public input_resep(ServiceResep SR) throws RemoteException {
+        this.SR = SR;
+        
         initComponents();
+        
+        Dropdown();
+        
     }
 
     /**
@@ -216,9 +226,9 @@ public class input_resep extends javax.swing.JInternalFrame {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tambah)
-                .addContainerGap())
+                .addGap(23, 23, 23))
         );
 
         getContentPane().add(jPanel3);
@@ -304,6 +314,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Pilih Obat Dahulu");
             
         }
+        
         else{
             
                ResepEntity RE = new ResepEntity();
@@ -315,19 +326,16 @@ public class input_resep extends javax.swing.JInternalFrame {
              RE.setharga(SR.getdetail(RE).getharga());
          } catch (RemoteException ex) {
              Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         try {
-             RE.setsatuan_jenis(SR.getdetail(RE).getsatuan_jenis());
-         } catch (RemoteException ex) {
-             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-         }
-               
+         }     
                TR.insert(RE);
                try {
-                   SR.Save(RE);    
-                   } catch (RemoteException | SQLException ex) {
+                   SR.Save(RE);
+                   
+                   } catch (RemoteException ex) {
                         Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-               }}
+               } catch (SQLException ex) {
+             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+         }}
     }//GEN-LAST:event_tambahActionPerformed
 
     private void kirimapotekerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimapotekerActionPerformed
@@ -346,9 +354,11 @@ public class input_resep extends javax.swing.JInternalFrame {
                     
                 }
                 JOptionPane.showMessageDialog(null, "Data Berhasil Terkirim ","Sukses",JOptionPane.OK_OPTION);
-            } catch (RemoteException | SQLException ex) {
+            } catch (RemoteException ex) {
             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   catch (SQLException ex) {
+                Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+            }
            
         }
         else{
@@ -363,8 +373,10 @@ public class input_resep extends javax.swing.JInternalFrame {
 
     private void Dropdown() throws RemoteException{
     isi = SR.obat(isi);
+        
     
     for (int i=0;i<isi.length;i++){
+        System.out.println(isi[i] +" isis");
         obat.addItem(isi[i]);
     }
     

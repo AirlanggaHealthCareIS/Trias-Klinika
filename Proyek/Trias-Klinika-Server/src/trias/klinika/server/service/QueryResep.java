@@ -7,6 +7,7 @@ package trias.klinika.server.service;
  */
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,72 +18,43 @@ import trias.klinika.server.utilitas.Koneksidatabase;
 import trias.klinika.api.entitas.ResepEntity;
 import trias.klinika.api.entitas.RincianResep;
 import trias.klinika.api.sevice.ServiceResep;
+
 /**
  *
  * @author User
  */
-public class QueryResep extends UnicastRemoteObject implements ServiceResep{
-    
+public class QueryResep extends UnicastRemoteObject implements ServiceResep {
+
     public QueryResep() throws RemoteException {
-        
+
     }
-    public String[] obat(String [] pk) throws RemoteException {
+
+    public String[] obat(String[] pk) throws RemoteException {
         Statement statement = null;
-        
+
         try {
-           
+
             statement = Koneksidatabase.getConnection().createStatement();
-            
-            ResultSet result = statement.executeQuery
-            ("SELECT ID_OBAT, NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = 'S0001'");
-            
+
+            ResultSet result = statement.executeQuery("SELECT ID_OBAT, NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = 'S0001'");
+
             result.last();
-            pk = new String [result.getRow()];
+            pk = new String[result.getRow()];
             result.first();
 
-            for (int i=0;i<pk.length;i++){
-                pk [i] = result.getString("ID_OBAT")+" - "+result.getString("NAMA_OBAT");
+            for (int i = 0; i < pk.length; i++) {
+                pk[i] = result.getString("ID_OBAT") + " - " + result.getString("NAMA_OBAT");
+                System.out.println(pk[i]+"ini id");
                 result.next();
             }
 
             result.close();
-            
-            return pk;
-            
-        }catch (SQLException exception) {
-            exception.printStackTrace();
-            return pk;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException exception) {
-                    exception.printStackTrace();
-                }
-            } 
-        }
-    }
-    
 
-    @Override
-    public ResepEntity getdetail(ResepEntity RE) throws RemoteException {
-               Statement statement = null;
-        
-        try {
-           
-            statement = Koneksidatabase.getConnection().createStatement();
-            
-            ResultSet result = statement.executeQuery
-            ("SELECT o.HARGA_OBAT FROM OBAT as o WHERE ID_OBAT = '"+RE.getID_obat()+"'");
-            
-            
-            
-           result.first();
-           RE.setharga(result.getInt("HARGA_OBAT"));
-          
-        }catch (SQLException exception) {
+            return pk;
+
+        } catch (SQLException exception) {
             exception.printStackTrace();
-           
+            return pk;
         } finally {
             if (statement != null) {
                 try {
@@ -91,29 +63,60 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep{
                     exception.printStackTrace();
                 }
             }
+        }
     }
+
+    @Override
+    public ResepEntity getdetail(ResepEntity RE) throws RemoteException {
+        Statement statement = null;
+
+        try {
+
+            statement = Koneksidatabase.getConnection().createStatement();
+
+            ResultSet result = statement.executeQuery("SELECT o.HARGA_OBAT FROM OBAT as o WHERE ID_OBAT = '" + RE.getID_obat() + "'");
+
+            result.first();
+            RE.setharga(result.getInt("HARGA_OBAT"));
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
         return RE;
-         //To change body of generated methods, choose Tools | Templates.
+        //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void Save(ResepEntity RE) throws RemoteException, SQLException {
         Statement statement = null;
-        
+
         statement = Koneksidatabase.getConnection().createStatement();
-        ResultSet result = statement.executeQuery
-                    ("INSERT INTO `resep`(`ID_RESEP`, `ID_APOTEK`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES (["+RE.getID_resep()+"],["+RE.getID_apotek()+"],["+RE.getharga()+"],["+RE.getSTATUS_RESEP()+"]) ");
-    
-         //To change body of generated methods, choose Tools | Templates.
+        ResultSet result = statement.executeQuery("INSERT INTO `resep`(`ID_RESEP`, `ID_APOTEK`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES ([" + RE.getID_resep() + "],[" + RE.getID_apotek() + "],[" + RE.getharga() + "],[" + RE.getSTATUS_RESEP() + "]) ");
+        System.out.println(statement.toString());
+                    //statement.executeUpdate(re)
+        //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void save(RincianResep RR, ResepEntity RE, int i) throws RemoteException, SQLException {
-        Statement statement = null;
-        
-        statement = Koneksidatabase.getConnection().createStatement();
-        ResultSet result = statement.executeQuery
-                            ("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES (["+RE.getID_obat()+"],["+RE.getID_resep()+"],["+RE.getID_obat()+"],["+RE.getjumlah()+"],["+RE.getjumlah_terpenuhi()+"]) ");
+        PreparedStatement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES ([" + RE.getID_obat() + "],[" + RE.getID_resep() + "],[" + RE.getID_obat() + "],[" + RE.getjumlah() + "],[" + RE.getjumlah_terpenuhi() + "]) ");
+
+            statement.executeUpdate();
+
+        } catch (Exception e) {
+        }
+
         //To change body of generated methods, choose Tools | Templates.
     }
 
