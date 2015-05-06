@@ -17,7 +17,6 @@ import trias.klinika.server.service.queryRekammedis;
 import trias.klinika.server.service.QueryListPembayaran;
 import trias.klinika.server.service.QueryAntrean;
 import trias.klinika.server.service.QueryListPetugas;
-import trias.klinika.server.service.QueryPasien;
 import trias.klinika.server.service.QueryResep;
 /**
  *
@@ -38,14 +37,12 @@ public class Main {
         QueryPendaftaran querypendaftaran = new QueryPendaftaran (){};
         QueryListPembayaran querylistpembayaran = new QueryListPembayaran(){};
         QueryAntrean QueryAntrean = new QueryAntrean() {};
-        QueryPasien QueryPasien = new QueryPasien(){};
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
         QueryResep queryresep = new QueryResep(){};
        
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
         server.rebind("service3", QueryAntrean);
-        server.rebind("service7", QueryPasien);
         server.rebind("service4", queryPembayaran);
         server.rebind("service4.1", querylistpembayaran);
         server.rebind("service5", querylistpetugas);

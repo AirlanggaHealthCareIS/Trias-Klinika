@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import trias.klinika.api.entitas.Dokter;
 import trias.klinika.api.entitas.PasienEntity;
-import trias.klinika.api.sevice.DokterService;
+import trias.klinika.api.sevice.AntreanServis;
 import trias.klinika.api.sevice.ListPetugasService;
-import trias.klinika.api.sevice.PasienService;
+//import trias.klinika.api.sevice.PasienService;
 import trias.klinika.client.tabel.TabelDokter;
 //import trias.klinika.api.sevice.PemeriksaanService;
 //import trias.klinika.api.entitas.Pemeriksaan;
@@ -20,17 +20,15 @@ import trias.klinika.client.tabel.TabelDokter;
 public class Antrean extends javax.swing.JInternalFrame {
 
     public TabelDokter tabeldokter = new TabelDokter();
-    private DokterService DoSer;
-    public DokterService DS;
-    public PasienService PaSer;
+    private AntreanServis AS;
     private String[] isi;
     private ListPetugasService LPS;
 //    private PemeriksaanService PS;
     
-    public Antrean(ListPetugasService LPS, PasienService PaSer)throws RemoteException {
+    public Antrean(ListPetugasService LPS, AntreanServis AS)throws RemoteException {
 
         this.LPS=LPS;
-        this.PaSer=PaSer;
+        this.AS=AS;
         initComponents();
         tabeldokter.setData(LPS.AmbilDokterOnline());
 
@@ -44,7 +42,7 @@ public class Antrean extends javax.swing.JInternalFrame {
         List<Dokter> pd;
              System.out.println("skrol 3");
         try {
-            pd = DS.getDokters();
+            pd = AS.getDokters();
             System.out.println("skrol 4");
             for(int i = 0; i<pd.size();i++){                
                PilihDokter.addItem(pd.get(i).getnama_dokter().toUpperCase());           
@@ -61,7 +59,7 @@ public class Antrean extends javax.swing.JInternalFrame {
         PilihIDPasien.removeAllItems();        
         List<PasienEntity> pe;
         try {
-            pe = PaSer.getPasienEntitys();
+            pe = AS.getPasienEntitys();
             for(int i = 0; i<pe.size();i++){                
                PilihIDPasien.addItem(pe.get(i).getid_pasien());         
             }            
@@ -420,7 +418,7 @@ public class Antrean extends javax.swing.JInternalFrame {
 
     public void awal() {
         try{
-             tabeldokter.setData(this.DS.getDokters());
+             tabeldokter.setData(this.AS.getDokters());
              System.out.println("unyu 3");
         }catch(RemoteException exception){
              exception.printStackTrace();

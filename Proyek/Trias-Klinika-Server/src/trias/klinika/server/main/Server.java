@@ -16,7 +16,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import trias.klinika.server.service.QueryAntrean;
-import trias.klinika.server.service.QueryPasien;
 import trias.klinika.server.service.QueryInventoriObatDokter;
 import trias.klinika.server.service.QueryInventoryObatApotek;
 import trias.klinika.server.service.QueryListPembayaran;
@@ -121,7 +120,6 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryPendaftaran querypendaftaran = new QueryPendaftaran (){};
         QueryListPembayaran querylistpembayaran = new QueryListPembayaran(){};
         QueryAntrean QueryAntrean = new QueryAntrean() {};
-        QueryPasien QueryPasien = new QueryPasien() {};
         queryLaporanKeuanganApotek querylaporankeuanganapotek = new queryLaporanKeuanganApotek(){};
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
         QueryResep queryResep = new QueryResep();
@@ -130,7 +128,6 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
         server.rebind("service3", QueryAntrean);
-        server.rebind("service14", QueryPasien);
         server.rebind("service7", queryResep);
         server.rebind("service4", queryPembayaran);
         server.rebind("service12", querylistpembayaran);
@@ -190,12 +187,23 @@ public class Server extends javax.swing.JFrame implements Runnable {
             if(findUserThread(msg.pengirim) == null){
                 clients[findClient(ID)].username = msg.pengirim;
                 clients[findClient(ID)].send(new pesan("login", "SERVER", "berhasil", msg.pengirim));
-                Announce("newuser", "SERVER", msg.pengirim);
-                SendUserList(msg.pengirim);
                 riwayat.add(msg.pengirim+" Berhasil login pada "+setTanggal()+" "+setJam(jam));
             }
             else{
                 clients[findClient(ID)].send(new pesan("signup", "SERVER", "gagal", msg.pengirim));
+            }
+        }
+        else if(msg.tipe.equals("updatelist")){
+            if(msg.isi.substring(0, 1).equals("D")){
+                UpdateList(msg);
+            }
+        }
+    }
+    
+    public void UpdateList(pesan msg){
+        for(int i=0;i<clientCount;i++){
+            if("R".equals(clients[i].username.substring(0, 1))){
+                clients[i].send(msg);
             }
         }
     }

@@ -29,7 +29,7 @@ import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.ListPetugasService;
-import trias.klinika.api.sevice.PasienService;
+import trias.klinika.api.sevice.AntreanServis;
 import trias.klinika.client.tabel.TabelDokter;
 
 /**
@@ -43,15 +43,16 @@ public class utamaReservasi extends javax.swing.JFrame {
     Registry registry = LocateRegistry.getRegistry(localhost, 4444);
     final  PendaftaranService service2 = (PendaftaranService)registry.lookup("service2");
     final  ListPembayaranService service12 = (ListPembayaranService)registry.lookup("service12");
-    final  DokterService service3 = (DokterService)registry.lookup("service3");
-    final  PasienService service14 = (PasienService)registry.lookup("service14");
+    final  AntreanServis service3 = (AntreanServis)registry.lookup("service3");
     final  ListPetugasService service5 = (ListPetugasService)registry.lookup("service5");
-    Antrean Pe = new Antrean(service5,service14);
-    private DokterService DS;
-    private PasienService PaSer;
+        
     TriasKlinika_Pendaftaran daft = new TriasKlinika_Pendaftaran(service2);
+    Antrean Ant = new Antrean(service5,service3);
+   
     TriasKlinika_ListPembayaran LP = new TriasKlinika_ListPembayaran(service12);
+    
     private ListPembayaranService LPS;
+    private AntreanServis AS;
     private PendaftaranService PS;
     private String[] isi;
     LoginEntitas LE;
@@ -227,7 +228,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton3ActionPerformed
     public void internal_frame (){
         
-        internalFrame1.add(Pe.getContentPane());
+        internalFrame1.add(Ant.getContentPane());
         internalFrame1.pack();
         internalFrame1.setSize(1146,577);
         internalFrame1.setVisible(true);
@@ -273,7 +274,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     public void updatelist (String Id, String Nama) {
         JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
         try {
-            Pe.tabeldokter.insert(service5.AmbilData(Id));
+            Ant.tabeldokter.insert(service5.AmbilData(Id));
         } catch (RemoteException ex) {
             Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
         }
