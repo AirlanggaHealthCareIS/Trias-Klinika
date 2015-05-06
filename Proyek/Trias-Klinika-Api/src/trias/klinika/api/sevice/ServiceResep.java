@@ -16,7 +16,7 @@ import trias.klinika.api.entitas.RincianResep;
  *
  * @author User
  */
-public interface ServiceResep {
+public interface ServiceResep extends Remote{
     String [] obat (String [] pk)throws RemoteException;
     void Save (ResepEntity RE)throws RemoteException, SQLException;
     void save (RincianResep RR,ResepEntity RE, int i)throws RemoteException, SQLException;
