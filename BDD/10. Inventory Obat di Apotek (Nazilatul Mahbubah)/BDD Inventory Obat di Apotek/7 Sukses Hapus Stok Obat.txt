@@ -6,3 +6,11 @@ Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
 When	: Memilih tombol “ya”
 Then	: Data akan terupdate di database
 
+Given	: User berada dalam menu inventory obat
+When	: Memilih obat yang akan di hapus
+And	: Memilih tombol “delete”
+Then	: Class InventoryObatApotek mendeteksi mana kolom yang akan dihapus menggunaka metodhe getSelectedRow
+And	: Class InventoryObatApotek menghapus kolom pada tabel menggunakan metodhe delete pada class tabelInventoryObatApotek
+And	: Class InventoryObatApotek perlu juga untuk menghapus pada database menggunakan metodhe deleteObat pada class QueryInventoryObatApotek
+Class InventoryObatApotek menggunakan metodhe refersh yang berfungsi untuk mengupdate data pada tabel 
+

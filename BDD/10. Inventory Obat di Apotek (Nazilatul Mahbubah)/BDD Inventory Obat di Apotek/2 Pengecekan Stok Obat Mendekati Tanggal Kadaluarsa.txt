@@ -2,3 +2,11 @@ Scenario 2 : User melakukan pengecekan stok obat yang mendekati tanggal kadaluar
 Given	: User berada dalam menu inventory obat
 When	: Memilih tombol “expired”
 Then	: Sistem mengurutkan stok obat berdasarkan masa pakai yang mendekati tanggal ketika pengecekan
+
+Given	: User berada dalam menu inventory obat apotek
+When	: Menekan tombol cek kadaluarsa
+Then	: Interface inventory obat apotek membutuhkan List Inventory Obat Apotek Entitas yang berisi (idobat, namaobat,hargaobat,deskripsi, tgl_masuk, masa_pakai, hargaobat) menggunakan metode cekExpired ke class QueryInventoryObatApotek
+And	: Interface inventory obat apotek menggunakan metode removeTableModelListener ke class tabelInventoryObatApotek
+And	: Interface inventory obat apotek menggunakan metode setData yang membawa semua entitas yang diambil dari class entitas
+And	: Interface inventory obat apotek menggunakan metode setModel pada class sendiri untuk mengubah isi tabel dengan isi hasil query di class queryinventoryobatapotek
+And	: Menampilkan hasil tabel yang telah disorting berdasarkan tanggal masa_pakai terkecil

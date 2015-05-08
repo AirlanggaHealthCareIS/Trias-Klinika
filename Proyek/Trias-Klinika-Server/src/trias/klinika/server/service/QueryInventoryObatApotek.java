@@ -125,9 +125,14 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
     public void updateObat(InventoryObatApotekEntitas inventory) throws RemoteException {
         System.out.println("Proses Melakukan Update Data Obat");
         PreparedStatement statement = null;
-       // try {
-           // statement = Koneksidatabase.getConnection().prepareStatement("UPDATE obat SET"+inventory.getNamaObat()+"=?"|
-      //  }
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement("UPDATE obat SET"+inventory.getNamaObat()+"=? WHERE id_detail_obat =?");
+            statement.setString(1, inventory.getIdDetailObat());
+            statement.executeUpdate();
+        }
+        catch (SQLException exception){
+            exception.printStackTrace();
+        }
         //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -334,4 +339,5 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         }
          //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

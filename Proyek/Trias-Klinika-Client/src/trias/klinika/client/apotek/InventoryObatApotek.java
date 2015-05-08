@@ -225,7 +225,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(650, 80, 350, 414);
+        jPanel2.setBounds(650, 80, 350, 0);
 
         cekkritis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cekkritis.setForeground(new java.awt.Color(0, 0, 204));
@@ -331,14 +331,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jenis_obatActionPerformed
 
     private void cekkritisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekkritisActionPerformed
-        try {
-            List<InventoryObatApotekEntitas> list = IOAS.cekKritis();
-            tioa.removeTableModelListener(table_obat);
-            tioa.setData(list);
-            table_obat.setModel(tioa);
-        } catch (RemoteException exception) {
-            exception.printStackTrace();
-        }
+        setCekKritis();
 // TODO add your handling code here:
     }//GEN-LAST:event_cekkritisActionPerformed
 
@@ -348,18 +341,12 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Salah Satu Data Belum di Isi");
         }
         else{
+            setInputObat();
             InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
-            IOAE.setIdObat(id_obat.getText());
-            IOAE.setNamaObat(nama_obat.getText());
-            IOAE.setQty(Integer.parseInt(qty.getText()));
-            IOAE.setTglMasuk(tgl_masuk.getDate().toString());
-            IOAE.setMasaPakai(masa_pakai.getDate().toString());
-            IOAE.setDeskripsi(deskripsi.toString());
-            IOAE.setRuangObat("Apotek");
-
             tioa.insert(IOAE);
             try {
             IOAS.insertObatBaru(IOAE);
+            refresh();
             }
             catch (RemoteException ex){
                 Logger.getLogger(InventoryObatApotek.class.getName()).log(Level.SEVERE, null, ex);
@@ -376,25 +363,12 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         }
         else{
             InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
-
-            IOAE.setQty(Integer.parseInt(qty.getText()));
-            IOAE.setTglMasuk(tgl_masuk.getDate().toString());
-            IOAE.setMasaPakai(masa_pakai.getDate().toString());
-            IOAE.setRuangObat("Apotek");
-            java.util.Date date = new java.util.Date(tgl_masuk.getDate().getTime());
-            System.out.println(date.toString());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String tgl = sdf.format(date);
-            IOAE.setTglMasuk(tgl);
-            System.out.println(tgl);
-            java.util.Date date1 = new java.util.Date(masa_pakai.getDate().getTime());
-            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-            String tgl1 = sdf1.format(date1);
-            IOAE.setMasaPakai(tgl1);
+            setTambahObat();
 
             tioa.tambah(IOAE);
             try {
             IOAS.tambahObat(IOAE);
+            refresh();
             }
             catch (RemoteException ex){
                 Logger.getLogger(InventoryObatApotek.class.getName()).log(Level.SEVERE, null, ex);
@@ -405,23 +379,40 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tambahActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
         JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        try{
         int row = table_obat.getSelectedRow();
         if(row == -1){
             return;
         }
+        tioa.delete(IOAE);
+        
+        IOAS.deleteObat(IOAE);
         refresh();
-        JOptionPane.showMessageDialog(this, "Proses Penghapusan obat berhasil");
+        }
+       catch (RemoteException exception){
+        JOptionPane.showMessageDialog(this, "Proses Penghapusan obat berhasil");    
+        }
+        
     }//GEN-LAST:event_deleteActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         // TODO add your handling code here:
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas ();
-        //PreparedStatement statement = new PreparedStatement();
-
-        JOptionPane.showMessageDialog(this, "Proses Update Obat Berhasil");
+        setUpdateObat();
+        tioa.update(IOAE);
+        try{
+        IOAS.updateObat(IOAE);
         refresh();
+        //PreparedStatement statement = new PreparedStatement();
+        }
+        catch (RemoteException ex){
+                Logger.getLogger(InventoryObatApotek.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        JOptionPane.showMessageDialog(this, "Proses Update Obat Berhasil");
+        
     }//GEN-LAST:event_updateActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
@@ -434,12 +425,13 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_clearActionPerformed
 
     private void kadaluarsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kadaluarsaActionPerformed
-       try {
-            List<InventoryObatApotekEntitas> list = IOAS.cekExpired();
-            tioa.setData(list);
-        } catch (RemoteException exception) {
-            exception.printStackTrace();
-        }
+        setCekExpired();
+//        try {
+//            List<InventoryObatApotekEntitas> list = IOAS.cekExpired();
+//            tioa.setData(list);
+//        } catch (RemoteException exception) {
+//            exception.printStackTrace();
+//        }
         // TODO add your handling code here:
     }//GEN-LAST:event_kadaluarsaActionPerformed
 private void refresh (){
@@ -458,6 +450,70 @@ private void refresh (){
         }
         for (int i=0;i<isi.length;i++){
             jComboBox1.addItem(isi[i]);
+        }
+    }
+    public void setTambahObat (){
+        InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
+
+            IOAE.setQty(Integer.parseInt(qty.getText()));
+            IOAE.setTglMasuk(tgl_masuk.getDate().toString());
+            IOAE.setMasaPakai(masa_pakai.getDate().toString());
+            IOAE.setRuangObat("Apotek");
+            java.util.Date date = new java.util.Date(tgl_masuk.getDate().getTime());
+            System.out.println(date.toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl = sdf.format(date);
+            IOAE.setTglMasuk(tgl);
+            System.out.println(tgl);
+            java.util.Date date1 = new java.util.Date(masa_pakai.getDate().getTime());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl1 = sdf1.format(date1);
+            IOAE.setMasaPakai(tgl1);
+    }
+    public void setInputObat(){
+        InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
+            IOAE.setIdObat(id_obat.getText());
+            IOAE.setNamaObat(nama_obat.getText());
+            IOAE.setQty(Integer.parseInt(qty.getText()));
+            IOAE.setTglMasuk(tgl_masuk.getDate().toString());
+            IOAE.setMasaPakai(masa_pakai.getDate().toString());
+            IOAE.setDeskripsi(deskripsi.getText());
+            IOAE.setRuangObat("Apotek");
+    }
+    public void setUpdateObat (){
+        InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
+        IOAE.setDeskripsi(deskripsi.getText());
+        java.util.Date date1 = new java.util.Date(masa_pakai.getDate().getTime());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl1 = sdf1.format(date1);
+            IOAE.setMasaPakai(tgl1);
+        java.util.Date date = new java.util.Date(tgl_masuk.getDate().getTime());
+            System.out.println(date.toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl = sdf.format(date);
+            IOAE.setTglMasuk(tgl);
+            System.out.println(tgl);
+        IOAE.setHargaObat(Integer.parseInt(harga.getText()));
+        
+        
+        
+    }
+    public void setCekKritis(){
+        try {
+            List<InventoryObatApotekEntitas> list = IOAS.cekKritis();
+            tioa.removeTableModelListener(table_obat);
+            tioa.setData(list);
+            table_obat.setModel(tioa);
+        } catch (RemoteException exception) {
+            exception.printStackTrace();
+        }
+    }
+    public void setCekExpired (){
+        try {
+            List<InventoryObatApotekEntitas> list = IOAS.cekExpired();
+            tioa.setData(list);
+        } catch (RemoteException exception) {
+            exception.printStackTrace();
         }
     }
 

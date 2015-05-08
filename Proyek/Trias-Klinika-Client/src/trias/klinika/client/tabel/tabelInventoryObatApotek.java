@@ -36,6 +36,14 @@ public class tabelInventoryObatApotek extends AbstractTableModel{
         list.add(inventory);
         fireTableDataChanged();
     }
+    public void delete (InventoryObatApotekEntitas inventory){
+        list.add(inventory);
+        fireTableDataChanged();
+    }
+    public void update (InventoryObatApotekEntitas inventory){
+        list.add(inventory);
+        fireTableDataChanged();
+    }
     @Override
     public String getColumnName (int column){
         switch (column){
