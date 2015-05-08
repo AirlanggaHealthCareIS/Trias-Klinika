@@ -1,0 +1,12 @@
+Scenario 5 : Login tidak sukses karena username kosong
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan ""
+and	   : memasukkan password dengan "benar"
+and	   : user menekan tombol login
+then	   : sistem memanggil method cek pada class Login dengan 
+             parameter "" dan "benar"
+when	   : method cek mengembalikan nilai string 
+	     "Masukkan Username Terlebih Dahulu"
+then	   : sistem mengeluarkan notifikasi 
+	     "Masukkan Username Terlebih Dahulu"

@@ -1,12 +1,25 @@
 Scenario 3 : Login sukses dan user = apoteker
 
 Given	   : user berada di halaman login aplikasi
-when	   : user memasukkan username dengan 'A0001'
-and	   : memasukkan password dengan 'cantik'
+when	   : user memasukkan username dengan 'A0004'
+and	   : memasukkan password dengan 'ganteng'
 and	   : user menekan tombol login
-then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
-	     username dan password yang telah dimasukkan
-when	   : sistem menemukan kombinasi username dan password yang
-	     dimasukkan user pada basis data
-and	   : user di identifikasi sebagai apoteker oleh sistem
-then	   : sistem akan menampilkan halaman utama apoteker
+then	   : sistem memanggil method cek pada class Login dengan 
+             parameter "A0004" dan "ganteng"
+when	   : method cek mengembalikan nilai string "Sukses"
+then	   : sistem memanggil method proses pada class login dengan 
+             parameter "A0004" dan "ganteng"
+and	   : sistem memanggil method SetData pada class loginEntitas 
+	     dengan parameter "A0004", "ganteng", "apotek", "id_apotek",
+	     "password_apotek", "status_apotek", dan "nama_apotek"
+and	   : sistem memanggil method CheckPassword pada class LoginService 
+	     dengan parameter LoginEntitas
+When	   : method CheckPassword mengembalikan nilai int "3"
+then	   : method proses mengembalikan nilai string "Login Sukses"
+and        : sistem memanggil method getNama pada class LoginService 
+	     dengan parameter LoginEntitas
+when	   : sistem mengindikasi bahwa user belum melakukan login
+then	   : sistem memanggil method Eksekusi pada class Login dengan
+	     parameter LoginEntitas
+and	   : sistem akan menampilkan form utama apotek pada class 
+	     UtamaAPotek dengan parameter LoginEntitas

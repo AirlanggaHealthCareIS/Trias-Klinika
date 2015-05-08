@@ -4,9 +4,23 @@ Given	   : user berada di halaman login aplikasi
 when	   : user memasukkan username dengan 'R0001'
 and	   : memasukkan password dengan 'cantik'
 and	   : user menekan tombol login
-then	   : sistem melakukan pengecekan ke basis data untuk kombinasi
-	     username dan password yang telah dimasukkan
-when	   : sistem menemukan kombinasi username dan password yang
-	     dimasukkan user pada basis data
-and	   : user di identifikasi sebagai reservasi oleh sistem
-then	   : sistem akan menampilkan halaman utama reservasi
+then	   : sistem memanggil method cek pada class Login dengan 
+             parameter "R0001" dan "cantik"
+when	   : method cek mengembalikan nilai string "Sukses"
+then	   : sistem memanggil method proses pada class login dengan 
+             parameter "R0001" dan "cantik"
+and	   : sistem memanggil method SetData pada class loginEntitas 
+	     dengan parameter "R0001", "cantik", "reservasi", 
+	     "id_reservasi", "password_reservasi", "status_reservasi", 
+	     dan "nama_reservasi"
+and	   : sistem memanggil method CheckPassword pada class LoginService 
+	     dengan parameter LoginEntitas
+When	   : method CheckPassword mengembalikan nilai int "3"
+then	   : method proses mengembalikan nilai string "Login Sukses"
+and        : sistem memanggil method getNama pada class LoginService 
+	     dengan parameter LoginEntitas
+when	   : sistem mengindikasi bahwa user belum melakukan login
+then	   : sistem memanggil method Eksekusi pada class Login dengan
+	     parameter LoginEntitas
+and	   : sistem akan menampilkan form utama rseservasi pada class 
+	     UtamaReservasi dengan parameter LoginEntitas

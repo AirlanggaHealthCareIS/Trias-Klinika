@@ -1,0 +1,20 @@
+Scenario 7 : Login tidak sukses karena username belum terdaftar
+
+Given	   : user berada di halaman login aplikasi
+when	   : user memasukkan username dengan 'Devadata'
+and	   : memasukkan password dengan 'lima'
+and	   : user menekan tombol login
+then	   : sistem memanggil method cek pada class Login dengan 
+             parameter "Devadata" dan "lima"
+when	   : method cek mengembalikan nilai string "Sukses"
+then	   : sistem memanggil method proses pada class login dengan 
+             parameter "Devadata" dan "lima"
+and	   : sistem memanggil method SetData pada class loginEntitas 
+	     dengan parameter "Devadata", "lima", "dokter", "id_dokter",
+	     "password_dokter", "status_dokter", dan "nama_dokter"
+and	   : sistem memanggil method CheckPassword pada class LoginService 
+	     dengan parameter LoginEntitas
+When	   : method CheckPassword mengembalikan nilai int "1"
+then	   : method proses mengembalikan nilai string 
+	     "User Belum Terdaftar"
+and        : sistem mengeluarkan notifikasi "User Belum Terdaftar"

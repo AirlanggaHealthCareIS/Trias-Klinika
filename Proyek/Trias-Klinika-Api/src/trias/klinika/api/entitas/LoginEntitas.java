@@ -20,6 +20,16 @@ public class LoginEntitas implements Serializable {
     private String fieldstatus;
     private String fieldnama;
     
+    public void SetData (String username, String password, String sebagai, String fielduser, String fieldpass, String fieldstatus, String fieldnama) {
+        this.username = username;
+        this.password = password;
+        this.sebagai = sebagai;
+        this.fielduser = fielduser;
+        this.fieldpass = fieldpass;
+        this.fieldstatus = fieldstatus;
+        this.fieldnama = fieldnama;
+    }
+    
     public String getsebagai() {
         return sebagai;
     }

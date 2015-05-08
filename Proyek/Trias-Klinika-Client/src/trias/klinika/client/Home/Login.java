@@ -207,31 +207,19 @@ public class Login extends javax.swing.JFrame implements Runnable {
     }
     
     public String Proses (String username, String password) {
-        users.setusername(username);
-        users.setpassword(password);
         String sebagai = username.substring(0, 1);
         if (null != sebagai) switch (sebagai) {
             case "D":
-                users.setsebagai("dokter");
-                users.setfielduser("id_dokter");
-                users.setfieldpass("password_dokter");
-                users.setfieldstatus("status_dokter");
-                users.setfieldnama("nama_dokter");
+                users.SetData(username, password, "dokter", "id_dokter", "password_dokter", "status_dokter", "nama_dokter");
                 break;
             case "R":
-                users.setsebagai("reservasi");
-                users.setfielduser("id_reservasi");
-                users.setfieldpass("password_reservasi");
-                users.setfieldstatus("status_reservasi");
-                users.setfieldnama("nama_reservasi");
+                users.SetData(username, password, "reservasi", "id_reservasi", "password_reservasi", "status_reservasi", "nama_reservasi");
                 break;
             case "A":
-                users.setsebagai("apotek");
-                users.setfielduser("id_apotek");
-                users.setfieldpass("password_apotek");
-                users.setfieldstatus("status_apotek");
-                users.setfieldnama("nama_apotek");
+                users.SetData(username, password, "apotek", "id_apotek", "password_apotek", "status_apotek", "nama_apotek");
                 break;
+            default :
+                users.SetData(username, password, null, null, null, null, null);
         }
         try {
             indeks = service1.CheckPassword(users);
