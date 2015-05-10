@@ -32,16 +32,15 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
     /**
      * Creates new form TriasKlinika_ListPembayaran
      */
-    
-    public TriasKlinika_ListPembayaran(final ListPembayaranService LPS) throws RemoteException {
+   public TriasKlinika_ListPembayaran(final ListPembayaranService LPS) throws RemoteException {
         this.LPS = LPS;
         try {
-            TLP.setData(this.LPS.getBayar());
+            setDataTabel1();
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
         try {
-            TLP2.setData(this.LPS.getTelat());
+            setDataTabel2();
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
@@ -49,47 +48,9 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
         initComponents();
         tabelAntre.setModel(TLP);
         tabelTelat.setModel(TLP2);
+        PilihBaris();
         
-        tabelAntre.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            
-            public void valueChanged(ListSelectionEvent e) {
-                int row = tabelAntre.getSelectedRow();
-                if (row != -1) {
-                    ListPembayaranEntitas LPE = TLP.get(row);
-                    NamaPasien.setText(LPE.getnamaPasien());
-                    NamaDokter.setText(LPE.getnamaDokter());
-                    ID_pemeriksaan.setText(LPE.getidPemeriksaan());
-                    try {
-                        LPE = LPS.getdatadetail(LPE.getidPemeriksaan());
-                        Jasa_Pemeriksaan.setText(Integer.toString(LPE.getbiayaDokter()));
-                        Total_Biaya.setText(Integer.toString(LPE.gettotalBayar()));
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(TriasKlinika_ListPembayaran.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-            
-        });
-        tabelTelat.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            
-            public void valueChanged(ListSelectionEvent e) {
-                int row = tabelTelat.getSelectedRow();
-                if (row != -1) {
-                    ListPembayaranEntitas LPE = TLP.get(row);
-                    NamaPasien.setText(LPE.getnamaPasien());
-                    NamaDokter.setText(LPE.getnamaDokter());
-                    ID_pemeriksaan.setText(LPE.getidPemeriksaan());
-                    try {
-                        LPE = LPS.getdatadetail(LPE.getidPemeriksaan());
-                        Jasa_Pemeriksaan.setText(Integer.toString(LPE.getbiayaDokter()));
-                        Total_Biaya.setText(Integer.toString(LPE.gettotalBayar()));
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(TriasKlinika_ListPembayaran.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-            
-        });
+        
     }
 
     /**
@@ -359,7 +320,54 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
     private void tabelAntreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelAntreMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tabelAntreMouseClicked
-
+public void setDataTabel1() throws RemoteException{
+    TLP.setData(this.LPS.getBayar());
+}
+public void setDataTabel2() throws RemoteException{
+    TLP2.setData(this.LPS.getTelat());
+}
+public void PilihBaris(){
+    tabelAntre.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            
+            public void valueChanged(ListSelectionEvent e) {
+                int row = tabelAntre.getSelectedRow();
+                if (row != -1) {
+                    ListPembayaranEntitas LPE = TLP.get(row);
+                    NamaPasien.setText(LPE.getnamaPasien());
+                    NamaDokter.setText(LPE.getnamaDokter());
+                    ID_pemeriksaan.setText(LPE.getidPemeriksaan());
+                    try {
+                        LPE = LPS.getdatadetail(LPE.getidPemeriksaan());
+                        Jasa_Pemeriksaan.setText(Integer.toString(LPE.getbiayaDokter()));
+                        Total_Biaya.setText(Integer.toString(LPE.gettotalBayar()));
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(TriasKlinika_ListPembayaran.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            
+        });
+        tabelTelat.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            
+            public void valueChanged(ListSelectionEvent e) {
+                int row = tabelTelat.getSelectedRow();
+                if (row != -1) {
+                    ListPembayaranEntitas LPE = TLP2.get(row);
+                    NamaPasien.setText(LPE.getnamaPasien());
+                    NamaDokter.setText(LPE.getnamaDokter());
+                    ID_pemeriksaan.setText(LPE.getidPemeriksaan());
+                    try {
+                        LPE = LPS.getdatadetail(LPE.getidPemeriksaan());
+                        Jasa_Pemeriksaan.setText(Integer.toString(LPE.getbiayaDokter()));
+                        Total_Biaya.setText(Integer.toString(LPE.gettotalBayar()));
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(TriasKlinika_ListPembayaran.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            
+        });
+}
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

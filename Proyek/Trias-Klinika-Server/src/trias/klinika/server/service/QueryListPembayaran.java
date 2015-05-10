@@ -35,7 +35,7 @@ public class QueryListPembayaran extends UnicastRemoteObject implements ListPemb
         try{
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT r.id_pemeriksaan, d.nama_dokter, p.nama_pasien, b.id_pembayaran, b.biaya_dokter, b.jumlah_pembayaran FROM pemeriksaan as r, dokter as d, pasien as p, pembayaran as b WHERE r.id_dokter=d.id_dokter and r.id_pasien=p.id_pasien and r.id_pembayaran=b.id_pembayaran ");
+            ResultSet result = statement.executeQuery("SELECT r.tgl_pemeriksaan, r.id_pemeriksaan, d.nama_dokter, p.nama_pasien, b.id_pembayaran, b.biaya_dokter, b.jumlah_pembayaran FROM pemeriksaan as r, dokter as d, pasien as p, pembayaran as b WHERE r.id_dokter=d.id_dokter and r.id_pasien=p.id_pasien and r.id_pembayaran=b.id_pembayaran and r.tgl_pemeriksaan >= \"2015-03-10\" ");
             
             List<ListPembayaranEntitas> list = new ArrayList<ListPembayaranEntitas>();
             
@@ -110,7 +110,7 @@ public class QueryListPembayaran extends UnicastRemoteObject implements ListPemb
         try{
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT r.tgl_pemeriksaan, r.id_pemeriksaan, d.nama_dokter, p.nama_pasien, b.id_pembayaran, b.biaya_dokter, b.jumlah_pembayaran FROM pemeriksaan as r, dokter as d, pasien as p, pembayaran as b WHERE r.id_dokter=d.id_dokter and r.id_pasien=p.id_pasien and r.id_pembayaran=b.id_pembayaran  ");
+            ResultSet result = statement.executeQuery("SELECT r.tgl_pemeriksaan, r.id_pemeriksaan, d.nama_dokter, p.nama_pasien, b.id_pembayaran, b.biaya_dokter, b.jumlah_pembayaran FROM pemeriksaan as r, dokter as d, pasien as p, pembayaran as b WHERE r.id_dokter=d.id_dokter and r.id_pasien=p.id_pasien and r.id_pembayaran=b.id_pembayaran and r.tgl_pemeriksaan < \"2015-03-10\"   ");
             
             List<ListPembayaranEntitas> list = new ArrayList<ListPembayaranEntitas>();
             

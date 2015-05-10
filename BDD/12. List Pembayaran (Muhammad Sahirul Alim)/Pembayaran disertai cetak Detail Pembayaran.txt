@@ -1,15 +1,32 @@
 Feature		: Reservasi dapat melihat daftar pasien yang memiliki tanggungan biaya
+
 Skenario 1	: Pasien datang ke reservasi dan mencetak tagihan biaya dokter
+
 Given	: Reservasi telah login
+
 And	: Dokter telah melakukan pemeriksaan
+
 And	: Dokter mengirimkan data ke Reservasi
-When	: System menampilkan daftar pasien yang memiliki tanggungan biaya
-Then	: Reservasi memanggil nama pasien pada daftar
+
+When	: Reservasi membuka halaman List Pembayaran
+Then	: System memanggil method getBayar() pada class ListPembayaranService
+And	: System memanggil method setData() pada class TabelListPembayaran1
+And	: System memanggil method getTelat() pada class ListPembayaranService
+And	: System memanggil method setData() pada class TabelListPembayaran2
+When	: Reservasi memilih pasien pada tabel
+Then	: System memanggil method PilihBaris() pada class TriasKlinika_ListPembayaran
 When	: Pasien yang dipanggil datang dan melakukan pembayaran
+
 Then	: Reservasi melayani pembayaran
+
 And	: Reservasi menginformasikan detail biaya jasa secara lisan
+
 When	: Reservasi menekan tombol “Cetak”
+
 Then	: Sistem melakukan pengecakan pada isi kiriman dari dokter
+
 When	: Sistem menemukan isi kiriman hanya mengandung ID transaksi
+
 Then 	: Sistem melakukan print detail transaksi saja
+
 And	: Sistem menghapus nama pasien dari list
