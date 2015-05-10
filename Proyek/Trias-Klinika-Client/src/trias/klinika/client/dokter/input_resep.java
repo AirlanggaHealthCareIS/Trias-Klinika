@@ -22,7 +22,7 @@ import trias.klinika.api.entitas.RincianResep;
 import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.api.sevice.ServiceResep;
 import trias.klinika.client.apotek.InventoryObatApotek;
-import trias.klinika.client.tabell.TabelResep;
+import trias.klinika.client.tabel.TabelResep;
 /**
  *
  * @author User
@@ -40,7 +40,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         this.SR = SR;
         
         initComponents();
-        
+        table.setModel(TR);
         Dropdown();
         
     }
@@ -68,8 +68,8 @@ public class input_resep extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         obat = new javax.swing.JComboBox();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        juml = new javax.swing.JTextField();
+        ktr = new javax.swing.JTextField();
         tambah = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -173,9 +173,9 @@ public class input_resep extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+        ktr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
+                ktrActionPerformed(evt);
             }
         });
 
@@ -200,9 +200,9 @@ public class input_resep extends javax.swing.JInternalFrame {
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(juml, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(obat, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jTextField10)
+                    .addComponent(ktr)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -220,15 +220,15 @@ public class input_resep extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(juml, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ktr, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tambah)
-                .addGap(23, 23, 23))
+                .addGap(18, 18, 18))
         );
 
         getContentPane().add(jPanel3);
@@ -270,7 +270,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(kirimapoteker);
-        kirimapoteker.setBounds(881, 424, 176, 33);
+        kirimapoteker.setBounds(820, 420, 230, 33);
 
         kirimreservasi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/kirim.png"))); // NOI18N
         kirimreservasi.setText("KIRIM KE RESERVASI");
@@ -280,7 +280,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(kirimreservasi);
-        kirimreservasi.setBounds(881, 468, 176, 33);
+        kirimreservasi.setBounds(820, 470, 230, 33);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/resepj.png"))); // NOI18N
@@ -305,9 +305,9 @@ public class input_resep extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_obatActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void ktrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ktrActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }//GEN-LAST:event_ktrActionPerformed
 
     private void tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahActionPerformed
      if (obat.getSelectedItem()== "Pilih Obat"){
@@ -318,24 +318,10 @@ public class input_resep extends javax.swing.JInternalFrame {
         else{
             
                ResepEntity RE = new ResepEntity();
-               RE.setID_obat(obat.getSelectedItem().toString().substring(0, 6));
-               RE.setnama_obat(obat.getName());
-               RE.setnama_obat(obat.getSelectedItem().toString().substring(6));
-              
-         try {
-             RE.setharga(SR.getdetail(RE).getharga());
-         } catch (RemoteException ex) {
-             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-         }     
+               RE = setResep(RE);
                TR.insert(RE);
-               try {
-                   SR.Save(RE);
-                   
-                   } catch (RemoteException ex) {
-                        Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-               } catch (SQLException ex) {
-             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-         }}
+               }
+     
     }//GEN-LAST:event_tambahActionPerformed
 
     private void kirimapotekerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimapotekerActionPerformed
@@ -381,11 +367,27 @@ public class input_resep extends javax.swing.JInternalFrame {
     }
     
 }
+    public ResepEntity setResep(ResepEntity RE){
+        RE.setID_obat(obat.getSelectedItem().toString().substring(0, 6));
+        RE.setnama_obat(obat.getName());
+        RE.setnama_obat(obat.getSelectedItem().toString().substring(7));
+        try {
+            RE.setharga(SR.getdetail(RE).getharga());
+            RE.setsatuan_jenis(SR.getdetail(RE).getsatuan_jenis());
+        } catch (RemoteException ex) {
+            Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        RE.setjumlah_terpenuhi(juml.getText());
+        RE.setketerangan(ktr.getText());
+        return RE;
+    }
     private void hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusActionPerformed
         int i = table.getSelectedRow();
         if(i == -1){
             return;
-        }        // TODO add your handling code here:
+        }  
+        TR.delete(i);
+        // TODO add your handling code here:
     }//GEN-LAST:event_hapusActionPerformed
 
     private void ID_ApotekerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ID_ApotekerActionPerformed
@@ -418,10 +420,10 @@ public class input_resep extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField juml;
     private javax.swing.JButton kirimapoteker;
     private javax.swing.JButton kirimreservasi;
+    private javax.swing.JTextField ktr;
     private javax.swing.JComboBox obat;
     private javax.swing.JTable table;
     private javax.swing.JButton tambah;

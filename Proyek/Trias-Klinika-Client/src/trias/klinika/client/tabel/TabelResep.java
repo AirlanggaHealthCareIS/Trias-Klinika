@@ -30,6 +30,10 @@ public class TabelResep extends AbstractTableModel {
         list.add(RE);
         fireTableDataChanged();
     }
+    public void delete(int i){
+        list.remove(i);
+        fireTableDataChanged();
+    }
   
     public String getColumnName(int column){
         switch (column){
@@ -85,12 +89,5 @@ public class TabelResep extends AbstractTableModel {
         }
 }
 
-    @Override
-    public void fireTableDataChanged() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    String[] jComboBox1(String[] i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
