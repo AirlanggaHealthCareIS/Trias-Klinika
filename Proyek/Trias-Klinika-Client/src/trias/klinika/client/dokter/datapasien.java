@@ -313,92 +313,26 @@ private void namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:ev
 }//GEN-LAST:event_namaActionPerformed
 
 private void detail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detail1ActionPerformed
-        
-    if (history.getSelectedRow() == -1){
-          JOptionPane.showMessageDialog(this, "Pilih History Rekam Medis yang ingin dilihat terlebih dahulu");
+  if(history.getSelectedRow()==-1){
+        setCekData1();
+    } 
+    else{
+        setHistory();
     }
-    else {
-        int row = history.getSelectedRow();
-        rekammedisEntyty re = new rekammedisEntyty ();
-            try {
-                re = sr.getdatadetail(rm.get(row).getId_rekam());
-            } catch (RemoteException ex) {
-                ex.printStackTrace();
-            }
-        irm.setText(rm.get(row).getId_rekam());
-        diagnosa.setText(re.getDiagnosa());
-        keluhan.setText(re.getKeluhan());
-        alergi.setText(re.getAlergi());
-        tindakan.setText(re.getTindakan());
-        tekanan.setText(Integer.toString(re.getTekanan_darah()));
-        catatan.setText(re.getCatatan_lain());
-    }
-    
-    
-    
-    
 }//GEN-LAST:event_detail1ActionPerformed
 
 private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
 // TODO add your handling code here:
-           
-        if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
-        }
-        else {
-            rekammedisEntyty rrm = new rekammedisEntyty();
-                rrm.setId_rekam(irm.getText());
-                rrm.setDiagnosa(diagnosa.getText());
-                rrm.setKeluhan(keluhan.getText());
-                rrm.setAlergi(alergi.getText());
-                rrm.setTindakan(tindakan.getText());
-                rrm.setTekanan_darah(Integer.parseInt(tekanan.getText()));
-                rrm.setCatatan_lain(catatan.getText());
-            try {
-                sr.ok(rrm);
-            } catch (RemoteException ex) {
-                ex.printStackTrace();
-            }
-            
-        }
-        
-        this.dispose();
-        irm.setText("");
-        diagnosa.setText("");
-        keluhan.setText("");
-        tindakan.setText("");
-        tekanan.setText("");
-        alergi.setText("");
-        catatan.setText("");
-    
-//            if(textNO.getText()==""|textJO.getText()==""|textKO.getText()==""|texttglmasuk.getDate()==null|texttglmasapakai.getDate()==null|deskripsi.getText()==""){
-//            JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
-//        }
-//        else {
-//            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-//               IODE.setidobat(IDO.getText());
-//               IODE.setnamaobat(textNO.getText());
-//               IODE.setjenisobat(textJO.getText());
-//               IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
-//               IODE.settglmasuk(texttglmasuk.getDate().toString());
-//               IODE.setmasapakai(texttglmasapakai.getDate().toString());
-//               IODE.setdeskripsi(deskripsi.toString());
-//               IODE.setidspesialis("S002");
-//               IODE.setruanganobat("Ruang 2");
-//               
-//               tiod.insert(IODE);
-//            try {
-//                IODS.insertObatBaru(IODE);
-//            } catch (RemoteException ex) {
-//                Logger.getLogger(GUI_inventori_obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//             
+    if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
+        setCekdata2();
+    }
+    else{
+        setSimpan();
+    }
 }//GEN-LAST:event_saveActionPerformed
 
 private void catatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catatanActionPerformed
-// TODO add your handling code here:
-    
+// TODO add your handling code here:  
 }//GEN-LAST:event_catatanActionPerformed
 
 private void keluhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keluhanActionPerformed
@@ -419,8 +353,35 @@ private void irmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:eve
 
 private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
 // TODO add your handling code here:
+      setReset();
+}//GEN-LAST:event_resetActionPerformed
+public void setHistory (){
+
+        int row = history.getSelectedRow();
+        rekammedisEntyty re = new rekammedisEntyty ();
+            try {
+                re = sr.getdatadetail(rm.get(row).getId_rekam());
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
+        irm.setText(rm.get(row).getId_rekam());
+        diagnosa.setText(re.getDiagnosa());
+        keluhan.setText(re.getKeluhan());
+        alergi.setText(re.getAlergi());
+        tindakan.setText(re.getTindakan());
+        tekanan.setText(Integer.toString(re.getTekanan_darah()));
+        catatan.setText(re.getCatatan_lain());
+
+    save.setEnabled(false);
+}
+public void setCekData1(){
+  if (history.getSelectedRow()== -1){
+    JOptionPane.showMessageDialog(this, "Pilih History Rekam Medis yang ingin dilihat terlebih dahulu");  
+  }
       
-        irm.setText("");
+}
+public void setReset(){
+     irm.setText("");
         diagnosa.setText("");
         keluhan.setText("");
         tindakan.setText("");
@@ -429,7 +390,44 @@ private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
         catatan.setText("");
         rekammedis.setEnabled(true);
         save.setEnabled(true);
-}//GEN-LAST:event_resetActionPerformed
+}
+public void setCekdata2(){
+   if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Data belum di isi lengkap");
+        } 
+}
+public void setSimpan(){
+//     if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
+//            JOptionPane.showMessageDialog(this, "Data belum di isi lengkap");
+//        }
+//        else {
+            rekammedisEntyty rrm = new rekammedisEntyty();
+                rrm.setId_rekam(irm.getText());
+                rrm.setDiagnosa(diagnosa.getText());
+                rrm.setKeluhan(keluhan.getText());
+                rrm.setAlergi(alergi.getText());
+                rrm.setTindakan(tindakan.getText());
+                rrm.setTekanan_darah(Integer.parseInt(tekanan.getText()));
+                rrm.setCatatan_lain(catatan.getText());
+            try {
+                sr.ok(rrm);
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
+            
+        //}
+        
+        this.dispose();
+        irm.setText("");
+        diagnosa.setText("");
+        keluhan.setText("");
+        tindakan.setText("");
+        tekanan.setText("");
+        alergi.setText("");
+        catatan.setText("");
+    
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ID;

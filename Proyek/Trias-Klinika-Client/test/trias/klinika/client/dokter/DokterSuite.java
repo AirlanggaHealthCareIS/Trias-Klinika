@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author iqbal
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({trias.klinika.client.dokter.input_resepTest.class, trias.klinika.client.dokter.form_pembayaranTest.class, trias.klinika.client.dokter.Menu_DokterTest.class, trias.klinika.client.dokter.Inventori_Obat_DokterTest.class, trias.klinika.client.dokter.datapasienTest.class, trias.klinika.client.dokter.UtamaDokterTest.class})
+@Suite.SuiteClasses({trias.klinika.client.dokter.input_resepTest.class, trias.klinika.client.dokter.form_pembayaranTest.class, trias.klinika.client.dokter.Menu_DokterTest.class, trias.klinika.client.dokter.Inventori_Obat_DokterTest.class, trias.klinika.client.dokter.scenario1_History_benar.class, trias.klinika.client.dokter.UtamaDokterTest.class})
 public class DokterSuite {
 
     @BeforeClass
