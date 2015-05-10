@@ -1,0 +1,7 @@
+feature :pembayaran
+skenario 2 :kondisi dokter belum memilih obat dan menekan tombol tambah
+given :dokter sudah berada pada menu pembayaran
+
+when :dokter langsung menekan tombol tambah tanpa memilih obat
+then :mengecek method isirincian (RincianPembayaran RP)
+and  :return menampilkan notif "pilih obat dahulu"

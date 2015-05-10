@@ -1,0 +1,6 @@
+feature :pembayaran
+skenario 2 :kondisi dokter belum memilih obat dan menekan tombol tambah
+given :dokter sudah berada pada menu pembayaran
+
+when :dokter langsung menekan tombol tambah tanpa memilih obat
+then :menampilkan notifikasi "pilih obat dahulu"

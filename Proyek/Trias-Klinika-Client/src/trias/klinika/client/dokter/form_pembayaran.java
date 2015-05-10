@@ -325,15 +325,16 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_biayadokMouseClicked
 
     private void biayadokInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_biayadokInputMethodTextChanged
-        totalHarga = totalHarga+Integer.parseInt(biayadok.getText());
-        total.setText(Integer.toString(totalHarga));
+//        totalHarga = totalHarga+Integer.parseInt(biayadok.getText());
+//        total.setText(Integer.toString(totalHarga));
     }//GEN-LAST:event_biayadokInputMethodTextChanged
 
     private void biayadokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biayadokActionPerformed
 
         if (a == true){
-            totalHarga = totalHarga+Integer.parseInt(biayadok.getText());
-            total.setText(Integer.toString(totalHarga));
+            tambahharga(totalHarga,Integer.parseInt(biayadok.getText())); 
+//            totalHarga = totalHarga+Integer.parseInt(biayadok.getText());
+//            total.setText(Integer.toString(totalHarga));
             a = false;
             biayadok.setEditable(false);
         }
@@ -346,10 +347,12 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         int opsi = JOptionPane.showConfirmDialog(this, "Apakah Biaya Sudah Benar ?","Konfirmasi", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(opsi == 0){
             PembayaranEntitas PE = new PembayaranEntitas();
-
-            PE.setnomer_transaksi(Integer.parseInt(nomert.getText()));
-            PE.setBIAYA_DOKTER(Integer.parseInt(biayadok.getText()));
-            PE.setTOTAL_BIAYA(Integer.parseInt(total.getText()));
+            
+            PE.setPembayaran(Integer.parseInt(nomert.getText()),Integer.parseInt(biayadok.getText()),Integer.parseInt(total.getText()));
+            
+//            PE.setnomer_transaksi(Integer.parseInt(nomert.getText()));
+//            PE.setBIAYA_DOKTER(Integer.parseInt(biayadok.getText()));
+//            PE.setTOTAL_BIAYA(Integer.parseInt(total.getText()));
 
             try {
 
@@ -357,9 +360,11 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
 
                 for(int i=1;i<=tp.getRowCount();i++){
                     RincianPembayaranEntitas RPE = new RincianPembayaranEntitas();
-                    RPE.setID_RINCIAN_PEMBAYARAN(i);
-                    RPE.setID_PEMBAYARAN(Integer.parseInt(nomert.getText()));
-                    RPE.setID_OBAT_DOKTER(tp.getValueAt((i-1), 0).toString());
+                    
+            RPE.setRincianPembayaran(i,Integer.parseInt(nomert.getText()),tp.getValueAt((i-1),0).toString());
+//                    RPE.setID_RINCIAN_PEMBAYARAN(i);
+//                    RPE.setID_PEMBAYARAN(Integer.parseInt(nomert.getText()));
+//                    RPE.setID_OBAT_DOKTER(tp.getValueAt((i-1), 0).toString());
                     ps.save(RPE);
 
                 }
@@ -404,19 +409,9 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         }
         else{
             RincianPembayaran RP = new RincianPembayaran();
-            RP.setID_OBAT(obat.getSelectedItem().toString().substring(0, 6));
-            String a = obat.getSelectedItem().toString();
-            RP.setNAMA_OBAT(obat.getSelectedItem().toString().substring(5));
-
-            try {
-                RP.setHARGA_OBAT(ps.biaya(harga, RP.getID_OBAT()));
-            } catch (RemoteException ex) {
-                Logger.getLogger(form_pembayaran.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            RP = isirincian(RP);
             tp.insert(RP);
-            totalHarga = totalHarga +RP.getHARGA_OBAT();
-            total.setText(Integer.toString(totalHarga));
-
+            tambahharga(totalHarga, RP.getHARGA_OBAT());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -432,6 +427,24 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
     }
     
 }
+    
+    private void tambahharga(int a, int b){
+        totalHarga = a+b;
+        total.setText(Integer.toString(totalHarga));
+    }
+    
+    private RincianPembayaran isirincian(RincianPembayaran RP) {
+        RP.setID_OBAT(obat.getSelectedItem().toString().substring(0, 6));
+        String a = obat.getSelectedItem().toString();
+        RP.setNAMA_OBAT(obat.getSelectedItem().toString().substring(5));
+
+            try {
+                RP.setHARGA_OBAT(ps.biaya(harga, RP.getID_OBAT()));
+            } catch (RemoteException ex) {
+                Logger.getLogger(form_pembayaran.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return RP;
+    }
     public void ID (String idp) throws RemoteException {
         idp = ps.ID(idp);
         

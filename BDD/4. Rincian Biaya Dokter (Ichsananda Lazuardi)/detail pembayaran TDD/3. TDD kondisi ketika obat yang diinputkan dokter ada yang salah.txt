@@ -1,0 +1,24 @@
+feature :pembayaran
+skenario 1 :biaya obat yang diinputkan dokter jika kondisi "salah"
+given :dokter sudah berada pada menu pembayaran
+
+when :dokter menginput biaya obat yang dikeluarkan :
+      pulvis 			Rp. 12000
+then :mengambil method isirincian (rinncianPembayaran RP)
+and  :dokter menekan tombol tambah
+then :memanggil method insert (RincianPembayaran RP) pada class tabelPembayaran
+and  :memanggil method tambahharga(int a, int b) pada class form_Pembayaran
+and  :sistem menapilkan "pulvis 	Rp. 12000" kedalam tabel pembayaran
+when :dokter menginputkan biaya dokter		Rp. 50.000
+and  :dokter menekan enter
+then :memanggil method tambahharga(int a, int b) pada class form_pembayaran
+when :dokter menekan tombol kirim untuk mengirim ke reservasi
+then :menampilkan notifikasi "apakah biaya yang diinputkan sudah benar?"
+and  :menekan tombol konfirmasi "Tidak"
+then :memangil method class form_Pembayaran
+and  :sistem menampilkan layout menu pembayaran kembali
+when :dokter memilih obat "pulvis 	Rp. 12000" pada tabel
+and  :dokter menekan tombol hapus
+then :memanggil method delete(int row) pada class tabelPembayaran
+
+
