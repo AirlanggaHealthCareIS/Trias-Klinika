@@ -5,11 +5,14 @@ Rekam Medis
 	Given		: Dokter telah menerima notifikasi dari reservasi
 	When		: Dokter menekan tombol “OK”
 	Then		: Sistem menampilkan data pasien
-	When		: Dokter memilih tombol “ history rekam medis “
-	Then		: sistem menampilkan id rekam medis dan tanggal periksa
-	When		: Dokter memilih tabel "id" dan "tanggal" pada tabel yang di sediakan
-	And		: Dokter menekan tombol "ok"
-	Then		: sistem menampilkan rekam medis yang di inginkan
+	When		: Dokter memilih “ history rekam medis “
+	When		: Dokter memilih history yang ingin ditampilkan pada tabel
+	Then		: sistem memanngil method "getDataDetail"
+	And		: sistem memanngil method "setdatapasien"
+	And		: sistem mereturn "rekammedisEntyty"
+	When		: Dokter menekan tombol "detail"
+	Then		: sistem memanggil method "setHistory"
+
 
 History Rekam Medis salah
 
@@ -18,7 +21,7 @@ History Rekam Medis salah
 	Given		: Dokter telah menerima notifikasi dari reservasi
 	When		: Dokter menekan tombol “OK”
 	Then		: Sistem menampilkan data pasien
-	When		: Dokter memilih tombol “ history rekam medis “
-	Then		: sistem menampilkan "id" rekam medis dan "tanggal" periksa
-	When		: Dokter memilih tombol “OK”
-	Then		: sistem menampilkan pesan " pilih table id dan tanggal"
+	When		: Dokter memilih “ history rekam medis “
+	When		: Dokter memilih tombol “detail”
+	Then		: sistem memanggil method "setcekdata1"
+	Then		: sistem menampilkan notifikasi "pilih history yang ingin ditampilkan"

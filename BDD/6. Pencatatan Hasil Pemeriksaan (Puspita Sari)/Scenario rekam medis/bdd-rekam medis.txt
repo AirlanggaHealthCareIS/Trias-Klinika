@@ -5,16 +5,10 @@ REKAM MEDIS
 	Given		: Dokter telah menerima notifikasi dari reservasi
 	When		: Dokter menekan tombol “OK”
 	Then		: Sistem menampilkan data pasien
-	When		: Dokter memilih tombol “ input rekam medis baru “
-	Then		: Sistem menampilkan form rekam medis
+	When		: Dokter memilih rekam medis baru
 	When		: Dokter mengisi field yang di sediakan
-	And		: Dokter menginput field “keluhan” dengan "muntah-muntah dan demam"
-	And		: Dokter menginput field “diagnosa” dengan "typus"
-	And		: Dokter menginput field “tindakan” dengan "cek darah di laboratorium"
-	And		: Dokter menginput field “catatan lain” "tidak ada"
-	And		: Dokter menginput field “alergi obat” dengan "tidak ada"
-	And		: Dokter menginput field “tekanan darah” dengan "normal (120/80 mmhg)
-	And		: Dokter menekan tombol “OK”
-	Then		: Sistem menyimpan rekam medis baru kedalam data base
+	then		: sistem memanggil method "setData"
+	When		: Dokter menekan tombol “save”
+	Then		: Sistem memanggil method "setSave"
 
 	
