@@ -1,0 +1,53 @@
+Scenario 1: user melihat laporan keuangan apotek Tahunan
+Given	: user berada dalam menu laporan keuangan apotek
+When	: memilih jenis laporan Tahunan
+Then	: Interface Laporan keuangan membutuhkan Tahun yang tersedia di class laporan Keuangan Apotek Entitas
+And	: class Laporan Keuangan Apotek Entitas melakukan return (Tahun)
+When	: memilih Tahun
+Than	: Interface Laporan Keuangan membutuhkan list <keuangan>
+And	: class queryLaporanKeuanganApotek memanggil setData yang berisi (bulan dan total pendapatan ) pada laporanKeuanganApotekEntitas
+And	: queryLaporanKeuanganApotek addlist
+And	: queryLaporanKeuanganApotek mereturn lkeuangan
+And	: interface laporankeuanganApotek setModel yang berisi Tabellaporan keuanganApotek
+When	: menekan tombol cetak
+And	: mengconvert to PDF
+
+
+
+Scenario 2: user melihat laporan keuangan apotek bulanan
+Given	: user berada dalam menu laporan keuangan apotek
+When	: memilih jenis laporan bulanan
+Then	: Interface Laporan keuangan membutuhkan Tahun yang tersedia di class laporan Keuangan Apotek Entitas
+And	: class Laporan Keuangan Apotek Entitas melakukan return (Tahun)
+When	: memilih Tahun
+And	: memmanggil method cekTahun pada class laporankeuanganapotek
+Then	: Interface Laporan keuangan membutuhkan bulan yang tersedia di class laporan Keuangan Apotek Entitas
+And	: class Laporan Keuangan Apotek Entitas melakukan return (bulan)
+When	: memilih bulan
+Than	: Interface Laporan Keuangan membutuhkan list <keuangan>
+And	: class queryLaporanKeuanganApotek memanggil setData yang berisi (tanggal dan total pendapatan ) pada laporanKeuanganApotekEntitas
+And	: queryLaporanKeuanganApotek addlist
+And	: queryLaporanKeuanganApotek mereturn lkeuangan
+And	: interface laporankeuanganApotek setModel yang berisi Tabellaporan keuanganApotek
+When	: menekan tombol cetak
+And	: mengconvert to PDF
+
+
+Scenario 3: user melihat laporan keuangan apotek harian
+Given	: user berada dalam menu laporan keuangan apotek
+When	: memilih jenis laporan harian
+Then	: Interface Laporan keuangan membutuhkan Tahun yang tersedia di class laporan Keuangan Apotek Entitas
+And	: class Laporan Keuangan Apotek Entitas melakukan return (Tahun)
+When	: memilih Tahun
+And	: memmanggil method cekTahun pada class laporankeuanganapotek
+Then	: Interface Laporan keuangan membutuhkan bulan yang tersedia di class laporan Keuangan Apotek Entitas
+And	: class Laporan Keuangan Apotek Entitas melakukan return (bulan)
+When	: memilih bulan
+And	: memmanggil method cekbulan pada class laporankeuanganapotek
+Than	: Interface Laporan Keuangan membutuhkan list <keuangan>
+And	: class queryLaporanKeuanganApotek memanggil setData yang berisi (tanggal, harga, total harga ) pada laporanKeuanganApotekEntitas
+And	: queryLaporanKeuanganApotek addlist
+And	: queryLaporanKeuanganApotek mereturn lkeuangan
+And	: interface laporankeuanganApotek setModel yang berisi Tabellaporan keuanganApotek
+When	: menekan tombol cetak
+And	: mengconvert to PDF
