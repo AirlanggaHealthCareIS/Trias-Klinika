@@ -1,9 +1,13 @@
 Sekenario 2 = Penambahan data obat lama, user = dokter
+
 Given	    = Dokter masuk kehalaman inventori obat dokter
-When	    = Memilih obat lama yang ada di database yang akan di tambah
-and	    = Menginputkan kuantiti obat "Antasida" yang akan di tambah
+When	    = Memilih dropdown pilih "lama"
+and	    = Memilih dropdown nama obat "Abate" yang akan di tambah
+and	    = Menginputkan kuantiti obat "50" yang akan di tambah
+and	    = Mengiputkan harga obat "50000" yang akan di tambah
 and	    = Memilih tanggal masuk "5 April 2015"
 and	    = Memilih Masa Pakai "10 september2020"
-and	    = menekan tombol "OK"
-Then	    = Data obat "Antasida" akan bertambah di database
-and	    = Menampilkan data obat "Antasida" yang telah terupdate di tabel
+and	    = Menekan tombol "OK"
+Then	    = Sistem memanggil method "Insert.DataOBlama(Namaobat, jenisobat, kuantitiobat, hargaobat, tglmasuk, masapakai)"
+and	    = Method "insert.DataOBlama" mengembalikan nilai stirng
+and	    = Sistem menampilkan data obat lama yang baru di tabel

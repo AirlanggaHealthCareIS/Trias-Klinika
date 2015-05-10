@@ -49,7 +49,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
                 inventoriObatDokterEntitas.setkuantitiobat(result.getInt("kuantitas_obat"));
                 inventoriObatDokterEntitas.sethargaobat(result.getInt("harga_obat"));
                 inventoriObatDokterEntitas.settglmasuk(result.getString("tgl_masuk_obat"));
-                inventoriObatDokterEntitas.setmasapakai(result.getString("masa_pakai_obat"));
+                inventoriObatDokterEntitas.settglmasapakai(result.getString("masa_pakai_obat"));
                 inventoriObatDokterEntitas.setdeskripsi(result.getString("deskripsi_obat"));;
                 inventoriObatDokterEntitas.setidobat(result.getString("id_obat"));
                 
@@ -164,11 +164,11 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
                     "INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT)"
                     + "values (?, ?, ?, ?, ?)");
 
-            statement.setString(1, inventoriobatDokterEntitas.idobat());
-            statement.setString(2, inventoriobatDokterEntitas.idspesialis());
+            statement.setString(1, inventoriobatDokterEntitas.getidobat());
+            statement.setString(2, inventoriobatDokterEntitas.getidspesialis());
             statement.setString(3, inventoriobatDokterEntitas.getnamaobat());
             statement.setInt(4, inventoriobatDokterEntitas.gethargaobat());
-            statement.setString(5, inventoriobatDokterEntitas.deskripsi());
+            statement.setString(5, inventoriobatDokterEntitas.getdeskripsi());
             System.out.println(statement.toString());
             
 
@@ -192,12 +192,12 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
                     "INSERT INTO detail_obat (ID_DETAIL_OBAT, ID_OBAT, KUANTITAS_OBAT, TGL_MASUK_OBAT, MASA_PAKAI_OBAT, RUANGAN_OBAT)"
                     + "values (?, ?, ?, ?, ?, ?)");
 
-            statement1.setString(1, inventoriobatDokterEntitas.iddetailobat());
-            statement1.setString(2, inventoriobatDokterEntitas.idobat());
+            statement1.setString(1, inventoriobatDokterEntitas.getiddetailobat());
+            statement1.setString(2, inventoriobatDokterEntitas.getidobat());
             statement1.setInt(3, inventoriobatDokterEntitas.getkuantitiobat());
             statement1.setString(4, inventoriobatDokterEntitas.gettglmasuk());
-            statement1.setString(5, inventoriobatDokterEntitas.getmasapakai());
-            statement1.setString(6, inventoriobatDokterEntitas.ruanganobat());
+            statement1.setString(5, inventoriobatDokterEntitas.gettglmasapakai());
+            statement1.setString(6, inventoriobatDokterEntitas.getruanganobat());
             System.out.println(statement1.toString());
 
             statement1.executeUpdate();
@@ -220,7 +220,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
                     "INSERT INTO dibagi (ID_OBAT, ID_JENIS_OBAT)"
                     + "values (?, ?)");
 
-            statement2.setString(1, inventoriobatDokterEntitas.idjenisobat());
+            statement2.setString(1, inventoriobatDokterEntitas.getidjenisobat());
             statement2.setString(2, inventoriobatDokterEntitas.getjenisobat());
             System.out.println(statement.toString());
             

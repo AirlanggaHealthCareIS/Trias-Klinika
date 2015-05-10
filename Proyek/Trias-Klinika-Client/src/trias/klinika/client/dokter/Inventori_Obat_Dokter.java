@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.client.tabel.tabelinventoriobtdokter;
 import trias.klinika.api.entitas.InventoriObatDokterEntitas;
@@ -43,6 +45,22 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         tabel.setModel(tiod);
         
         Dropdownjenis();
+        
+        tabel.setModel(tiod);
+        tabel.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged (ListSelectionEvent e){
+                int row = tabel.getSelectedRow();
+                if (row != -1) {
+                    InventoriObatDokterEntitas IODE = tiod.get(row);                    
+                    textNO.setText(IODE.getnamaobat());
+                    textKO.setText(Integer.toString(IODE.getkuantitiobat()));
+                    textHO.setText(Integer.toString(IODE.gethargaobat()));
+                    texttglmasuk.setDate(java.sql.Date.valueOf(IODE.gettglmasuk()));
+                    texttglmasapakai.setDate(java.sql.Date.valueOf(IODE.gettglmasapakai()));
+                    deskripsi.setText(IODE.getdeskripsi());
+                    }
+            }
+        });
     }
 
     /**
@@ -473,7 +491,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         else {
             InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
             
-            IODE.setnamaobat(textmin.getText());
+            setpengurangan();
             
             tiod.insert(IODE);
             try {
@@ -525,7 +543,13 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_dropaddActionPerformed
 
     private void droplamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_droplamaItemStateChanged
-        // TODO add your handling code here:
+        InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
+        IODE.setidobat(droplama.getSelectedItem().toString().substring(0, 5));
+        textNO.setText(IODE.getnamaobat());
+        textKO.setText(Integer.toString(IODE.getkuantitiobat()));
+        texttglmasuk.setDate(java.sql.Date.valueOf(IODE.gettglmasuk()));
+        texttglmasapakai.setDate(java.sql.Date.valueOf(IODE.gettglmasapakai()));
+        deskripsi.setText(IODE.getdeskripsi());
 
     }//GEN-LAST:event_droplamaItemStateChanged
 
@@ -548,27 +572,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         }
         else {
             InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-            IODE.setidobat(IDO.getText());
-            IODE.setnamaobat(textNO.getText());
-            IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0, 9));
-            String a = dropJO.getSelectedItem().toString();
-            IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
-            IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
-            IODE.sethargaobat(Integer.parseInt(textHO.getText()));
-            Date date = new Date(texttglmasuk.getDate().getTime());
-            System.out.println(date.toString());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String tgl = sdf.format(date);
-            IODE.settglmasuk(tgl);
-            System.out.println(tgl);
-            Date date1 = new Date(texttglmasapakai.getDate().getTime());
-            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-            String tgl1 = sdf1.format(date1);
-            IODE.setmasapakai(tgl1);
-            IODE.setdeskripsi(textdeskripsi.getText());
-            IODE.setiddetailobat("DO0028");
-            IODE.setidspesialis("S0002");
-            IODE.setruanganobat("Ruang 2");
+            settambahOBbaru();
 
             tiod.insert(IODE);
             try {
@@ -628,6 +632,38 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         for (int i=0;i<isi.length;i++){
             dropJO.addItem(isi[i]);
         }
+    }
+    
+    public void settambahOBbaru (){
+        InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
+        
+            IODE.setidobat(IDO.getText());
+            IODE.setnamaobat(textNO.getText());
+            IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0, 9));
+            String a = dropJO.getSelectedItem().toString();
+            IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
+            IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
+            IODE.sethargaobat(Integer.parseInt(textHO.getText()));
+            Date date = new Date(texttglmasuk.getDate().getTime());
+            System.out.println(date.toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl = sdf.format(date);
+            IODE.settglmasuk(tgl);
+            System.out.println(tgl);
+            Date date1 = new Date(texttglmasapakai.getDate().getTime());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl1 = sdf1.format(date1);
+            IODE.settglmasapakai(tgl1);
+            IODE.setdeskripsi(textdeskripsi.getText());
+            IODE.setiddetailobat("DO0040");
+            IODE.setidspesialis("S0002");
+            IODE.setruanganobat("Ruang 2");
+    }
+    
+    public void setpengurangan(){
+        InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
+        
+        IODE.setnamaobat(textmin.getText());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

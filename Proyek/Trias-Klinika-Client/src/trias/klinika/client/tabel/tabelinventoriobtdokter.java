@@ -78,9 +78,9 @@ public class tabelinventoriobtdokter extends AbstractTableModel {
             case 4:
                 return list.get(rowIndex).gettglmasuk();
             case 5:
-                return list.get(rowIndex).getmasapakai();
+                return list.get(rowIndex).gettglmasapakai();
             case 6:
-                return list.get(rowIndex).deskripsi();
+                return list.get(rowIndex).getdeskripsi();
             default:
                 return null;
         }

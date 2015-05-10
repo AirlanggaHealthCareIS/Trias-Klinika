@@ -15,7 +15,7 @@ public class InventoriObatDokterEntitas implements Serializable {
     private int kuantitiobat;
     private int hargaobat;
     private String tglmasuk;
-    private String masapakai;
+    private String tglmasapakai;
     private String deskripsi;
     private String idobat;
     private String iddetailobat;
@@ -63,15 +63,15 @@ public class InventoriObatDokterEntitas implements Serializable {
         this.tglmasuk = tglmasuk;
     }
     
-    public String getmasapakai(){
-        return masapakai;
+    public String gettglmasapakai(){
+        return tglmasapakai;
     }
     
-    public void setmasapakai(String masapakai){
-        this.masapakai = masapakai;
+    public void settglmasapakai(String tglmasapakai){
+        this.tglmasapakai = tglmasapakai;
     }
     
-    public String deskripsi(){
+    public String getdeskripsi(){
         return deskripsi;
     }
     
@@ -79,7 +79,7 @@ public class InventoriObatDokterEntitas implements Serializable {
         this.deskripsi = deskripsi;
     }
     
-    public String idobat(){
+    public String getidobat(){
         return idobat;
     }
     
@@ -87,7 +87,7 @@ public class InventoriObatDokterEntitas implements Serializable {
         this.idobat = idobat;
     }
     
-    public String iddetailobat(){
+    public String getiddetailobat(){
         return iddetailobat;
     }
     
@@ -95,7 +95,7 @@ public class InventoriObatDokterEntitas implements Serializable {
         this.iddetailobat = iddetailobat;
     }
     
-    public String idspesialis(){
+    public String getidspesialis(){
         return idspesialis;
     }
     
@@ -103,7 +103,7 @@ public class InventoriObatDokterEntitas implements Serializable {
         this.idspesialis = idspesialis;
     }
     
-    public String ruanganobat(){
+    public String getruanganobat(){
         return ruanganobat;
     }
     
@@ -111,7 +111,7 @@ public class InventoriObatDokterEntitas implements Serializable {
         this.ruanganobat = ruanganobat;
     }
     
-    public String idjenisobat(){
+    public String getidjenisobat(){
         return idjenisobat;
     }
     

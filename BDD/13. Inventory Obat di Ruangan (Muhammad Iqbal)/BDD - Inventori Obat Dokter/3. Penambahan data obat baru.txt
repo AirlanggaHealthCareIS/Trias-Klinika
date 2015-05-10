@@ -1,12 +1,15 @@
 Sekenario 3 = Penambahan data obat baru, user = dokter
+
 Given	    = Dokter masuk kehalaman inventori obat dokter
-When	    = Menginputkan jenis obat baru yang akan di tambah
-and	    = Menginputkan nama obat dengan "canesten" 
-and	    = Menginputkan jenis obat dengan "gel"
-and	    = Menginputkan kuantiti obat dengan "20"
+When	    = Memilih dropdown pilih "Baru"
+and	    = Menginputkan nama obat "Salbutamol" 
+and	    = Menginputkan jenis obat "tablet"
+and	    = Menginputkan kuantiti obat "20"
+and	    = Menginputkna harga obat "5000"
 and	    = Memilih taggal masuk obat "8 januari 2015"
 and	    = Memilih masa pakai obat "20 desember 2020"
-and	    = Menginputkan deskripsi obat "obat untuk otot"
+and	    = Menginputkan deskripsi obat "obat untuk sesak nafas"
 and	    = menekan tombol "OK"
-Then	    = Data obat "canesten" akan bertambah di database
-and	    = Menampilkan data obat "CTM" yang telah terupdate di tabel
+Then	    = Sistem memanggil method "Insert.DataOBbaru(Namaobat, jenisobat, kuantitiobat, hargaobat, tglmasuk, masapakai, deskripsi)"
+and	    = Method "insert.DataOBlama" mengembalikan nilai stirng
+and	    = Sistem menampilkan data obat baru yang baru di tabel
