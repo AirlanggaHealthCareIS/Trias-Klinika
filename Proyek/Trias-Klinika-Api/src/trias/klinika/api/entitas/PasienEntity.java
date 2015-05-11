@@ -18,6 +18,7 @@ public class PasienEntity implements Serializable {
     String NoTLP;
     String golDarah;
     String tanggal;
+    private int NO_ANTREAN;
    
     public void setid_pasien(String id_pasien){
         this.id_pasien = id_pasien;
@@ -61,5 +62,11 @@ public class PasienEntity implements Serializable {
     }
     public String getTanggal(){
         return tanggal;
+    }
+    public int getNO_ANTREAN(){
+        return NO_ANTREAN;
+    }
+    public void setNO_ANTREAN(int NO_ANTREAN){
+        this.NO_ANTREAN = NO_ANTREAN;
     }
 }
