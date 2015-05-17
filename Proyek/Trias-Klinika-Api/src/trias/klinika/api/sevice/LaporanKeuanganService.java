@@ -17,7 +17,5 @@ public interface LaporanKeuanganService extends Remote{
   
    
     List<LaporanKeuanganApotekEntitas> getlkeuangan() throws RemoteException;
-    String[] Tahun (String [] ob) throws RemoteException;
-    String[] Bulan (String [] ob) throws RemoteException;
-    String[] Tanggal (String [] ob) throws RemoteException;
+    
 }  

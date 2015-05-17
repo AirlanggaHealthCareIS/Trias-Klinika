@@ -66,120 +66,7 @@ public class queryLaporanKeuanganApotek extends UnicastRemoteObject implements L
         }
    }
 
-  
-
-    @Override
-    public String[] Tahun(String[] ob) throws RemoteException {
-         Statement statement = null;
-        
-        try {
-            
-            statement = Koneksidatabase.getConnection().createStatement();
-            
-            ResultSet result = statement.executeQuery("SELECT `TGL_PEMERIKSAAN`FROM `pemeriksaan`");
-            
-            result.last();
-            ob = new String [result.getRow()];
-            result.first();
-
-            for (int i=0;i<ob.length;i++){
-                ob [i] = result.getString("TGL_PEMERIKSAAN").substring(0, 4);
-                result.next();
-            }
-
-            result.close();
-            
-            return ob;
-            
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            return null;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }
-    }
-
-    @Override
-    public String[] Bulan(String[] ob) throws RemoteException {
-        Statement statement = null;
-        
-        try {
-            
-            statement = Koneksidatabase.getConnection().createStatement();
-            
-            ResultSet result = statement.executeQuery("SELECT `TGL_PEMERIKSAAN`FROM `pemeriksaan`");
-            
-            result.last();
-            ob = new String [result.getRow()];
-            result.first();
-
-            for (int i=0;i<ob.length;i++){
-                ob [i] = result.getString("TGL_PEMERIKSAAN").substring(5, 7);
-                result.next();
-            }
-
-            result.close();
-            
-            return ob;
-            
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            return null;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }
     
-    }
-
-    @Override
-    public String[] Tanggal(String[] ob) throws RemoteException {
-        Statement statement = null;
-        
-        try {
-            
-            statement = Koneksidatabase.getConnection().createStatement();
-            
-            ResultSet result = statement.executeQuery("SELECT `TGL_PEMERIKSAAN`FROM `pemeriksaan`");
-            
-            result.last();
-            ob = new String [result.getRow()];
-            result.first();
-
-            for (int i=0;i<ob.length;i++){
-                ob [i] = result.getString("TGL_PEMERIKSAAN").substring(8, 10);
-                result.next();
-            }
-
-            result.close();
-            
-            return ob;
-            
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            return null;
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }
-    }
-    }
 
 
 
@@ -187,3 +74,4 @@ public class queryLaporanKeuanganApotek extends UnicastRemoteObject implements L
     
     
    
+}
