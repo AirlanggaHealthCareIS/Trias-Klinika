@@ -18,8 +18,22 @@ public class Splash extends javax.swing.JDialog {
     public Splash() {
         setUndecorated(true);
         initComponents();
-        //Agar muncul tulisan sudah berapa % loadingnya
         ProgBar.setStringPainted(true);
+    }
+    
+    public void Awal() {
+        Splash pertama = new Splash();
+        pertama.setVisible(true);
+        for(int i=0;i<=100;i++){
+            try {
+                pertama.ProgBar.setValue(i);
+                Thread.sleep(40);
+            }
+            catch (InterruptedException ex) {
+                Logger.getLogger(Splash.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        pertama.dispose();
     }
 
     /**
@@ -83,32 +97,6 @@ public class Splash extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        Splash pertama = new Splash();
-        //Memunculkan splash screen
-        pertama.setVisible(true);
-        //Proses loading 
-        for(int i=0;i<=100;i++){
-    try {
-        //Set value menjadi i
-        pertama.ProgBar.setValue(i);
-        //Pause pekerjaan selama sekian waktu dengan satuan milisecond
-        Thread.sleep(40);
-    }
-    catch (InterruptedException ex) {
-                Logger.getLogger(Splash.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    }
-        //Menutup proses loading
-        pertama.dispose();
-        loading kedua = new loading();
-        //Memunculkan frame tujuan
-        kedua.setVisible(true);
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar ProgBar;
     private javax.swing.JLabel jLabel1;

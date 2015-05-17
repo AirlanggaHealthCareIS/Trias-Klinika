@@ -8,7 +8,6 @@ package trias.klinika.client.Home;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -39,17 +38,16 @@ public class Login extends javax.swing.JFrame implements Runnable {
     private LoginService service1;
     private ListPetugasService service5;
     private LoginEntitas users = new LoginEntitas();
-    public ObjectInputStream readC;
-    public ObjectOutputStream writeC;
-    public Thread clientThread;
+    private ObjectInputStream readC;
+    private ObjectOutputStream writeC;
+    private Thread clientThread;
     private UtamaDokter menudokter;
     private utamaReservasi menureservasi;
     private UtamaApotek menuapotek;
-    Socket client;
-    ServerSocket server;
-    int port = 2013;
-    Date jam;
-    String cek;
+    private Socket client;
+    private int port = 2013;
+    private Date jam;
+    private String cek;
 
     /**
      * Creates new form Login
@@ -149,12 +147,12 @@ public class Login extends javax.swing.JFrame implements Runnable {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         cek = Cek(username.getText(), password.getText());
         if (!"Sukses".equals(cek)) {
-            JOptionPane.showMessageDialog(this, cek);
+            PopUpPesan(cek);
         }
         else {
             cek = Proses(username.getText(), password.getText());
             if (!"Login Sukses".equals(cek)) {
-                JOptionPane.showMessageDialog(this, cek);
+                PopUpPesan(cek);
             }
             else {
                 try {
@@ -254,19 +252,19 @@ public class Login extends javax.swing.JFrame implements Runnable {
     public void Eksekusi (LoginEntitas users) throws RemoteException, NotBoundException {
         if (null != users.getsebagai()) switch (users.getsebagai()) {
             case "dokter":{
-                menudokter = new UtamaDokter(users);
+                menudokter = new UtamaDokter(users, this);
                 menudokter.setTitle(ip);
                 menudokter.setVisible(true);
                 break;
             }
             case "reservasi":{
-                menureservasi = new utamaReservasi(users, clientThread, readC, writeC);
+                menureservasi = new utamaReservasi(users, this);
                 menureservasi.setTitle(ip);
                 menureservasi.setVisible(true);
                 break;
             }
             case "apotek":{
-                menuapotek = new UtamaApotek();
+                menuapotek = new UtamaApotek(users, this);
                 menuapotek.setTitle(ip);
                 menuapotek.setLocation(500, 200);
                 menuapotek.setVisible(true);
@@ -275,6 +273,27 @@ public class Login extends javax.swing.JFrame implements Runnable {
         }
     }
     
+    public void PopUpPesan (String pesan) {
+        JOptionPane.showMessageDialog(this, pesan);
+    }
+    
+    public ObjectInputStream getOIS() {
+        return readC;
+    }
+    public ObjectOutputStream getOUS() {
+        return writeC;
+    }
+    public Thread getThread() {
+        return clientThread;
+    }
+    
+    public LoginEntitas getUsers() {
+        return users;
+    }
+    
+    public ListPetugasService getService5() {
+        return service5;
+    }
     
     /**
      * @param args the command line arguments
@@ -331,22 +350,27 @@ public class Login extends javax.swing.JFrame implements Runnable {
                 catch (ClassNotFoundException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if (msg.tipe.equals("login")) {
-                    JOptionPane.showMessageDialog(this, users.getnamauser()+" Berhasil Login pada "+setTanggal()+" "+setJam(jam));
-                    try {
-                        Eksekusi(users);
-                    } catch (RemoteException | NotBoundException ex) {
-                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    service5.Ubah_Status_Login(users);
-                    kirim(new pesan("updatelist", users.getnamauser(), users.getusername(), "Reservasi"));
-                    this.setVisible(false);
-                }
-                else if (msg.tipe.equals("sudahsign")) {
-                    JOptionPane.showMessageDialog(this, "Username ini Telah dipakai Login di Tempat Lain");
-                }
-                else if (msg.tipe.equals("updatelist")) {
-                    menureservasi.updatelist(msg.isi, msg.pengirim);
+                switch (msg.tipe) {
+                    case "login":
+                        PopUpPesan(users.getnamauser()+" Berhasil Login pada "+setTanggal()+" "+setJam(jam));
+                        this.setVisible(false);
+                        try {
+                            Eksekusi(users);
+                        } catch (RemoteException | NotBoundException ex) {
+                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                        }   
+                        service5.Ubah_Status_Login(users);
+                        kirim(new pesan("updatelist", users.getnamauser(), users.getusername(), "Reservasi"));
+                        break;
+                    case "sudahsign":
+                        PopUpPesan("Username ini Telah dipakai Login di Tempat Lain");
+                        break;
+                    case "updatelist":
+                        menureservasi.updatelist(msg.isi, msg.pengirim);
+                        break;
+                    case "logout":
+                        menureservasi.updatelogout(msg.isi, msg.pengirim);
+                        break;
                 }
             }
             catch (IOException ex) {

@@ -20,7 +20,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trias.klinika.api.entitas.LoginEntitas;
+import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
@@ -31,6 +34,8 @@ import trias.klinika.client.tabel.TabelDokter;
 import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.client.dokter.form_pembayaran;
 import trias.klinika.api.sevice.ServiceResep;
+import trias.klinika.client.Home.Login;
+import trias.klinika.client.Home.Splash;
 import trias.klinika.client.dokter.input_resep;
 /**
  *
@@ -54,6 +59,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     private ServiceResep IR;
     private String[] isi;
     LoginEntitas LE;
+    Login login;
     
     
     /**
@@ -71,8 +77,10 @@ public class UtamaDokter extends javax.swing.JFrame {
 //        new Utama().setVisible(true);
 //    }
     
-    public UtamaDokter(LoginEntitas LE)throws RemoteException,NotBoundException {
+    public UtamaDokter(LoginEntitas LE, Login login)throws RemoteException,NotBoundException {
+        new Splash().Awal();
         this.LE = LE;
+        this.login = login;
         initComponents();
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
@@ -106,6 +114,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
+        logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -158,6 +167,15 @@ public class UtamaDokter extends javax.swing.JFrame {
         });
         jPanel1.add(jToggleButton4);
         jToggleButton4.setBounds(10, 207, 139, 41);
+
+        logout.setText("Logout");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+        jPanel1.add(logout);
+        logout.setBounds(10, 260, 140, 40);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jPanel1.add(jLabel2);
@@ -384,6 +402,17 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        try {
+            login.getService5().Ubah_Status_Logout(LE);
+            login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Reservasi"));
+            login.dispose();
+            this.dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(UtamaDokter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_logoutActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
@@ -393,6 +422,7 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton4;
+    private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
     // End of variables declaration//GEN-END:variables
 }

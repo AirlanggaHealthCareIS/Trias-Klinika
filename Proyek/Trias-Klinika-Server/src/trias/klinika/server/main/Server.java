@@ -174,29 +174,36 @@ public class Server extends javax.swing.JFrame implements Runnable {
     }
 	
     public synchronized void handle(int ID, pesan msg){
-        if(msg.tipe.equals("pesan")){
-            if(msg.penerima.equals("semua")){
-                Announce("pesan", msg.pengirim, msg.isi);
-            }
-            else{
-               findUserThread(msg.penerima).send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
-               clients[findClient(ID)].send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
-            }
-        }
-        else if(msg.tipe.equals("login")){
-            if(findUserThread(msg.pengirim) == null){
-                clients[findClient(ID)].username = msg.pengirim;
-                clients[findClient(ID)].send(new pesan("login", "SERVER", "berhasil", msg.pengirim));
-                riwayat.add(msg.pengirim+" Berhasil login pada "+setTanggal()+" "+setJam(jam));
-            }
-            else{
-                clients[findClient(ID)].send(new pesan("signup", "SERVER", "gagal", msg.pengirim));
-            }
-        }
-        else if(msg.tipe.equals("updatelist")){
-            if(msg.isi.substring(0, 1).equals("D")){
-                UpdateList(msg);
-            }
+        switch (msg.tipe) {
+            case "pesan":
+                if(msg.penerima.equals("semua")){
+                    Announce("pesan", msg.pengirim, msg.isi);
+                }
+                else{
+                    findUserThread(msg.penerima).send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
+                    clients[findClient(ID)].send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
+                }   
+                break;
+            case "login":
+                if(findUserThread(msg.pengirim) == null){
+                    clients[findClient(ID)].username = msg.pengirim;
+                    clients[findClient(ID)].send(new pesan("login", "SERVER", "berhasil", msg.pengirim));
+                    riwayat.add(msg.pengirim+" Berhasil login pada "+setTanggal()+" "+setJam(jam));
+                }
+                else{
+                    clients[findClient(ID)].send(new pesan("signup", "SERVER", "gagal", msg.pengirim));
+                }   
+                break;
+            case "updatelist":
+                if(msg.isi.substring(0, 1).equals("D")){
+                    UpdateList(msg);
+                }   
+                break;
+            case "logout":
+                if(msg.isi.substring(0, 1).equals("D")){
+                    UpdateList(msg);
+                }   
+                break;
         }
     }
     

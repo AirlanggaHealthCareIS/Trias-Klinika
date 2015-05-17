@@ -19,7 +19,7 @@ import trias.klinika.client.tabel.TabelDokter;
 
 public class Antrean extends javax.swing.JInternalFrame {
 
-    public TabelDokter tabeldokter = new TabelDokter();
+    private TabelDokter tabeldokter = new TabelDokter();
     private AntreanServis AS;
     private String[] isi;
     private ListPetugasService LPS;
@@ -416,6 +416,10 @@ public class Antrean extends javax.swing.JInternalFrame {
         System.out.println("pasien imin 3");
     }//GEN-LAST:event_PilihIDPasienPopupMenuWillBecomeVisible
 
+    public TabelDokter getTabel() {
+        return tabeldokter;
+    }
+    
     public void awal() {
         try{
              tabeldokter.setData(this.AS.getDokters());

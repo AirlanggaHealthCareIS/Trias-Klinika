@@ -19,10 +19,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trias.klinika.api.entitas.InventoryObatApotekEntitas;
+import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.client.tabel.tabelInventoryObatApotek;
 import trias.klinika.api.sevice.LaporanKeuanganService;
+import trias.klinika.client.Home.Login;
+import trias.klinika.client.Home.Splash;
 import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
 /**
  *
@@ -42,11 +47,16 @@ final LaporanKeuanganService service9_c_1 = (LaporanKeuanganService)registry.loo
 LaporanKeuanganApotek laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
 private LaporanKeuanganService LKS;
 private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
+LoginEntitas LE;
+Login login;
    
 
 
 
-    public UtamaApotek() throws RemoteException,NotBoundException{
+    public UtamaApotek(LoginEntitas LE, Login login) throws RemoteException,NotBoundException{
+        new Splash().Awal();
+        this.LE = LE;
+        this.login = login;
         initComponents();
         internal_frame ();
         nama.setText(localhost);
@@ -72,6 +82,7 @@ private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuang
         nama = new javax.swing.JTextField();
         internalFrame = new javax.swing.JDesktopPane();
         laporankeuangan = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -116,6 +127,15 @@ private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuang
         });
         getContentPane().add(laporankeuangan);
         laporankeuangan.setBounds(20, 260, 160, 23);
+
+        logout.setText("Logout");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(logout);
+        logout.setBounds(30, 300, 65, 23);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -175,6 +195,16 @@ private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuang
         }
     }//GEN-LAST:event_laporankeuanganActionPerformed
 
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        try {
+            login.getService5().Ubah_Status_Logout(LE);
+            login.dispose();
+            this.dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(UtamaApotek.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_logoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,6 +232,7 @@ public void internal_frame (){
     private javax.swing.JButton inventory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton laporankeuangan;
+    private javax.swing.JButton logout;
     private javax.swing.JTextField nama;
     // End of variables declaration//GEN-END:variables
 }

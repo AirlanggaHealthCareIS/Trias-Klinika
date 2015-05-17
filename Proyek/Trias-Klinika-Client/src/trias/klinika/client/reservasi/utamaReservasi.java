@@ -10,10 +10,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseListener;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -30,7 +26,9 @@ import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.api.sevice.AntreanServis;
+import trias.klinika.client.Home.Login;
 import trias.klinika.client.tabel.TabelDokter;
+import trias.klinika.client.Home.Splash;
 
 /**
  *
@@ -59,12 +57,14 @@ public class utamaReservasi extends javax.swing.JFrame {
     private JInternalFrame internalFrame1 = new JInternalFrame("Frame Antrean");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pendaftaran");
     private JInternalFrame internalFrame3 = new JInternalFrame("Frame List Pembayaran");
-    public ObjectInputStream readC;
-    public ObjectOutputStream writeC;
-    public Thread clientThread;
+    Login login;
     
     /**
      * Creates new form Utama
+     * @param LE
+     * @param login
+     * @throws java.rmi.RemoteException
+     * @throws java.rmi.NotBoundException
      */
     
 //    public static void main(String[] args) {
@@ -78,10 +78,10 @@ public class utamaReservasi extends javax.swing.JFrame {
 //        new Utama().setVisible(true);
 //    }
     
-    public utamaReservasi(LoginEntitas LE, Thread clientThread, ObjectInputStream readC, ObjectOutputStream writeC)throws RemoteException,NotBoundException {
+    public utamaReservasi(LoginEntitas LE, Login login)throws RemoteException,NotBoundException {
+        new Splash().Awal();
         this.LE = LE;
-        this.readC = readC;
-        this.writeC = writeC;
+        this.login = login;
         initComponents();
         internal_frame();
         nama.setText(LE.getnamauser());
@@ -115,6 +115,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
+        logout = new javax.swing.JButton();
         nama = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -144,6 +145,13 @@ public class utamaReservasi extends javax.swing.JFrame {
             }
         });
 
+        logout.setText("Logout");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -153,7 +161,8 @@ public class utamaReservasi extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(82, Short.MAX_VALUE))
@@ -167,7 +176,9 @@ public class utamaReservasi extends javax.swing.JFrame {
                 .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 391, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 334, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -226,6 +237,16 @@ public class utamaReservasi extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        try {
+            login.getService5().Ubah_Status_Logout(LE);
+            login.dispose();
+            this.dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_logoutActionPerformed
     public void internal_frame (){
         
         internalFrame1.add(Ant.getContentPane());
@@ -274,7 +295,16 @@ public class utamaReservasi extends javax.swing.JFrame {
     public void updatelist (String Id, String Nama) {
         JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
         try {
-            Ant.tabeldokter.insert(service5.AmbilData(Id));
+            Ant.getTabel().insert(service5.AmbilData(Id));
+        } catch (RemoteException ex) {
+            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updatelogout (String Id, String Nama) {
+        JOptionPane.showMessageDialog(null, Nama+" Telah melakukan Logout");
+        try {
+            Ant.getTabel().delete(service5.AmbilData(Id));
         } catch (RemoteException ex) {
             Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -285,6 +315,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
     // End of variables declaration//GEN-END:variables
 }
