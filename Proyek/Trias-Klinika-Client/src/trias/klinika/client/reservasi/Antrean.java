@@ -14,14 +14,12 @@ import trias.klinika.api.sevice.AntreanServis;
 import trias.klinika.api.sevice.ListPetugasService;
 //import trias.klinika.api.sevice.PasienService;
 import trias.klinika.client.tabel.TabelDokter;
-import trias.klinika.client.tabel.TabelPasien;
 //import trias.klinika.api.sevice.PemeriksaanService;
 //import trias.klinika.api.entitas.Pemeriksaan;
 
 public class Antrean extends javax.swing.JInternalFrame {
 
     public TabelDokter tabeldokter = new TabelDokter();
-    public TabelPasien tabelpasien = new TabelPasien();
     private AntreanServis AS;
     private String[] isi;
     private ListPetugasService LPS;
@@ -33,8 +31,7 @@ public class Antrean extends javax.swing.JInternalFrame {
         this.AS=AS;
         initComponents();
         tabeldokter.setData(LPS.AmbilDokterOnline());
-        tabelpasien.setData(this.AS.getPasienEntitys());
-        tabelantrean.setModel(tabelpasien);
+
          jTable2.setModel(tabeldokter);
 
     }
