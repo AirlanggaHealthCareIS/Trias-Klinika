@@ -49,14 +49,13 @@ public class Splash extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        progBar = new javax.swing.JLabel();
         ProgBar = new javax.swing.JProgressBar();
+        progBar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
         setMinimumSize(new java.awt.Dimension(1366, 768));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Nyala", 3, 50)); // NOI18N
@@ -83,15 +82,15 @@ public class Splash extends javax.swing.JDialog {
         getContentPane().add(jLabel5);
         jLabel5.setBounds(170, 280, 340, 40);
 
-        progBar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
-        getContentPane().add(progBar);
-        progBar.setBounds(0, 0, 1366, 768);
-
         ProgBar.setBackground(new java.awt.Color(255, 255, 255));
         ProgBar.setFont(new java.awt.Font("Nyala", 3, 18)); // NOI18N
         ProgBar.setForeground(new java.awt.Color(0, 153, 0));
         getContentPane().add(ProgBar);
         ProgBar.setBounds(10, 460, 1350, 30);
+
+        progBar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
+        getContentPane().add(progBar);
+        progBar.setBounds(0, 0, 1366, 768);
 
         pack();
         setLocationRelativeTo(null);

@@ -78,31 +78,37 @@ public class Login extends javax.swing.JFrame implements Runnable {
         login = new javax.swing.JButton();
         judul = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1366, 768));
+        setPreferredSize(new java.awt.Dimension(1355, 768));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1147, 557));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1366, 768));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         jPanel1.setLayout(null);
 
         user.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        user.setForeground(new java.awt.Color(255, 255, 255));
         user.setText("Username");
         jPanel1.add(user);
-        user.setBounds(630, 240, 110, 30);
+        user.setBounds(390, 390, 110, 30);
 
         pass.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        pass.setForeground(new java.awt.Color(255, 255, 255));
         pass.setText("Password");
         jPanel1.add(pass);
-        pass.setBounds(630, 300, 100, 30);
+        pass.setBounds(390, 450, 100, 30);
 
         username.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jPanel1.add(username);
-        username.setBounds(740, 240, 180, 30);
+        username.setBounds(500, 390, 180, 30);
 
         password.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jPanel1.add(password);
-        password.setBounds(740, 300, 180, 30);
+        password.setBounds(500, 450, 180, 30);
 
         login.setText("Login");
         login.addActionListener(new java.awt.event.ActionListener() {
@@ -111,34 +117,36 @@ public class Login extends javax.swing.JFrame implements Runnable {
             }
         });
         jPanel1.add(login);
-        login.setBounds(960, 260, 70, 50);
+        login.setBounds(720, 410, 70, 50);
 
         judul.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
         judul.setForeground(new java.awt.Color(255, 255, 255));
         judul.setText("Login");
         jPanel1.add(judul);
-        judul.setBounds(500, 130, 120, 60);
+        judul.setBounds(270, 310, 120, 60);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/doctor.png"))); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(500, 220, 130, 140);
+        jLabel2.setBounds(260, 370, 130, 140);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/BGlogin.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/22.png"))); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(100, 50, 810, 380);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/BG login.jpg"))); // NOI18N
         jLabel3.setText("  ");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(0, 0, 1150, 560);
+        jLabel3.setBounds(0, 0, 1370, 770);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1147, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -380,6 +388,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

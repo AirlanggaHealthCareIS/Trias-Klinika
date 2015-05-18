@@ -12,9 +12,9 @@ import trias.klinika.api.entitas.laporan_keuangan_reservasiEntity;
  *
  * @author Acer
  */
-public class QueryLaporanReservasi extends UnicastRemoteObject implements laporan_keuangan_reservasiEntity {
-     public queryLaporanReservasi() throws RemoteException {
-       
-   }
-
-}
+//public class QueryLaporanReservasi extends UnicastRemoteObject implements laporan_keuangan_reservasiEntity {
+//     public queryLaporanReservasi() throws RemoteException {
+//       
+//   }
+//
+//}

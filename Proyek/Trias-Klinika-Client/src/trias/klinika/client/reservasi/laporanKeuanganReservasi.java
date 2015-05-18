@@ -138,12 +138,12 @@ private void jenis1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
 // TODO add your handling code here:
     if (jenis1.getSelectedItem()== "Harian"){
     tabelReservasi.setVisible(true);
-    try {
-            TLR.setData(this.SKS.getlaporan());
-        } catch (RemoteException exception) {
-            exception.printStackTrace();
-        }
-    tabelReservasi.setModel(TLR);
+//    try {
+//            TLR.setData(this.SKS.getlaporan());
+//        } catch (RemoteException exception) {
+//            exception.printStackTrace();
+//        }
+//    tabelReservasi.setModel(TLR);
      
 }
 }//GEN-LAST:event_jenis1ActionPerformed
