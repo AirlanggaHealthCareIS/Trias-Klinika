@@ -159,7 +159,7 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
     }
     
     @Override
-    public int d (int id) throws RemoteException {
+    public String d (String id) throws RemoteException {
         System.out.println("Client Melakukan Proses Get By Id");
 
         Statement statement = null;
@@ -170,7 +170,7 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
                 ("SELECT ID_PEMBAYARAN FROM pembayaran ");
             
             result.last();
-            id = result.getInt("ID_PEMBAYARAN");
+            id = result.getString("ID_PEMBAYARAN");
              
                
 
