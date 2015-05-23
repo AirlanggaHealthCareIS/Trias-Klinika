@@ -17,7 +17,7 @@ import java.rmi.registry.Registry;
 import java.util.List;
 import trias.klinika.api.entitas.rekammedisEntyty;
 import trias.klinika.api.sevice.serviceRekam;
-import trias.klinika.client.dokter.datapasien;
+import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.client.tabel.tabelrekammedis;
 
 /**
@@ -54,7 +54,7 @@ public class scenario1_History_benar {
         fail("The test case is a prototype.");
     }
     /**
-     * Test of setHistory method, of class datapasien.
+     * Test of setHistory method, of class rekammedis.
      */
     @Test
     public void testSetHistory() throws RemoteException, NotBoundException  {
@@ -62,7 +62,7 @@ public class scenario1_History_benar {
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
         System.out.println("setHistory");      
-        datapasien interfaceRekammedis = new datapasien (service6);
+        rekammedis interfaceRekammedis = new rekammedis (service6);
         interfaceRekammedis.setHistory();
     }
 

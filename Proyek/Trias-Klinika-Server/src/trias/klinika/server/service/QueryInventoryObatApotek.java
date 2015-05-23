@@ -33,20 +33,20 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.kuantitas_obat, do.tgl_masuk_obat, do.masa_pakai_obat, jo.nama_jenis_obat FROM obat as o, detail_obat as do, jenis_obat as jo, dibagi as d WHERE do.ruangan_obat = 'Apotek'");
+            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = \"Apotek\" AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
-                inventory.setIdObat(result.getString("id_obat"));
+  
                 inventory.setNamaObat(result.getString("nama_obat"));
-                inventory.setJenisObat(result.getString("nama_jenis_obat"));
-                inventory.setQty(result.getInt("kuantitas_obat"));
-                inventory.setHargaObat(result.getInt("harga_obat"));
-                inventory.setTglMasuk(result.getString("tgl_masuk_obat"));
-                inventory.setMasaPakai(result.getString("masa_pakai_obat"));
                 inventory.setDeskripsi(result.getString("deskripsi_obat"));
-                
-                
+                inventory.setHargaObat(result.getInt("harga_obat"));
+                inventory.setQty(result.getInt("qty_obat"));
+                inventory.setTglMasuk(result.getString("tgl_masuk"));
+                inventory.setMasaPakai(result.getString("masa_pakai"));
+                inventory.setJenisObat(result.getString("nama_jenis"));
+                inventory.setNamaSpesialis(result.getString("nama_spesialis"));
+
                 list.add(inventory);
             }
             result.close();
@@ -200,7 +200,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
             jenis = new String [result.getRow()];
             result.first();
             for(int i=0;i<jenis.length;i++){
-                jenis [i] = result.getString("id_jenis_obat")+"-"+result.getString("nama_jenis_obat");
+                jenis [i] = result.getString("id_jenis")+"-"+result.getString("nama_jenis");
                 result.next();
             }
             result.close();;

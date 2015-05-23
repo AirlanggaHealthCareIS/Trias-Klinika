@@ -50,17 +50,19 @@ public class tabelInventoryObatApotek extends AbstractTableModel{
             case 0:
                 return "Nama Obat";
             case 1:
-                return "Jenis Obat";
+                return "Deskripsi";
             case 2:
-                return "Quantity";
+                return "Harga";
             case 3:
-                return "Harga Obat";
+                return "QTY";
             case 4:
                 return "Tanggal Masuk";
             case 5:
                 return "Masa Pakai";
             case 6:
-                return "Deskripsi";
+                return "Jenis";
+            case 7:
+                return "Spesialis";
             default :
                 return null;
         }
@@ -71,7 +73,7 @@ public class tabelInventoryObatApotek extends AbstractTableModel{
     }
     @Override
     public int getColumnCount(){
-        return 7;
+        return 8;
     }
     @Override
     public Object getValueAt (int rowIndex, int columnIndex){
@@ -79,17 +81,19 @@ public class tabelInventoryObatApotek extends AbstractTableModel{
             case 0:
                 return list.get(rowIndex).getNamaObat();
             case 1:
-                return list.get(rowIndex).getJenisObat();
+                return list.get(rowIndex).getDeskripsi();
             case 2:
-                return list.get(rowIndex).getQty();
-            case 3:
                 return list.get(rowIndex).getHargaObat();
+            case 3:
+                return list.get(rowIndex).getQty();
             case 4:
                 return list.get(rowIndex).getTglMasuk();
             case 5:
                 return list.get(rowIndex).getMasaPakai();
             case 6:
-                return list.get(rowIndex).getDeskripsi();
+                return list.get(rowIndex).getJenisObat();
+            case 7:
+                return list.get(rowIndex).getNamaSpesialis();
             default:
                 return null;
         

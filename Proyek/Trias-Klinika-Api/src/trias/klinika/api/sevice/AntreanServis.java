@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import trias.klinika.api.entitas.Dokter;
 import trias.klinika.api.entitas.PasienEntity;
+import trias.klinika.api.entitas.PemeriksaanEntitas;
 
 /**
  *
@@ -16,10 +17,16 @@ public interface AntreanServis extends Remote{
     int getIDPasien() throws RemoteException;
     List<PasienEntity> getPasienEntitys() throws RemoteException;
     PasienEntity insertIDPasien (PasienEntity a) throws RemoteException;
+    PemeriksaanEntitas insertPemeriksaan (PemeriksaanEntitas a) throws RemoteException;
+    PasienEntity getpasienkanan(String id) throws RemoteException;
+    List<PemeriksaanEntitas> getpasienkiri(String id) throws RemoteException;
     
     List<Dokter> getDokters() throws RemoteException;
+    List<PemeriksaanEntitas> getPemeriksaans() throws RemoteException;
     Dokter insertDokter (Dokter a) throws RemoteException;
     Dokter getDokter (int IdDokter) throws RemoteException;
+    
+    String getIDdokter(String nama_dokter) throws RemoteException;
    
     /**
      *

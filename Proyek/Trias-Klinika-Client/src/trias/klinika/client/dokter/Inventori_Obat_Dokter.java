@@ -31,11 +31,11 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
      * Creates new form Inventori_Obat_Dokter
      */
     
-    public Inventori_Obat_Dokter(InventoriObatDokterService IODS) throws RemoteException {
+    public Inventori_Obat_Dokter(InventoriObatDokterService IODS, UtamaDokter UD) throws RemoteException {
         this.IODS = IODS;
         
         try {
-            tiod.setData(this.IODS.getobat());
+            tiod.setData(this.IODS.getobat(this.IODS.Spesialis(UD.LE.getusername())));
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
@@ -336,7 +336,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         });
 
         textruang.setEditable(false);
-        textruang.setText("Ruangan");
+        textruang.setText("Spesialis");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -454,7 +454,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -22,6 +22,7 @@ import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import trias.klinika.api.entitas.LoginEntitas;
+import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.ListPetugasService;
@@ -258,6 +259,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         try {
             login.getService5().Ubah_Status_Logout(LE);
+            login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Server"));
             login.dispose();
             this.dispose();
         } catch (RemoteException ex) {
@@ -318,23 +320,23 @@ public class utamaReservasi extends javax.swing.JFrame {
         }
     }
     
-    public void updatelist (String Id, String Nama) {
-        JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
-        try {
-            Ant.getTabel().insert(service5.AmbilData(Id));
-        } catch (RemoteException ex) {
-            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void updatelogout (String Id, String Nama) {
-        JOptionPane.showMessageDialog(null, Nama+" Telah melakukan Logout");
-        try {
-            Ant.getTabel().delete(service5.AmbilData(Id));
-        } catch (RemoteException ex) {
-            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void updatelist (String Id, String Nama) {
+//        JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
+//        try {
+//            Ant.getTabel().insert(service5.AmbilData(Id));
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//    
+//    public void updatelogout (String Id, String Nama) {
+//        JOptionPane.showMessageDialog(null, Nama+" Telah melakukan Logout");
+//        try {
+//            Ant.getTabel().delete(service5.AmbilData(Id));
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JPanel jPanel1;

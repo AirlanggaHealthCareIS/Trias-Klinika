@@ -18,7 +18,6 @@ import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import trias.klinika.client.dokter.Menu_Dokter;
 import trias.klinika.api.entitas.PembayaranEntitas;
 import trias.klinika.api.entitas.RincianPembayaran;
 import trias.klinika.api.sevice.pembayaranService;
@@ -35,7 +34,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
     private int totalHarga = 0;
     private tabelPembayaran tp = new tabelPembayaran();
     String tanggalinsertnow = "";
-    int d;
+    String d;
     boolean a = true;
     String idia = "";
 
@@ -83,8 +82,13 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         tanggalinsertnow = YearFormat.format(Year)+"-"+MonthFormat.format(Month)+"-"+dateFormat.format(date);
         
         d = ps.d(d);
-        d++;
-        nomert.setText(Integer.toString(d));
+        String b = Integer.toString((Integer.parseInt(d.substring(1,5)))+1); //memisahkan angka D dengan 0001
+     //menambahkan angka belakang    
+        for (int i = b.length(); i < 4; i++ ) {
+            b = "0" + b;
+        } 
+        d = d.substring(0, 1) + b;
+        nomert.setText(d);
         
         idia = ps.ID(idia);
         id.setText(idia);

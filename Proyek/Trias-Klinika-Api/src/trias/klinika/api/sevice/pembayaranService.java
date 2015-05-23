@@ -20,6 +20,6 @@ public interface pembayaranService extends Remote {
     void Save (PembayaranEntitas PE)throws RemoteException;
     void save (RincianPembayaranEntitas RPE)throws RemoteException;
     int biaya (int harga, String id)throws RemoteException;
-    int d (int id) throws RemoteException;
+    String d (String id) throws RemoteException;
     String ID (String idp) throws RemoteException; 
 }

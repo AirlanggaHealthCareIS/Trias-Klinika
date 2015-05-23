@@ -2,61 +2,96 @@
 package trias.klinika.client.reservasi;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import trias.klinika.api.entitas.Dokter;
 import trias.klinika.api.entitas.PasienEntity;
 import trias.klinika.api.sevice.AntreanServis;
 import trias.klinika.api.sevice.ListPetugasService;
-//import trias.klinika.api.sevice.PasienService;
 import trias.klinika.client.tabel.TabelDokter;
-//import trias.klinika.api.sevice.PemeriksaanService;
-//import trias.klinika.api.entitas.Pemeriksaan;
-
+import trias.klinika.client.tabel.TabelPasien;
+import trias.klinika.api.entitas.PemeriksaanEntitas;
 public class Antrean extends javax.swing.JInternalFrame {
 
-    private TabelDokter tabeldokter = new TabelDokter();
+    public TabelDokter tabeldokter = new TabelDokter();
+    public TabelPasien tabelpasien = new TabelPasien();
     private AntreanServis AS;
     private String[] isi;
     private ListPetugasService LPS;
-//    private PemeriksaanService PS;
+    public PemeriksaanEntitas PE = new PemeriksaanEntitas();
+    public List<PasienEntity> list;
+    private Object connection;
     
     public Antrean(ListPetugasService LPS, AntreanServis AS)throws RemoteException {
 
+        setTanggal(jLabel1);
+        list = new ArrayList<>();
         this.LPS=LPS;
         this.AS=AS;
         initComponents();
         tabeldokter.setData(LPS.AmbilDokterOnline());
-
-         jTable2.setModel(tabeldokter);
-
+        tabelkanan.setModel(tabeldokter);
+//         int baris = tabelpasien.getRowCount();
+//         for(int j = 0 ; j<baris;j++){
+//            PasienEntity baru = new PasienEntity();
+////            baru.setNO_ANTREAN(j+1);
+////            list.add(baru);
+            
+////            tabelpasien.setData(list);
+//
+//            String nomor = String.valueOf(j);
+//            
+////            tabelantrean.setModel(tabelpasien);
+//            tabelantrean.setValueAt(nomor, j, 1);
+//        }
+//                tabelpasien.setData(this.AS.getPemeriksaans());
+//                tabelkiri.setModel(tabelpasien);
+                noTable();
     }
-         private void initiateComboBox1(){
-             System.out.println("skrol 1");
-        PilihDokter.removeAllItems();
-             System.out.println("skrol 2");
-        List<Dokter> pd;
-             System.out.println("skrol 3");
-        try {
-            pd = AS.getDokters();
-            System.out.println("skrol 4");
-            for(int i = 0; i<pd.size();i++){                
-               PilihDokter.addItem(pd.get(i).getnama_dokter().toUpperCase());           
-                System.out.println("skrol 5");
-            }            
-        } catch (RemoteException ex) {
-//            Logger.getLogger(Form_tambah_bahan.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("skrol 6");
+
+    private void noTable()
+	{
+            System.out.println("taperwer");
+		int baris = tabelkiri.getRowCount();
+		for(int a=0; a<baris; a++)
+		{
+			String nomor = String.valueOf(a+1);
+			tabelkiri.setValueAt(nomor, a, 0);
+                        System.out.println("taperwer 2");
+//                        PasienEntity baru = new PasienEntity();
+//                        baru.setNO_ANTREAN(a+1);
+//                        list.add(baru);
+//                        tabelpasien.setData(list);
+                }
+                
         }
+
+         private void initiateComboBox1(){
+        List<Dokter> pd;
+        pd = tabeldokter.getDataDokter();
+            for(int i = 0; i<pd.size();i++){                
+               PilihDokter.addItem(pd.get(i).getnama_dokter().toUpperCase());
+            }
     
     }
 
-         private void initiateComboBox2(){
-        PilihIDPasien.removeAllItems();        
+         private void initiateComboBox2(){      
         List<PasienEntity> pe;
         try {
             pe = AS.getPasienEntitys();
@@ -64,8 +99,6 @@ public class Antrean extends javax.swing.JInternalFrame {
                PilihIDPasien.addItem(pe.get(i).getid_pasien());         
             }            
         } catch (RemoteException ex) {
-            System.out.println("fatich");
-//            Logger.getLogger(Form_tambah_bahan.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }
@@ -76,13 +109,15 @@ public class Antrean extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelantrean = new javax.swing.JTable();
+        tabelkiri = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         PilihDokter = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabelkanan = new javax.swing.JTable();
         TambahAntrean = new javax.swing.JToggleButton();
         PilihIDPasien = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        imin = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(1146, 577));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -129,7 +164,7 @@ public class Antrean extends javax.swing.JInternalFrame {
             }
         });
 
-        tabelantrean.setModel(new javax.swing.table.DefaultTableModel(
+        tabelkiri.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -140,7 +175,22 @@ public class Antrean extends javax.swing.JInternalFrame {
                 "No", "ID Pasien", "Nama", "Status"
             }
         ));
-        jScrollPane1.setViewportView(tabelantrean);
+        tabelkiri.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelkiriMouseClicked(evt);
+            }
+        });
+        tabelkiri.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                tabelkiriComponentShown(evt);
+            }
+        });
+        tabelkiri.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tabelkiriComponentAdded(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelkiri);
 
         jLabel4.setText("List Dokter yang Aktif");
 
@@ -165,7 +215,7 @@ public class Antrean extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabelkanan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -176,22 +226,22 @@ public class Antrean extends javax.swing.JInternalFrame {
                 "1", "2", "3"
             }
         ));
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelkanan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
+                tabelkananMouseClicked(evt);
             }
         });
-        jTable2.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tabelkanan.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                jTable2ComponentShown(evt);
+                tabelkananComponentShown(evt);
             }
         });
-        jTable2.addContainerListener(new java.awt.event.ContainerAdapter() {
+        tabelkanan.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jTable2ComponentAdded(evt);
+                tabelkananComponentAdded(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tabelkanan);
 
         TambahAntrean.setText("Tambah ke Antrean");
         TambahAntrean.addActionListener(new java.awt.event.ActionListener() {
@@ -226,38 +276,51 @@ public class Antrean extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
-                        .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(TambahAntrean))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(199, 199, 199))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(426, 426, 426)
+                        .addComponent(imin, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(135, 135, 135)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TambahAntrean))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(123, 123, 123)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(198, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(356, 356, 356))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TambahAntrean, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(70, Short.MAX_VALUE))
+                    .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(imin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                        .addGap(60, 60, 60))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -266,11 +329,15 @@ public class Antrean extends javax.swing.JInternalFrame {
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         // TODO add your handling code here:
         awal();
+        ListAntrean();
+        noTable();
         System.out.println("imin part 1");
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         awal();
+        ListAntrean();
+        noTable();
         System.out.println("imin part 2");
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameOpened
@@ -278,148 +345,140 @@ public class Antrean extends javax.swing.JInternalFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         awal();
+        ListAntrean();
+        noTable();
         System.out.println("imin part 3");
     }//GEN-LAST:event_formComponentShown
 
-    private void jTable2ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTable2ComponentShown
+    private void tabelkananComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelkananComponentShown
         // TODO add your handling code here:
          awal();
          System.out.println("imin part 4");
-    }//GEN-LAST:event_jTable2ComponentShown
+    }//GEN-LAST:event_tabelkananComponentShown
 
     private void TambahAntreanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahAntreanActionPerformed
-        // TODO add your handling code here:
-//       boolean isi1 = false;
-//       boolean isi2 = false;
-//
-//        if(!PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString().equals("Pilih ID Pasien")){
-//            isi1 = true;
-//        }
-//        if(!PilihDokter.getItemAt(PilihDokter.getSelectedIndex()).toString().equals("Pilih Dokter")){
-//            isi2 = true;
-//        }
-//        if(isi1&&isi2)    {
-//            
-//            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
-//            String iddok =  PilihDokter.getItemAt(PilihDokter.getSelectedIndex()).toString();
-//            try {
-//                Dokter d = new Dokter();
-//                PasienEntity p = new PasienEntity();
-//                d.setid_dokter(iddok);
-//                p.setid_pasien(idpas);
-//                DoSer.insertDokter(d);
-//                PaSer.insertIDPasien(p);
-//                Pemeriksaan temp1 = new Pemeriksaan();
-////                Dokter temp=DoSer.getLastBahan();
-////                PasienEntity temp=PaSer.getLastBahan();
-//
-//                temp1.setid_pemeriksaan(idpas);
-//                temp1.setid_rekam_medis(idpas);
-//                temp1.setid_reservasi(idpas);
-//                temp1.setid_pasien(idpas);
-//                temp1.setid_dokter(iddok);
-//                temp1.setid_resep(WIDTH);
-//                temp1.setid_pembayaran(WIDTH);
-//                temp1.settgl_pemeriksaan(idpas);
-//                temp1.setno_antrean(WIDTH);
-//                PS.insertPasienDokter(temp1);
-////                int opsi = JOptionPane.showConfirmDialog(null, "Data Anda berhasil disimpan. Apakah Anda akan menambahkan data lagi?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-////                if(opsi==0){
-////                    refresh();
-////                }
-////                else{
-////                    f.setVisible(true);
-////                    this.dispose();
-////                }
-//            }
-//            catch(RemoteException exception){
-//                exception.printStackTrace();
-//            }
-//        }
-//        else{
-//            if(!isi1){
-//                jTextField2.setBackground(Color.red);
-//            }
-//            if(!isi2){
-//                jTextField3.setBackground(Color.red);
-//            }
-//            if(!isi3){
-//                jComboBox1.setBackground(Color.red);
-//            }
-//            if(!isi4){
-//                jComboBox2.setBackground(Color.red);
-//            }
-//            JOptionPane.showMessageDialog(null, "Ada kesalahan pada kolom isian Anda. Mohon memperbaiki field yang berwarna merah untuk melanjutkan.", "ERROR", JOptionPane.ERROR_MESSAGE);
-//        }
-        System.out.println("imin part 5");
+
+        Dokter d =new Dokter();
+        int id_dokter=0;
+
+        try {
+            
+            String ID = null;
+            int bayar=0;
+            PemeriksaanEntitas a = new PemeriksaanEntitas();
+            int c = AS.getPemeriksaans().size()+1;
+            ID = "PE000"+c;
+            bayar = AS.getPemeriksaans().size();
+            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
+            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
+            a.setID_PEMERIKSAAAN(ID);
+            a.setID_PASIEN(idpas);
+            a.setID_DOKTER(iddok);
+            a.setID_RESERVASI("R0001");
+            a.setNO_ANTRIAN(6);
+            a.setTGL_PEMERIKSAAN("2015-03-17");
+            AS.insertPemeriksaan(a);
+
+            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
+                        refresh();
+        } catch (RemoteException ex) {
+            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_TambahAntreanActionPerformed
 
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         // TODO add your handling code here:
         awal();
+        ListAntrean();
+        noTable();
         System.out.println("imin part 6");
     }//GEN-LAST:event_formComponentAdded
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
         // TODO add your handling code here:
         awal();
+        ListAntrean();
+        noTable();
         System.out.println("imin part 7");
     }//GEN-LAST:event_formFocusGained
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_formMouseClicked
 
-    private void jTable2ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTable2ComponentAdded
-        // TODO add your handling code here:
+    private void tabelkananComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelkananComponentAdded
         awal();
         System.out.println("imin part 8");
-    }//GEN-LAST:event_jTable2ComponentAdded
+    }//GEN-LAST:event_tabelkananComponentAdded
 
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+    private void tabelkananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkananMouseClicked
+ int row = tabelkanan.rowAtPoint(evt.getPoint());
+        PasienEntity paen = new PasienEntity ();
+        try {            
+            paen = AS.getpasienkanan(tabeldokter.get(row).getid_dokter());
+        } catch (RemoteException ex) {
+            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable2MouseClicked
+            Object selectedObj = tabelkanan.getValueAt(row, 0);
+
+                try {
+                tabelpasien.setData(this.AS.getpasienkiri(""+selectedObj));
+            } catch (RemoteException ex) {
+                Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tabelkiri.setModel(tabelpasien);
+           
+    }//GEN-LAST:event_tabelkananMouseClicked
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_formMouseMoved
 
     private void PilihDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PilihDokterActionPerformed
-        System.out.println("dokter imin 1");
+
     }//GEN-LAST:event_PilihDokterActionPerformed
 
     private void PilihDokterFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PilihDokterFocusGained
-        // TODO add your handling code here:
-        System.out.println("dokter imin 2");
+
     }//GEN-LAST:event_PilihDokterFocusGained
 
     private void PilihDokterPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_PilihDokterPopupMenuWillBecomeVisible
         // TODO add your handling code here:
         initiateComboBox1();
-        System.out.println("dokter imin 3");
+
     }//GEN-LAST:event_PilihDokterPopupMenuWillBecomeVisible
 
     private void PilihIDPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PilihIDPasienActionPerformed
-        // TODO add your handling code here:
-        System.out.println("pasien imin 1");
+
     }//GEN-LAST:event_PilihIDPasienActionPerformed
 
     private void PilihIDPasienFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PilihIDPasienFocusGained
-        // TODO add your handling code here:
-        System.out.println("pasien imin 2");
+
     }//GEN-LAST:event_PilihIDPasienFocusGained
 
     private void PilihIDPasienPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_PilihIDPasienPopupMenuWillBecomeVisible
         // TODO add your handling code here:
         initiateComboBox2();
-        System.out.println("pasien imin 3");
     }//GEN-LAST:event_PilihIDPasienPopupMenuWillBecomeVisible
 
-    public TabelDokter getTabel() {
-        return tabeldokter;
-    }
-    
+    private void tabelkiriComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelkiriComponentShown
+        // TODO add your handling code here:
+        noTable();
+        ListAntrean();
+    }//GEN-LAST:event_tabelkiriComponentShown
+
+    private void tabelkiriComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelkiriComponentAdded
+        // TODO add your handling code here:
+        noTable();
+        ListAntrean();
+    }//GEN-LAST:event_tabelkiriComponentAdded
+
+    private void tabelkiriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkiriMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelkiriMouseClicked
+
     public void awal() {
         try{
              tabeldokter.setData(this.AS.getDokters());
@@ -428,24 +487,166 @@ public class Antrean extends javax.swing.JInternalFrame {
              exception.printStackTrace();
             System.out.println("unyu 2");
          }
-        jTable2.setModel(tabeldokter);
+        tabelkanan.setModel(tabeldokter);
         System.out.println("unyu 1");
     }
-//    private void Dropdown() throws RemoteException{
-//        isi = DoSer.Dropdowndokter(isi);
-//    
-//        for (int i=0;i<isi.length;i++){
-//            jComboBox3.addItem(isi[i]);
-//        }
-//    }
+    
+    public void ListAntrean() {
+        try{
+             tabelpasien.setData(this.AS.getPemeriksaans());
+             System.out.println("aa");
+        }catch(RemoteException exception){
+             exception.printStackTrace();
+            System.out.println("bb");
+         }
+        tabelkiri.setModel(tabelpasien);
+        System.out.println("cc");
+    }
+    
+    private void refresh (){
+        try {
+            List<PemeriksaanEntitas> list = AS.getPemeriksaans();
+            tabelpasien.setData(list);
+        } catch (RemoteException exception) {
+            exception.printStackTrace();
+        }
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox PilihDokter;
     private javax.swing.JComboBox PilihIDPasien;
     private javax.swing.JToggleButton TambahAntrean;
+    private javax.swing.JTextField imin;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable tabelantrean;
+    private javax.swing.JTable tabelkanan;
+    private javax.swing.JTable tabelkiri;
     // End of variables declaration//GEN-END:variables
+public void setJam(final JLabel tampilJam) {
+    ActionListener taskPerformer = new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        Calendar cal = new GregorianCalendar();
+        String nolJam = "";
+        String nolMenit = "";
+        String nolDetik = "";
+        String nolTanggal = "";
+        String nolBulan = "";
+        String nolTahun = "";
+        
+        // Membuat Date
+        Date dt = new Date();
+        
+        // Mengambil nilai JAM, MENIT, dan DETIK Sekarang
+        int nilaiJam = dt.getHours();
+        int nilaiMenit = dt.getMinutes();
+        int nilaiDetik = dt.getSeconds();
+        int nilaiTanggal = cal.get(Calendar.DAY_OF_MONTH);
+        int nilaiBulan = cal.get(Calendar.MONTH);
+        int nilaiTahun = cal.get(Calendar.YEAR);
+        
+        // Jika nilai JAM lebih kecil dari 10 (hanya 1 digit)
+        if (nilaiJam <= 9) {
+          // Tambahkan "0" didepannya
+          nolJam = "0";
+        }
+        // Jika nilai MENIT lebih kecil dari 10 (hanya 1 digit)
+        if (nilaiMenit <= 9) {
+          // Tambahkan "0" didepannya
+          nolMenit = "0";
+        }
+        // Jika nilai DETIK lebih kecil dari 10 (hanya 1 digit)
+        if (nilaiDetik <= 9) {
+          // Tambahkan "0" didepannya
+          nolDetik = "0";
+        }
+        if (nilaiTanggal<10){
+            nolTanggal="0";
+        }
+        if ((nilaiBulan+1)<10){
+            nolBulan="0";
+        }
+        if (nilaiTahun<10){
+            nolTahun="0";
+        }
+        
+        // Membuat String JAM, MENIT, DETIK
+        String jam = nolJam + Integer.toString(nilaiJam);
+        String menit = nolMenit + Integer.toString(nilaiMenit);
+        String detik = nolDetik + Integer.toString(nilaiDetik);
+        String tanggal = nolTanggal + Integer.toString(nilaiTanggal);
+        String bulan = nolBulan + Integer.toString(nilaiBulan+1);
+        String tahun = nolTahun + Integer.toString(nilaiTahun);
+        
+        // Menampilkan pada Layar
+        tampilJam.setText(jam+":"+menit+":"+detik);
+      }
+      
+    };
+    // Timer
+    new Timer(1000, taskPerformer).start();
+    }
+
+public void setTanggal(final JLabel tampilTanggal) {
+    ActionListener taskPerformer = new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        Calendar cal = new GregorianCalendar();
+        String nolJam = "";
+        String nolMenit = "";
+        String nolDetik = "";
+        String nolTanggal = "";
+        String nolBulan = "";
+        String nolTahun = "";
+        // Membuat Date
+        Date dt = new Date();
+        // Mengambil nilai JAM, MENIT, dan DETIK Sekarang
+        int nilaiJam = dt.getHours();
+        int nilaiMenit = dt.getMinutes();
+        int nilaiDetik = dt.getSeconds();
+        int nilaiTanggal = cal.get(Calendar.DAY_OF_MONTH);
+        int nilaiBulan = cal.get(Calendar.MONTH);
+        int nilaiTahun = cal.get(Calendar.YEAR);
+        // Jika nilai JAM lebih kecil dari 10 (hanya 1 digit)
+        if (nilaiJam <= 9) {
+          // Tambahkan "0" didepannya
+          nolJam = "0";
+        }
+        // Jika nilai MENIT lebih kecil dari 10 (hanya 1 digit)
+        if (nilaiMenit <= 9) {
+          // Tambahkan "0" didepannya
+          nolMenit = "0";
+        }
+        // Jika nilai DETIK lebih kecil dari 10 (hanya 1 digit)
+        if (nilaiDetik <= 9) {
+          // Tambahkan "0" didepannya
+          nolDetik = "0";
+        }
+        if (nilaiTanggal<10){
+            nolTanggal="0";
+        }
+        if ((nilaiBulan+1)<10){
+            nolBulan="0";
+        }
+        if (nilaiTahun<10){
+            nolTahun="0";
+        }
+        // Membuat String JAM, MENIT, DETIK
+        String jam = nolJam + Integer.toString(nilaiJam);
+        String menit = nolMenit + Integer.toString(nilaiMenit);
+        String detik = nolDetik + Integer.toString(nilaiDetik);
+        String tanggal = nolTanggal + Integer.toString(nilaiTanggal);
+        String bulan = nolBulan + Integer.toString(nilaiBulan+1);
+        String tahun = nolTahun + Integer.toString(nilaiTahun);
+        // Menampilkan pada Layar
+//        tampilTanggal.setText(tanggal+"-"+bulan+"-"+tahun);
+        imin.setText(tahun+"-"+bulan+"-"+tanggal);
+        imin.setEnabled(false);
+      }
+      
+    };
+    // Timer
+    new Timer(1000, taskPerformer).start();
+    }
 }

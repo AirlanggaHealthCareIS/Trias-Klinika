@@ -20,6 +20,7 @@ public class InventoriObatDokterEntitas implements Serializable {
     private String idobat;
     private String iddetailobat;
     private String idspesialis;
+    private String iddokter;
     private String ruanganobat;
     private String idjenisobat;
     
@@ -101,6 +102,14 @@ public class InventoriObatDokterEntitas implements Serializable {
     
     public void setidspesialis(String idspesialis){
         this.idspesialis = idspesialis;
+    }
+    
+    public String getiddokter(){
+        return iddokter;
+    }
+    
+    public void setiddokter(String iddokter){
+        this.iddokter = iddokter;
     }
     
     public String getruanganobat(){

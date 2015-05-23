@@ -24,12 +24,19 @@ public class InventoryObatApotekEntitas implements Serializable {
     private String ruang_obat;
     private String id_jenisobat;
     private String deskripsi;
+    private String nama_spesialis;
     
     public String getIdObat (){
         return id_obat;
     }
     public void setIdObat (String id_obat){
         this.id_obat = id_obat;
+    }
+    public String getNamaSpesialis (){
+        return nama_spesialis;
+    }
+    public void setNamaSpesialis (String nama_spesialis){
+        this.nama_spesialis = nama_spesialis;
     }
     public String getNamaObat(){
         return nama_obat;

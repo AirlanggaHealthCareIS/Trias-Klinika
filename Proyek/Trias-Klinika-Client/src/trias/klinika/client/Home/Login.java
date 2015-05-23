@@ -374,10 +374,10 @@ public class Login extends javax.swing.JFrame implements Runnable {
                         PopUpPesan("Username ini Telah dipakai Login di Tempat Lain");
                         break;
                     case "updatelist":
-                        menureservasi.updatelist(msg.isi, msg.pengirim);
+//                        menureservasi.updatelist(msg.isi, msg.pengirim);
                         break;
                     case "logout":
-                        menureservasi.updatelogout(msg.isi, msg.pengirim);
+//                        menureservasi.updatelogout(msg.isi, msg.pengirim);
                         break;
                 }
             }
