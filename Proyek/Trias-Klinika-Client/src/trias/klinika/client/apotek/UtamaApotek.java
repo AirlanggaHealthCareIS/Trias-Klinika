@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.entitas.LoginEntitas;
+import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.client.tabel.tabelInventoryObatApotek;
 import trias.klinika.api.sevice.LaporanKeuanganService;
@@ -197,7 +198,8 @@ Login login;
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         try {
-            login.getService5().Ubah_Status_Logout(LE);
+            login.getService5().Ubah_Status_Logout(LE);        
+            login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Server"));
             login.dispose();
             this.dispose();
         } catch (RemoteException ex) {

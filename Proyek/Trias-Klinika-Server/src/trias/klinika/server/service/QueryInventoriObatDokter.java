@@ -28,7 +28,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
     }
     
    @Override
-   public List<InventoriObatDokterEntitas> getobat() throws RemoteException {
+   public List<InventoriObatDokterEntitas> getobat(String id_spesialis) throws RemoteException {
         System.out.println("Client melakukan proses get-all");
 
         Statement statement = null;
@@ -38,20 +38,20 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.kuantitas_obat, do.tgl_masuk_obat, do.masa_pakai_obat, jo.nama_jenis_obat FROM obat as o, detail_obat as do, jenis_obat as jo, dibagi as d where o.id_obat = do.id_obat and o.id_obat = d.id_obat");
+            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.QTY_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis FROM obat as o, detail_obat as do, jenis_obat as jo where o.id_obat = do.id_obat and o.id_jenis = jo.id_jenis and do.ruangan = 'Dokter' and o.id_spesialis = '"+id_spesialis+"' ");
             
             List<InventoriObatDokterEntitas> list = new ArrayList<InventoriObatDokterEntitas>();
 
             while(result.next()){
                 InventoriObatDokterEntitas inventoriObatDokterEntitas = new InventoriObatDokterEntitas();
-                inventoriObatDokterEntitas.setnamaobat(result.getString("nama_obat"));
-                inventoriObatDokterEntitas.setjenisobat(result.getString("nama_jenis_obat"));
-                inventoriObatDokterEntitas.setkuantitiobat(result.getInt("kuantitas_obat"));
-                inventoriObatDokterEntitas.sethargaobat(result.getInt("harga_obat"));
-                inventoriObatDokterEntitas.settglmasuk(result.getString("tgl_masuk_obat"));
-                inventoriObatDokterEntitas.settglmasapakai(result.getString("masa_pakai_obat"));
-                inventoriObatDokterEntitas.setdeskripsi(result.getString("deskripsi_obat"));;
                 inventoriObatDokterEntitas.setidobat(result.getString("id_obat"));
+                inventoriObatDokterEntitas.setnamaobat(result.getString("nama_obat"));
+                inventoriObatDokterEntitas.setdeskripsi(result.getString("deskripsi_obat"));
+                inventoriObatDokterEntitas.sethargaobat(result.getInt("harga_obat"));
+                inventoriObatDokterEntitas.setkuantitiobat(result.getInt("QTY_obat"));
+                inventoriObatDokterEntitas.settglmasuk(result.getString("tgl_masuk"));
+                inventoriObatDokterEntitas.settglmasapakai(result.getString("masa_pakai"));
+                inventoriObatDokterEntitas.setjenisobat(result.getString("nama_jenis"));
                 
                 list.add(inventoriObatDokterEntitas);
             }
@@ -59,6 +59,37 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             result.close();
             
             return list;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+   
+   @Override
+   public String Spesialis(String id_dokter) throws RemoteException {
+        System.out.println("Client melakukan proses get ID_spesialis");
+
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT ID_SPESIALIS FROM dokter WHERE ID_DOKTER '"+id_dokter+"'");
+            
+            
+            
+            return result.getString("ID_SPESIALIS");
             
         } catch (SQLException exception) {
             exception.printStackTrace();

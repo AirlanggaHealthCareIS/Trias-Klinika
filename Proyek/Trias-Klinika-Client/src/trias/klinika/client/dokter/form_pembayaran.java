@@ -18,7 +18,6 @@ import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import trias.klinika.client.dokter.Menu_Dokter;
 import trias.klinika.api.entitas.PembayaranEntitas;
 import trias.klinika.api.entitas.RincianPembayaran;
 import trias.klinika.api.sevice.pembayaranService;

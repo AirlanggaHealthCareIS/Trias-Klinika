@@ -22,6 +22,7 @@ import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import trias.klinika.api.entitas.LoginEntitas;
+import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.ListPetugasService;
@@ -258,6 +259,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         try {
             login.getService5().Ubah_Status_Logout(LE);
+            login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Server"));
             login.dispose();
             this.dispose();
         } catch (RemoteException ex) {
