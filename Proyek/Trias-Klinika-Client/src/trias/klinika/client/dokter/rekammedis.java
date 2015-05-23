@@ -18,6 +18,7 @@ import trias.klinika.api.entitas.PasienEntity;
 import trias.klinika.api.entitas.rekammedisEntyty;
 import trias.klinika.client.tabel.tabelrekammedis;
 import trias.klinika.api.entitas.rekammedisEntyty;
+
 /**
  *
  * @author Acer
@@ -26,6 +27,7 @@ public class rekammedis extends javax.swing.JInternalFrame {
 private serviceRekam sr;
 private tabelrekammedis rm = new tabelrekammedis();
 rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
+String airekam;
 
 
 
@@ -49,6 +51,7 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
             exception.printStackTrace();
         }
         history.setModel(rm);
+        
         
     }
 
@@ -368,6 +371,14 @@ private void irmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:eve
 private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
 // TODO add your handling code here:
       setReset();
+        try {
+            ai_rekammedis ();
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+        irm.setText(airekam);
+  
+      
 }//GEN-LAST:event_resetActionPerformed
 public void setHistory (){
 
@@ -454,36 +465,9 @@ private boolean CheckNumber(String a){
         }
         return true;
     }
-//public void tambahRekamMedis(){
-//    String id_rekam;
-//    try {
-//            
-//            //String id_rekam = null;
-//            int bayar=0;
-//            rekammedisEntyty a = new rekammedisEntyty();
-//            int c = AS.getPemeriksaans().size()+1;
-//            ID = "PE00"+c;
-//            bayar = AS.getPemeriksaans().size();
-//            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
-////            String iddok = PilihDokter.getItemAt(PilihDokter.getSelectedIndex()).toString();
-//            a.setId_rekam(id_rekam);
-//            a.setID_REKAM_MEDIS("RM0002");
-//            a.setID_PASIEN(idpas);
-//            a.setID_DOKTER("D0001");
-//            a.setID_RESERVASI("R0001");
-//            a.setID_PEMBAYARAN(""+bayar);            
-//            a.setID_RESEP("1");
-//            a.setNO_ANTREAN(1);
-//            a.setTGL_PEMERIKSAAN(""+imin);
-//            AS.insertPemeriksaan(a);
-//
-//            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
-//                        refresh();
-//        } catch (RemoteException ex) {
-//            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//}
-//        
+    private void ai_rekammedis () throws RemoteException{
+            airekam = sr.ai_rekammedis(airekam);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
