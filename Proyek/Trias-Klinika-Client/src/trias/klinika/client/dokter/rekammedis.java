@@ -4,11 +4,12 @@
  */
 
 /*
- * datapasien.java
+ * rekammedis.java
  *
  * Created on Apr 26, 2015, 12:42:56 PM
  */
 package trias.klinika.client.dokter;
+import java.awt.Color;
 import java.rmi.RemoteException;
 import javax.swing.JOptionPane;
 import trias.klinika.api.sevice.serviceRekam;
@@ -22,15 +23,15 @@ import trias.klinika.api.entitas.rekammedisEntyty;
  *
  * @author Acer
  */
-public class datapasien extends javax.swing.JInternalFrame {
+public class rekammedis extends javax.swing.JInternalFrame {
 private serviceRekam sr;
 private tabelrekammedis rm = new tabelrekammedis();
 rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
 
 
 
-    /** Creates new form datapasien */
-    public datapasien(serviceRekam sr) throws RemoteException {
+    /** Creates new form rekammedis */
+    public rekammedis(serviceRekam sr) throws RemoteException {
         this.sr = sr;
         
         initComponents();
@@ -49,6 +50,7 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
             exception.printStackTrace();
         }
         history.setModel(rm);
+        
     }
 
 
@@ -323,12 +325,25 @@ private void detail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
 
 private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
 // TODO add your handling code here:
-    if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
+    boolean isi = false;
+    if(CheckNumber(tekanan.getText())&&!tekanan.getText().equals("")){
+            isi = true;
+        }
+    if(isi){
+        if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
         setCekdata2();
+        }        
+        else{
+            setSimpan();
+        }
     }
-    else{
-        setSimpan();
-    }
+    else if (!isi){
+        if(irm.getText().isEmpty()|diagnosa.getText().isEmpty()|keluhan.getText().isEmpty()|alergi.getText().isEmpty()|tindakan.getText().isEmpty()|tekanan.getText().isEmpty()|catatan.getText().isEmpty()){
+        setCekdata2();
+        } 
+            tekanan.setBackground(Color.red);
+            JOptionPane.showMessageDialog(this, "isi field merah degan inputan angka");
+        }
 }//GEN-LAST:event_saveActionPerformed
 
 private void catatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catatanActionPerformed
@@ -427,6 +442,49 @@ public void setSimpan(){
         catatan.setText("");
     
 }
+private boolean CheckNumber(String a){
+        char b;
+        StringBuffer s;        
+        for(int i = 0; i<a.length();i++){
+            b = a.charAt(i);                        
+            s = new StringBuffer();
+            s.append(b);          
+            if(!s.toString().equals("1")&&!s.toString().equals("2")&&!s.toString().equals("3")&&!s.toString().equals("4")&&!s.toString().equals("5")&&!s.toString().equals("6")&&!s.toString().equals("7")&&!s.toString().equals("8")&&!s.toString().equals("9")&&!s.toString().equals("0")){               
+               return false;
+            }            
+        }
+        return true;
+    }
+public void tambahRekamMedis(){
+    String id_rekam;
+    try {
+            
+            //String id_rekam = null;
+            int bayar=0;
+            rekammedisEntyty a = new rekammedisEntyty();
+            int c = AS.getPemeriksaans().size()+1;
+            ID = "PE00"+c;
+            bayar = AS.getPemeriksaans().size();
+            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
+//            String iddok = PilihDokter.getItemAt(PilihDokter.getSelectedIndex()).toString();
+            a.setId_rekam(id_rekam);
+            a.setID_REKAM_MEDIS("RM0002");
+            a.setID_PASIEN(idpas);
+            a.setID_DOKTER("D0001");
+            a.setID_RESERVASI("R0001");
+            a.setID_PEMBAYARAN(""+bayar);            
+            a.setID_RESEP("1");
+            a.setNO_ANTREAN(1);
+            a.setTGL_PEMERIKSAAN(""+imin);
+            AS.insertPemeriksaan(a);
+
+            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
+                        refresh();
+        } catch (RemoteException ex) {
+            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+        
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

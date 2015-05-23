@@ -17,7 +17,7 @@ import java.rmi.registry.Registry;
 import java.util.List;
 import trias.klinika.api.entitas.rekammedisEntyty;
 import trias.klinika.api.sevice.serviceRekam;
-import trias.klinika.client.dokter.datapasien;
+import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.client.tabel.tabelrekammedis;
 /**
  *
@@ -48,7 +48,7 @@ public class scenario4_Rekammedisbaru_salah {
     }
 
     /**
-     * Test of setCekdata2 method, of class datapasien.
+     * Test of setCekdata2 method, of class rekammedis.
      */
     @Test
     public void testSetCekdata2()throws RemoteException, NotBoundException  {
@@ -56,7 +56,7 @@ public class scenario4_Rekammedisbaru_salah {
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
         System.out.println("data yang dimasukkan belum lengkap");    
-        datapasien interfaceRekammedis = new datapasien (service6);
+        rekammedis interfaceRekammedis = new rekammedis (service6);
         interfaceRekammedis.setCekdata2();
     }
 

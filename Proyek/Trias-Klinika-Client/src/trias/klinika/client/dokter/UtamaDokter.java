@@ -29,7 +29,7 @@ import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.client.tabel.tabelrekammedis;
-import trias.klinika.client.dokter.datapasien;
+import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.client.tabel.TabelDokter;
 import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.client.dokter.form_pembayaran;
@@ -51,7 +51,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     final ServiceResep service7 = (ServiceResep)registry.lookup("service7");
     Inventori_Obat_Dokter iod = new Inventori_Obat_Dokter(service13);
     form_pembayaran fp = new form_pembayaran(service4);
-    datapasien sr = new datapasien(service6);
+    rekammedis sr = new rekammedis(service6);
     input_resep ir = new input_resep(service7);
     private InventoriObatDokterService IODS;
     private pembayaranService FP;
