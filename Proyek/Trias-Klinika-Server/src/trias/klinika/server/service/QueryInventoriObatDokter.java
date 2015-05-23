@@ -85,7 +85,8 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT ID_SPESIALIS FROM dokter WHERE ID_DOKTER '"+id_dokter+"'");
+            ResultSet result = statement.executeQuery("SELECT ID_SPESIALIS FROM dokter WHERE ID_DOKTER = '"+id_dokter+"'");
+            System.out.println(result.toString());
             
             
             
@@ -279,7 +280,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT o.ID_OBAT, o.NAMA_OBAT FROM obat as o , detail_obat as do where do.id_obat  = o.id_obat and do.ruangan_obat = 'Ruang 2' ORDER BY id_obat");
+            ResultSet result = statement.executeQuery("SELECT ID_OBAT,NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = 'S0001'");
             
             result.last();
             ob = new String [result.getRow()];
@@ -323,7 +324,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             result.first();
 
             for (int i=0;i<ob.length;i++){
-                ob [i] = result.getString("id_jenis_obat")+" - "+result.getString("nama_jenis_obat");
+                ob [i] = result.getString("id_jenis")+" - "+result.getString("nama_jenis");
                 result.next();
             }
 
