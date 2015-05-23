@@ -16,8 +16,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
 import trias.klinika.api.entitas.InventoriObatDokterEntitas;
+import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.sevice.InventoriObatDokterService;
+import trias.klinika.client.Home.Login;
 import trias.klinika.client.dokter.Inventori_Obat_Dokter;
+import trias.klinika.client.dokter.UtamaDokter;
 import trias.klinika.client.tabel.tabelinventoriobtdokter;
 
 /**
@@ -55,8 +58,11 @@ public class scenario_1_Pengurangan_obat {
         ip = "127.0.0.1";
         registry = LocateRegistry.getRegistry(ip,4444);
         service13 = (InventoriObatDokterService) registry.lookup("service13");
-        System.out.println("pengurangan sukses");        
-        Inventori_Obat_Dokter interfacetambah = new Inventori_Obat_Dokter (service13);
+        System.out.println("pengurangan sukses");
+        Login LO = new Login();
+        LoginEntitas LE = new LoginEntitas();
+        UtamaDokter UD = new UtamaDokter(LE, LO);
+        Inventori_Obat_Dokter interfacetambah = new Inventori_Obat_Dokter (service13, UD);
         interfacetambah.setpengurangan();
     }
     // TODO add test methods here.

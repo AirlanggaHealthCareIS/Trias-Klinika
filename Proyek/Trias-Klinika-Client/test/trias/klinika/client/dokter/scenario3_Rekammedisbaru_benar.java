@@ -17,7 +17,7 @@ import java.rmi.registry.Registry;
 import java.util.List;
 import trias.klinika.api.entitas.rekammedisEntyty;
 import trias.klinika.api.sevice.serviceRekam;
-import trias.klinika.client.dokter.datapasien;
+import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.client.tabel.tabelrekammedis;
 /**
  *
@@ -48,7 +48,7 @@ public class scenario3_Rekammedisbaru_benar {
     }
 
     /**
-     * Test of setSimpan method, of class datapasien.
+     * Test of setSimpan method, of class rekammedis.
      */
     @Test
     public void testSetSimpan() throws RemoteException, NotBoundException {
@@ -56,7 +56,7 @@ public class scenario3_Rekammedisbaru_benar {
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
         System.out.println("setSimpan");    
-        datapasien interfaceRekammedis = new datapasien (service6);
+        rekammedis interfaceRekammedis = new rekammedis (service6);
         interfaceRekammedis.setSimpan();
     }
 }

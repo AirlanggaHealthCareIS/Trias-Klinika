@@ -191,13 +191,14 @@ public class Server extends javax.swing.JFrame implements Runnable {
                     riwayat.add(msg.pengirim+" Berhasil login pada "+setTanggal()+" "+setJam(jam));
                 }
                 else{
-                    clients[findClient(ID)].send(new pesan("signup", "SERVER", "gagal", msg.pengirim));
+                    clients[findClient(ID)].send(new pesan("sudahsign", "SERVER", "gagal", msg.pengirim));
                 }   
                 break;
             case "updatelist":
                 if(msg.isi.substring(0, 1).equals("D")){
                     UpdateList(msg);
-                }   
+                }
+                hapus(findClient(ID));
                 break;
             case "logout":
                 if(msg.isi.substring(0, 1).equals("D")){
@@ -239,6 +240,27 @@ public class Server extends javax.swing.JFrame implements Runnable {
 	
     @SuppressWarnings("deprecation")
     public synchronized void remove(int ID){
+    int pos = findClient(ID);
+        if (pos >= 0){  
+            ServerThread toTerminate = clients[pos];
+            riwayat.add("\nMenghapus client thread " + ID + " at " + pos);
+	    if (pos < clientCount-1){
+                for (int i = pos+1; i < clientCount; i++){
+                    clients[i-1] = clients[i];
+	        }
+	    }
+	    clientCount--;
+	    try{  
+	      	toTerminate.close(); 
+	    }
+	    catch(IOException ioe){  
+	      	riwayat.add("\nError menutup thread: " + ioe); 
+	    }
+	    toTerminate.stop(); 
+	}
+    }
+    
+    public void hapus(int ID){
     int pos = findClient(ID);
         if (pos >= 0){  
             ServerThread toTerminate = clients[pos];
