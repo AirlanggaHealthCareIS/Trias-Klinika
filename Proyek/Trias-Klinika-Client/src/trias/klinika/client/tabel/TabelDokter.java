@@ -33,21 +33,10 @@ public class TabelDokter extends AbstractTableModel{
     return list;
 }
     
-    public void delete(Dokter Dok) {
-        int indek = 0;
-        for (int i=0;i<list.size();i++) {
-            if (Dok.getid_dokter().equals(list.get(i).getid_dokter())) {
-                indek = i;
-            }
-        }
-        list.remove(indek);
-        fireTableDataChanged();
-    }
-    
-    @Override
     public String getColumnName(int column){
         switch (column){
-            case 0 :return "nama dokter";
+            case 0 :return "id dokter";
+            case 1 :return "nama dokter";
             default:return null;
         }
     }
@@ -60,16 +49,20 @@ public class TabelDokter extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 1;
+        return 2;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){
             case 0:
+                return list.get(rowIndex).getid_dokter();
+            case 1:
                 return list.get(rowIndex).getnama_dokter();
             default:return null;
         }
     }
+    
+    
     
 }

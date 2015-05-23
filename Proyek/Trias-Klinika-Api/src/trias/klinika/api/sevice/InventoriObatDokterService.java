@@ -19,6 +19,7 @@ public interface InventoriObatDokterService extends Remote {
     List<InventoriObatDokterEntitas> getobat(String id_spesialis) throws RemoteException;
     List<InventoriObatDokterEntitas> getobat1() throws RemoteException;
     List<InventoriObatDokterEntitas> getobat2() throws RemoteException;
+    InventoriObatDokterEntitas dataobat(InventoriObatDokterEntitas IODE) throws RemoteException;
     String Spesialis(String id_dokter) throws RemoteException;
     void insertObatBaru(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
     void insertObatLama(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;

@@ -11,12 +11,12 @@ import java.io.Serializable;
  */
 public class RincianPembayaranEntitas implements Serializable {
     private int ID_RINCIAN_PEMBAYARAN;
-    private int ID_PEMBAYARAN;
+    private String ID_PEMBAYARAN;
     private String ID_OBAT_DOKTER;
     
     
     
-    public void setRincianPembayaran(int ID_RINCIAN_PEMBAYARAN, int ID_PEMBAYARAN, String ID_OBAT_DOKTER){
+    public void setRincianPembayaran(int ID_RINCIAN_PEMBAYARAN, String ID_PEMBAYARAN, String ID_OBAT_DOKTER){
         this.ID_RINCIAN_PEMBAYARAN = ID_RINCIAN_PEMBAYARAN;
         this.ID_PEMBAYARAN = ID_PEMBAYARAN;
         this.ID_OBAT_DOKTER = ID_OBAT_DOKTER;
@@ -27,7 +27,7 @@ public class RincianPembayaranEntitas implements Serializable {
     }
     
        
-    public int getID_PEMBAYARAN() {
+    public String getID_PEMBAYARAN() {
         return ID_PEMBAYARAN;
     }
     

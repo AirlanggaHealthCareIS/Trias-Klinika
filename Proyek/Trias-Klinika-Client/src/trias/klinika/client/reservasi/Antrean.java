@@ -47,21 +47,6 @@ public class Antrean extends javax.swing.JInternalFrame {
         initComponents();
         tabeldokter.setData(LPS.AmbilDokterOnline());
         tabelkanan.setModel(tabeldokter);
-//         int baris = tabelpasien.getRowCount();
-//         for(int j = 0 ; j<baris;j++){
-//            PasienEntity baru = new PasienEntity();
-////            baru.setNO_ANTREAN(j+1);
-////            list.add(baru);
-            
-////            tabelpasien.setData(list);
-//
-//            String nomor = String.valueOf(j);
-//            
-////            tabelantrean.setModel(tabelpasien);
-//            tabelantrean.setValueAt(nomor, j, 1);
-//        }
-//                tabelpasien.setData(this.AS.getPemeriksaans());
-//                tabelkiri.setModel(tabelpasien);
                 noTable();
     }
 
@@ -74,10 +59,6 @@ public class Antrean extends javax.swing.JInternalFrame {
 			String nomor = String.valueOf(a+1);
 			tabelkiri.setValueAt(nomor, a, 0);
                         System.out.println("taperwer 2");
-//                        PasienEntity baru = new PasienEntity();
-//                        baru.setNO_ANTREAN(a+1);
-//                        list.add(baru);
-//                        tabelpasien.setData(list);
                 }
                 
         }
@@ -413,7 +394,8 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tabelkananComponentAdded
 
     private void tabelkananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkananMouseClicked
- int row = tabelkanan.rowAtPoint(evt.getPoint());
+ 
+        int row = tabelkanan.rowAtPoint(evt.getPoint());
         PasienEntity paen = new PasienEntity ();
         try {            
             paen = AS.getpasienkanan(tabeldokter.get(row).getid_dokter());
@@ -425,6 +407,7 @@ public class Antrean extends javax.swing.JInternalFrame {
 
                 try {
                 tabelpasien.setData(this.AS.getpasienkiri(""+selectedObj));
+                    System.out.println("malam"+selectedObj);
             } catch (RemoteException ex) {
                 Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
             }
