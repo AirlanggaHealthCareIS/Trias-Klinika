@@ -96,21 +96,26 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
     }
 
     @Override
-    public void Save(ResepEntity RE) throws RemoteException, SQLException {
-        Statement statement = null;
+    public void Save(ResepEntity RE) throws RemoteException{
+        PreparedStatement statement = null;
 
-        statement = Koneksidatabase.getConnection().createStatement();
-        ResultSet result = statement.executeQuery("INSERT INTO `resep`(`ID_RESEP`, `ID_APOTEK`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES ([" + RE.getID_resep() + "],[" + RE.getID_apotek() + "],[" + RE.getharga() + "],[" + RE.getSTATUS_RESEP() + "]) ");
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement(
+            "INSERT INTO `resep`(`ID_RESEP`, `TOTAL_HARGA`, `STATUS_RESEP`) VALUES ('" + RE.getID_resep() + "','0','" + RE.getSTATUS_RESEP() + "') ");
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryResep.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println(statement.toString());
                     //statement.executeUpdate(re)
         //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void save(RincianResep RR, ResepEntity RE, int i) throws RemoteException, SQLException {
+    public void save(RincianResep RR) throws RemoteException{
         PreparedStatement statement = null;
         try {
-            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES ([" + RE.getID_obat() + "],[" + RE.getID_resep() + "],[" + RE.getID_obat() + "],[" + RE.getjumlah() + "],[" + RE.getjumlah_terpenuhi() + "]) ");
+            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO `rincian_resep`(`ID_RINCIAN_OBAT`, `ID_RESEP`, `ID_OBAT_KELUAR`, `JUMLAH_OBAT`, `DOSIS_OBAT`) VALUES ('" + RR.getID_RINCIAN_OBAT() + "','" + RR.getID_RESEP()+ "','" + RR.getID_OBAT() + "','" + RR.getJUMLAH_OBAT() + "','" + RR.getDOSIS_OBAT() + "') ");
 
             statement.executeUpdate();
 

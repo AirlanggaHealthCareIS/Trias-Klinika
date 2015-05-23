@@ -46,10 +46,8 @@ public class TabelResep extends AbstractTableModel {
             case 3:
                 return "jumlah_terpenuhi";
             case 4:
-                return "satuan_jenis";
-            case 5:
                 return "harga";
-            case 6:
+            case 5:
                 return "keterangan";
             default :
                 return null;
@@ -64,7 +62,7 @@ public class TabelResep extends AbstractTableModel {
 
     
     public int getColumnCount() {
-        return 7;
+        return 6;
     }
 
     
@@ -79,10 +77,8 @@ public class TabelResep extends AbstractTableModel {
             case 3:
                 return list.get(rowIndex).getjumlah_terpenuhi();
             case 4:
-                return list.get(rowIndex).getsatuan_jenis();
-            case 5:
                 return list.get(rowIndex).getharga();
-            case 6:
+            case 5:
                 return list.get(rowIndex).getketarangan();
             default:
                 return null;

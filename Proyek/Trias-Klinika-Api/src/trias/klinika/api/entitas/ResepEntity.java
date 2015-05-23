@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author User
  */
 public class ResepEntity implements Serializable {
-    private int ID_resep;
+    private String ID_resep;
     private String ID_pasien;
     private String ID_dokter;
     private String ID_obat;
@@ -28,26 +28,16 @@ public class ResepEntity implements Serializable {
     private String jumlah_terpenuhi;
     private String satuan_jenis;
     private int harga;
+    private int STATUS_RESEP;
     
-//    public void setResep(int ID_resep, String ID_pasien, String ID_dokter, String ID_obat, String ID_apotek, String ID_Apotek, int jumlah, String nama_pasien, String nama_dokter, String nama_obat, String keterangan, int NO, String jumlah_terpenuhi, String satuan_jenis, int harga){
-//        this.ID_resep = ID_resep;
-//        this.ID_pasien = ID_pasien;
-//        this.ID_dokter = ID_dokter;
-//        this.ID_obat = ID_obat;
-//        this.ID_apotek = ID_apotek;
-//        this.jumlah = jumlah;
-//        this.nama_pasien = nama_pasien;
-//        this.nama_dokter = nama_dokter;
-//        this.nama_obat = nama_obat;
-//        this.keterangan = keterangan;
-//        this.NO = NO;
-//        this.jumlah_terpenuhi = jumlah_terpenuhi;
-//        this.satuan_jenis = satuan_jenis;
-//    }
-    public int getID_resep(){
+    public void setDataResep(String ID_resep, int STATUS_RESEP){
+        this.ID_resep = ID_resep;
+        this.STATUS_RESEP = STATUS_RESEP;
+    }
+    public String getID_resep(){
                 return ID_resep;
     }
-    public void setID_resep(int ID_resep) {
+    public void setID_resep(String ID_resep) {
         this.ID_resep = ID_resep;
     }
     public String getID_pasien(){
@@ -135,8 +125,8 @@ public class ResepEntity implements Serializable {
         this.harga = harga;
     }
 
-    public String getSTATUS_RESEP() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getSTATUS_RESEP() {
+        return STATUS_RESEP;
     }
     
     

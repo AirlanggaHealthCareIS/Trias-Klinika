@@ -18,8 +18,8 @@ import trias.klinika.api.entitas.RincianResep;
  */
 public interface ServiceResep extends Remote{
     String [] obat (String [] pk)throws RemoteException;
-    void Save (ResepEntity RE)throws RemoteException, SQLException;
-    void save (RincianResep RR,ResepEntity RE, int i)throws RemoteException, SQLException;
+    void Save (ResepEntity RE)throws RemoteException;
+    void save(RincianResep RR) throws RemoteException;
     RincianResep getdetail  (RincianResep RR) throws RemoteException;
     ResepEntity getdetail (ResepEntity RE) throws RemoteException;
 }

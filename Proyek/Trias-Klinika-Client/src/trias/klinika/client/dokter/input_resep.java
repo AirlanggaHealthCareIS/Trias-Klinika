@@ -90,7 +90,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         jLabel2.setText("NO Resep ");
 
         NoResep.setEditable(false);
-        NoResep.setText("01");
+        NoResep.setText("RE1112");
 
         jLabel3.setText("ID Pasien");
 
@@ -102,7 +102,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             }
         });
 
-        apotek.setText("ID Apoteker");
+        apotek.setText("ID Pemeriksaan");
 
         ID_Apoteker.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,10 +121,10 @@ public class input_resep extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel5))
-                        .addGap(38, 38, 38)
+                        .addGap(54, 54, 54)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NoResep, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
-                            .addComponent(IDDokter)))
+                            .addComponent(IDDokter)
+                            .addComponent(NoResep, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -236,13 +236,13 @@ public class input_resep extends javax.swing.JInternalFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "ID Obat", "Nama Obat", "Jumlah Terpenuhi", "Satuan Jenis", "Harga", "Keterangan"
+                "No", "ID Obat", "Nama Obat", "Jumlah Terpenuhi", "Harga", "Keterangan"
             }
         ));
         jScrollPane1.setViewportView(table);
@@ -296,7 +296,7 @@ public class input_resep extends javax.swing.JInternalFrame {
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameDokter.png"))); // NOI18N
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(-20, 0, 1140, 580);
+        jLabel6.setBounds(-10, 0, 1140, 580);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -328,23 +328,21 @@ public class input_resep extends javax.swing.JInternalFrame {
         int opsi = JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
             if (opsi == 0){
             ResepEntity RE = new ResepEntity();
-           
-            RE.setID_apotek(ID_Apoteker.getText());
-            RE.setID_pasien(IDPasien.getText());
+            RincianResep RR = new RincianResep();
+            RE.setDataResep(NoResep.getText(), 0);
             
             try{
                 
                 SR.Save(RE);
                 
-                for(int i=1;i<=TR.getRowCount();i++){
-                    
+                for(int i=0;i<TR.getRowCount();i++){
+                    RR.setDataRincian((i+1), TR.getValueAt(i, 1).toString(), NoResep.getText(), Integer.parseInt(TR.getValueAt(i, 3).toString()), TR.getValueAt(i, 5).toString());
+                    SR.save(RR);
                 }
                 JOptionPane.showMessageDialog(null, "Data Berhasil Terkirim ","Sukses",JOptionPane.OK_OPTION);
             } catch (RemoteException ex) {
             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-        }   catch (SQLException ex) {
-                Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }
            
         }
         else{
