@@ -34,21 +34,20 @@ import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
  * @author Azmil
  */
 public class UtamaApotek extends javax.swing.JFrame {
-String localhost = this.getTitle();
+    String localhost = this.getTitle();
 private tabelInventoryObatApotek tabelInventory = new tabelInventoryObatApotek();
-Registry registry = LocateRegistry.getRegistry(localhost, 4444);
-final InventoryObatApotekService service10 = (InventoryObatApotekService)registry.lookup("service10");
-InventoryObatApotek interfaceObat = new InventoryObatApotek (service10);
-private InventoryObatApotekService IOAS;
-private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
-
-private TabelLaporanKeuanganApotek TLKA = new TabelLaporanKeuanganApotek();
-final LaporanKeuanganService service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
-LaporanKeuanganApotek laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
-private LaporanKeuanganService LKS;
-private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
-LoginEntitas LE;
-Login login;
+    Registry registry = LocateRegistry.getRegistry(localhost, 4444);
+        final InventoryObatApotekService service10 = (InventoryObatApotekService)registry.lookup("service10");
+    InventoryObatApotek interfaceObat = new InventoryObatApotek (service10);
+        private InventoryObatApotekService IOAS;
+        private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
+        private TabelLaporanKeuanganApotek TLKA = new TabelLaporanKeuanganApotek();
+        final LaporanKeuanganService service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
+        LaporanKeuanganApotek laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
+        private LaporanKeuanganService LKS;
+        private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
+        LoginEntitas LE;
+        Login login;
    
 
 
