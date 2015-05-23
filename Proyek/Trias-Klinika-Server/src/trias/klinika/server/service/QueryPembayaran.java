@@ -78,7 +78,7 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
             
-       "INSERT INTO `PEMBAYARAN`(`ID_PEMBAYARAN`, `BIAYA_DOKTER`, `JUMLAH_PEMBAYARAN`) VALUE ("+PE.getnomer_transaksi()+","+PE.getBIAYA_DOKTER()+","+PE.getTOTAL_BIAYA()+")");
+       "INSERT INTO `PEMBAYARAN`(`ID_PEMBAYARAN`, `BIAYA_DOKTER`, `JUMLAH_PEMBAYARAN`) VALUE ('"+PE.getnomer_transaksi()+"',"+PE.getBIAYA_DOKTER()+","+PE.getTOTAL_BIAYA()+")");
             System.out.println(statement.toString());
             statement.executeUpdate();   
                   
@@ -107,7 +107,7 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
            
             statement = Koneksidatabase.getConnection().prepareStatement(
             
-            "INSERT INTO `RINCIAN_PEMBAYARAN`(`ID_RINCIAN_PEMBAYARAN`, `ID_PEMBAYARAN`, `ID_OBAT_DOKTER`) VALUE ("+RPE.getID_RINCIAN_PEMBAYARAN()+","+RPE.getID_PEMBAYARAN()+",'"+RPE.getID_OBAT_DOKTER()+"')");
+            "INSERT INTO `RINCIAN_PEMBAYARAN`(`ID_RINCIAN_PEMBAYARAN`, `ID_PEMBAYARAN`, `ID_OBAT_DOKTER`) VALUE ("+RPE.getID_RINCIAN_PEMBAYARAN()+",'"+RPE.getID_PEMBAYARAN()+"','"+RPE.getID_OBAT_DOKTER()+"')");
              System.out.println(statement.toString());
              statement.executeUpdate();   
                   

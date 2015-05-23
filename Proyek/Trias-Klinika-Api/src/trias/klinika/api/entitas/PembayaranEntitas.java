@@ -13,10 +13,10 @@ public class PembayaranEntitas implements Serializable{
     
     private int BIAYA_DOKTER;
     private int TOTAL_BIAYA;
-    private int nomer_transaksi;
+    private String nomer_transaksi;
     
    
-    public void setPembayaran (int BIAYA_DOKTER, int TOTAL_BIAYA, int nomer_transaksi){
+    public void setPembayaran (int BIAYA_DOKTER, int TOTAL_BIAYA, String nomer_transaksi){
         this.BIAYA_DOKTER = BIAYA_DOKTER;
         this.TOTAL_BIAYA = TOTAL_BIAYA;
         this.nomer_transaksi = nomer_transaksi;
@@ -34,7 +34,7 @@ public class PembayaranEntitas implements Serializable{
     
    
      
-    public int getnomer_transaksi(){
+    public String getnomer_transaksi(){
         return nomer_transaksi;
     }
     

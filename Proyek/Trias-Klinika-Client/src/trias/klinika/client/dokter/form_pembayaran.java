@@ -352,7 +352,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         if(opsi == 0){
             PembayaranEntitas PE = new PembayaranEntitas();
             
-            PE.setPembayaran(Integer.parseInt(nomert.getText()),Integer.parseInt(biayadok.getText()),Integer.parseInt(total.getText()));
+            PE.setPembayaran(Integer.parseInt(biayadok.getText()),Integer.parseInt(total.getText()),nomert.getText());
             
 //            PE.setnomer_transaksi(Integer.parseInt(nomert.getText()));
 //            PE.setBIAYA_DOKTER(Integer.parseInt(biayadok.getText()));
@@ -365,7 +365,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
                 for(int i=1;i<=tp.getRowCount();i++){
                     RincianPembayaranEntitas RPE = new RincianPembayaranEntitas();
                     
-            RPE.setRincianPembayaran(i,Integer.parseInt(nomert.getText()),tp.getValueAt((i-1),0).toString());
+            RPE.setRincianPembayaran(i,nomert.getText(),tp.getValueAt((i-1),0).toString());
 //                    RPE.setID_RINCIAN_PEMBAYARAN(i);
 //                    RPE.setID_PEMBAYARAN(Integer.parseInt(nomert.getText()));
 //                    RPE.setID_OBAT_DOKTER(tp.getValueAt((i-1), 0).toString());
