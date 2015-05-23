@@ -16,7 +16,6 @@ import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.api.entitas.PasienEntity;
 //import trias.klinika.client.dokter.rekam_medis;
 import trias.klinika.api.entitas.rekammedisEntyty;
-import trias.klinika.client.dokter.Menu_Dokter;
 import trias.klinika.client.tabel.tabelrekammedis;
 import trias.klinika.api.entitas.rekammedisEntyty;
 /**

@@ -49,7 +49,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     final  pembayaranService service4 = (pembayaranService)registry.lookup("service4");
     final serviceRekam service6 = (serviceRekam)registry.lookup("service6");
     final ServiceResep service7 = (ServiceResep)registry.lookup("service7");
-    Inventori_Obat_Dokter iod = new Inventori_Obat_Dokter(service13);
+    Inventori_Obat_Dokter iod ;
     form_pembayaran fp = new form_pembayaran(service4);
     rekammedis sr = new rekammedis(service6);
     input_resep ir = new input_resep(service7);
@@ -81,6 +81,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         new Splash().Awal();
         this.LE = LE;
         this.login = login;
+        iod = new Inventori_Obat_Dokter(service13, this);
         initComponents();
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
