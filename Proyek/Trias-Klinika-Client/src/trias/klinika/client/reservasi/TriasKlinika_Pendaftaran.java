@@ -247,7 +247,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             Date date1 = new Date(tgl_pemeriksaan.getDate().getTime());
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
             String tgl_pemeriksaan = sdf1.format(date1);
-            PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString(), tgl_pemeriksaan, "3");
+//            PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString(), tgl_pemeriksaan, "3");
 
             try {
                 PS.Save(EP, PE);

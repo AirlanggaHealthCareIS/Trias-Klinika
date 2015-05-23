@@ -19,7 +19,7 @@ public class PemeriksaanEntitas implements Serializable {
     private String ID_RESEP;
     private String ID_PEMBAYARAN;
     private String TGL_PEMERIKSAAN;
-    private int NO_ANTREAN;  
+    private int NO_ANTRIAN;  
     
     public String getID_PEMERIKSAAAN() {
         return ID_PEMERIKSAAAN;
@@ -93,11 +93,11 @@ public class PemeriksaanEntitas implements Serializable {
         this.ID_PEMBAYARAN= ID_PEMBAYARAN;
     }
     
-    public int getNO_ANTREAN(){
-        return NO_ANTREAN;
+    public int getNO_ANTRIAN(){
+        return NO_ANTRIAN;
     }
-    public void setNO_ANTREAN(int NO_ANTREAN){
-        this.NO_ANTREAN = NO_ANTREAN;
+    public void setNO_ANTRIAN(int NO_ANTRIAN){
+        this.NO_ANTRIAN = NO_ANTRIAN;
     }
 
     

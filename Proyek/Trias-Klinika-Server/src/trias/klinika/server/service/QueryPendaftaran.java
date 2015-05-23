@@ -72,7 +72,7 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             statement.setString(6, PE.getID_RESEP());
             statement.setString(7, PE.getID_PEMBAYARAN());
             statement.setString(8, PE.getTGL_PEMERIKSAAN());
-            statement.setInt(9, PE.getNO_ANTREAN());
+            statement.setInt(9, PE.getNO_ANTRIAN());
             
             System.out.println(statement.toString());
             statement.executeUpdate();

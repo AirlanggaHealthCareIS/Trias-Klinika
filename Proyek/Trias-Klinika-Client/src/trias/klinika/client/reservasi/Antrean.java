@@ -370,7 +370,7 @@ public class Antrean extends javax.swing.JInternalFrame {
             ID = "PE000"+c;
             bayar = AS.getPemeriksaans().size();
             String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
-            String iddok = PilihDokter.getItemAt(PilihDokter.getSelectedIndex()).toString();
+            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
             a.setID_PEMERIKSAAAN(ID);
             a.setID_PASIEN(idpas);
             a.setID_DOKTER(iddok);
@@ -413,9 +413,7 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tabelkananComponentAdded
 
     private void tabelkananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkananMouseClicked
-            
-//        int row = tabelkanan.getSelectedRow();
-        int row = tabelkanan.rowAtPoint(evt.getPoint());
+ int row = tabelkanan.rowAtPoint(evt.getPoint());
         PasienEntity paen = new PasienEntity ();
         try {            
             paen = AS.getpasienkanan(tabeldokter.get(row).getid_dokter());
