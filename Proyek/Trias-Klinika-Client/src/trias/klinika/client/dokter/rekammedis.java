@@ -454,36 +454,36 @@ private boolean CheckNumber(String a){
         }
         return true;
     }
-public void tambahRekamMedis(){
-    String id_rekam;
-    try {
-            
-            //String id_rekam = null;
-            int bayar=0;
-            rekammedisEntyty a = new rekammedisEntyty();
-            int c = AS.getPemeriksaans().size()+1;
-            ID = "PE00"+c;
-            bayar = AS.getPemeriksaans().size();
-            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
-//            String iddok = PilihDokter.getItemAt(PilihDokter.getSelectedIndex()).toString();
-            a.setId_rekam(id_rekam);
-            a.setID_REKAM_MEDIS("RM0002");
-            a.setID_PASIEN(idpas);
-            a.setID_DOKTER("D0001");
-            a.setID_RESERVASI("R0001");
-            a.setID_PEMBAYARAN(""+bayar);            
-            a.setID_RESEP("1");
-            a.setNO_ANTREAN(1);
-            a.setTGL_PEMERIKSAAN(""+imin);
-            AS.insertPemeriksaan(a);
-
-            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
-                        refresh();
-        } catch (RemoteException ex) {
-            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}
-        
+//public void tambahRekamMedis(){
+//    String id_rekam;
+//    try {
+//            
+//            //String id_rekam = null;
+//            int bayar=0;
+//            rekammedisEntyty a = new rekammedisEntyty();
+//            int c = AS.getPemeriksaans().size()+1;
+//            ID = "PE00"+c;
+//            bayar = AS.getPemeriksaans().size();
+//            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
+////            String iddok = PilihDokter.getItemAt(PilihDokter.getSelectedIndex()).toString();
+//            a.setId_rekam(id_rekam);
+//            a.setID_REKAM_MEDIS("RM0002");
+//            a.setID_PASIEN(idpas);
+//            a.setID_DOKTER("D0001");
+//            a.setID_RESERVASI("R0001");
+//            a.setID_PEMBAYARAN(""+bayar);            
+//            a.setID_RESEP("1");
+//            a.setNO_ANTREAN(1);
+//            a.setTGL_PEMERIKSAAN(""+imin);
+//            AS.insertPemeriksaan(a);
+//
+//            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
+//                        refresh();
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//}
+//        
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

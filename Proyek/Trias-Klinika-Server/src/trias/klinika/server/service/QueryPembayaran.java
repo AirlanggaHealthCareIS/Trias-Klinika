@@ -38,9 +38,7 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
             statement = Koneksidatabase.getConnection().createStatement();
             
             ResultSet result = statement.executeQuery
-            ("SELECT o.ID_OBAT, o.NAMA_OBAT\n" +
-                    "FROM OBAT AS o, DETAIL_OBAT AS \n" +
-                   "DO WHERE do.RUANGAN_OBAT =  'Ruang 1'");
+            ("SELECT ID_OBAT,NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = 'S0001'");
             
             result.last();
             pk = new String [result.getRow()];
