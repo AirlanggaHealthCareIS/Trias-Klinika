@@ -181,4 +181,41 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
             }
         } 
     }
-}
+
+    public String ai_rekammedis (String  airekam) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT ID_REKAM_MEDIS FROM rekam_medis");
+            
+            
+            result.last();
+            airekam = result.getString("ID_REKAM_MEDIS");
+            String b = Integer.toString((Integer.parseInt(airekam.substring(2,6)))+1); //memisahkan angka RM dengan 0001
+            //menambahkan angka belakang    
+            for (int i = b.length(); i < 4; i++ ) {
+             b = "0" + b;
+        } 
+        airekam = airekam.substring(0, 2) + b;
+            result.close();
+            
+            return airekam;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return airekam;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    }
+    }}
