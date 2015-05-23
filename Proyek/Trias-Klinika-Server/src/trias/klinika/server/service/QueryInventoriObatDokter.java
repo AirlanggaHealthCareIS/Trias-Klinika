@@ -88,9 +88,46 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             ResultSet result = statement.executeQuery("SELECT ID_SPESIALIS FROM dokter WHERE ID_DOKTER = '"+id_dokter+"'");
             System.out.println(result.toString());
             
-            
-            
+            result.first();
             return result.getString("ID_SPESIALIS");
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+   
+   @Override
+   public InventoriObatDokterEntitas dataobat(InventoriObatDokterEntitas IODE) throws RemoteException {
+        System.out.println("Client melakukan proses get ID_OBAT");
+
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM obat where ID_OBAT = '"+IODE.getidobat()+"'");
+            result.first();
+            InventoriObatDokterEntitas inventoriObatDokterEntitas = new InventoriObatDokterEntitas();
+                inventoriObatDokterEntitas.setidobat(result.getString("ID_OBAT"));
+                inventoriObatDokterEntitas.setidspesialis(result.getString("ID_SPESIALIS"));
+                inventoriObatDokterEntitas.setidjenisobat(result.getString("ID_JENIS"));
+                inventoriObatDokterEntitas.setnamaobat(result.getString("NAMA_OBAT"));
+                inventoriObatDokterEntitas.sethargaobat(result.getInt("HARGA_OBAT"));
+                inventoriObatDokterEntitas.setdeskripsi(result.getString("DESKRIPSI_OBAT"));
+                
+            
+            
+            return inventoriObatDokterEntitas;
             
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -193,14 +230,15 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
         PreparedStatement statement = null;
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT)"
-                    + "values (?, ?, ?, ?, ?)");
+                    "INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT, ID_JENIS)"
+                    + "values (?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, inventoriobatDokterEntitas.getidobat());
             statement.setString(2, inventoriobatDokterEntitas.getidspesialis());
             statement.setString(3, inventoriobatDokterEntitas.getnamaobat());
             statement.setInt(4, inventoriobatDokterEntitas.gethargaobat());
             statement.setString(5, inventoriobatDokterEntitas.getdeskripsi());
+            statement.setString(6, inventoriobatDokterEntitas.getidjenisobat());
             System.out.println(statement.toString());
             
 
@@ -221,7 +259,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
         PreparedStatement statement1 = null;
         try {
             statement1 = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO detail_obat (ID_DETAIL_OBAT, ID_OBAT, KUANTITAS_OBAT, TGL_MASUK_OBAT, MASA_PAKAI_OBAT, RUANGAN_OBAT)"
+                    "INSERT INTO detail_obat (ID_DETAIL, ID_OBAT, QTY_OBAT, TGL_MASUK, MASA_PAKAI, RUANGAN)"
                     + "values (?, ?, ?, ?, ?, ?)");
 
             statement1.setString(1, inventoriobatDokterEntitas.getiddetailobat());
@@ -233,30 +271,6 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             System.out.println(statement1.toString());
 
             statement1.executeUpdate();
-
-            
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException exception) {
-                }
-            }
-        }
-        
-        PreparedStatement statement2 = null;
-        try {
-            statement2 = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO dibagi (ID_OBAT, ID_JENIS_OBAT)"
-                    + "values (?, ?)");
-
-            statement2.setString(1, inventoriobatDokterEntitas.getidjenisobat());
-            statement2.setString(2, inventoriobatDokterEntitas.getjenisobat());
-            System.out.println(statement.toString());
-            
-            statement2.executeUpdate();
 
             
         } catch (SQLException exception) {

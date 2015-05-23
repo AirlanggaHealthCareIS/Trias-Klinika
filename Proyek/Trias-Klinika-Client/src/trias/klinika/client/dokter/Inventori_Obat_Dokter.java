@@ -26,6 +26,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     private InventoriObatDokterService IODS;
     private String[] isi;
     private tabelinventoriobtdokter tiod = new tabelinventoriobtdokter();
+    private InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
 
     /**
      * Creates new form Inventori_Obat_Dokter
@@ -40,6 +41,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             exception.printStackTrace();
         }
         initComponents();
+        textruang.setText(this.IODS.Spesialis(UD.LE.getusername()));
         
         Dropdown();
         tabel.setModel(tiod);
@@ -320,7 +322,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         TM1.setText("Tgl Masuk");
 
         IDO.setEditable(false);
-        IDO.setText("O0036");
+        IDO.setText("O0070");
         IDO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IDOActionPerformed(evt);
@@ -428,8 +430,8 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                             .addComponent(KO)
                             .addComponent(textKO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textHO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(textHO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(HO)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(texttglmasapakai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -543,18 +545,30 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_dropaddActionPerformed
 
     private void droplamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_droplamaItemStateChanged
-        InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-        IODE.setidobat(droplama.getSelectedItem().toString().substring(0, 5));
-        textNO.setText(IODE.getnamaobat());
-        textKO.setText(Integer.toString(IODE.getkuantitiobat()));
-        texttglmasuk.setDate(java.sql.Date.valueOf(IODE.gettglmasuk()));
-        texttglmasapakai.setDate(java.sql.Date.valueOf(IODE.gettglmasapakai()));
-        deskripsi.setText(IODE.getdeskripsi());
+        try {
+            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
+            IODE.setidobat(droplama.getSelectedItem().toString().substring(0, 5));
+            IODE = IODS.dataobat(IODE);
+            textNO.setText(IODE.getnamaobat());
+            int index = 0;
+            System.out.println("janvok = "+dropJO.getItemCount());
+            for(int i=0;i<dropJO.getItemCount();i++){
+                System.out.println(dropJO.getItemAt(i).toString().substring(0, 6));
+                if (dropJO.getItemAt(i).toString().substring(0, 6).equals(IODE.getidjenisobat())){
+                    index = i;
+                }
+                System.out.println(index);
+            }
+            dropJO.setSelectedItem(dropJO.getItemAt(index));
+        } catch (RemoteException ex) {
+            Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
     }//GEN-LAST:event_droplamaItemStateChanged
 
     private void droplamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_droplamaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_droplamaActionPerformed
 
     private void textNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNOActionPerformed
@@ -571,7 +585,6 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
 
         }
         else {
-            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
             settambahOBbaru();
 
             tiod.insert(IODE);
@@ -635,11 +648,10 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     }
     
     public void settambahOBbaru (){
-        InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
         
             IODE.setidobat(IDO.getText());
             IODE.setnamaobat(textNO.getText());
-            IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0, 9));
+            IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0,6));
             String a = dropJO.getSelectedItem().toString();
             IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
             IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
@@ -655,9 +667,9 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             String tgl1 = sdf1.format(date1);
             IODE.settglmasapakai(tgl1);
             IODE.setdeskripsi(textdeskripsi.getText());
-            IODE.setiddetailobat("DO0040");
+            IODE.setiddetailobat("1");
             IODE.setidspesialis("S0002");
-            IODE.setruanganobat("Ruang 2");
+            IODE.setruanganobat("Dokter");
     }
     
     public void setpengurangan(){
