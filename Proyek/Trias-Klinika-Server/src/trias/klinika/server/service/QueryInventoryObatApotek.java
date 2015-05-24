@@ -33,7 +33,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = \"Apotek\" AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis");
+            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = 'Apotek' AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
@@ -193,17 +193,18 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
     @Override
     public String[] DropdownJenis(String[] jenis) throws RemoteException {
         Statement statement = null;
-        try{
+        try {
             statement = Koneksidatabase.getConnection().createStatement();
             ResultSet result = statement.executeQuery("select * from jenis_obat");
             result.last();
             jenis = new String [result.getRow()];
             result.first();
-            for(int i=0;i<jenis.length;i++){
+            
+            for (int i=0;i<jenis.length;i++){
                 jenis [i] = result.getString("id_jenis")+"-"+result.getString("nama_jenis");
                 result.next();
             }
-            result.close();;
+            result.close();
             return jenis;
         }
         catch (SQLException exception){
@@ -212,7 +213,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         }
         finally {
             if(statement != null){
-                try {
+                try{
                     statement.close();
                 }
                 catch (SQLException exception){
@@ -263,7 +264,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = \"Apotek\" AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis ORDER BY do.qty_obat");
+            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = 'Apotek' AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis ORDER BY do.masa_pakai");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
@@ -305,7 +306,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = \"Apotek\" AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis ORDER BY do.masa_pakai");
+            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = 'Apotek' AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis ORDER BY do.masa_pakai");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();

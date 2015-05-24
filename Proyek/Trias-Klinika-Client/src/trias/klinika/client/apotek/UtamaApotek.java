@@ -96,12 +96,12 @@ public class UtamaApotek extends javax.swing.JFrame {
             }
         });
         getContentPane().add(inventory);
-        inventory.setBounds(30, 210, 145, 23);
+        inventory.setBounds(20, 340, 170, 40);
 
         nama.setText("APOTEK");
         nama.setEnabled(false);
         getContentPane().add(nama);
-        nama.setBounds(330, 10, 120, 30);
+        nama.setBounds(480, 10, 250, 30);
 
         internalFrame.setPreferredSize(new java.awt.Dimension(1147, 570));
 
@@ -126,7 +126,7 @@ public class UtamaApotek extends javax.swing.JFrame {
             }
         });
         getContentPane().add(laporankeuangan);
-        laporankeuangan.setBounds(20, 260, 160, 23);
+        laporankeuangan.setBounds(20, 200, 170, 40);
 
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +135,7 @@ public class UtamaApotek extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(30, 300, 65, 23);
+        logout.setBounds(20, 270, 170, 40);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jLabel1.setText("jLabel1");

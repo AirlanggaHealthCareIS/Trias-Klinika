@@ -29,6 +29,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     int z;
     private InventoryObatApotekService IOAS;
     private String [] isi;
+    private String [] sp ;
     private tabelInventoryObatApotek tioa = new tabelInventoryObatApotek();
 
 //    private String [] jenis;
@@ -49,7 +50,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                 int row = table_obat.getSelectedRow();
                 if (row != -1) {
                     InventoryObatApotekEntitas IOAE = tioa.get(row);                    
-                    id_obat.setText(IOAE.getIdObat());
+                    
                     nama_obat.setText(IOAE.getNamaObat());
                     id_obat.setText(IOAE.getIdObat());
                     qty.setText(Integer.toString(IOAE.getQty()));
@@ -60,7 +61,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                     }
             }
         });
-        Dropdown();
+        
     }
 
     /**
@@ -106,9 +107,10 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(1147, 570));
         getContentPane().setLayout(null);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("INVENTORY OBAT APOTEK");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(547, 11, 129, 14);
+        jLabel2.setBounds(547, 11, 200, 20);
 
         jLabel3.setText("Id_Obat");
 
@@ -141,6 +143,8 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
 
+        deskripsi.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         jenis_obat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jenis_obatActionPerformed(evt);
@@ -156,7 +160,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(deskripsi))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +230,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(650, 80, 350, 414);
+        jPanel2.setBounds(650, 40, 350, 414);
 
         cekkritis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cekkritis.setForeground(new java.awt.Color(0, 0, 204));
@@ -237,7 +241,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(cekkritis);
-        cekkritis.setBounds(1016, 84, 113, 23);
+        cekkritis.setBounds(1000, 40, 113, 23);
 
         kadaluarsa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         kadaluarsa.setForeground(new java.awt.Color(0, 0, 255));
@@ -248,8 +252,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(kadaluarsa);
-        kadaluarsa.setBounds(1016, 118, 113, 23);
+        kadaluarsa.setBounds(1000, 80, 113, 23);
 
+        input.setForeground(new java.awt.Color(0, 0, 153));
         input.setText("Input");
         input.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,8 +262,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(input);
-        input.setBounds(1016, 152, 113, 23);
+        input.setBounds(1000, 120, 113, 23);
 
+        tambah.setForeground(new java.awt.Color(0, 0, 255));
         tambah.setText("Tambah");
         tambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,8 +272,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(tambah);
-        tambah.setBounds(1016, 186, 113, 23);
+        tambah.setBounds(1000, 160, 113, 23);
 
+        delete.setForeground(new java.awt.Color(0, 51, 255));
         delete.setText("Delete");
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,8 +282,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(delete);
-        delete.setBounds(1016, 220, 113, 23);
+        delete.setBounds(1000, 200, 113, 23);
 
+        update.setForeground(new java.awt.Color(0, 51, 204));
         update.setText("Update");
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,8 +292,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(update);
-        update.setBounds(1016, 254, 113, 23);
+        update.setBounds(1000, 240, 113, 23);
 
+        clear.setForeground(new java.awt.Color(0, 51, 204));
         clear.setText("Clear");
         clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,7 +302,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(clear);
-        clear.setBounds(1016, 288, 113, 23);
+        clear.setBounds(1000, 280, 113, 23);
 
         table_obat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -309,7 +318,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         tabel.setViewportView(table_obat);
 
         getContentPane().add(tabel);
-        tabel.setBounds(20, 84, 606, 383);
+        tabel.setBounds(20, 40, 606, 383);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -332,7 +341,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cekkritisActionPerformed
 
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
-        JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showConfirmDialog(null, "Apakah anda sudah yakin?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(nama_obat.getText()==""|qty.getText()==""|harga.getText()==""|tgl_masuk.getDate()==null|masa_pakai.getDate()==null|deskripsi.getText()==""){
             JOptionPane.showMessageDialog(this, "Salah Satu Data Belum di Isi");
         }
@@ -353,7 +362,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_inputActionPerformed
 
     private void tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahActionPerformed
-        JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showConfirmDialog(null, "Apakah anda sudah yakin?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(qty.getText()==""|tgl_masuk.getDate()==null|masa_pakai.getDate()==null){
             JOptionPane.showMessageDialog(this, "Salah Satu Data Belum di Isi");
         }
@@ -376,7 +385,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
-        JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showConfirmDialog(null, "Apakah anda sudah yakin?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         try{
         int row = table_obat.getSelectedRow();
         if(row == -1){
@@ -394,7 +403,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_deleteActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showConfirmDialog(null, "Apakah anda sudah yakin?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         // TODO add your handling code here:
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas ();
         setUpdateObat();
@@ -422,15 +431,8 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
 
     private void kadaluarsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kadaluarsaActionPerformed
         setCekExpired();
-//        try {
-//            List<InventoryObatApotekEntitas> list = IOAS.cekExpired();
-//            tioa.setData(list);
-//        } catch (RemoteException exception) {
-//            exception.printStackTrace();
-//        }
-        // TODO add your handling code here:
     }//GEN-LAST:event_kadaluarsaActionPerformed
-private void refresh (){
+    private void refresh (){
         try {
             List<InventoryObatApotekEntitas> list = IOAS.getobat();
             tioa.setData(list);
@@ -440,12 +442,12 @@ private void refresh (){
     }
     private void Dropdown () throws RemoteException{
         isi = IOAS.DropdownJenis(isi);
-        isi = IOAS.DropdownSpesialis(isi);
+        sp = IOAS.DropdownSpesialis(sp);
         for (int i=0;i<isi.length;i++){
             jenis_obat.addItem(isi[i]);
         }
-        for (int i=0;i<isi.length;i++){
-            jComboBox1.addItem(isi[i]);
+        for (int i=0;i<sp.length;i++){
+            jComboBox1.addItem(sp[i]);
         }
     }
     public void setTambahObat (){
@@ -489,10 +491,7 @@ private void refresh (){
             String tgl = sdf.format(date);
             IOAE.setTglMasuk(tgl);
             System.out.println(tgl);
-        IOAE.setHargaObat(Integer.parseInt(harga.getText()));
-        
-        
-        
+        IOAE.setHargaObat(Integer.parseInt(harga.getText()));  
     }
     public void setCekKritis(){
         try {
@@ -512,8 +511,6 @@ private void refresh (){
             exception.printStackTrace();
         }
     }
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cekkritis;
     private javax.swing.JButton clear;
