@@ -181,6 +181,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
         registry = LocateRegistry.getRegistry(ip,4444);
         service1 = (LoginService) registry.lookup("service1");
         service5 = (ListPetugasService) registry.lookup("service5");
+        this.setTitle(ip);
     }
     
     public String setTanggal () {
@@ -261,20 +262,16 @@ public class Login extends javax.swing.JFrame implements Runnable {
         if (null != users.getsebagai()) switch (users.getsebagai()) {
             case "dokter":{
                 menudokter = new UtamaDokter(users, this);
-                menudokter.setTitle(ip);
                 menudokter.setVisible(true);
                 break;
             }
             case "reservasi":{
                 menureservasi = new utamaReservasi(users, this);
-                menureservasi.setTitle(ip);
                 menureservasi.setVisible(true);
                 break;
             }
             case "apotek":{
                 menuapotek = new UtamaApotek(users, this);
-                menuapotek.setTitle(ip);
-                menuapotek.setLocation(500, 200);
                 menuapotek.setVisible(true);
                 break;
             }
