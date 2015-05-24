@@ -35,17 +35,17 @@ import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
  * @author Azmil
  */
 public class UtamaApotek extends javax.swing.JFrame {
-    String localhost = this.getTitle();
+    String localhost;
     private tabelInventoryObatApotek tabelInventory = new tabelInventoryObatApotek();
-    Registry registry = LocateRegistry.getRegistry(localhost, 4444);
-    final InventoryObatApotekService service10 = (InventoryObatApotekService)registry.lookup("service10");
-    InventoryObatApotek interfaceObat = new InventoryObatApotek (service10);
-    private InventoryObatApotekService IOAS;
-    private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
     private TabelLaporanKeuanganApotek TLKA = new TabelLaporanKeuanganApotek();
-    final LaporanKeuanganService service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
-    LaporanKeuanganApotek laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
+    Registry registry;
+    final LaporanKeuanganService service9_c_1;
+    final InventoryObatApotekService service10;
+    InventoryObatApotek interfaceObat;
+    LaporanKeuanganApotek laporankeuanganapotek;
+    private InventoryObatApotekService IOAS;
     private LaporanKeuanganService LKS;
+    private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
     LoginEntitas LE;
     Login login;
@@ -58,7 +58,13 @@ public class UtamaApotek extends javax.swing.JFrame {
         this.LE = LE;
         this.login = login;
         initComponents();
-        internal_frame ();
+        localhost = this.login.getTitle();
+        registry = LocateRegistry.getRegistry(localhost, 4444);
+        service10 = (InventoryObatApotekService)registry.lookup("service10");
+        interfaceObat = new InventoryObatApotek (service10);
+        service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
+        laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
+        internal_frame();
         nama.setText(localhost);
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
@@ -194,7 +200,6 @@ public void internal_frame (){
         internalFrame2.pack();
         internalFrame2.setSize(1146,577);
         internalFrame2.setVisible(true);
-        internalFrame.removeAll();
         internalFrame.add(internalFrame2);
         BasicInternalFrameUI ui2 = (BasicInternalFrameUI)internalFrame2.getUI();
         Container north2 = (Container)ui2.getNorthPane();

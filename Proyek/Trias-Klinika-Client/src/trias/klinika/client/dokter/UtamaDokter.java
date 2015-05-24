@@ -43,16 +43,16 @@ import trias.klinika.client.dokter.input_resep;
  */
 public class UtamaDokter extends javax.swing.JFrame {
     
-    String localhost = this.getTitle();
-    Registry registry = LocateRegistry.getRegistry(localhost, 4444);
-    final  InventoriObatDokterService service13 = (InventoriObatDokterService)registry.lookup("service13");
-    final  pembayaranService service4 = (pembayaranService)registry.lookup("service4");
-    final serviceRekam service6 = (serviceRekam)registry.lookup("service6");
-    final ServiceResep service7 = (ServiceResep)registry.lookup("service7");
+    String localhost;
+    Registry registry;
+    final  InventoriObatDokterService service13;
+    final  pembayaranService service4;
+    final serviceRekam service6;
+    final ServiceResep service7;
     Inventori_Obat_Dokter iod ;
-    form_pembayaran fp = new form_pembayaran(service4);
-    rekammedis sr = new rekammedis(service6);
-    input_resep ir = new input_resep(service7);
+    form_pembayaran fp;
+    rekammedis sr;
+    input_resep ir;
     private InventoriObatDokterService IODS;
     private pembayaranService FP;
     private serviceRekam SR;
@@ -69,8 +69,19 @@ public class UtamaDokter extends javax.swing.JFrame {
         new Splash().Awal();
         this.LE = LE;
         this.login = login;
-        iod = new Inventori_Obat_Dokter(service13, this);
         initComponents();
+        localhost = this.login.getTitle();
+        registry = LocateRegistry.getRegistry(localhost, 4444);
+        service13 = (InventoriObatDokterService)registry.lookup("service13");
+        service4 = (pembayaranService)registry.lookup("service4");
+        service6 = (serviceRekam)registry.lookup("service6");
+        service7 = (ServiceResep)registry.lookup("service7");
+        
+        iod = new Inventori_Obat_Dokter(service13, this);
+        fp = new form_pembayaran(service4);
+        sr = new rekammedis(service6);
+        ir = new input_resep(service7);
+        internal_frame();
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
@@ -217,7 +228,7 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
-    public void internal_frame (){
+    public void internal_frame() {
         internalFrame1.add(iod.getContentPane());
         internalFrame1.pack();
         internalFrame1.setSize(1146,577);

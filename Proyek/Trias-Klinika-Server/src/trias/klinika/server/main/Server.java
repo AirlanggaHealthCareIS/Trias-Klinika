@@ -198,12 +198,12 @@ public class Server extends javax.swing.JFrame implements Runnable {
                 if(msg.isi.substring(0, 1).equals("D")){
                     UpdateList(msg);
                 }
-                hapus(findClient(ID));
                 break;
             case "logout":
                 if(msg.isi.substring(0, 1).equals("D")){
                     UpdateList(msg);
-                }   
+                }
+                hapus(findClient(ID));   
                 break;
         }
     }
