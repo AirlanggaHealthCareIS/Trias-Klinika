@@ -25,6 +25,7 @@ import trias.klinika.client.tabel.tabelInventoryObatApotek;
  * @author Azmil
  */
 public class InventoryObatApotek extends javax.swing.JInternalFrame {
+    
     int z;
     private InventoryObatApotekService IOAS;
     private String [] isi;
@@ -36,6 +37,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
      * Creates new form InventoryObatApotek
      */
         public InventoryObatApotek(InventoryObatApotekService IOAS) throws RemoteException {
+            
         
         this.IOAS = IOAS;
         tioa.setData(this.IOAS.getobat());// harusnyya pake try
@@ -99,7 +101,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         clear = new javax.swing.JButton();
         tabel = new javax.swing.JScrollPane();
         table_obat = new javax.swing.JTable();
-        jLabel12 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(1147, 570));
         setPreferredSize(new java.awt.Dimension(1147, 570));
@@ -225,7 +226,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(650, 80, 350, 0);
+        jPanel2.setBounds(650, 80, 350, 414);
 
         cekkritis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cekkritis.setForeground(new java.awt.Color(0, 0, 204));
@@ -309,11 +310,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
 
         getContentPane().add(tabel);
         tabel.setBounds(20, 84, 606, 383);
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameApoteker.png"))); // NOI18N
-        jLabel12.setText("jLabel12");
-        getContentPane().add(jLabel12);
-        jLabel12.setBounds(-10, 0, 1140, 540);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -516,6 +512,7 @@ private void refresh (){
             exception.printStackTrace();
         }
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cekkritis;
@@ -528,7 +525,6 @@ private void refresh (){
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
