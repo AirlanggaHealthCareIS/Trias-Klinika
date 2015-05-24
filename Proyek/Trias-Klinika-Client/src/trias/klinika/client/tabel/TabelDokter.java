@@ -29,6 +29,17 @@ public class TabelDokter extends AbstractTableModel{
         fireTableDataChanged();
     }
     
+    public void delete (Dokter Dok) {
+        int indek = 0;
+        for (int i=0;i<list.size();i++) {
+            if (Dok.getid_dokter().equals(list.get(i).getid_dokter())) {
+                indek = i;
+            }
+        }
+        list.remove(indek);
+        fireTableDataChanged();
+    } 
+    
     public List<Dokter> getDataDokter(){
     return list;
 }
