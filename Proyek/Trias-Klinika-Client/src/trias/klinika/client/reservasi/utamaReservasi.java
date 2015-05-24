@@ -69,17 +69,6 @@ public class utamaReservasi extends javax.swing.JFrame {
      * @throws java.rmi.NotBoundException
      */
     
-//    public static void main(String[] args) {
-//        // TODO code application logic here
-//        try {
-//        UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
-//        SwingUtilities.updateComponentTreeUI(new Utama());
-//        } catch (Exception e){
-// 
-//        }
-//        new Utama().setVisible(true);
-//    }
-    
     public utamaReservasi(LoginEntitas LE, Login login)throws RemoteException,NotBoundException {
         new Splash().Awal();
         this.LE = LE;
@@ -320,23 +309,23 @@ public class utamaReservasi extends javax.swing.JFrame {
         }
     }
     
-//    public void updatelist (String Id, String Nama) {
-//        JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
-//        try {
-//            Ant.getTabel().insert(service5.AmbilData(Id));
-//        } catch (RemoteException ex) {
-//            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-//    public void updatelogout (String Id, String Nama) {
-//        JOptionPane.showMessageDialog(null, Nama+" Telah melakukan Logout");
-//        try {
-//            Ant.getTabel().delete(service5.AmbilData(Id));
-//        } catch (RemoteException ex) {
-//            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+    public void updatelist (String Id, String Nama) {
+        JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
+        try {
+            Ant.tabeldokter.insert(service5.AmbilData(Id));
+        } catch (RemoteException ex) {
+            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updatelogout (String Id, String Nama) {
+        JOptionPane.showMessageDialog(null, Nama+" Telah melakukan Logout");
+        try {
+            Ant.tabeldokter.delete(service5.AmbilData(Id));
+        } catch (RemoteException ex) {
+            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JPanel jPanel1;

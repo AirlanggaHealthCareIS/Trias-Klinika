@@ -60,22 +60,10 @@ public class UtamaDokter extends javax.swing.JFrame {
     private String[] isi;
     LoginEntitas LE;
     Login login;
-    
-    
-    /**
-     * Creates new form Utama
-     */
-    
-//    public static void main(String[] args) {
-//        // TODO code application logic here
-//        try {
-//        UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
-//        SwingUtilities.updateComponentTreeUI(new Utama());
-//        } catch (Exception e){
-// 
-//        }
-//        new Utama().setVisible(true);
-//    }
+    private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventori Obat Dokter");
+    private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
+    private JInternalFrame internalFrame3 = new JInternalFrame("Data Pasien");
+    private JInternalFrame internalFrame4 = new JInternalFrame("Frame Pembayaran");
     
     public UtamaDokter(LoginEntitas LE, Login login)throws RemoteException,NotBoundException {
         new Splash().Awal();
@@ -95,8 +83,6 @@ public class UtamaDokter extends javax.swing.JFrame {
         setLocation(
         (screenSize.width - frameSize.width) / 2,
         (screenSize.height - frameSize.height) / 2);
-   
-//        
     }
 
     /**
@@ -199,210 +185,95 @@ public class UtamaDokter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-        try
-        {
-//        Kecil satu = new Kecil();
-//        Besar dua = new Besar();
-//        jDesktopPane1.add(imin);
-//        imin.setVisible(true);
-//            Pe.setTitle(this.getTitle());
-//            Pe.setVisible(true);
-            System.out.println("1 haha .. cemingut ^_^");
-//           Antrean satu = new Antrean(DS);
-            System.out.println("1.1");
-           JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventori Obat Dokter");
-            System.out.println("1.2");
-           internalFrame1.add(iod.getContentPane());
-            System.out.println("1.3");
-           internalFrame1.pack();
-            System.out.println("1.4");
-           internalFrame1.setSize(1146,577);
-            System.out.println("1.5");
-           internalFrame1.setVisible(true);
-            System.out.println("1.6");
-            
-//            JComboBox JCB = new JComboBox();
-//            isi = DS.Dropdowndokter(isi);
-//        for (int i=0;i<isi.length;i++){
-//            JCB.addItem(isi[i]);
-//        }
-           jDesktopPane2.add(internalFrame1);
-//           internalFrame1.setClosable(true);
-            System.out.println("2");
-           BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame1.getUI();
-           Container north = (Container)ui.getNorthPane();
-           north.remove(0);
-           north.validate();
-           north.repaint();
-            System.out.println("3");
-           for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
-        ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
-        }
-         internalFrame1.setSelected(true);
-      
-        }   
-        catch(Exception ex)
-      {
+        try {
+            internalFrame1.setSelected(true);
+        } catch(Exception ex) {
           JOptionPane.showMessageDialog(null, ex);
-          System.out.println("syeemangat choy");
-      }  
+        }  
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        // TODO add your handling code here:
-        try
-        {
-            //        Kecil satu = new Kecil();
-            //        Besar dua = new Besar();
-            //        jDesktopPane1.add(imin);
-            //        imin.setVisible(true);
-            //            Pe.setTitle(this.getTitle());
-            //            Pe.setVisible(true);
-            System.out.println("1 haha .. cemingut ^_^");
-            //           Antrean satu = new Antrean(DS);
-            System.out.println("1.1");
-            JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
-            System.out.println("1.2");
-            internalFrame2.add(fp.getContentPane());
-            System.out.println("1.3");
-            internalFrame2.pack();
-            System.out.println("1.4");
-            internalFrame2.setSize(1146,577);
-            System.out.println("1.5");
-            internalFrame2.setVisible(true);
-            System.out.println("1.6");
-
-            //            JComboBox JCB = new JComboBox();
-            //            isi = DS.Dropdowndokter(isi);
-            //        for (int i=0;i<isi.length;i++){
-                //            JCB.addItem(isi[i]);
-                //        }
-            jDesktopPane2.add(internalFrame2);
-            //           internalFrame1.setClosable(true);
-            System.out.println("2");
-            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
-            Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("3");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
-            }
+        try {
             internalFrame2.setSelected(true);
-
-        }
-        catch(Exception ex)
-        {
+        } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
-            System.out.println("syeemangat choy");
         }
         
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
 private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-// TODO add your handling code here:
-    try
-        {
-            //        Kecil satu = new Kecil();
-            //        Besar dua = new Besar();
-            //        jDesktopPane1.add(imin);
-            //        imin.setVisible(true);
-            //            Pe.setTitle(this.getTitle());
-            //            Pe.setVisible(true);
-            System.out.println("1 haha .. cemingut ^_^");
-            //           Antrean satu = new Antrean(DS);
-            System.out.println("1.1");
-            JInternalFrame internalFrame2 = new JInternalFrame("Data Pasien");
-            System.out.println("1.2");
-            internalFrame2.add(sr.getContentPane());
-            System.out.println("1.3");
-            internalFrame2.pack();
-            System.out.println("1.4");
-            internalFrame2.setSize(1146,577);
-            System.out.println("1.5");
-            internalFrame2.setVisible(true);
-            System.out.println("1.6");
-
-            //            JComboBox JCB = new JComboBox();
-            //            isi = DS.Dropdowndokter(isi);
-            //        for (int i=0;i<isi.length;i++){
-                //            JCB.addItem(isi[i]);
-                //        }
-            jDesktopPane2.add(internalFrame2);
-            //           internalFrame1.setClosable(true);
-            System.out.println("2");
-            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
-            Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("3");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
-            }
-            internalFrame2.setSelected(true);
-
-        }
-        catch(Exception ex)
-        {
-            JOptionPane.showMessageDialog(null, ex);
-            System.out.println("syeemangat choy");
-        }
+    try {
+        internalFrame3.setSelected(true);
+    } catch(Exception ex) {
+        JOptionPane.showMessageDialog(null, ex);
+    }
 }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
-        // TODO add your handling code here:
-        try
-        {
-            //        Kecil satu = new Kecil();
-            //        Besar dua = new Besar();
-            //        jDesktopPane1.add(imin);
-            //        imin.setVisible(true);
-            //            Pe.setTitle(this.getTitle());
-            //            Pe.setVisible(true);
-            System.out.println("1 haha .. cemingut ^_^");
-            //           Antrean satu = new Antrean(DS);
-            System.out.println("1.1");
-            JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
-            System.out.println("1.2");
-            internalFrame2.add(ir.getContentPane());
-            System.out.println("1.3");
-            internalFrame2.pack();
-            System.out.println("1.4");
-            internalFrame2.setSize(1146,577);
-            System.out.println("1.5");
-            internalFrame2.setVisible(true);
-            System.out.println("1.6");
-
-            //            JComboBox JCB = new JComboBox();
-            //            isi = DS.Dropdowndokter(isi);
-            //        for (int i=0;i<isi.length;i++){
-                //            JCB.addItem(isi[i]);
-                //        }
-            jDesktopPane2.add(internalFrame2);
-            //           internalFrame1.setClosable(true);
-            System.out.println("2");
-            BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
-            Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("3");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
-            }
-            internalFrame2.setSelected(true);
-
-        }
-        catch(Exception ex)
-        {
+        try {
+            internalFrame4.setSelected(true);
+        } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
-            System.out.println("syeemangat choy");
         }
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
+    public void internal_frame (){
+        internalFrame1.add(iod.getContentPane());
+        internalFrame1.pack();
+        internalFrame1.setSize(1146,577);
+        internalFrame1.setVisible(true);
+        jDesktopPane2.add(internalFrame1);
+        BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame1.getUI();
+        Container north = (Container)ui.getNorthPane();
+        north.remove(0);
+        north.validate();
+        north.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
+        }
+     
+        internalFrame2.add(fp.getContentPane());
+        internalFrame2.pack();
+        internalFrame2.setSize(1146,577);
+        internalFrame2.setVisible(true);
+        jDesktopPane2.add(internalFrame2);
+        BasicInternalFrameUI ui2 = (BasicInternalFrameUI)internalFrame2.getUI();
+        Container north2 = (Container)ui2.getNorthPane();
+        north2.remove(0);
+        north2.validate();
+        north2.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
+        }
+           
+        internalFrame3.add(sr.getContentPane());
+        internalFrame3.pack();
+        internalFrame3.setSize(1146,577);
+        internalFrame3.setVisible(true);
+        jDesktopPane2.add(internalFrame3);
+        BasicInternalFrameUI ui3 = (BasicInternalFrameUI)internalFrame3.getUI();
+        Container north3 = (Container)ui3.getNorthPane();
+        north3.remove(0);
+        north3.validate();
+        north3.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().removeMouseListener(listener);
+        }
+        
+        internalFrame4.add(ir.getContentPane());
+        internalFrame4.pack();;
+        internalFrame4.setSize(1146,577);
+        internalFrame4.setVisible(true);
+        jDesktopPane2.add(internalFrame4);
+        BasicInternalFrameUI ui4 = (BasicInternalFrameUI)internalFrame4.getUI();
+        Container north4 = (Container)ui4.getNorthPane();
+        north4.remove(0);
+        north4.validate();
+        north4.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().removeMouseListener(listener);
+        }
+    }
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         try {
             login.getService5().Ubah_Status_Logout(LE);

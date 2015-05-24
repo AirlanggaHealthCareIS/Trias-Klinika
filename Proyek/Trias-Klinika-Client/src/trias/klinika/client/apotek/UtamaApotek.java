@@ -36,19 +36,19 @@ import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
  */
 public class UtamaApotek extends javax.swing.JFrame {
     String localhost = this.getTitle();
-private tabelInventoryObatApotek tabelInventory = new tabelInventoryObatApotek();
+    private tabelInventoryObatApotek tabelInventory = new tabelInventoryObatApotek();
     Registry registry = LocateRegistry.getRegistry(localhost, 4444);
-        final InventoryObatApotekService service10 = (InventoryObatApotekService)registry.lookup("service10");
+    final InventoryObatApotekService service10 = (InventoryObatApotekService)registry.lookup("service10");
     InventoryObatApotek interfaceObat = new InventoryObatApotek (service10);
-        private InventoryObatApotekService IOAS;
-        private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
-        private TabelLaporanKeuanganApotek TLKA = new TabelLaporanKeuanganApotek();
-        final LaporanKeuanganService service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
-        LaporanKeuanganApotek laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
-        private LaporanKeuanganService LKS;
-        private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
-        LoginEntitas LE;
-        Login login;
+    private InventoryObatApotekService IOAS;
+    private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
+    private TabelLaporanKeuanganApotek TLKA = new TabelLaporanKeuanganApotek();
+    final LaporanKeuanganService service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
+    LaporanKeuanganApotek laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
+    private LaporanKeuanganService LKS;
+    private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
+    LoginEntitas LE;
+    Login login;
    
 
 
@@ -149,49 +149,17 @@ private tabelInventoryObatApotek tabelInventory = new tabelInventoryObatApotek()
 
     private void inventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryActionPerformed
        try {
-           internalFrame.removeAll();
-           internalFrame.add(internalFrame1);
-           System.out.println("1");
-           BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame1.getUI();
-           Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("1");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
-            }
-            internalFrame1.setSelected(true);
+           internalFrame1.setSelected(true);
+       } catch (Exception ex){
+           JOptionPane.showMessageDialog(null, ex);        
        }
-            catch (Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
-            System.out.println("semangat ya");
-                    
-       }
-        // TODO add your handling code here:
     }//GEN-LAST:event_inventoryActionPerformed
 
     private void laporankeuanganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporankeuanganActionPerformed
-         try
-        {
-            
-            internalFrame.removeAll();
-           internalFrame.add(internalFrame2);
-           System.out.println("2");
-           BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame2.getUI();
-           Container north = (Container)ui.getNorthPane();
-            north.remove(0);
-            north.validate();
-            north.repaint();
-            System.out.println("2");
-            for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
-            }
+        try{
             internalFrame2.setSelected(true);
-       }
-            catch (Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
-            System.out.println("semangat ya");
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_laporankeuanganActionPerformed
 
@@ -206,26 +174,36 @@ private tabelInventoryObatApotek tabelInventory = new tabelInventoryObatApotek()
         }
     }//GEN-LAST:event_logoutActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
 public void internal_frame (){
         
-           internalFrame1.add(interfaceObat.getContentPane());
-        
-           internalFrame1.pack();
-         
-           internalFrame1.setSize(1146,577);
-         
-           internalFrame1.setVisible(true);
+        internalFrame1.add(interfaceObat.getContentPane());
+        internalFrame1.pack();
+        internalFrame1.setSize(1146,577);
+        internalFrame1.setVisible(true);
+        internalFrame.add(internalFrame1);
+        BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame1.getUI();
+        Container north = (Container)ui.getNorthPane();
+        north.remove(0);
+        north.validate();
+        north.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
+           ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
+        }
            
-           internalFrame2.add(laporankeuanganapotek.getContentPane());
-    
-           internalFrame2.pack();
-      
-           internalFrame2.setSize(1146,577);
- 
-           internalFrame2.setVisible(true);
+        internalFrame2.add(laporankeuanganapotek.getContentPane());
+        internalFrame2.pack();
+        internalFrame2.setSize(1146,577);
+        internalFrame2.setVisible(true);
+        internalFrame.removeAll();
+        internalFrame.add(internalFrame2);
+        BasicInternalFrameUI ui2 = (BasicInternalFrameUI)internalFrame2.getUI();
+        Container north2 = (Container)ui2.getNorthPane();
+        north2.remove(0);
+        north2.validate();
+        north2.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
+          ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
+        }
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
