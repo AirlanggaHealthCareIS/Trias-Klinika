@@ -20,6 +20,17 @@ public class rekammedisEntyty implements Serializable {
     int tekanan_darah;
     String Tanggal;
     
+    public void SetData (String id_rekam, String diagnosa, String keluhan, String tindakan, String catatan_lain, String alergi, int tekanan_darah, String Tanggal){
+        this.id_rekam = id_rekam;
+        this.diagnosa = diagnosa;
+        this.keluhan = keluhan;
+        this.tindakan = tindakan;
+        this.catatan_lain = catatan_lain;
+        this.alergi = alergi;
+        this.tekanan_darah = tekanan_darah;
+        this.Tanggal = Tanggal;
+    }
+    
     public void setId_rekam(String id_rekam){
         this.id_rekam = id_rekam;
     } 

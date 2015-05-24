@@ -19,25 +19,24 @@ import trias.klinika.api.entitas.rekammedisEntyty;
 import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.client.tabel.tabelrekammedis;
-
 /**
  *
- * @author iqbal
+ * @author Acer
  */
 public class scenario1_History_benar {
     private String ip;
     private Registry registry;
     private serviceRekam service6;
     private rekammedisEntyty rekam = new rekammedisEntyty();
-    public scenario1_History_benar()throws RemoteException, NotBoundException  {
+    public scenario1_History_benar()throws RemoteException, NotBoundException {
     }
-    
+
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() throws Exception {
     }
-    
+
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() throws Exception {
     }
     
     @Before
@@ -48,22 +47,20 @@ public class scenario1_History_benar {
     public void tearDown() {
     }
 
-    @Test
-    public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     /**
      * Test of setHistory method, of class rekammedis.
      */
     @Test
-    public void testSetHistory() throws RemoteException, NotBoundException  {
-       ip = "127.0.0.1";
+    public void testSetHistory() throws RemoteException, NotBoundException{
+        ip = "127.0.0.1";
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
-        System.out.println("setHistory");      
+        System.out.println(" ");    
         rekammedis interfaceRekammedis = new rekammedis (service6);
+        
         interfaceRekammedis.setHistory();
+        
     }
 
+    
 }
