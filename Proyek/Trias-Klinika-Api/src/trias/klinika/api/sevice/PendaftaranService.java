@@ -20,4 +20,5 @@ public  interface PendaftaranService extends Remote  {
     void Save(EntitasPendaftaran EP, PemeriksaanEntitas PE) throws RemoteException;
     String auto_increment_pemeriksaan(String  aiperiksa) throws RemoteException;
     String auto_increment_pasien(String  aipasien) throws RemoteException;
+    int nomor_antrian(int na, String tgl, String id_dokter) throws RemoteException;
 }
