@@ -71,6 +71,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         this.login = login;
         iod = new Inventori_Obat_Dokter(service13, this);
         initComponents();
+        internal_frame();
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
@@ -217,7 +218,7 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
-    public void internal_frame (){
+    public void internal_frame() {
         internalFrame1.add(iod.getContentPane());
         internalFrame1.pack();
         internalFrame1.setSize(1146,577);

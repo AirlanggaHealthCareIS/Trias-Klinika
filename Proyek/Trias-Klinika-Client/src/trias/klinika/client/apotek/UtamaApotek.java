@@ -58,7 +58,7 @@ public class UtamaApotek extends javax.swing.JFrame {
         this.LE = LE;
         this.login = login;
         initComponents();
-        internal_frame ();
+        internal_frame();
         nama.setText(localhost);
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
@@ -194,7 +194,6 @@ public void internal_frame (){
         internalFrame2.pack();
         internalFrame2.setSize(1146,577);
         internalFrame2.setVisible(true);
-        internalFrame.removeAll();
         internalFrame.add(internalFrame2);
         BasicInternalFrameUI ui2 = (BasicInternalFrameUI)internalFrame2.getUI();
         Container north2 = (Container)ui2.getNorthPane();
