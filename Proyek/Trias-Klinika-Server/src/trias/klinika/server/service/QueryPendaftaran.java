@@ -61,18 +61,15 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
         }
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_REKAM_MEDIS, ID_RESERVASI, ID_PASIEN, ID_DOKTER, ID_RESEP, ID_PEMBAYARAN, TGL_PEMERIKSAAN, NO_ANTRIAN)"
-                    + "VALUES (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_RESERVASI, ID_PASIEN, ID_DOKTER, TGL_PEMERIKSAAN, NO_ANTRIAN ,ID_REKAM_MEDIS, ID_RESEP, ID_PEMBAYARAN)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, null, null, null)");
 
-            statement.setString(1, PE.getID_PEMERIKSAAAN());
-            statement.setString(2, PE.getID_REKAM_MEDIS());
-            statement.setString(3, PE.getID_RESERVASI());
-            statement.setString(4, PE.getID_PASIEN());
-            statement.setString(5, PE.getID_DOKTER());
-            statement.setString(6, PE.getID_RESEP());
-            statement.setString(7, PE.getID_PEMBAYARAN());
-            statement.setString(8, PE.getTGL_PEMERIKSAAN());
-            statement.setInt(9, PE.getNO_ANTRIAN());
+            statement.setString(1, PE.getID_PEMERIKSAAN());
+            statement.setString(2, PE.getID_RESERVASI());
+            statement.setString(3, PE.getID_PASIEN());
+            statement.setString(4, PE.getID_DOKTER());
+            statement.setString(5, PE.getTGL_PEMERIKSAAN());
+            statement.setString(6, PE.getNO_ANTRIAN());
             
             System.out.println(statement.toString());
             statement.executeUpdate();
@@ -127,6 +124,45 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
     }
     
     }   
+    public int nomor_antrian(int na, String tgl, String id_dokter) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT NO_ANTRIAN FROM PEMERIKSAAN WHERE ID_DOKTER = '"+id_dokter+"' AND TGL_PEMERIKSAAN = '"+tgl+"'");
+            
+            if(result.first() == false) {
+                na = 1;
+            }
+            else{
+                result.last();
+            
+                na = result.getInt("NO_ANTRIAN")+1;
+                System.out.println(na);
+            }
+            
+            result.close();
+            
+            return na;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return na;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    }
+    
+    }
     public String auto_increment_pemeriksaan(String  aiperiksa) throws RemoteException {
         Statement statement = null;
         
@@ -140,9 +176,12 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             
             result.last();
             aiperiksa = result.getString("ID_PEMERIKSAAN");
-            int a = Integer.parseInt(aiperiksa.substring(5));
-            a++;
-            aiperiksa = aiperiksa.substring(0, 5)+ a ;
+            String b = Integer.toString((Integer.parseInt(aiperiksa.substring(2,6)))+1); //memisahkan angka D dengan 0001
+            //menambahkan angka belakang    
+            for (int i = b.length(); i < 4; i++ ) {
+                b = "0" + b;
+            } 
+            aiperiksa = aiperiksa.substring(0, 2) + b;
             result.close();
             
             return aiperiksa;
@@ -174,10 +213,12 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             
             result.last();
             aipasien = result.getString("ID_PASIEN");
-            int a = Integer.parseInt(aipasien.substring(4));
-            a++;
-            aipasien = aipasien.substring(0, 6)+ a ;
-            
+            String b = Integer.toString((Integer.parseInt(aipasien.substring(1,5)))+1); //memisahkan angka D dengan 0001
+                //menambahkan angka belakang    
+            for (int i = b.length(); i < 4; i++ ) {
+            b = "0" + b;
+            } 
+            aipasien = aipasien.substring(0, 1) + b;
             result.close();
             return aipasien;
             
