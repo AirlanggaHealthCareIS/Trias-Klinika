@@ -37,18 +37,16 @@ import trias.klinika.client.Home.Splash;
  */
 public class utamaReservasi extends javax.swing.JFrame {
     
-    String localhost = this.getTitle();
+    String localhost;
     private TabelDokter tabeldokter = new TabelDokter();
-    Registry registry = LocateRegistry.getRegistry(localhost, 4444);
-    final  PendaftaranService service2 = (PendaftaranService)registry.lookup("service2");
-    final  ListPembayaranService service12 = (ListPembayaranService)registry.lookup("service12");
-    final  AntreanServis service3 = (AntreanServis)registry.lookup("service3");
-    final  ListPetugasService service5 = (ListPetugasService)registry.lookup("service5");
-        
-    TriasKlinika_Pendaftaran daft = new TriasKlinika_Pendaftaran(service2);
-    Antrean Ant = new Antrean(service5,service3);
-   
-    TriasKlinika_ListPembayaran LP = new TriasKlinika_ListPembayaran(service12);
+    Registry registry;
+    final  PendaftaranService service2;
+    final  ListPembayaranService service12;
+    final  AntreanServis service3;
+    final  ListPetugasService service5;   
+    TriasKlinika_Pendaftaran daft;
+    Antrean Ant;
+    TriasKlinika_ListPembayaran LP;
     
     private ListPembayaranService LPS;
     private AntreanServis AS;
@@ -74,6 +72,15 @@ public class utamaReservasi extends javax.swing.JFrame {
         this.LE = LE;
         this.login = login;
         initComponents();
+        localhost = this.login.getTitle();
+        registry = LocateRegistry.getRegistry(localhost, 4444);
+        service2 = (PendaftaranService)registry.lookup("service2");
+        service12 = (ListPembayaranService)registry.lookup("service12");
+        service3 = (AntreanServis)registry.lookup("service3");
+        service5 = (ListPetugasService)registry.lookup("service5");    
+        daft = new TriasKlinika_Pendaftaran(service2);
+        Ant = new Antrean(service5,service3);
+        LP = new TriasKlinika_ListPembayaran(service12);
         internal_frame();
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
