@@ -64,12 +64,12 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
                     "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_RESERVASI, ID_PASIEN, ID_DOKTER, TGL_PEMERIKSAAN, NO_ANTRIAN ,ID_REKAM_MEDIS, ID_RESEP, ID_PEMBAYARAN)"
                     + "VALUES (?, ?, ?, ?, ?, ?, null, null, null)");
 
-            statement.setString(1, PE.getID_PEMERIKSAAN());
+            statement.setString(1, PE.getID_PEMERIKSAAAN());
             statement.setString(2, PE.getID_RESERVASI());
             statement.setString(3, PE.getID_PASIEN());
             statement.setString(4, PE.getID_DOKTER());
             statement.setString(5, PE.getTGL_PEMERIKSAAN());
-            statement.setString(6, PE.getNO_ANTRIAN());
+            statement.setInt(6, PE.getNO_ANTRIAN());
             
             System.out.println(statement.toString());
             statement.executeUpdate();

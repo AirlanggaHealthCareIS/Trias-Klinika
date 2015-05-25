@@ -52,8 +52,8 @@ public class TabelPasien extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex){
-//            case 0:
-//                return list.get(rowIndex).getID_PEMERIKSAAAN();
+            case 0:
+                return list.get(rowIndex).getNO_ANTRIAN();
             case 1:
                 return list.get(rowIndex).getID_PASIEN();
             case 2:

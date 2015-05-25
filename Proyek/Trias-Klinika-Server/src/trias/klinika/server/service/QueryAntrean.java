@@ -19,8 +19,84 @@ import trias.klinika.api.sevice.AntreanServis;
 public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
     public QueryAntrean() throws RemoteException {
     }
+    
     @Override
-    public List<PemeriksaanEntitas> getpasienkiri(String id) throws RemoteException {
+    public List<PemeriksaanEntitas> buatRefreshing(String tgl, String id_dokter) throws RemoteException {
+        System.out.println("c");
+        System.out.println("proses get ALL Pemeriksaan");
+        Statement statement = null;
+        
+        try {
+            System.out.println("b");
+            statement = Koneksidatabase.getConnection().createStatement();
+            System.out.println("b.1");
+            List<PemeriksaanEntitas> list;
+            try (ResultSet result = statement.executeQuery("SELECT * FROM pemeriksaan WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"'")) {
+                list = new ArrayList<>();
+                while(result.next()){
+                    PemeriksaanEntitas a = new PemeriksaanEntitas();
+                    a.setID_PEMERIKSAAAN(result.getString("ID_PEMERIKSAAN"));
+                    a.setID_RESERVASI(result.getString("ID_RESERVASI"));
+                    a.setID_PASIEN(result.getString("ID_PASIEN"));
+                    a.setID_DOKTER(result.getString("ID_DOKTER"));
+                    a.setTGL_PEMERIKSAAN(result.getString("TGL_PEMERIKSAAN"));
+                    a.setNO_ANTRIAN(Integer.parseInt(result.getString("NO_ANTRIAN")));
+                    list.add(a);
+                }
+            }
+            return list;
+        } 
+        catch (SQLException exception) {
+            return null;
+        }
+        finally{
+            if(statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException  exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+        
+    }
+    
+    @Override
+    public int nomorAntrean(int na, String tgl, String id_dokter) throws RemoteException {
+        Statement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().createStatement();
+                    ResultSet result = statement.executeQuery(
+                    "SELECT NO_ANTRIAN FROM  `pemeriksaan`  WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"'");
+            if(result.first()==false){
+                na=1;
+            }
+            else{
+                result.last();
+                na=result.getInt("NO_ANTRIAN")+1;
+                System.out.println(na);
+            }
+            
+            result.close();
+            return na;
+            
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+            return na;
+        }
+        finally{
+            if(statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException  exception) {
+                    exception.printStackTrace();
+                }
+            }
+    }}
+    
+    @Override
+    public List<PemeriksaanEntitas> getpasienkiri(String id, String tgl) throws RemoteException {
         System.out.println("c");
         System.out.println("proses get ALL pasien kiri");
         Statement statement = null;
@@ -28,13 +104,14 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         try {
             statement = Koneksidatabase.getConnection().createStatement();
             List<PemeriksaanEntitas> list;
-            try (ResultSet result = statement.executeQuery("SELECT ID_PEMERIKSAAN, ID_PASIEN, ID_DOKTER FROM PEMERIKSAAN WHERE ID_DOKTER = '"+id+"'")) {
+            try (ResultSet result = statement.executeQuery("SELECT ID_PEMERIKSAAN, ID_PASIEN, ID_DOKTER, NO_ANTRIAN FROM PEMERIKSAAN WHERE ID_DOKTER = '"+id+"' AND TGL_PEMERIKSAAN='"+tgl+"'")) {
                 list = new ArrayList<>();
                 while(result.next()){
                     PemeriksaanEntitas a = new PemeriksaanEntitas();
                     a.setID_PEMERIKSAAAN(result.getString("ID_PEMERIKSAAN"));
                     a.setID_PASIEN(result.getString("ID_PASIEN"));
                     a.setID_DOKTER(result.getString("ID_DOKTER"));
+                    a.setNO_ANTRIAN(result.getInt("NO_ANTRIAN"));
                     list.add(a);
                 }
             }
@@ -179,7 +256,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
             statement = Koneksidatabase.getConnection().createStatement();
             System.out.println("b.1");
             List<PemeriksaanEntitas> list;
-            try (ResultSet result = statement.executeQuery("SELECT * FROM pemeriksaan")) {
+            try (ResultSet result = statement.executeQuery("SELECT * FROM pemeriksaan ")) {
                 list = new ArrayList<>();
                 while(result.next()){
                     PemeriksaanEntitas a = new PemeriksaanEntitas();

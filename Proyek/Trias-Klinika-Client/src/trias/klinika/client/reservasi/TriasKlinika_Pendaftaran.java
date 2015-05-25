@@ -261,7 +261,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             
             
             
-            PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString().substring(0, 5), tgl_pemeriksaan.getText(), no_antrian.getText());
+//            PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString().substring(0, 5), tgl_pemeriksaan.getText(), no_antrian.getText());
 
             try {
                 PS.Save(EP, PE);

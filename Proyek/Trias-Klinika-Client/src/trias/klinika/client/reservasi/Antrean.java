@@ -47,21 +47,7 @@ public class Antrean extends javax.swing.JInternalFrame {
         initComponents();
         tabeldokter.setData(LPS.AmbilDokterOnline());
         tabelkanan.setModel(tabeldokter);
-                noTable();
     }
-
-    private void noTable()
-	{
-            System.out.println("taperwer");
-		int baris = tabelkiri.getRowCount();
-		for(int a=0; a<baris; a++)
-		{
-			String nomor = String.valueOf(a+1);
-			tabelkiri.setValueAt(nomor, a, 0);
-                        System.out.println("taperwer 2");
-                }
-                
-        }
 
          private void initiateComboBox1(){
         List<Dokter> pd;
@@ -311,30 +297,22 @@ public class Antrean extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         awal();
         ListAntrean();
-        noTable();
-        System.out.println("imin part 1");
     }//GEN-LAST:event_formInternalFrameActivated
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         awal();
         ListAntrean();
-        noTable();
-        System.out.println("imin part 2");
-        // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         awal();
         ListAntrean();
-        noTable();
-        System.out.println("imin part 3");
     }//GEN-LAST:event_formComponentShown
 
     private void tabelkananComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelkananComponentShown
         // TODO add your handling code here:
          awal();
-         System.out.println("imin part 4");
     }//GEN-LAST:event_tabelkananComponentShown
 
     private void TambahAntreanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahAntreanActionPerformed
@@ -349,15 +327,18 @@ public class Antrean extends javax.swing.JInternalFrame {
             PemeriksaanEntitas a = new PemeriksaanEntitas();
             int c = AS.getPemeriksaans().size()+1;
             ID = "PE000"+c;
+            int antri=0;
+            antri =  AS.nomorAntrean(antri, imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
             bayar = AS.getPemeriksaans().size();
             String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
             String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
             a.setID_PEMERIKSAAAN(ID);
+            a.setID_RESERVASI("R0001");
             a.setID_PASIEN(idpas);
             a.setID_DOKTER(iddok);
-            a.setID_RESERVASI("R0001");
-            a.setNO_ANTRIAN(6);
-            a.setTGL_PEMERIKSAAN("2015-03-17");
+            a.setTGL_PEMERIKSAAN(imin.getText());
+            a.setNO_ANTRIAN(antri);
+            
             AS.insertPemeriksaan(a);
 
             JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
@@ -372,16 +353,12 @@ public class Antrean extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         awal();
         ListAntrean();
-        noTable();
-        System.out.println("imin part 6");
     }//GEN-LAST:event_formComponentAdded
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
         // TODO add your handling code here:
         awal();
         ListAntrean();
-        noTable();
-        System.out.println("imin part 7");
     }//GEN-LAST:event_formFocusGained
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -406,8 +383,7 @@ public class Antrean extends javax.swing.JInternalFrame {
             Object selectedObj = tabelkanan.getValueAt(row, 0);
 
                 try {
-                tabelpasien.setData(this.AS.getpasienkiri(""+selectedObj));
-                    System.out.println("malam"+selectedObj);
+                tabelpasien.setData(this.AS.getpasienkiri(""+selectedObj,imin.getText()));
             } catch (RemoteException ex) {
                 Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -447,14 +423,10 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_PilihIDPasienPopupMenuWillBecomeVisible
 
     private void tabelkiriComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelkiriComponentShown
-        // TODO add your handling code here:
-        noTable();
         ListAntrean();
     }//GEN-LAST:event_tabelkiriComponentShown
 
     private void tabelkiriComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelkiriComponentAdded
-        // TODO add your handling code here:
-        noTable();
         ListAntrean();
     }//GEN-LAST:event_tabelkiriComponentAdded
 
@@ -488,7 +460,8 @@ public class Antrean extends javax.swing.JInternalFrame {
     
     private void refresh (){
         try {
-            List<PemeriksaanEntitas> list = AS.getPemeriksaans();
+            int antri=0;
+            List<PemeriksaanEntitas> list = AS.buatRefreshing(imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
             tabelpasien.setData(list);
         } catch (RemoteException exception) {
             exception.printStackTrace();
