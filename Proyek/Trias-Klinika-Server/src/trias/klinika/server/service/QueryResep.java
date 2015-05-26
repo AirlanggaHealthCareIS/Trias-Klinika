@@ -129,4 +129,41 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
     public RincianResep getdetail(RincianResep RR) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    public String auto_increment_NoResep(String  airesep) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT ID_RESEP FROM RESEP");
+            
+            
+            result.last();
+            airesep = result.getString("ID_RESEP");
+            String b = Integer.toString((Integer.parseInt(airesep.substring(2,6)))+1); //memisahkan angka D dengan 0001
+                //menambahkan angka belakang    
+            for (int i = b.length(); i < 4; i++ ) {
+            b = "0" + b;
+            } 
+            airesep = airesep.substring(0, 1) + b;
+            result.close();
+            return airesep;
+            
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return airesep;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    }    
+    }
 }
