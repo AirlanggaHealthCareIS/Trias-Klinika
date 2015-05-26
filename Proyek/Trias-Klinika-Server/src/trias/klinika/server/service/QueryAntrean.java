@@ -32,7 +32,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
                 list = new ArrayList<>();
                 while(result.next()){
                     PemeriksaanEntitas a = new PemeriksaanEntitas();
-                    a.setID_PEMERIKSAAAN(result.getString("ID_PEMERIKSAAN"));
+                   a.setID_PEMERIKSAAAN(result.getString("ID_PEMERIKSAAN"));
                     a.setID_PASIEN(result.getString("ID_PASIEN"));
                     a.setID_DOKTER(result.getString("ID_DOKTER"));
                     list.add(a);
@@ -106,7 +106,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
             
             if(result.next()){
                 a=new PemeriksaanEntitas();
-                a.setID_DOKTER(result.getString("ID_DOKTER"));
+               a.setID_DOKTER(result.getString("ID_DOKTER"));
             }
             
         } catch (SQLException exception) {
@@ -183,12 +183,12 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
                 list = new ArrayList<>();
                 while(result.next()){
                     PemeriksaanEntitas a = new PemeriksaanEntitas();
-                    a.setID_PEMERIKSAAAN(result.getString("ID_PEMERIKSAAN"));
-                    a.setID_RESERVASI(result.getString("ID_RESERVASI"));
-                    a.setID_PASIEN(result.getString("ID_PASIEN"));
-                    a.setID_DOKTER(result.getString("ID_DOKTER"));
-                    a.setTGL_PEMERIKSAAN(result.getString("TGL_PEMERIKSAAN"));
-                    a.setNO_ANTRIAN(Integer.parseInt(result.getString("NO_ANTRIAN")));
+                   a.setID_PEMERIKSAAAN(result.getString("ID_PEMERIKSAAN"));
+                   a.setID_RESERVASI(result.getString("ID_RESERVASI"));
+                   a.setID_PASIEN(result.getString("ID_PASIEN"));
+                   a.setID_DOKTER(result.getString("ID_DOKTER"));
+                   a.setTGL_PEMERIKSAAN(result.getString("TGL_PEMERIKSAAN"));
+                   a.setNO_ANTRIAN(Integer.parseInt(result.getString("NO_ANTRIAN")));
                     list.add(a);
                 }
             }
