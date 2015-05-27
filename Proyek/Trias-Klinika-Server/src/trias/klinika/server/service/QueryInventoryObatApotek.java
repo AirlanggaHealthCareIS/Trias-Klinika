@@ -340,5 +340,85 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         }
          //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String auto_increment_obat(String aiObat) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT ID_OBAT FROM OBAT");
+            
+            
+            result.last();
+            aiObat = result.getString("ID_OBAT");
+            String b = Integer.toString((Integer.parseInt(aiObat.substring(2,6)))+1); //memisahkan angka D dengan 0001
+            //menambahkan angka belakang    
+            for (int i = b.length(); i < 4; i++ ) {
+                b = "0" + b;
+            } 
+            aiObat = aiObat.substring(0, 2) + b;
+            result.close();
+            
+            return aiObat;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return aiObat;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    }
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public InventoryObatApotekEntitas getIdObat(String id) throws RemoteException {
+        System.out.println("Client melakukan proses get-all");
+
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT O.ID_OBAT FROM OBAT AS O WHERE NAMA_OBAT = '"+id+"'");
+            
+            
+            InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
+            result.first();
+                
+                IOAE.setIdObat(result.getString("ID_OBAT"));
+                IOAE.setNamaObat(result.getString("NAMA_OBAT"));
+                
+            result.close();
+            
+            return IOAE;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+
+        //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

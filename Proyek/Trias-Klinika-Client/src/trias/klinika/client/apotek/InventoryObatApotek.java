@@ -31,6 +31,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     private String [] isi;
     private String [] sp ;
     private tabelInventoryObatApotek tioa = new tabelInventoryObatApotek();
+    private String aiObat;
 
 //    private String [] jenis;
 //    private String [] spesialis;
@@ -43,6 +44,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         this.IOAS = IOAS;
         tioa.setData(this.IOAS.getobat());// harusnyya pake try
         initComponents();
+        auto_increment_obat ();
         Dropdown();
         table_obat.setModel(tioa);
         table_obat.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -58,6 +60,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                     deskripsi.setText(IOAE.getDeskripsi()); 
                     tgl_masuk.setDate(Date.valueOf(IOAE.getTglMasuk()));
                     masa_pakai.setDate(Date.valueOf(IOAE.getMasaPakai()));
+                    
                     }
             }
         });
@@ -421,7 +424,8 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_updateActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        id_obat.setText("");
+        
+        id_obat.setText(aiObat);
         nama_obat.setText("");
         qty.setText("");
         harga.setText("");
@@ -510,6 +514,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
+    }
+    private void auto_increment_obat () throws RemoteException { 
+       aiObat = IOAS.auto_increment_obat(aiObat);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cekkritis;
