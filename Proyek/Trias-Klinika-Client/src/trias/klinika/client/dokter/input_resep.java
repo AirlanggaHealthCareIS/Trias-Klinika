@@ -32,6 +32,7 @@ public class input_resep extends javax.swing.JInternalFrame {
     private String[] isi;
     private TabelResep TR = new TabelResep();
     private Object ID_Apotek;
+    String airesep;
     DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
     /**
      * Creates new form input_resep
@@ -40,6 +41,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         this.SR = SR;
         
         initComponents();
+        NoResep.setText(airesep);
         table.setModel(TR);
         Dropdown();
         
@@ -395,7 +397,9 @@ public class input_resep extends javax.swing.JInternalFrame {
     private void IDPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDPasienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_IDPasienActionPerformed
-
+    public void auto_increment_NoResep () throws RemoteException { 
+        airesep = SR.auto_increment_NoResep(airesep);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IDDokter;

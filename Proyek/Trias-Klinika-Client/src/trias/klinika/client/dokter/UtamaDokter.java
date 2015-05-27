@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoriObatDokterService;
+import trias.klinika.api.sevice.LaporanKeuanganDokterService;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.serviceRekam;
@@ -49,14 +50,17 @@ public class UtamaDokter extends javax.swing.JFrame {
     final  pembayaranService service4;
     final serviceRekam service6;
     final ServiceResep service7;
+    final LaporanKeuanganDokterService service9_b_2;
     Inventori_Obat_Dokter iod ;
     form_pembayaran fp;
     rekammedis sr;
     input_resep ir;
+    Laporan_keuangan_dokter lkd;
     private InventoriObatDokterService IODS;
     private pembayaranService FP;
     private serviceRekam SR;
     private ServiceResep IR;
+    private LaporanKeuanganDokterService LKDS;
     private String[] isi;
     LoginEntitas LE;
     Login login;
@@ -64,6 +68,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
     private JInternalFrame internalFrame3 = new JInternalFrame("Data Pasien");
     private JInternalFrame internalFrame4 = new JInternalFrame("Frame Pembayaran");
+    private JInternalFrame internalFrame5 = new JInternalFrame("Laporan Keuangan Dokter");
     
     public UtamaDokter(LoginEntitas LE, Login login)throws RemoteException,NotBoundException {
         new Splash().Awal();
@@ -76,11 +81,13 @@ public class UtamaDokter extends javax.swing.JFrame {
         service4 = (pembayaranService)registry.lookup("service4");
         service6 = (serviceRekam)registry.lookup("service6");
         service7 = (ServiceResep)registry.lookup("service7");
+        service9_b_2 = (LaporanKeuanganDokterService)registry.lookup("service9_b_2");
         
         iod = new Inventori_Obat_Dokter(service13, this);
         fp = new form_pembayaran(service4);
         sr = new rekammedis(service6);
         ir = new input_resep(service7);
+        lkd = new Laporan_keuangan_dokter(service9_b_2, this);
         internal_frame();
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
@@ -112,6 +119,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
+        LaporanKeuanganDokter = new javax.swing.JToggleButton();
         logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
@@ -146,7 +154,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jToggleButton2);
-        jToggleButton2.setBounds(10, 77, 139, 41);
+        jToggleButton2.setBounds(10, 50, 139, 41);
 
         jToggleButton3.setText("Rekam Medis");
         jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -155,7 +163,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jToggleButton3);
-        jToggleButton3.setBounds(10, 148, 139, 41);
+        jToggleButton3.setBounds(10, 100, 139, 41);
 
         jToggleButton4.setText("Resep");
         jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -164,7 +172,16 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jToggleButton4);
-        jToggleButton4.setBounds(10, 207, 139, 41);
+        jToggleButton4.setBounds(10, 150, 139, 41);
+
+        LaporanKeuanganDokter.setText("Laporan");
+        LaporanKeuanganDokter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LaporanKeuanganDokterActionPerformed(evt);
+            }
+        });
+        jPanel1.add(LaporanKeuanganDokter);
+        LaporanKeuanganDokter.setBounds(10, 200, 140, 40);
 
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -284,6 +301,20 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().getMouseListeners()){
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().removeMouseListener(listener);
         }
+        
+        internalFrame5.add(lkd.getContentPane());
+        internalFrame5.pack();;
+        internalFrame5.setSize(1146,577);
+        internalFrame5.setVisible(true);
+        jDesktopPane2.add(internalFrame5);
+        BasicInternalFrameUI ui5 = (BasicInternalFrameUI)internalFrame5.getUI();
+        Container north5 = (Container)ui4.getNorthPane();
+        north5.remove(0);
+        north5.validate();
+        north5.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().removeMouseListener(listener);
+        }
     }
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         try {
@@ -296,7 +327,17 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }//GEN-LAST:event_logoutActionPerformed
 
+    private void LaporanKeuanganDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaporanKeuanganDokterActionPerformed
+        // TODO add your handling code here:
+        try {
+            internalFrame5.setSelected(true);
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_LaporanKeuanganDokterActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton LaporanKeuanganDokter;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
