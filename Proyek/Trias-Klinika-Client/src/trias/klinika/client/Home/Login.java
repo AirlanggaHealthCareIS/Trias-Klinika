@@ -21,6 +21,7 @@ import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.LoginService;
 import trias.klinika.api.sevice.ListPetugasService;
+import trias.klinika.api.sevice.laporankeuanganReservasiService;
 import trias.klinika.client.apotek.UtamaApotek;
 import trias.klinika.client.dokter.UtamaDokter;
 import trias.klinika.client.reservasi.utamaReservasi;
@@ -37,6 +38,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
     private Registry registry;
     private LoginService service1;
     private ListPetugasService service5;
+    private laporankeuanganReservasiService service9_a_1;
     private LoginEntitas users = new LoginEntitas();
     private ObjectInputStream readC;
     private ObjectOutputStream writeC;
@@ -181,6 +183,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
         registry = LocateRegistry.getRegistry(ip,4444);
         service1 = (LoginService) registry.lookup("service1");
         service5 = (ListPetugasService) registry.lookup("service5");
+        service9_a_1 = (laporankeuanganReservasiService) registry.lookup("service9_a_1");
         this.setTitle(ip);
     }
     
