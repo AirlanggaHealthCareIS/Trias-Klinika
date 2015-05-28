@@ -14,7 +14,7 @@ import trias.klinika.api.entitas.rekammedisEntyty;
  *
  * @author Acer
  */
-public interface laporan_keuanganService extends Remote {
+public interface laporankeuanganReservasiService extends Remote {
     
   List<laporan_keuangan_reservasiEntity> getlaporan () throws RemoteException;
     

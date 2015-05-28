@@ -10,13 +10,37 @@
  */
 package trias.klinika.client.reservasi;
 
+import java.rmi.RemoteException;
+import trias.klinika.api.sevice.laporankeuanganReservasiService;
+import trias.klinika.client.tabel.TabelLaporanKeuanganReservasi;
+
 /**
  *
  * @author Acer
  */
 public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
 
-    /** Creates new form laporanKeuanganReservasi */
+    int a;
+   private laporankeuanganReservasiService LKR;
+    private String [] isi;
+    private String jenis;
+    private String id_dokter;
+    private String tanggal;
+    private String nama_dokter;
+    private int jumlah;
+    private String id_rincian_pembayaran;
+    private TabelLaporanKeuanganReservasi TLKA = new TabelLaporanKeuanganReservasi();
+    
+     public laporanKeuanganReservasi(laporankeuanganReservasiService LKR) throws RemoteException {
+       this.LKR = LKR;
+        initComponents();
+        tabel.setVisible(false);
+        pilih.setEnabled(false);
+        date1.setEnabled(false);
+        date2.setEnabled(false);
+       
+       }
+    
     public laporanKeuanganReservasi() {
         initComponents();
     }
@@ -31,19 +55,19 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabel = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        pilih = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        date1 = new com.toedter.calendar.JDateChooser();
+        date2 = new com.toedter.calendar.JDateChooser();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1147, 557));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -54,21 +78,26 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
                 "ID DOKTER", "NAMA DOKTER", "JUMLAH"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabel);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36));
         jLabel1.setText("LAPORAN KEUANGAN RESERVASI");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12));
         jLabel2.setText("PILIH KATEGORI    :");
 
-        jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "HARIAN", "MINGGUAN" }));
+        pilih.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        pilih.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "HARI INI", "PILIH TANGGAL" }));
+        pilih.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pilihActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12));
         jLabel3.setText("TANGGAL    :");
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18));
         jLabel4.setText("-");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -84,19 +113,19 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
                         .addGap(211, 211, 211)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66)
+                        .addComponent(pilih, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(228, 228, 228)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,29 +133,56 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
                 .addGap(67, 67, 67)
                 .addComponent(jLabel1)
                 .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pilih, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(date2, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(date1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(75, 75, 75)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addGap(100, 100, 100))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+private void pilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pilihActionPerformed
+// TODO add your handling code here:
+     if(pilih.getSelectedItem().toString()=="HARI INI"){
+             date1.setVisible(true);
+             date2.setVisible(false);
+             tabel.setVisible(true);
+            reset();
+            a = 0;
+            date1.setEnabled(true);}
+        
+         else if(pilih.getSelectedItem().toString()=="PILIH TANGGAL"){
+            date1.setVisible(true);
+            date2.setVisible(true);
+            tabel.setVisible(true);
+             reset();
+        a=1;
+        date1.setEnabled(true);
+        date2.setEnabled(true);}       
+}//GEN-LAST:event_pilihActionPerformed
+    public void reset(){
+            date1.setEnabled(false);
+            date2.setEnabled(false);
+    }       
+  
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox jComboBox1;
+    private com.toedter.calendar.JDateChooser date1;
+    private com.toedter.calendar.JDateChooser date2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JComboBox pilih;
+    private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }
