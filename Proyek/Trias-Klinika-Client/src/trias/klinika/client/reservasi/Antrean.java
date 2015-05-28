@@ -37,6 +37,7 @@ public class Antrean extends javax.swing.JInternalFrame {
     public PemeriksaanEntitas PE = new PemeriksaanEntitas();
     public List<PasienEntity> list;
     private Object connection;
+    private boolean sama = false;
     
     public Antrean(ListPetugasService LPS, AntreanServis AS)throws RemoteException {
 
@@ -50,7 +51,8 @@ public class Antrean extends javax.swing.JInternalFrame {
     }
 
          private void initiateComboBox1(){
-        List<Dokter> pd;
+        PilihDokter.removeAllItems();
+             List<Dokter> pd;
         pd = tabeldokter.getDataDokter();
             for(int i = 0; i<pd.size();i++){                
                PilihDokter.addItem(pd.get(i).getnama_dokter().toUpperCase());
@@ -59,6 +61,7 @@ public class Antrean extends javax.swing.JInternalFrame {
     }
 
          private void initiateComboBox2(){      
+        PilihIDPasien.removeAllItems();
         List<PasienEntity> pe;
         try {
             pe = AS.getPasienEntitys();
@@ -316,13 +319,27 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tabelkananComponentShown
 
     private void TambahAntreanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahAntreanActionPerformed
-
+        sama = false;
         Dokter d =new Dokter();
         int id_dokter=0;
 
         try {
+            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
+            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
+            List<PemeriksaanEntitas> pemeriksaan = AS.getpasienkiri(iddok, imin.getText());
             
-            String ID = null;
+            for (int i = 0; i < pemeriksaan.size(); i++) {
+                if(pemeriksaan.get(i).getID_PASIEN().toString().equals(idpas)){
+                    sama = true;
+                    System.out.println(idpas);
+                }
+            }
+            if (sama) {
+                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean");
+            }
+            
+            else if(!sama){
+                String ID = null;
             int bayar=0;
             PemeriksaanEntitas a = new PemeriksaanEntitas();
             int c = AS.getPemeriksaans().size()+1;
@@ -330,8 +347,7 @@ public class Antrean extends javax.swing.JInternalFrame {
             int antri=0;
             antri =  AS.nomorAntrean(antri, imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
             bayar = AS.getPemeriksaans().size();
-            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
-            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
+            
             a.setID_PEMERIKSAAAN(ID);
             a.setID_RESERVASI("R0001");
             a.setID_PASIEN(idpas);
@@ -343,6 +359,8 @@ public class Antrean extends javax.swing.JInternalFrame {
 
             JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
                         refresh();
+            }
+            
         } catch (RemoteException ex) {
             Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
         }
