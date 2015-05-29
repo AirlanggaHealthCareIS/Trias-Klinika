@@ -19,59 +19,7 @@ import trias.klinika.api.sevice.AntreanServis;
 public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
     public QueryAntrean() throws RemoteException {
     }
-    
-    @Override
-    public List<PasienEntity> ngecekIDPasienSama() throws RemoteException {
-        System.out.println("c");
-        System.out.println("proses get ALL Pasien");
-        Statement statement = null;
         
-        try {
-            System.out.println("b");
-            statement = Koneksidatabase.getConnection().createStatement();
-            System.out.println("b.1");
-            List<PasienEntity> list;
-            try (ResultSet result = statement.executeQuery("SELECT * FROM PASIEN")) {
-                System.out.println("b.2");
-                list = new ArrayList<>();
-                System.out.println("b.3");
-                while(result.next()){
-                    System.out.println("a");
-                    PasienEntity a = new PasienEntity();
-                    System.out.println("a.1");
-                    a.setid_pasien(result.getString("ID_PASIEN"));
-                    System.out.println(a.getid_pasien());
-                    a.setNama(result.getString("NAMA_PASIEN"));
-                    System.out.println("a.3");
-                    a.SetTanggal(result.getString("TGL_LAHIR_PASIEN"));
-                    System.out.println("a.4");
-                    a.setNoTLP(result.getString("NO_TELP_PASIEN"));
-                    System.out.println("a.5");
-                    a.setAlamat(result.getString("ALAMAT_PASIEN"));
-                    System.out.println("a.6");
-                    a.setGolDarah(result.getString("GOL_DARAH"));
-                    System.out.println("a.7");
-                    list.add(a);
-                }
-            }
-            return list;
-        } 
-        catch (SQLException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-        finally{
-            if(statement!=null){
-                try {
-                    statement.close();
-                } catch (SQLException  exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }
-        
-    }
-    
     @Override
     public List<PemeriksaanEntitas> buatRefreshing(String tgl, String id_dokter) throws RemoteException {
         System.out.println("c");

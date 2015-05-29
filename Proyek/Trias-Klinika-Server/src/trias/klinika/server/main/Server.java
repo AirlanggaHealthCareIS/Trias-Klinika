@@ -4,6 +4,8 @@
  */
 package trias.klinika.server.main;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import trias.klinika.api.pesan.pesan;
 import java.io.*;
 import java.net.UnknownHostException;
@@ -306,6 +308,11 @@ public class Server extends javax.swing.JFrame implements Runnable {
      */
     public Server() {
         initComponents();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation(
+        (screenSize.width - frameSize.width) / 2,
+        (screenSize.height - frameSize.height) / 2);
     }
 
     /**
