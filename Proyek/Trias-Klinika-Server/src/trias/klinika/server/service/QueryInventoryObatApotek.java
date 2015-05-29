@@ -74,16 +74,16 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         System.out.println("Proses Melakukan Penambahan Obat Baru");
         PreparedStatement statement = null;
         try {
-            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO obat(id_obat, id_spesialis, nama_obat, harga_obat, deskripsi_obat, harga_obat, tgl_masuk, masa_pakai)"+"VALUES (?,?,?,?,?,?,?,?)");
-            statement.setString(1, inventory.getIdDetailObat());
-            statement.setString(2, inventory.getIdObat());
-            statement.setInt(3, inventory.getQty());
-            statement.setString(4, inventory.getTglMasuk());
-            statement.setString(5, inventory.getMasaPakai());
-            statement.setString(6, inventory.getRuangObat());
-            statement.setInt(7, inventory.getHargaObat());
-            statement.setString(8, inventory.getTglMasuk());
-            statement.setString(9, inventory.getMasaPakai());
+            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT, ID_JENIS)"+ "values (?, ?, ?, ?, ?, ?)");
+            
+            statement.setString(1, inventory.getIdObat());
+            statement.setString(2, inventory.getIdSpesialis());
+            statement.setString(3, inventory.getNamaObat());
+            statement.setInt(4, inventory.getHargaObat());
+            statement.setString(5, inventory.getDeskripsi());
+            statement.setString(6, inventory.getIdJenisObat());
+            System.out.println(statement.toString());
+            
             statement.executeUpdate();
         }
         catch(SQLException exception){
@@ -101,10 +101,15 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
     }
         PreparedStatement statement2 = null;
         try{
-            statement2 = Koneksidatabase.getConnection().prepareStatement("INSERT INTO jenis_obat (id_jenis_obat, nama_jenis_obat)"+"values(?,?)");
-            statement2.setString(1, inventory.getIdJenisObat());
-            statement2.setString(2, inventory.getJenisObat());
-            statement.executeUpdate();
+            statement2 = Koneksidatabase.getConnection().prepareStatement("INSERT INTO detail_obat (ID_DETAIL, ID_OBAT, QTY_OBAT, TGL_MASUK, MASA_PAKAI, RUANGAN)"+ "values (?, ?, ?, ?, ?, ?)");
+            statement2.setString(1, inventory.getIdDetailObat());
+            statement2.setString(2, inventory.getIdObat());
+            statement2.setInt(3, inventory.getQty());
+            statement2.setString(4, inventory.getTglMasuk());
+            statement2.setString(5, inventory.getMasaPakai());
+            statement2.setString(6, inventory.getRuangObat());
+            System.out.println(statement2.toString());
+            statement2.executeUpdate();
         }
         catch (SQLException exception){
             exception.printStackTrace();
@@ -163,24 +168,25 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
 
     @Override
     public void tambahObat(InventoryObatApotekEntitas inventory) throws RemoteException {
-        System.out.println("Proses Melakukan Penambahan Stok Obat Lama");
-        PreparedStatement statement = null;
-        try {
-            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO obat (id_obat, nama_obat,tgl_masuk, masa_pakai, kuantiti_obat)values(null,null,?,?,?) ");
-            statement.setString(1, inventory.getIdObat());
-            statement.setString(2, inventory.getNamaObat());
-            statement.setString(3, inventory.getTglMasuk());
-            statement.setString(4, inventory.getMasaPakai());
-            statement.setInt(5, inventory.getQty());
-            statement.executeUpdate();
+        PreparedStatement statement2 = null;
+        try{
+            statement2 = Koneksidatabase.getConnection().prepareStatement("INSERT INTO detail_obat (ID_DETAIL, ID_OBAT, QTY_OBAT, TGL_MASUK, MASA_PAKAI, RUANGAN)"+ "values (?, ?, ?, ?, ?, ?)");
+            statement2.setString(1, inventory.getIdDetailObat());
+            statement2.setString(2, inventory.getIdObat());
+            statement2.setInt(3, inventory.getQty());
+            statement2.setString(4, inventory.getTglMasuk());
+            statement2.setString(5, inventory.getMasaPakai());
+            statement2.setString(6, inventory.getRuangObat());
+            System.out.println(statement2.toString());
+            statement2.executeUpdate();
         }
         catch (SQLException exception){
             exception.printStackTrace();
         }
         finally {
-            if(statement != null){
-                try {
-                    statement.close();
+            if(statement2 != null){
+                try{
+                    statement2.close();
                 }
                 catch (SQLException exception){
                     
@@ -355,7 +361,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
             
             result.last();
             aiObat = result.getString("ID_OBAT");
-            String b = Integer.toString((Integer.parseInt(aiObat.substring(2,6)))+1); //memisahkan angka D dengan 0001
+            String b = Integer.toString((Integer.parseInt(aiObat.substring(1,5)))+1); //memisahkan angka D dengan 0001
             //menambahkan angka belakang    
             for (int i = b.length(); i < 4; i++ ) {
                 b = "0" + b;
