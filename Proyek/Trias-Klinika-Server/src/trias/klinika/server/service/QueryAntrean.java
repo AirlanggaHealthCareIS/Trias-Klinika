@@ -19,7 +19,7 @@ import trias.klinika.api.sevice.AntreanServis;
 public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
     public QueryAntrean() throws RemoteException {
     }
-    
+        
     @Override
     public List<PemeriksaanEntitas> buatRefreshing(String tgl, String id_dokter) throws RemoteException {
         System.out.println("c");

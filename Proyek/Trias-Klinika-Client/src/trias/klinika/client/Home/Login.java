@@ -5,6 +5,8 @@
  */
 package trias.klinika.client.Home;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -56,6 +58,8 @@ public class Login extends javax.swing.JFrame implements Runnable {
     public Login() {
         try {
             Awal();
+            Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
+            setSize(dim);
         } catch (RemoteException | NotBoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,7 +87,6 @@ public class Login extends javax.swing.JFrame implements Runnable {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1366, 768));
-        setPreferredSize(new java.awt.Dimension(1355, 768));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(1366, 768));

@@ -2,6 +2,9 @@
 
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1147, 557]"/>
+    </Property>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1146, 577]"/>
     </Property>
@@ -37,27 +40,29 @@
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="426" max="-2" attributes="0"/>
-                      <Component id="imin" min="-2" pref="132" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="174" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="PilihIDPasien" min="-2" pref="119" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="PilihDokter" min="-2" pref="132" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="TambahAntrean" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jScrollPane1" min="-2" pref="398" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jScrollPane1" min="-2" pref="398" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="380" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="input" min="-2" pref="138" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="PilihIDPasien" min="-2" pref="119" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="PilihDokter" min="-2" pref="132" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="tomboltambah" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="kirim" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="reset" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="174" max="-2" attributes="0"/>
+                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <Component id="imin" min="-2" pref="17" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="198" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
@@ -69,28 +74,29 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="PilihDokter" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                  <Component id="TambahAntrean" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="PilihIDPasien" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="3" min="-2" pref="47" max="-2" attributes="0"/>
-                  <Component id="imin" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="imin" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jLabel1" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="tomboltambah" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="PilihDokter" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                          <Component id="PilihIDPasien" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                          <Component id="kirim" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="reset" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="input" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane2" pref="392" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="428" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane1" pref="380" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="380" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,11 +112,10 @@
         <Component class="javax.swing.JTable" name="tabelkiri">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="No" type="java.lang.Object"/>
+              <Table columnCount="3" rowCount="4">
+                <Column editable="true" title="No Antrean" type="java.lang.Object"/>
                 <Column editable="true" title="ID Pasien" type="java.lang.Object"/>
-                <Column editable="true" title="Nama" type="java.lang.Object"/>
-                <Column editable="true" title="Status" type="java.lang.Object"/>
+                <Column editable="true" title="ID Dokter" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>
@@ -166,14 +171,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JToggleButton" name="TambahAntrean">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tambah ke Antrean"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TambahAntreanActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JComboBox" name="PilihIDPasien">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -191,6 +188,44 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
     </Component>
     <Component class="javax.swing.JTextField" name="imin">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="iminActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="tomboltambah">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tambah ke Antrean"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tomboltambahActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="kirim">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kirim ID ke Dokter"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kirimActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="reset">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reset ID Pasien"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="input">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="66" red="66" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Input ID Pasien"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

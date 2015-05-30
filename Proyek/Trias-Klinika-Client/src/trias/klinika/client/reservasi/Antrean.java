@@ -37,6 +37,7 @@ public class Antrean extends javax.swing.JInternalFrame {
     public PemeriksaanEntitas PE = new PemeriksaanEntitas();
     public List<PasienEntity> list;
     private Object connection;
+    private boolean sama = false;
     
     public Antrean(ListPetugasService LPS, AntreanServis AS)throws RemoteException {
 
@@ -47,11 +48,20 @@ public class Antrean extends javax.swing.JInternalFrame {
         initComponents();
         tabeldokter.setData(LPS.AmbilDokterOnline());
         tabelkanan.setModel(tabeldokter);
+        tomboltambah.setEnabled(false);
+        PilihDokter.setEnabled(false);
+        imin.setVisible(false);
+        kirim.setEnabled(false);
+        reset.setEnabled(false);
+        tabelkiri.setEnabled(false);
+        
     }
 
          private void initiateComboBox1(){
-        List<Dokter> pd;
+        PilihDokter.removeAllItems();
+             List<Dokter> pd;
         pd = tabeldokter.getDataDokter();
+        tomboltambah.setEnabled(true);
             for(int i = 0; i<pd.size();i++){                
                PilihDokter.addItem(pd.get(i).getnama_dokter().toUpperCase());
             }
@@ -59,7 +69,9 @@ public class Antrean extends javax.swing.JInternalFrame {
     }
 
          private void initiateComboBox2(){      
+        PilihIDPasien.removeAllItems();
         List<PasienEntity> pe;
+        PilihDokter.setEnabled(true);
         try {
             pe = AS.getPasienEntitys();
             for(int i = 0; i<pe.size();i++){                
@@ -81,11 +93,15 @@ public class Antrean extends javax.swing.JInternalFrame {
         PilihDokter = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelkanan = new javax.swing.JTable();
-        TambahAntrean = new javax.swing.JToggleButton();
         PilihIDPasien = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         imin = new javax.swing.JTextField();
+        tomboltambah = new javax.swing.JButton();
+        kirim = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
+        input = new javax.swing.JTextField();
 
+        setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1146, 577));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -133,13 +149,13 @@ public class Antrean extends javax.swing.JInternalFrame {
 
         tabelkiri.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "No", "ID Pasien", "Nama", "Status"
+                "No Antrean", "ID Pasien", "ID Dokter"
             }
         ));
         tabelkiri.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,13 +226,6 @@ public class Antrean extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tabelkanan);
 
-        TambahAntrean.setText("Tambah ke Antrean");
-        TambahAntrean.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TambahAntreanActionPerformed(evt);
-            }
-        });
-
         PilihIDPasien.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Pilih ID Pasien" }));
         PilihIDPasien.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
@@ -238,6 +247,37 @@ public class Antrean extends javax.swing.JInternalFrame {
             }
         });
 
+        imin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                iminActionPerformed(evt);
+            }
+        });
+
+        tomboltambah.setText("Tambah ke Antrean");
+        tomboltambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tomboltambahActionPerformed(evt);
+            }
+        });
+
+        kirim.setText("Kirim ID ke Dokter");
+        kirim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kirimActionPerformed(evt);
+            }
+        });
+
+        reset.setText("Reset ID Pasien");
+        reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetActionPerformed(evt);
+            }
+        });
+
+        input.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        input.setForeground(new java.awt.Color(102, 102, 102));
+        input.setText("Input ID Pasien");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,22 +286,26 @@ public class Antrean extends javax.swing.JInternalFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(426, 426, 426)
-                        .addComponent(imin, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(135, 135, 135)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TambahAntrean))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(123, 123, 123)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(198, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tomboltambah)
+                        .addGap(18, 18, 18)
+                        .addComponent(kirim)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(reset)
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(imin, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
@@ -270,24 +314,25 @@ public class Antrean extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TambahAntrean, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(imin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(imin, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tomboltambah, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kirim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                        .addGap(60, 60, 60))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
         );
 
         pack();
@@ -315,40 +360,6 @@ public class Antrean extends javax.swing.JInternalFrame {
          awal();
     }//GEN-LAST:event_tabelkananComponentShown
 
-    private void TambahAntreanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahAntreanActionPerformed
-
-        Dokter d =new Dokter();
-        int id_dokter=0;
-
-        try {
-            
-            String ID = null;
-            int bayar=0;
-            PemeriksaanEntitas a = new PemeriksaanEntitas();
-            int c = AS.getPemeriksaans().size()+1;
-            ID = "PE000"+c;
-            int antri=0;
-            antri =  AS.nomorAntrean(antri, imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
-            bayar = AS.getPemeriksaans().size();
-            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
-            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
-            a.setID_PEMERIKSAAAN(ID);
-            a.setID_RESERVASI("R0001");
-            a.setID_PASIEN(idpas);
-            a.setID_DOKTER(iddok);
-            a.setTGL_PEMERIKSAAN(imin.getText());
-            a.setNO_ANTRIAN(antri);
-            
-            AS.insertPemeriksaan(a);
-
-            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
-                        refresh();
-        } catch (RemoteException ex) {
-            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_TambahAntreanActionPerformed
-
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         // TODO add your handling code here:
         awal();
@@ -362,7 +373,8 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formFocusGained
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-
+        kirim.setEnabled(false);
+        reset.setEnabled(false);
     }//GEN-LAST:event_formMouseClicked
 
     private void tabelkananComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelkananComponentAdded
@@ -388,6 +400,9 @@ public class Antrean extends javax.swing.JInternalFrame {
                 Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
             }
             tabelkiri.setModel(tabelpasien);
+            kirim.setEnabled(false);
+            reset.setEnabled(false);
+            tabelkiri.setEnabled(true);
            
     }//GEN-LAST:event_tabelkananMouseClicked
 
@@ -432,7 +447,75 @@ public class Antrean extends javax.swing.JInternalFrame {
 
     private void tabelkiriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkiriMouseClicked
         // TODO add your handling code here:
+        kirim.setEnabled(true);
+        reset.setEnabled(true);
     }//GEN-LAST:event_tabelkiriMouseClicked
+
+    private void tomboltambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboltambahActionPerformed
+        // TODO add your handling code here:
+        sama = false;
+        Dokter d =new Dokter();
+        int id_dokter=0;
+        kirim.setEnabled(false);
+        reset.setEnabled(false);
+        try {
+            if(input.getText()==AS.getIDPasien()){
+                
+            }
+            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
+            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
+            List<PemeriksaanEntitas> pemeriksaan = AS.getpasienkiri(iddok, imin.getText());
+            
+            for (int i = 0; i < pemeriksaan.size(); i++) {
+                if(pemeriksaan.get(i).getID_PASIEN().toString().equals(idpas)){
+                    sama = true;
+                    System.out.println(idpas);
+                }
+            }
+            if (sama) {
+//                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean");
+                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean", "ERROR", JOptionPane.OK_OPTION);
+            }
+            
+            else if(!sama){
+                String ID = null;
+            int bayar=0;
+            PemeriksaanEntitas a = new PemeriksaanEntitas();
+            int c = AS.getPemeriksaans().size()+1;
+            ID = "PE000"+c;
+            int antri=0;
+            antri =  AS.nomorAntrean(antri, imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
+            bayar = AS.getPemeriksaans().size();
+            
+            a.setID_PEMERIKSAAAN(ID);
+            a.setID_RESERVASI("R0001");
+            a.setID_PASIEN(idpas);
+            a.setID_DOKTER(iddok);
+            a.setTGL_PEMERIKSAAN(imin.getText());
+            a.setNO_ANTRIAN(antri);
+            
+            AS.insertPemeriksaan(a);
+
+            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
+                        refresh();
+            }
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tomboltambahActionPerformed
+
+    private void iminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_iminActionPerformed
+
+    private void kirimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kirimActionPerformed
+
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resetActionPerformed
 
     public void awal() {
         try{
@@ -472,14 +555,17 @@ public class Antrean extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox PilihDokter;
     private javax.swing.JComboBox PilihIDPasien;
-    private javax.swing.JToggleButton TambahAntrean;
     private javax.swing.JTextField imin;
+    private javax.swing.JTextField input;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton kirim;
+    private javax.swing.JButton reset;
     private javax.swing.JTable tabelkanan;
     private javax.swing.JTable tabelkiri;
+    private javax.swing.JButton tomboltambah;
     // End of variables declaration//GEN-END:variables
 public void setJam(final JLabel tampilJam) {
     ActionListener taskPerformer = new ActionListener() {
@@ -598,7 +684,7 @@ public void setTanggal(final JLabel tampilTanggal) {
         // Menampilkan pada Layar
 //        tampilTanggal.setText(tanggal+"-"+bulan+"-"+tahun);
         imin.setText(tahun+"-"+bulan+"-"+tanggal);
-        imin.setEnabled(false);
+//        imin.setEnabled(false);
       }
       
     };

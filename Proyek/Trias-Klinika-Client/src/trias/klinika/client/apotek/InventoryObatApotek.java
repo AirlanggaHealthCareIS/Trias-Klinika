@@ -32,6 +32,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     private String [] sp ;
     private tabelInventoryObatApotek tioa = new tabelInventoryObatApotek();
     private String aiObat;
+    private int index;
 
 //    private String [] jenis;
 //    private String [] spesialis;
@@ -54,13 +55,25 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                     InventoryObatApotekEntitas IOAE = tioa.get(row);                    
                     
                     nama_obat.setText(IOAE.getNamaObat());
-                    id_obat.setText(IOAE.getIdObat());
                     qty.setText(Integer.toString(IOAE.getQty()));
                     harga.setText(Integer.toString(IOAE.getHargaObat()));
                     deskripsi.setText(IOAE.getDeskripsi()); 
                     tgl_masuk.setDate(Date.valueOf(IOAE.getTglMasuk()));
                     masa_pakai.setDate(Date.valueOf(IOAE.getMasaPakai()));
-                    
+                    for (int i=0; i<jenis_obat.getItemCount();i++){
+                        if(jenis_obat.getItemAt(i).toString().substring(7)==IOAE.getJenisObat()){
+                            index=i;
+                        }
+                        System.out.println(index);
+                    }
+                    jenis_obat.setSelectedItem(jenis_obat.getItemAt(index));
+                    for (int i=0; i<spesialis.getItemCount();i++){
+                        if(spesialis.getItemAt(i).toString().substring(6)==IOAE.getNamaSpesialis()){
+                            index=i;
+                        }
+                        System.out.println(index);
+                    }
+                    spesialis.setSelectedItem(spesialis.getItemAt(index));
                     }
             }
         });
@@ -78,7 +91,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -87,7 +99,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        id_obat = new javax.swing.JTextField();
         nama_obat = new javax.swing.JTextField();
         qty = new javax.swing.JTextField();
         tgl_masuk = new com.toedter.calendar.JDateChooser();
@@ -95,7 +106,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         harga = new javax.swing.JTextField();
         deskripsi = new javax.swing.JTextField();
         jenis_obat = new javax.swing.JComboBox();
-        jComboBox1 = new javax.swing.JComboBox();
+        spesialis = new javax.swing.JComboBox();
         cekkritis = new javax.swing.JButton();
         kadaluarsa = new javax.swing.JButton();
         input = new javax.swing.JButton();
@@ -115,8 +126,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(547, 11, 200, 20);
 
-        jLabel3.setText("Id_Obat");
-
         jLabel4.setText("Nama Obat");
 
         jLabel6.setText("Jenis Obat");
@@ -132,13 +141,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         jLabel5.setText("Harga Obat");
 
         jLabel11.setText("Deskripsi Obat");
-
-        id_obat.setEnabled(false);
-        id_obat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                id_obatActionPerformed(evt);
-            }
-        });
 
         nama_obat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +175,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spesialis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(masa_pakai, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                             .addComponent(tgl_masuk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(harga)))
@@ -181,11 +183,9 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(id_obat)
                             .addComponent(jenis_obat, javax.swing.GroupLayout.Alignment.TRAILING, 0, 255, Short.MAX_VALUE)
                             .addComponent(nama_obat, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(qty, javax.swing.GroupLayout.Alignment.TRAILING))))
@@ -194,10 +194,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(id_obat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nama_obat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -220,7 +217,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spesialis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -229,11 +226,11 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(deskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addGap(0, 38, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(650, 40, 350, 414);
+        jPanel2.setBounds(650, 30, 350, 414);
 
         cekkritis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cekkritis.setForeground(new java.awt.Color(0, 0, 204));
@@ -325,10 +322,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void id_obatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_obatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_id_obatActionPerformed
 
     private void nama_obatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama_obatActionPerformed
         // TODO add your handling code here:
@@ -425,11 +418,15 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         
-        id_obat.setText(aiObat);
+        
         nama_obat.setText("");
         qty.setText("");
         harga.setText("");
         deskripsi.setText("");
+        tgl_masuk.setDate(null);
+        masa_pakai.setDate(null);
+        jenis_obat.setSelectedItem(jenis_obat.getItemAt(0));
+        spesialis.setSelectedItem(spesialis.getItemAt(0));
         // TODO add your handling code here:
     }//GEN-LAST:event_clearActionPerformed
 
@@ -451,7 +448,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             jenis_obat.addItem(isi[i]);
         }
         for (int i=0;i<sp.length;i++){
-            jComboBox1.addItem(sp[i]);
+            spesialis.addItem(sp[i]);
         }
     }
     public void setTambahObat (){
@@ -474,7 +471,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }
     public void setInputObat(){
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
-            IOAE.setIdObat(id_obat.getText());
+            
             IOAE.setNamaObat(nama_obat.getText());
             IOAE.setQty(Integer.parseInt(qty.getText()));
             IOAE.setTglMasuk(tgl_masuk.getDate().toString());
@@ -524,13 +521,10 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     private javax.swing.JButton delete;
     private javax.swing.JTextField deskripsi;
     private javax.swing.JTextField harga;
-    private javax.swing.JTextField id_obat;
     private javax.swing.JButton input;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -543,6 +537,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser masa_pakai;
     private javax.swing.JTextField nama_obat;
     private javax.swing.JTextField qty;
+    private javax.swing.JComboBox spesialis;
     private javax.swing.JScrollPane tabel;
     private javax.swing.JTable table_obat;
     private javax.swing.JButton tambah;
