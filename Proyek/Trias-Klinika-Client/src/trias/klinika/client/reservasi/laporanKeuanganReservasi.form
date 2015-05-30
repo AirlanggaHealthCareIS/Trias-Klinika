@@ -51,10 +51,6 @@
                       <EmptySpace min="-2" pref="228" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="708" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="495" max="-2" attributes="0"/>
-                      <Component id="tampilkan" min="-2" pref="103" max="-2" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace pref="186" max="32767" attributes="0"/>
           </Group>
@@ -76,9 +72,7 @@
                       <Component id="jLabel2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="tampilkan" min="-2" pref="39" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="162" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
           </Group>
@@ -179,14 +173,6 @@
     <Component class="com.toedter.calendar.JDateChooser" name="date1">
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="date2">
-    </Component>
-    <Component class="javax.swing.JButton" name="tampilkan">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="TAMPILKAN"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tampilkanActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

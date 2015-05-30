@@ -11,14 +11,8 @@
 package trias.klinika.client.reservasi;
 
 import java.rmi.RemoteException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import trias.klinika.api.entitas.laporan_keuangan_reservasiEntity;
 import trias.klinika.api.sevice.laporankeuanganReservasiService;
 import trias.klinika.client.tabel.TabelLaporanKeuanganReservasi;
-import trias.klinika.client.tabel.TabelLaporanReservasi;
 
 /**
  *
@@ -27,9 +21,7 @@ import trias.klinika.client.tabel.TabelLaporanReservasi;
 public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
 
     int a;
-    private laporankeuanganReservasiService LKR;
-    private TabelLaporanKeuanganReservasi TLKA = new TabelLaporanKeuanganReservasi();
-    private laporan_keuangan_reservasiEntity LKE = new laporan_keuangan_reservasiEntity ();
+   private laporankeuanganReservasiService LKR;
     private String [] isi;
     private String jenis;
     private String id_dokter;
@@ -37,17 +29,15 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
     private String nama_dokter;
     private int jumlah;
     private String id_rincian_pembayaran;
-    private utamaReservasi UR;
-   
+    private TabelLaporanKeuanganReservasi TLKA = new TabelLaporanKeuanganReservasi();
     
      public laporanKeuanganReservasi(laporankeuanganReservasiService LKR) throws RemoteException {
        this.LKR = LKR;
-       this.UR = UR ; 
         initComponents();
-//        tabel.setVisible(false);
-//        pilih.setEnabled(false);
-//        date1.setEnabled(false);
-//        date2.setEnabled(false);
+        tabel.setVisible(false);
+        pilih.setEnabled(false);
+        date1.setEnabled(false);
+        date2.setEnabled(false);
        
        }
     
@@ -73,7 +63,6 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         date1 = new com.toedter.calendar.JDateChooser();
         date2 = new com.toedter.calendar.JDateChooser();
-        tampilkan = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1147, 557));
@@ -97,7 +86,7 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12));
         jLabel2.setText("PILIH KATEGORI    :");
 
-        pilih.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        pilih.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         pilih.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "HARI INI", "PILIH TANGGAL" }));
         pilih.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,13 +99,6 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18));
         jLabel4.setText("-");
-
-        tampilkan.setText("TAMPILKAN");
-        tampilkan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tampilkanActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,10 +124,7 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
                         .addComponent(date2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(228, 228, 228)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(495, 495, 495)
-                        .addComponent(tampilkan, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(186, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -162,9 +141,7 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(tampilkan, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(75, 75, 75)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100))
         );
@@ -191,38 +168,12 @@ private void pilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
         date1.setEnabled(true);
         date2.setEnabled(true);}       
 }//GEN-LAST:event_pilihActionPerformed
-
-private void tampilkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tampilkanActionPerformed
-// TODO add your handling code here:
-     pilihTanggal();
-}//GEN-LAST:event_tampilkanActionPerformed
-  public void pilihTanggal(){
-     try {
-            // TODO add your handling code here:
-            TLKA.setData(this.LKR.getlaporan(FormatTanggal(date1.getDate()), FormatTanggal(date2.getDate()), UR.LE.getusername()));
-        } catch (RemoteException ex) {
-            Logger.getLogger(laporanKeuanganReservasi.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tabel.setModel(TLKA);
-  }
-//  public void hariIni (){
-//       try {
-//            TLKA.setData(this.LKR.getdata());
-//        } catch (RemoteException exception) {
-//            exception.printStackTrace();
-//        }
-//        tabel.setModel(TLKA);
-//  }
     public void reset(){
             date1.setEnabled(false);
             date2.setEnabled(false);
-    } 
-    public String FormatTanggal(Date date){
-    
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            return sdf.format(date);
-  
     }       
+  
+            
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser date1;
     private com.toedter.calendar.JDateChooser date2;
@@ -233,6 +184,5 @@ private void tampilkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox pilih;
     private javax.swing.JTable tabel;
-    private javax.swing.JButton tampilkan;
     // End of variables declaration//GEN-END:variables
 }

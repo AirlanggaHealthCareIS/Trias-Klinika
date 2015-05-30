@@ -15,7 +15,11 @@ import trias.klinika.api.entitas.rekammedisEntyty;
  * @author Acer
  */
 public interface laporankeuanganReservasiService extends Remote {
-    public List<laporan_keuangan_reservasiEntity> getlaporan(String date1, String date2, String id_dokter) throws RemoteException;
-    public laporan_keuangan_reservasiEntity getdata() throws RemoteException;
-  
+    
+  List<laporan_keuangan_reservasiEntity> getlaporan () throws RemoteException;
+    
+     laporan_keuangan_reservasiEntity getdata(String id) throws RemoteException;
+    List<laporan_keuangan_reservasiEntity> getdatarekam (String id) throws RemoteException;
+    rekammedisEntyty getdatadetail(String id) throws RemoteException;
+    void ok(rekammedisEntyty rekammedisEntyty)throws RemoteException;
 }
