@@ -32,6 +32,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     private String [] sp ;
     private tabelInventoryObatApotek tioa = new tabelInventoryObatApotek();
     private String aiObat;
+    private int aiDetail;
     private int index;
 
 //    private String [] jenis;
@@ -45,7 +46,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         this.IOAS = IOAS;
         tioa.setData(this.IOAS.getobat());// harusnyya pake try
         initComponents();
-        auto_increment_obat ();
+        
         Dropdown();
         table_obat.setModel(tioa);
         table_obat.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -61,17 +62,17 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                     tgl_masuk.setDate(Date.valueOf(IOAE.getTglMasuk()));
                     masa_pakai.setDate(Date.valueOf(IOAE.getMasaPakai()));
                     for (int i=0; i<jenis_obat.getItemCount();i++){
-                        if(jenis_obat.getItemAt(i).toString().substring(7)==IOAE.getJenisObat()){
+                        
+                        if(jenis_obat.getItemAt(i).toString().substring(7).equals(IOAE.getJenisObat())){
                             index=i;
-                        }
-                        System.out.println(index);
+                        }    
                     }
                     jenis_obat.setSelectedItem(jenis_obat.getItemAt(index));
+                    index = 0;
                     for (int i=0; i<spesialis.getItemCount();i++){
-                        if(spesialis.getItemAt(i).toString().substring(6)==IOAE.getNamaSpesialis()){
+                        if(spesialis.getItemAt(i).toString().substring(6).equals(IOAE.getNamaSpesialis())){
                             index=i;
                         }
-                        System.out.println(index);
                     }
                     spesialis.setSelectedItem(spesialis.getItemAt(index));
                     }
@@ -148,7 +149,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
         });
 
-        deskripsi.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        deskripsi.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jenis_obat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,13 +338,19 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cekkritisActionPerformed
 
     private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
+
         JOptionPane.showConfirmDialog(null, "Apakah anda sudah yakin?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(nama_obat.getText()==""|qty.getText()==""|harga.getText()==""|tgl_masuk.getDate()==null|masa_pakai.getDate()==null|deskripsi.getText()==""){
             JOptionPane.showMessageDialog(this, "Salah Satu Data Belum di Isi");
         }
         else{
-            setInputObat();
-            InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
+            
+            InventoryObatApotekEntitas IOAE = null;
+            try {
+                IOAE = setInputObat(auto_increment_obat (),auto_increment_detail ());
+            } catch (RemoteException ex) {
+                Logger.getLogger(InventoryObatApotek.class.getName()).log(Level.SEVERE, null, ex);
+            }
             tioa.insert(IOAE);
             try {
             IOAS.insertObatBaru(IOAE);
@@ -354,7 +361,6 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             }
 // harusnya pake try
         }
-        // TODO add your handling code here:
     }//GEN-LAST:event_inputActionPerformed
 
     private void tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahActionPerformed
@@ -363,8 +369,14 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Salah Satu Data Belum di Isi");
         }
         else{
-            InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
-            setTambahObat();
+            InventoryObatApotekEntitas IOAE = null;
+            aiObat = tioa.get(table_obat.getSelectedRow()).getIdObat();
+            System.out.println(aiObat);
+            try {
+                IOAE = setTambahObat(aiObat,auto_increment_detail());
+            } catch (RemoteException ex) {
+                Logger.getLogger(InventoryObatApotek.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             tioa.tambah(IOAE);
             try {
@@ -451,7 +463,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             spesialis.addItem(sp[i]);
         }
     }
-    public void setTambahObat (){
+    public InventoryObatApotekEntitas setTambahObat (String aiObat, int aiDetail){
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
 
             IOAE.setQty(Integer.parseInt(qty.getText()));
@@ -459,25 +471,44 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             IOAE.setMasaPakai(masa_pakai.getDate().toString());
             IOAE.setRuangObat("Apotek");
             java.util.Date date = new java.util.Date(tgl_masuk.getDate().getTime());
-            System.out.println(date.toString());
+            
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String tgl = sdf.format(date);
             IOAE.setTglMasuk(tgl);
-            System.out.println(tgl);
+            
             java.util.Date date1 = new java.util.Date(masa_pakai.getDate().getTime());
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
             String tgl1 = sdf1.format(date1);
             IOAE.setMasaPakai(tgl1);
+            IOAE.setIdObat(aiObat);
+            IOAE.setIdDetailObat(aiDetail);
+            return IOAE;
     }
-    public void setInputObat(){
+    public InventoryObatApotekEntitas setInputObat(String aiObat, int aiDetail){
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
-            
+            IOAE.setIdObat(aiObat);
             IOAE.setNamaObat(nama_obat.getText());
             IOAE.setQty(Integer.parseInt(qty.getText()));
             IOAE.setTglMasuk(tgl_masuk.getDate().toString());
             IOAE.setMasaPakai(masa_pakai.getDate().toString());
             IOAE.setDeskripsi(deskripsi.getText());
             IOAE.setRuangObat("Apotek");
+            IOAE.setIdSpesialis(spesialis.getSelectedItem().toString().substring(0,5));
+            IOAE.setHargaObat(Integer.parseInt(harga.getText()));
+            IOAE.setIdJenisObat(jenis_obat.getSelectedItem().toString().substring(0,6));
+            IOAE.setIdDetailObat(aiDetail);
+            java.util.Date date = new java.util.Date(tgl_masuk.getDate().getTime());
+            
+            SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl2 = SDF.format(date);
+            IOAE.setTglMasuk(tgl2);
+            
+            java.util.Date date2 = new java.util.Date(masa_pakai.getDate().getTime());
+            SimpleDateFormat SDF2 = new SimpleDateFormat("yyyy-MM-dd");
+            String tgl3 = SDF2.format(date2);
+            IOAE.setMasaPakai(tgl3);
+            return IOAE;
+            
     }
     public void setUpdateObat (){
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
@@ -512,8 +543,11 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             exception.printStackTrace();
         }
     }
-    private void auto_increment_obat () throws RemoteException { 
-       aiObat = IOAS.auto_increment_obat(aiObat);
+    private String auto_increment_obat () throws RemoteException { 
+       return IOAS.auto_increment_idobat(aiObat);
+    }
+    private int auto_increment_detail () throws RemoteException {
+        return IOAS.auto_increment_iddetail(aiObat);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cekkritis;

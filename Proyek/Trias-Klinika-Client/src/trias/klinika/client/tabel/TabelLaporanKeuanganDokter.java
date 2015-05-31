@@ -49,18 +49,20 @@ public class TabelLaporanKeuanganDokter extends AbstractTableModel{
     }
     @Override
     public Object getValueAt (int rowIndex, int columnIndex){
-        switch (columnIndex){
-            case 0:
-                return list.get(rowIndex).getID_PEMERIKSAAN();
-            case 1:
-                return list.get(rowIndex).getTGL_PEMERIKSAAN();
-            case 2:
-                return list.get(rowIndex).getNAMA_PASIEN();
-            case 3:
-                return list.get(rowIndex).getJUMLAH_PEMASUKKAN();
-            default:
-                return null;
-        
-        }
+//        switch (columnIndex){
+//            case 0:
+//                return list.get(rowIndex).getID_PEMERIKSAAN();
+//            case 1:
+//                return list.get(rowIndex).getTGL_PEMERIKSAAN();
+//            case 2:
+//                return list.get(rowIndex).getNAMA_PASIEN();
+//            case 3:
+//                return list.get(rowIndex).getJUMLAH_PEMASUKKAN();
+//            default:
+//                return null;
+//        
+//        }
+    return null;
     }
 }
+

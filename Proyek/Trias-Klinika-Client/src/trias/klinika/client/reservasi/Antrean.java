@@ -2,8 +2,6 @@
 package trias.klinika.client.reservasi;
 
 import java.awt.Color;
-import java.text.*;
-import java.awt.print.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
@@ -21,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.Timer;
 import trias.klinika.api.entitas.Dokter;
 import trias.klinika.api.entitas.PasienEntity;
@@ -29,7 +26,6 @@ import trias.klinika.api.sevice.AntreanServis;
 import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.client.tabel.TabelDokter;
 import trias.klinika.client.tabel.TabelPasien;
-import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
 public class Antrean extends javax.swing.JInternalFrame {
 
@@ -37,13 +33,11 @@ public class Antrean extends javax.swing.JInternalFrame {
     public TabelPasien tabelpasien = new TabelPasien();
     private AntreanServis AS;
     private String[] isi;
-    private rekammedis rm;
     private ListPetugasService LPS;
     public PemeriksaanEntitas PE = new PemeriksaanEntitas();
     public List<PasienEntity> list;
     private Object connection;
     private boolean sama = false;
-    private boolean psi = false;
     
     public Antrean(ListPetugasService LPS, AntreanServis AS)throws RemoteException {
 
@@ -52,11 +46,10 @@ public class Antrean extends javax.swing.JInternalFrame {
         this.LPS=LPS;
         this.AS=AS;
         initComponents();
-        
         tabeldokter.setData(LPS.AmbilDokterOnline());
         tabelkanan.setModel(tabeldokter);
         tomboltambah.setEnabled(false);
-        PilihDokter.setEnabled(true);
+        PilihDokter.setEnabled(false);
         imin.setVisible(false);
         kirim.setEnabled(false);
         reset.setEnabled(false);
@@ -74,6 +67,20 @@ public class Antrean extends javax.swing.JInternalFrame {
             }
     
     }
+
+         private void initiateComboBox2(){      
+        PilihIDPasien.removeAllItems();
+        List<PasienEntity> pe;
+        PilihDokter.setEnabled(true);
+        try {
+            pe = AS.getPasienEntitys();
+            for(int i = 0; i<pe.size();i++){                
+               PilihIDPasien.addItem(pe.get(i).getid_pasien());         
+            }            
+        } catch (RemoteException ex) {
+        }
+    
+    }
          
     @SuppressWarnings("unchecked")
 
@@ -86,13 +93,13 @@ public class Antrean extends javax.swing.JInternalFrame {
         PilihDokter = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelkanan = new javax.swing.JTable();
+        PilihIDPasien = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         imin = new javax.swing.JTextField();
         tomboltambah = new javax.swing.JButton();
         kirim = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         input = new javax.swing.JTextField();
-        cekat = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1146, 577));
@@ -219,6 +226,27 @@ public class Antrean extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tabelkanan);
 
+        PilihIDPasien.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Pilih ID Pasien" }));
+        PilihIDPasien.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                PilihIDPasienPopupMenuWillBecomeVisible(evt);
+            }
+        });
+        PilihIDPasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PilihIDPasienActionPerformed(evt);
+            }
+        });
+        PilihIDPasien.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                PilihIDPasienFocusGained(evt);
+            }
+        });
+
         imin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 iminActionPerformed(evt);
@@ -239,22 +267,16 @@ public class Antrean extends javax.swing.JInternalFrame {
             }
         });
 
-        reset.setText("Reset Status Pasien");
+        reset.setText("Reset ID Pasien");
         reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetActionPerformed(evt);
             }
         });
 
-        input.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        input.setForeground(new java.awt.Color(0, 0, 204));
-
-        cekat.setText("print dokter");
-        cekat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cekatActionPerformed(evt);
-            }
-        });
+        input.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        input.setForeground(new java.awt.Color(102, 102, 102));
+        input.setText("Input ID Pasien");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -270,6 +292,8 @@ public class Antrean extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(tomboltambah)
@@ -277,11 +301,9 @@ public class Antrean extends javax.swing.JInternalFrame {
                         .addComponent(kirim)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(reset)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cekat)
-                        .addGap(109, 109, 109)
+                        .addGap(59, 59, 59)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(imin, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -300,10 +322,10 @@ public class Antrean extends javax.swing.JInternalFrame {
                         .addComponent(tomboltambah, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PilihIDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(kirim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cekat))))
+                            .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -363,7 +385,6 @@ public class Antrean extends javax.swing.JInternalFrame {
     private void tabelkananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkananMouseClicked
  
         int row = tabelkanan.rowAtPoint(evt.getPoint());
-        int status;
         PasienEntity paen = new PasienEntity ();
         try {            
             paen = AS.getpasienkanan(tabeldokter.get(row).getid_dokter());
@@ -374,21 +395,7 @@ public class Antrean extends javax.swing.JInternalFrame {
             Object selectedObj = tabelkanan.getValueAt(row, 0);
 
                 try {
-                    List<PemeriksaanEntitas> ubahStatus= AS.getpasienkiri(""+selectedObj,imin.getText());
-                    for (int i = 0; i < ubahStatus.size(); i++) {
-                        status = ubahStatus.get(i).getSTATUS_PASIEN();
-                        if(status==0){
-                            ubahStatus.get(i).setSTATUS_PASIEN_strink("Tidak Mengantri");
-                        }
-                        else if(status==1){
-                            ubahStatus.get(i).setSTATUS_PASIEN_strink("Sedang Mengantri");
-                        }
-                        else if(status==2){
-                            ubahStatus.get(i).setSTATUS_PASIEN_strink("Belum Dilayani");
-                        }
-                    }
-                    
-                tabelpasien.setData(ubahStatus);
+                tabelpasien.setData(this.AS.getpasienkiri(""+selectedObj,imin.getText()));
             } catch (RemoteException ex) {
                 Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -417,6 +424,19 @@ public class Antrean extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_PilihDokterPopupMenuWillBecomeVisible
 
+    private void PilihIDPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PilihIDPasienActionPerformed
+
+    }//GEN-LAST:event_PilihIDPasienActionPerformed
+
+    private void PilihIDPasienFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PilihIDPasienFocusGained
+
+    }//GEN-LAST:event_PilihIDPasienFocusGained
+
+    private void PilihIDPasienPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_PilihIDPasienPopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+        initiateComboBox2();
+    }//GEN-LAST:event_PilihIDPasienPopupMenuWillBecomeVisible
+
     private void tabelkiriComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelkiriComponentShown
         ListAntrean();
     }//GEN-LAST:event_tabelkiriComponentShown
@@ -434,65 +454,55 @@ public class Antrean extends javax.swing.JInternalFrame {
     private void tomboltambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tomboltambahActionPerformed
         // TODO add your handling code here:
         sama = false;
-        psi = false;
         Dokter d =new Dokter();
         int id_dokter=0;
         kirim.setEnabled(false);
         reset.setEnabled(false);
-        try {
-            String idpas = input.getText();
-            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()).getid_dokter();
-            List<PasienEntity> idpasiens = AS.getlistidpasien();
-            
-            for (int emboh = 0; emboh < idpasiens.size(); emboh++) {
-                if(idpasiens.get(emboh).getid_pasien().toString().equals(input.getText())){
-                    psi = true;
-                }
-                System.out.println("parmintul"+idpasiens.get(emboh).getid_pasien().toString());
-            }
-            if(!psi){
-                JOptionPane.showMessageDialog(null, "ID Pasien "+ input.getText() +" tidak ada dalam database", "ERROR", JOptionPane.OK_OPTION);
-            
-            }
-            else if(psi){
-            List<PemeriksaanEntitas> pemeriksaan = AS.getpasienkiri(iddok, imin.getText());
-            
-            for (int i = 0; i < pemeriksaan.size(); i++) {
-                if(pemeriksaan.get(i).getID_PASIEN().toString().equals(idpas)){
-                    sama = true;
-                    }
-            }
-            if (sama) {
-                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean", "ERROR", JOptionPane.OK_OPTION);
-            }
-            
-            else if(!sama){
-                String ID = null;
-            int bayar=0;
-            PemeriksaanEntitas a = new PemeriksaanEntitas();
-            int c = AS.getPemeriksaans().size()+1;
-            ID = "PE000"+c;
-            int antri=0;
-            antri =  AS.nomorAntrean(antri, imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()).getid_dokter());
-            bayar = AS.getPemeriksaans().size();
-            
-            a.setID_PEMERIKSAAAN(ID);
-            a.setID_RESERVASI("R0001");
-            a.setID_PASIEN(idpas);
-            a.setID_DOKTER(iddok);
-            a.setTGL_PEMERIKSAAN(imin.getText());
-            a.setNO_ANTRIAN(antri);
-            a.setSTATUS_PASIEN(1);
-            
-            AS.insertPemeriksaan(a);
-
-            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
-                        refresh();
-            }
-            }
-        } catch (RemoteException ex) {
-            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            if(input.getText()==AS.getIDPasien()){
+//                
+//            }
+//            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
+//            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
+//            List<PemeriksaanEntitas> pemeriksaan = AS.getpasienkiri(iddok, imin.getText());
+//            
+//            for (int i = 0; i < pemeriksaan.size(); i++) {
+//                if(pemeriksaan.get(i).getID_PASIEN().toString().equals(idpas)){
+//                    sama = true;
+//                    System.out.println(idpas);
+//                }
+//            }
+//            if (sama) {
+////                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean");
+//                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean", "ERROR", JOptionPane.OK_OPTION);
+//            }
+//            
+//            else if(!sama){
+//                String ID = null;
+//            int bayar=0;
+//            PemeriksaanEntitas a = new PemeriksaanEntitas();
+//            int c = AS.getPemeriksaans().size()+1;
+//            ID = "PE000"+c;
+//            int antri=0;
+//            antri =  AS.nomorAntrean(antri, imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
+//            bayar = AS.getPemeriksaans().size();
+//            
+//            a.setID_PEMERIKSAAAN(ID);
+//            a.setID_RESERVASI("R0001");
+//            a.setID_PASIEN(idpas);
+//            a.setID_DOKTER(iddok);
+//            a.setTGL_PEMERIKSAAN(imin.getText());
+//            a.setNO_ANTRIAN(antri);
+//            
+//            AS.insertPemeriksaan(a);
+//
+//            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
+//                        refresh();
+//            }
+//            
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_tomboltambahActionPerformed
 
     private void iminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iminActionPerformed
@@ -500,34 +510,12 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_iminActionPerformed
 
     private void kirimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimActionPerformed
-        int row = tabelkiri.getSelectedRow();
-         rm= new rekammedis(tabelpasien.get(row).getID_PASIEN().toString());
-        JOptionPane.showMessageDialog(null, "ID pasien mungkin berhasil masuk ke dokter, cek aja kalo nggak percaya");
+        // TODO add your handling code here:
     }//GEN-LAST:event_kirimActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
-                    
-        try {
-            PemeriksaanEntitas a = new PemeriksaanEntitas();
-             AS.updateStatus(a, tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN());
-             JOptionPane.showMessageDialog(null, "ID Pasien kayaknya berhasil direset");
-             refresh();
-        } catch (RemoteException ex) {
-            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_resetActionPerformed
-
-    private void cekatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekatActionPerformed
         // TODO add your handling code here:
-        MessageFormat header = new MessageFormat("Report Print");
-        MessageFormat footer = new MessageFormat("Page|0,number,integer");
-        try{
-            tabelkanan.print(JTable.PrintMode.NORMAL, header, footer);
-        }catch(java.awt.print.PrinterException e){
-            System.err.format("Cannnot print %s%n", e.getMessage());
-        }
-    }//GEN-LAST:event_cekatActionPerformed
+    }//GEN-LAST:event_resetActionPerformed
 
     public void awal() {
         try{
@@ -556,9 +544,8 @@ public class Antrean extends javax.swing.JInternalFrame {
     private void refresh (){
         try {
             int antri=0;
-            List<PemeriksaanEntitas> list = AS.buatRefreshing(imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()).getid_dokter());
+            List<PemeriksaanEntitas> list = AS.buatRefreshing(imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
             tabelpasien.setData(list);
-            tabelkiri.setModel(tabelpasien);
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
@@ -567,7 +554,7 @@ public class Antrean extends javax.swing.JInternalFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox PilihDokter;
-    private javax.swing.JButton cekat;
+    private javax.swing.JComboBox PilihIDPasien;
     private javax.swing.JTextField imin;
     private javax.swing.JTextField input;
     private javax.swing.JLabel jLabel1;
