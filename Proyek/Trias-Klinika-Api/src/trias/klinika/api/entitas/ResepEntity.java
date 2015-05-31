@@ -29,7 +29,7 @@ public class ResepEntity implements Serializable {
     private String satuan_jenis;
     private int harga;
     private int STATUS_RESEP;
-    
+     
     public void setDataResep(String ID_resep, int STATUS_RESEP){
         this.ID_resep = ID_resep;
         this.STATUS_RESEP = STATUS_RESEP;

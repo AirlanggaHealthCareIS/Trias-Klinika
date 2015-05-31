@@ -380,7 +380,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
                         menureservasi.updatelogout(msg.isi, msg.pengirim);
                         break;
                     case "tagihan":
-                        menureservasi.updatelist2(msg.isi, msg.pengirim);
+                        menureservasi.updatelist2(msg.isi, msg.pengirim);                  
                 }
             }
             catch (IOException ex) {

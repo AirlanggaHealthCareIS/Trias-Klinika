@@ -86,7 +86,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         iod = new Inventori_Obat_Dokter(service13, this);
         fp = new form_pembayaran(service4, this);
         sr = new rekammedis(service6);
-        ir = new input_resep(service7);
+        ir = new input_resep(service7, this);
         lkd = new Laporan_keuangan_dokter(service9_b_2, this);
         internal_frame();
         nama.setText(LE.getnamauser());
