@@ -20,4 +20,5 @@ public interface ListPembayaranService extends Remote{
     List<ListPembayaranEntitas> getBayar() throws RemoteException;
     ListPembayaranEntitas getdatadetail(String id) throws RemoteException;
     List<ListPembayaranEntitas> getTelat() throws RemoteException;
+    ListPembayaranEntitas AmbilData(String Id) throws RemoteException;
 }
