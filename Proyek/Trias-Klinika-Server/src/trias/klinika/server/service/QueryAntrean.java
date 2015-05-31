@@ -31,7 +31,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
             statement = Koneksidatabase.getConnection().createStatement();
             System.out.println("b.1");
             List<PemeriksaanEntitas> list;
-            try (ResultSet result = statement.executeQuery("SELECT * FROM pemeriksaan WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"'")) {
+            try (ResultSet result = statement.executeQuery("SELECT * FROM pemeriksaan WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"' ORDER BY NO_ANTRIAN ASC")) {
                 list = new ArrayList<>();
                 while(result.next()){
                     PemeriksaanEntitas a = new PemeriksaanEntitas();
@@ -41,6 +41,18 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
                     a.setID_DOKTER(result.getString("ID_DOKTER"));
                     a.setTGL_PEMERIKSAAN(result.getString("TGL_PEMERIKSAAN"));
                     a.setNO_ANTRIAN(Integer.parseInt(result.getString("NO_ANTRIAN")));
+                    a.setSTATUS_PASIEN(Integer.parseInt(result.getString("STATUS_PASIEN")));
+                    
+                    if(a.getSTATUS_PASIEN()==0){
+                            a.setSTATUS_PASIEN_strink("Tidak Mengantri");
+                        }
+                        else if(a.getSTATUS_PASIEN()==1){
+                            a.setSTATUS_PASIEN_strink("Sedang Mengantri");
+                        }
+                        else if(a.getSTATUS_PASIEN()==2){
+                            a.setSTATUS_PASIEN_strink("Belum Dilayani");
+                        }
+                    
                     list.add(a);
                 }
             }
@@ -104,7 +116,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         try {
             statement = Koneksidatabase.getConnection().createStatement();
             List<PemeriksaanEntitas> list;
-            try (ResultSet result = statement.executeQuery("SELECT ID_PEMERIKSAAN, ID_PASIEN, ID_DOKTER, NO_ANTRIAN FROM PEMERIKSAAN WHERE ID_DOKTER = '"+id+"' AND TGL_PEMERIKSAAN='"+tgl+"'")) {
+            try (ResultSet result = statement.executeQuery("SELECT ID_PEMERIKSAAN, ID_PASIEN, ID_DOKTER, NO_ANTRIAN, STATUS_PASIEN FROM PEMERIKSAAN WHERE ID_DOKTER = '"+id+"' AND TGL_PEMERIKSAAN='"+tgl+"' ORDER BY NO_ANTRIAN ASC")) {
                 list = new ArrayList<>();
                 while(result.next()){
                     PemeriksaanEntitas a = new PemeriksaanEntitas();
@@ -112,6 +124,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
                     a.setID_PASIEN(result.getString("ID_PASIEN"));
                     a.setID_DOKTER(result.getString("ID_DOKTER"));
                     a.setNO_ANTRIAN(result.getInt("NO_ANTRIAN"));
+                    a.setSTATUS_PASIEN(result.getInt("STATUS_PASIEN"));
                     list.add(a);
                 }
             }
@@ -286,6 +299,40 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         
     }
     
+    @Override
+    public List<PasienEntity> getlistidpasien() throws RemoteException {
+        Statement statement = null;
+        
+        try {
+            System.out.println("b");
+            statement = Koneksidatabase.getConnection().createStatement();
+            System.out.println("b.1");
+            List<PasienEntity> list;
+            try (ResultSet result = statement.executeQuery("SELECT id_pasien FROM pasien")) {
+                list = new ArrayList<>();
+                while(result.next()){
+                    PasienEntity a = new PasienEntity();
+                   a.setid_pasien(result.getString("id_pasien"));
+                    list.add(a);
+                }
+            }
+            return list;
+        } 
+        catch (SQLException exception) {
+            return null;
+        }
+        finally{
+            if(statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException  exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+        
+    }
+    
 //   @Override
     public String[] Dropdowndokter(String [] ob) throws RemoteException {
         Statement statement = null;
@@ -329,7 +376,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         PreparedStatement statement = null;
         try{
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_REKAM_MEDIS, ID_RESERVASI, ID_PASIEN, ID_DOKTER	ID_RESEP, ID_PEMBAYARAN, TGL_PEMERIKSAAN, NO_ANTREAN) values(null,null,null,?,null,null,null,null,null)");
+                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_REKAM_MEDIS, ID_RESERVASI, ID_PASIEN, ID_DOKTER,ID_RESEP, ID_PEMBAYARAN, TGL_PEMERIKSAAN, NO_ANTREAN) values(null,null,null,?,null,null,null,null,null)");
             statement.setString(1, a.getid_pasien());
 
             
@@ -356,13 +403,14 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         PreparedStatement statement = null;
         try{
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_PASIEN, ID_DOKTER, ID_RESERVASI,  TGL_PEMERIKSAAN, NO_ANTRIAN, ID_PEMBAYARAN,	ID_REKAM_MEDIS,	ID_RESEP) values(?,?,?,?,?,?,null,null,null)");
+                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_PASIEN, ID_DOKTER, ID_RESERVASI,  TGL_PEMERIKSAAN, NO_ANTRIAN, ID_PEMBAYARAN,	ID_REKAM_MEDIS,	ID_RESEP, STATUS_PASIEN) values(?,?,?,?,?,?,null,null,null,?)");
             statement.setString(1, a.getID_PEMERIKSAAAN());
             statement.setString(2, a.getID_PASIEN());
             statement.setString(3, a.getID_DOKTER());
             statement.setString(4, a.getID_RESERVASI());
             statement.setString(5, a.getTGL_PEMERIKSAAN());
             statement.setInt(6, a.getNO_ANTRIAN()); 
+            statement.setInt(7, a.getSTATUS_PASIEN()); 
             System.out.println(statement.toString()); 
             statement.execute();
             return a;
@@ -380,6 +428,62 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
             }
         }
     }
+    
+    @Override
+    public void updateStatus(PemeriksaanEntitas suparmin, String id_pemeriksaan) throws RemoteException {
+        System.out.println("proses update SUPPLIER");
+        
+        PreparedStatement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement(
+                    "UPDATE pemeriksaan SET status_pasien=2 WHERE id_pemeriksaan='"+id_pemeriksaan+"'");
+            statement.executeUpdate();  
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        finally{
+            if(statement != null){
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+    
+//    @Override
+//    public PemeriksaanEntitas apdetsetatus(String tgl, String id_dokter) throws RemoteException {
+//        System.out.println("proses insert pemeriksaan");
+//        PreparedStatement statement = null;
+//        try{
+//            statement = Koneksidatabase.getConnection().prepareStatement(
+//                    "(UPDATE pemeriksaan SET status_pasien=2 WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"')");
+//            statement.setString(1, a.getID_PEMERIKSAAAN());
+//            statement.setString(2, a.getID_PASIEN());
+//            statement.setString(3, a.getID_DOKTER());
+//            statement.setString(4, a.getID_RESERVASI());
+//            statement.setString(5, a.getTGL_PEMERIKSAAN());
+//            statement.setInt(6, a.getNO_ANTRIAN()); 
+//            statement.setInt(7, a.getSTATUS_PASIEN()); 
+//            System.out.println(statement.toString()); 
+//            statement.execute();
+//            return a;
+//        }
+//        catch(SQLException exception){
+//            exception.printStackTrace();
+//            return null;
+//        }
+//        finally{
+//            if(statement != null){
+//                try {
+//                    statement.close();
+//                } catch (SQLException exception) {
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public int getIDPasien() throws RemoteException{
@@ -388,7 +492,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         PreparedStatement statement = null;
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "SELECT ID_PASIEN FROM PASIEN");
+                    "SELECT * FROM PASIEN");
 //            statement.setString(1,a);
             ResultSet result = statement.executeQuery();
             

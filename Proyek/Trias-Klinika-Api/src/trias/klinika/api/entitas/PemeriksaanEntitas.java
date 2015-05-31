@@ -21,6 +21,8 @@ public class PemeriksaanEntitas  implements Serializable{
     private String ID_PEMBAYARAN;
     private String TGL_PEMERIKSAAN;
     private int NO_ANTRIAN;   
+    private int STATUS_PASIEN; 
+    private String STATUS_PASIEN_strink; 
     
     
    
@@ -96,11 +98,23 @@ public class PemeriksaanEntitas  implements Serializable{
     public void setID_PEMBAYARAN(String ID_PEMBAYARAN) {
         this.ID_PEMBAYARAN= ID_PEMBAYARAN;
     }
+    public String getSTATUS_PASIEN_strink() {
+        return STATUS_PASIEN_strink;
+    }
     
+    public void setSTATUS_PASIEN_strink(String STATUS_PASIEN_strink) {
+        this.STATUS_PASIEN_strink= STATUS_PASIEN_strink;
+    }
     public int getNO_ANTRIAN(){
         return NO_ANTRIAN;
     }
     public void setNO_ANTRIAN(int NO_ANTRIAN){
         this.NO_ANTRIAN = NO_ANTRIAN;
+    }
+    public int getSTATUS_PASIEN(){
+        return STATUS_PASIEN;
+    }
+    public void setSTATUS_PASIEN(int STATUS_PASIEN){
+        this.STATUS_PASIEN = STATUS_PASIEN;
     }
 }

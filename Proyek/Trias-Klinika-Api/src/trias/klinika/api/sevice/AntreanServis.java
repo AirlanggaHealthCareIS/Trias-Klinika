@@ -19,11 +19,13 @@ public interface AntreanServis extends Remote{
     List<PasienEntity> getPasienEntitys() throws RemoteException;
     PasienEntity insertIDPasien (PasienEntity a) throws RemoteException;
     PemeriksaanEntitas insertPemeriksaan (PemeriksaanEntitas a) throws RemoteException;
+    void updateStatus(PemeriksaanEntitas suparmin, String id_pemeriksaan) throws RemoteException;
     PasienEntity getpasienkanan(String id) throws RemoteException;
     List<PemeriksaanEntitas> getpasienkiri(String id, String tgl) throws RemoteException;
     
     List<Dokter> getDokters() throws RemoteException;
     List<PemeriksaanEntitas> getPemeriksaans() throws RemoteException;
+    List<PasienEntity> getlistidpasien() throws RemoteException;
     List<PemeriksaanEntitas> buatRefreshing(String tgl, String id_dokter) throws RemoteException;
     Dokter insertDokter (Dokter a) throws RemoteException;
     Dokter getDokter (int IdDokter) throws RemoteException;
