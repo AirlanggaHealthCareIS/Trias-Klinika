@@ -209,6 +209,8 @@ public class Server extends javax.swing.JFrame implements Runnable {
                 }
                 hapus(findClient(ID));   
                 break;
+            case "tagihan":
+                UpdateList(msg);
         }
     }
     

@@ -139,5 +139,46 @@ public class QueryListPembayaran extends UnicastRemoteObject implements ListPemb
         
     }
     
+    @Override
+    public ListPembayaranEntitas AmbilData(String Id) throws RemoteException {
+        Statement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().createStatement();
+            ListPembayaranEntitas LPE = new ListPembayaranEntitas();
+            
+            ResultSet result = statement.executeQuery("SELECT r.id_pemeriksaan, d.nama_dokter, p.nama_pasien, b.id_pembayaran, b.biaya_dokter, b.jumlah_pembayaran FROM pemeriksaan as r, dokter as d, pasien as p, pembayaran as b WHERE r.id_dokter=d.id_dokter and r.id_pasien=p.id_pasien and r.id_pembayaran=b.id_pembayaran and r.id_pemeriksaan = '"+Id+"'");
+            result.first();
+            
+            LPE.setnamaPasien(result.getString("nama_pasien"));
+            System.out.println(result.getString("nama_pasien"));
+            LPE.setnamaDokter(result.getString("nama_dokter"));
+            System.out.println(result.getString("nama_dokter"));
+            LPE.setbiayaDokter(result.getInt("biaya_dokter"));
+            System.out.println(result.getString("biaya_dokter"));
+            LPE.settotalBayar(result.getInt("jumlah_pembayaran"));
+            System.out.println(result.getString("jumlah_pembayaran"));
+            LPE.setidPemeriksaan(result.getString("id_pemeriksaan"));
+            System.out.println(result.getString("id_pemeriksaan"));
+            
+            return LPE;
+        } 
+        catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+        finally{
+            if(statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException  exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+        
+    }
+    
     
 }
+
+

@@ -24,7 +24,7 @@ import trias.klinika.client.tabel.TabelListPembayaran2;
 public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
     
     private ListPembayaranService LPS;
-    private TabelListPembayaran TLP = new TabelListPembayaran();
+    public TabelListPembayaran TLP = new TabelListPembayaran();
     private TabelListPembayaran2 TLP2 = new TabelListPembayaran2();
     private ListPembayaranEntitas LPE = new ListPembayaranEntitas();
     
@@ -35,11 +35,11 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
     
     public TriasKlinika_ListPembayaran(final ListPembayaranService LPS) throws RemoteException {
         this.LPS = LPS;
-        try {
-            TLP.setData(this.LPS.getBayar());
-        } catch (RemoteException exception) {
-            exception.printStackTrace();
-        }
+//        try {
+//            TLP.setData(this.LPS.getBayar());
+//        } catch (RemoteException exception) {
+//            exception.printStackTrace();
+//        }
         try {
             TLP2.setData(this.LPS.getTelat());
         } catch (RemoteException exception) {
@@ -59,6 +59,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
                     NamaPasien.setText(LPE.getnamaPasien());
                     NamaDokter.setText(LPE.getnamaDokter());
                     ID_pemeriksaan.setText(LPE.getidPemeriksaan());
+                    
                     try {
                         LPE = LPS.getdatadetail(LPE.getidPemeriksaan());
                         Jasa_Pemeriksaan.setText(Integer.toString(LPE.getbiayaDokter()));
@@ -66,7 +67,9 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
                     } catch (RemoteException ex) {
                         Logger.getLogger(TriasKlinika_ListPembayaran.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    tindakan.setText(Integer.toString(Integer.parseInt(Total_Biaya.getText())-Integer.parseInt(Jasa_Pemeriksaan.getText())));
                 }
+                
             }
             
         });
@@ -113,7 +116,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
         NamaPasien = new javax.swing.JTextField();
         NamaDokter = new javax.swing.JTextField();
         Jasa_Pemeriksaan = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        tindakan = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         Total_Biaya = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -170,8 +173,8 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
         Jasa_Pemeriksaan.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         Jasa_Pemeriksaan.setText("-");
 
-        jTextField4.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jTextField4.setText("-");
+        tindakan.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        tindakan.setText("-");
 
         jTextField5.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTextField5.setText("-");
@@ -263,7 +266,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Jasa_Pemeriksaan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Total_Biaya, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel3)
@@ -319,7 +322,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel8)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(tindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -385,9 +388,9 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTable tabelAntre;
     private javax.swing.JTable tabelTelat;
+    private javax.swing.JTextField tindakan;
     // End of variables declaration//GEN-END:variables
 }

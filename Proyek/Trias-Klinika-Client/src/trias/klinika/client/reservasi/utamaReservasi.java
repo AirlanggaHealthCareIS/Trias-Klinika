@@ -342,6 +342,14 @@ public class utamaReservasi extends javax.swing.JFrame {
             Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void updatelist2 (String Id, String Nama){
+        JOptionPane.showMessageDialog(null, Id+" Masuk ke Daftar Tagihan");
+        try {
+            LP.TLP.insert(service12.AmbilData(Id));
+        } catch (RemoteException ex) {
+            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
