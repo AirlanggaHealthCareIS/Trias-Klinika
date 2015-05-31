@@ -379,7 +379,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
                     case "logout":
                         menureservasi.updatelogout(msg.isi, msg.pengirim);
                         break;
-                    case "tagihan":
+                    case "Pembayaran":
                         menureservasi.updatelist2(msg.isi, msg.pengirim);                  
                 }
             }

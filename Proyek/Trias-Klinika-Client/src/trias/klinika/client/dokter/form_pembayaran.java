@@ -381,7 +381,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             } catch (RemoteException ex) {
                 Logger.getLogger(form_pembayaran.class.getName()).log(Level.SEVERE, null, ex);
             }
-            UD.login.kirim(new pesan("tagihan",UD.LE.getusername(),"PE0004","Reservasi"));
+            UD.login.kirim(new pesan("Pembayaran",UD.LE.getusername(),"PE0005","Reservasi"));
         }
         else{
             this.setVisible(true);
