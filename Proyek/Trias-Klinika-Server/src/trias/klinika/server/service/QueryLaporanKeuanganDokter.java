@@ -40,7 +40,7 @@ public class QueryLaporanKeuanganDokter extends UnicastRemoteObject implements L
             
             while(result.next()){
                 LaporanKeuanganDokterEntitas LKDE = new LaporanKeuanganDokterEntitas();
-                LKDE.setDataLaporan(result.getString("ID_PEMERIKSAAN"), result.getString("TGL_PEMERIKSAAN"), result.getString("NAMA_PASIEN"), result.getInt("JUMLAH_PEMBAYARAN"));
+  //              LKDE.setDataLaporan(result.getString("ID_PEMERIKSAAN"), result.getString("TGL_PEMERIKSAAN"), result.getString("NAMA_PASIEN"), result.getInt("JUMLAH_PEMBAYARAN"));
                 
                 list.add(LKDE);
             }
