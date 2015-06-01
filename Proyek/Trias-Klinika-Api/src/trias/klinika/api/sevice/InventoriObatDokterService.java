@@ -25,4 +25,6 @@ public interface InventoriObatDokterService extends Remote {
     void insertObatLama(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
     String[] Dropdownobat(String [] ob) throws RemoteException;
     String[] Dropdownjenis(String [] ob) throws RemoteException;
+    String auto_increment_obat(String  aiobat) throws RemoteException;
+    int auto_increment_iddetail (String aiObat) throws RemoteException;
 }
