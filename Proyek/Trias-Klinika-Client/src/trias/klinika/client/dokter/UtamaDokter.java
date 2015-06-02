@@ -20,14 +20,19 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.api.sevice.LaporanKeuanganDokterService;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
+import trias.klinika.api.sevice.NotifikasiObatExpiredService;
 import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.client.tabel.tabelrekammedis;
 import trias.klinika.client.dokter.rekammedis;
@@ -51,6 +56,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     final serviceRekam service6;
     final ServiceResep service7;
     final LaporanKeuanganDokterService service9_b_2;
+    final NotifikasiObatExpiredService service11_1;
     Inventori_Obat_Dokter iod ;
     form_pembayaran fp;
     rekammedis sr;
@@ -82,6 +88,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         service6 = (serviceRekam)registry.lookup("service6");
         service7 = (ServiceResep)registry.lookup("service7");
         service9_b_2 = (LaporanKeuanganDokterService)registry.lookup("service9_b_2");
+        service11_1 = (NotifikasiObatExpiredService)registry.lookup("service11_1");
         
         iod = new Inventori_Obat_Dokter(service13, this);
         fp = new form_pembayaran(service4, this);
@@ -336,6 +343,32 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }//GEN-LAST:event_LaporanKeuanganDokterActionPerformed
 
+    public void NotifObatExpired() {
+    List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
+    String [] Id_Obat = new String[0];
+    String pesan = "List Obat Yang Terindikasi Kadaluarsa : \n";
+    try {
+        Id_Obat = service11_1.ObatDokterExpired(Id_Obat, setTanggal());
+        if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
+            for (int i=0;i<Id_Obat.length;i++) {
+                list.add(service11_1.getobat(Id_Obat[i]));
+                pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";
+            }
+            pesan = pesan + "Silahkan Melakukan Tindakan Atas Hal Ini";
+            JOptionPane.showMessageDialog(this, pesan, "Notifikasi Obat Expired",2);
+        }
+    } catch (RemoteException ex) {
+        Logger.getLogger(UtamaDokter.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
+public String setTanggal () {
+        Date skrg = new java.util.Date();
+        java.text.SimpleDateFormat kal = new
+        java.text.SimpleDateFormat("yyyy-MM-dd");
+        return kal.format(skrg);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton LaporanKeuanganDokter;
     private javax.swing.JDesktopPane jDesktopPane2;

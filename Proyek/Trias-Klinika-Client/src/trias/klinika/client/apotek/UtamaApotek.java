@@ -19,6 +19,9 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import trias.klinika.api.entitas.InventoryObatApotekEntitas;
@@ -27,6 +30,7 @@ import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.client.tabel.tabelInventoryObatApotek;
 import trias.klinika.api.sevice.LaporanKeuanganService;
+import trias.klinika.api.sevice.NotifikasiObatExpiredService;
 import trias.klinika.client.Home.Login;
 import trias.klinika.client.Home.Splash;
 import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
@@ -41,6 +45,7 @@ public class UtamaApotek extends javax.swing.JFrame {
     Registry registry;
     final LaporanKeuanganService service9_c_1;
     final InventoryObatApotekService service10;
+    final NotifikasiObatExpiredService service11_1;
     InventoryObatApotek interfaceObat;
     LaporanKeuanganApotek laporankeuanganapotek;
     private InventoryObatApotekService IOAS;
@@ -61,6 +66,7 @@ public class UtamaApotek extends javax.swing.JFrame {
         localhost = this.login.getTitle();
         registry = LocateRegistry.getRegistry(localhost, 4444);
         service10 = (InventoryObatApotekService)registry.lookup("service10");
+        service11_1 = (NotifikasiObatExpiredService)registry.lookup("service11_1");
         interfaceObat = new InventoryObatApotek (service10);
         service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
         laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
@@ -181,35 +187,60 @@ public class UtamaApotek extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
 public void internal_frame (){
-        
-        internalFrame1.add(interfaceObat.getContentPane());
-        internalFrame1.pack();
-        internalFrame1.setSize(1146,577);
-        internalFrame1.setVisible(true);
-        internalFrame.add(internalFrame1);
-        BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame1.getUI();
-        Container north = (Container)ui.getNorthPane();
-        north.remove(0);
-        north.validate();
-        north.repaint();
-        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
-           ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
-        }
+    internalFrame1.add(interfaceObat.getContentPane());
+    internalFrame1.pack();
+    internalFrame1.setSize(1146,577);
+    internalFrame1.setVisible(true);
+    internalFrame.add(internalFrame1);
+    BasicInternalFrameUI ui = (BasicInternalFrameUI)internalFrame1.getUI();
+    Container north = (Container)ui.getNorthPane();
+    north.remove(0);
+    north.validate();
+    north.repaint();
+    for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
+    }
            
-        internalFrame2.add(laporankeuanganapotek.getContentPane());
-        internalFrame2.pack();
-        internalFrame2.setSize(1146,577);
-        internalFrame2.setVisible(true);
-        internalFrame.add(internalFrame2);
-        BasicInternalFrameUI ui2 = (BasicInternalFrameUI)internalFrame2.getUI();
-        Container north2 = (Container)ui2.getNorthPane();
-        north2.remove(0);
-        north2.validate();
-        north2.repaint();
-        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
-          ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
-        }
+    internalFrame2.add(laporankeuanganapotek.getContentPane());
+    internalFrame2.pack();
+    internalFrame2.setSize(1146,577);
+    internalFrame2.setVisible(true);
+    internalFrame.add(internalFrame2);
+    BasicInternalFrameUI ui2 = (BasicInternalFrameUI)internalFrame2.getUI();
+    Container north2 = (Container)ui2.getNorthPane();
+    north2.remove(0);
+    north2.validate();
+    north2.repaint();
+    for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().getMouseListeners()){
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
+    }
 }
+
+public void NotifObatExpired() {
+    List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
+    String [] Id_Obat = new String[0];
+    String pesan = "List Obat Yang Terindikasi Kadaluarsa : \n";
+    try {
+        Id_Obat = service11_1.ObatApotekExpired(Id_Obat, setTanggal());
+        if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
+            for (int i=0;i<Id_Obat.length;i++) {
+                list.add(service11_1.getobat(Id_Obat[i]));
+                pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";
+            }
+            pesan = pesan + "Silahkan Melakukan Tindakan Atas Hal Ini";
+            JOptionPane.showMessageDialog(this, pesan, "Notifikasi Obat Expired",2);
+        }
+    } catch (RemoteException ex) {
+        Logger.getLogger(UtamaApotek.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
+public String setTanggal () {
+        Date skrg = new java.util.Date();
+        java.text.SimpleDateFormat kal = new
+        java.text.SimpleDateFormat("yyyy-MM-dd");
+        return kal.format(skrg);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane internalFrame;

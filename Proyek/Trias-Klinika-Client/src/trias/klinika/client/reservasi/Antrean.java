@@ -54,7 +54,6 @@ public class Antrean extends javax.swing.JInternalFrame {
         kirim.setEnabled(false);
         reset.setEnabled(false);
         tabelkiri.setEnabled(false);
-        
     }
 
          private void initiateComboBox1(){
@@ -458,6 +457,51 @@ public class Antrean extends javax.swing.JInternalFrame {
         int id_dokter=0;
         kirim.setEnabled(false);
         reset.setEnabled(false);
+        try {
+            if(input.getText().equals(Integer.toString(AS.getIDPasien()))){
+                
+            }
+            String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();
+            String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter();
+            List<PemeriksaanEntitas> pemeriksaan = AS.getpasienkiri(iddok, imin.getText());
+            
+            for (int i = 0; i < pemeriksaan.size(); i++) {
+                if(pemeriksaan.get(i).getID_PASIEN().toString().equals(idpas)){
+                    sama = true;
+                    System.out.println(idpas);
+                }
+            }
+            if (sama) {
+//                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean");
+                JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +" sudah ada di tabel antrean", "ERROR", JOptionPane.OK_OPTION);
+            }
+            
+            else if(!sama){
+                String ID = null;
+            int bayar=0;
+            PemeriksaanEntitas a = new PemeriksaanEntitas();
+            int c = AS.getPemeriksaans().size()+1;
+            ID = "PE000"+c;
+            int antri=0;
+            antri =  AS.nomorAntrean(antri, imin.getText(), tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()-1).getid_dokter());
+            bayar = AS.getPemeriksaans().size();
+            
+            a.setID_PEMERIKSAAAN(ID);
+            a.setID_RESERVASI("R0001");
+            a.setID_PASIEN(idpas);
+            a.setID_DOKTER(iddok);
+            a.setTGL_PEMERIKSAAN(imin.getText());
+            a.setNO_ANTRIAN(antri);
+            
+            AS.insertPemeriksaan(a);
+
+            JOptionPane.showMessageDialog(null, "ID Pasien "+ idpas +"berhasil ditambahkan ke tabel antrean");
+                        refresh();
+            }
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        try {
 //            if(input.getText()==AS.getIDPasien()){
 //                
