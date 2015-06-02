@@ -20,14 +20,19 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.api.sevice.LaporanKeuanganDokterService;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
+import trias.klinika.api.sevice.NotifikasiObatExpiredService;
 import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.client.tabel.tabelrekammedis;
 import trias.klinika.client.dokter.rekammedis;
@@ -51,6 +56,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     final serviceRekam service6;
     final ServiceResep service7;
     final LaporanKeuanganDokterService service9_b_2;
+    final NotifikasiObatExpiredService service11_1;
     Inventori_Obat_Dokter iod ;
     form_pembayaran fp;
     rekammedis sr;
@@ -82,6 +88,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         service6 = (serviceRekam)registry.lookup("service6");
         service7 = (ServiceResep)registry.lookup("service7");
         service9_b_2 = (LaporanKeuanganDokterService)registry.lookup("service9_b_2");
+        service11_1 = (NotifikasiObatExpiredService)registry.lookup("service11_1");
         
         iod = new Inventori_Obat_Dokter(service13, this);
         fp = new form_pembayaran(service4, this);
@@ -92,6 +99,10 @@ public class UtamaDokter extends javax.swing.JFrame {
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
+        IDpemeriksaan.setVisible(false);
+        rekamedistombol.setEnabled(false);
+        byr.setEnabled(false);
+        rsp.setEnabled(false);
         
         ImageIcon ico = new ImageIcon("src/image/imin.png");
         setIconImage(ico.getImage());
@@ -101,6 +112,12 @@ public class UtamaDokter extends javax.swing.JFrame {
         setLocation(
         (screenSize.width - frameSize.width) / 2,
         (screenSize.height - frameSize.height) / 2);
+        if(sr.ID.getText()!=""){
+            rekamedistombol.setEnabled(true);
+            byr.setEnabled(true);
+            rsp.setEnabled(true);
+        
+        }
     }
 
     /**
@@ -116,14 +133,14 @@ public class UtamaDokter extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
+        byr = new javax.swing.JToggleButton();
+        rekamedistombol = new javax.swing.JToggleButton();
+        rsp = new javax.swing.JToggleButton();
         LaporanKeuanganDokter = new javax.swing.JToggleButton();
         logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
-        pm = new javax.swing.JTextField();
+        IDpemeriksaan = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -148,32 +165,32 @@ public class UtamaDokter extends javax.swing.JFrame {
         jPanel1.add(jToggleButton1);
         jToggleButton1.setBounds(10, 0, 139, 46);
 
-        jToggleButton2.setText("Pembayaran");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        byr.setText("Pembayaran");
+        byr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
+                byrActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton2);
-        jToggleButton2.setBounds(10, 50, 139, 41);
+        jPanel1.add(byr);
+        byr.setBounds(10, 50, 139, 41);
 
-        jToggleButton3.setText("Rekam Medis");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+        rekamedistombol.setText("Rekam Medis");
+        rekamedistombol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
+                rekamedistombolActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton3);
-        jToggleButton3.setBounds(10, 100, 139, 41);
+        jPanel1.add(rekamedistombol);
+        rekamedistombol.setBounds(10, 100, 139, 41);
 
-        jToggleButton4.setText("Resep");
-        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+        rsp.setText("Resep");
+        rsp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton4ActionPerformed(evt);
+                rspActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton4);
-        jToggleButton4.setBounds(10, 150, 139, 41);
+        jPanel1.add(rsp);
+        rsp.setBounds(10, 150, 139, 41);
 
         LaporanKeuanganDokter.setText("Laporan");
         LaporanKeuanganDokter.addActionListener(new java.awt.event.ActionListener() {
@@ -206,9 +223,9 @@ public class UtamaDokter extends javax.swing.JFrame {
         getContentPane().add(nama);
         nama.setBounds(198, 160, 180, 28);
 
-        pm.setText("PE0004");
-        getContentPane().add(pm);
-        pm.setBounds(640, 170, 80, 20);
+        IDpemeriksaan.setText("PE0004");
+        getContentPane().add(IDpemeriksaan);
+        IDpemeriksaan.setBounds(640, 170, 80, 20);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -225,31 +242,31 @@ public class UtamaDokter extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+    private void byrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byrActionPerformed
         try {
             internalFrame2.setSelected(true);
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
         
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+    }//GEN-LAST:event_byrActionPerformed
 
-private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekamedistombolActionPerformed
     try {
         internalFrame3.setSelected(true);
     } catch(Exception ex) {
         JOptionPane.showMessageDialog(null, ex);
     }
-}//GEN-LAST:event_jToggleButton3ActionPerformed
+}//GEN-LAST:event_rekamedistombolActionPerformed
 
-    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+    private void rspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rspActionPerformed
         try {
             internalFrame4.setSelected(true);
-           ir.ID_Pemeriksaan.setText(pm.getText());
+           ir.ID_Pemeriksaan.setText(IDpemeriksaan.getText());
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-    }//GEN-LAST:event_jToggleButton4ActionPerformed
+    }//GEN-LAST:event_rspActionPerformed
 
     public void internal_frame() {
         internalFrame1.add(iod.getContentPane());
@@ -342,18 +359,49 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }//GEN-LAST:event_LaporanKeuanganDokterActionPerformed
 
+    public void NotifObatExpired() {
+        List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
+        String [] Id_Obat = new String[0];
+        String pesan = "List Obat Yang Terindikasi Kadaluarsa : \n";
+        try {
+            Id_Obat = service11_1.ObatDokterExpired(Id_Obat, setTanggal());
+            if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
+                for (int i=0;i<Id_Obat.length;i++) {
+                    list.add(service11_1.getobat(Id_Obat[i]));
+                    pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";
+                }
+                pesan = pesan + "Silahkan Melakukan Tindakan Atas Hal Ini";
+                JOptionPane.showMessageDialog(this, pesan, "Notifikasi Obat Expired",2);
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(UtamaDokter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String setTanggal () {
+        Date skrg = new java.util.Date();
+        java.text.SimpleDateFormat kal = new
+        java.text.SimpleDateFormat("yyyy-MM-dd");
+        return kal.format(skrg);
+    }
+    
+    public void kirimanAntreanImin (String Id, String Nama) {
+        JOptionPane.showMessageDialog(null, "Pasien baru siap diperiksa");
+        IDpemeriksaan.setText(Id);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField IDpemeriksaan;
     private javax.swing.JToggleButton LaporanKeuanganDokter;
+    private javax.swing.JToggleButton byr;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
-    private javax.swing.JTextField pm;
+    private javax.swing.JToggleButton rekamedistombol;
+    private javax.swing.JToggleButton rsp;
     // End of variables declaration//GEN-END:variables
 }
