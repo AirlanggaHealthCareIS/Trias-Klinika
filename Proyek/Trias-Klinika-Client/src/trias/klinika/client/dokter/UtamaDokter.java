@@ -123,6 +123,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
+        pm = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -205,6 +206,10 @@ public class UtamaDokter extends javax.swing.JFrame {
         getContentPane().add(nama);
         nama.setBounds(198, 160, 180, 28);
 
+        pm.setText("PE0004");
+        getContentPane().add(pm);
+        pm.setBounds(640, 170, 80, 20);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1366, 750);
@@ -240,6 +245,7 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         try {
             internalFrame4.setSelected(true);
+           ir.ID_Pemeriksaan.setText(pm.getText());
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -348,5 +354,6 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
+    private javax.swing.JTextField pm;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/lalala/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryListPembayaran.java</file>
-            <file>file:/D:/lalala/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryLaporanKeuanganDokter.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryResep.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryLogin.java</file>
+            <file>file:/C:/Users/User/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryAntrean.java</file>
         </group>
     </open-files>
 </project-private>
