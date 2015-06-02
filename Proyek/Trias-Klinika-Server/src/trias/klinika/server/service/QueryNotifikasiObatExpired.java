@@ -106,6 +106,7 @@ public class QueryNotifikasiObatExpired extends UnicastRemoteObject implements N
         try{
             statement = Koneksidatabase.getConnection().createStatement();
             ResultSet result = statement.executeQuery("SELECT  * FROM obat WHERE ID_OBAT = '"+IdObat+"'");
+            result.first();
             InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
             inventory.setIdObat(result.getString("ID_OBAT"));
             inventory.setIdSpesialis(result.getString("ID_SPESIALIS"));
