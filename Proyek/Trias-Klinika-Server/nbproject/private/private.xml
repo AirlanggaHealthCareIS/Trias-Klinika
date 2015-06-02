@@ -4,9 +4,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryResep.java</file>
-            <file>file:/C:/Users/User/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryLogin.java</file>
-            <file>file:/C:/Users/User/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryAntrean.java</file>
+            <file>file:/E:/Asli/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryListPetugas.java</file>
+            <file>file:/E:/Asli/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryInventoriObatDokter.java</file>
+            <file>file:/E:/Asli/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/main/Server.java</file>
         </group>
     </open-files>
 </project-private>

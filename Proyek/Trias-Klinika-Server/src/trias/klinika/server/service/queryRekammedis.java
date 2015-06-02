@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.api.entitas.PasienEntity;
 import trias.klinika.api.entitas.rekammedisEntyty;
@@ -174,7 +176,11 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
             exception.printStackTrace();
         } finally {
             if (statement != null) {
-                statement.close();
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(queryRekammedis.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } 
     }
