@@ -54,7 +54,6 @@ public class Antrean extends javax.swing.JInternalFrame {
         kirim.setEnabled(false);
         reset.setEnabled(false);
         tabelkiri.setEnabled(false);
-        
     }
 
          private void initiateComboBox1(){
@@ -459,7 +458,7 @@ public class Antrean extends javax.swing.JInternalFrame {
         kirim.setEnabled(false);
         reset.setEnabled(false);
         try {
-            if(input.getText()==AS.getIDPasien()){
+            if(input.getText().equals(Integer.toString(AS.getIDPasien()))){
                 
             }
             String idpas = PilihIDPasien.getItemAt(PilihIDPasien.getSelectedIndex()).toString();

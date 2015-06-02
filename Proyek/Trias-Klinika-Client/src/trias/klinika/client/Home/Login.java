@@ -266,6 +266,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
             case "dokter":{
                 menudokter = new UtamaDokter(users, this);
                 menudokter.setVisible(true);
+                menudokter.NotifObatExpired();
                 break;
             }
             case "reservasi":{
@@ -276,6 +277,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
             case "apotek":{
                 menuapotek = new UtamaApotek(users, this);
                 menuapotek.setVisible(true);
+                menuapotek.NotifObatExpired();
                 break;
             }
         }

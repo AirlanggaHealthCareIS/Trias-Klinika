@@ -89,11 +89,11 @@ public class utamaReservasi extends javax.swing.JFrame {
         ImageIcon ico = new ImageIcon("src/image/imin.png");
         setIconImage(ico.getImage());
  
-//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//        Dimension frameSize = getSize();
-//        setLocation(
-//        (screenSize.width - frameSize.width) / 2,
-//        (screenSize.height - frameSize.height) / 2);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        setLocation(
+        (screenSize.width - frameSize.width) / 2,
+        (screenSize.height - frameSize.height) / 2);
    
 //        
     }

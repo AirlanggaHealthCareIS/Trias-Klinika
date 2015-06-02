@@ -24,6 +24,7 @@ import trias.klinika.server.service.QueryLaporanKeuanganDokter;
 import trias.klinika.server.service.QueryListPembayaran;
 import trias.klinika.server.service.QueryListPetugas;
 import trias.klinika.server.service.QueryLogin;
+import trias.klinika.server.service.QueryNotifikasiObatExpired;
 import trias.klinika.server.service.QueryPembayaran;
 import trias.klinika.server.service.QueryPendaftaran;
 import trias.klinika.server.service.QueryResep;
@@ -127,6 +128,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
         QueryResep queryResep = new QueryResep();
         QueryLaporanKeuanganDokter querylaporankeuangandokter = new QueryLaporanKeuanganDokter() {};
+        QueryNotifikasiObatExpired queryNotifikasiObatExpired = new QueryNotifikasiObatExpired() {};
         
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
@@ -140,6 +142,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service13", queryInventoriObatDokter);
         server.rebind("service9_c_1", querylaporankeuanganapotek);
         server.rebind("service9_b_2", querylaporankeuangandokter);
+        server.rebind("service11_1", queryNotifikasiObatExpired);
         System.out.println("Server Berjalan");
         
         clients = new ServerThread [50];
@@ -207,7 +210,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
                 if(msg.isi.substring(0, 1).equals("D")){
                     UpdateList(msg);
                 }
-                hapus(findClient(ID));   
+                hapus(ID);   
                 break;
         }
     }
