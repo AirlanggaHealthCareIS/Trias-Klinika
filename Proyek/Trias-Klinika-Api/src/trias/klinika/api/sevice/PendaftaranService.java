@@ -10,6 +10,7 @@ package trias.klinika.api.sevice;
 import java.rmi.RemoteException;
 import trias.klinika.api.entitas.EntitasPendaftaran;
 import java.rmi.Remote;
+import java.util.List;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
 /**
  *
@@ -21,4 +22,6 @@ public  interface PendaftaranService extends Remote  {
     String auto_increment_pemeriksaan(String  aiperiksa) throws RemoteException;
     String auto_increment_pasien(String  aipasien) throws RemoteException;
     int nomor_antrian(int na, String tgl, String id_dokter) throws RemoteException;
+    public List<EntitasPendaftaran> getDataPasien() throws RemoteException;
+    public List<EntitasPendaftaran> search_nama(String nama_pasien_kecil) throws RemoteException;
 }

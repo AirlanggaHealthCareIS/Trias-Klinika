@@ -21,7 +21,6 @@ import trias.klinika.server.service.QueryAntrean;
 import trias.klinika.server.service.QueryInventoriObatDokter;
 import trias.klinika.server.service.QueryInventoryObatApotek;
 import trias.klinika.server.service.QueryLaporanKeuanganDokter;
-import trias.klinika.server.service.QueryLaporanKeuanganReservasi;
 import trias.klinika.server.service.QueryListPembayaran;
 import trias.klinika.server.service.QueryListPetugas;
 import trias.klinika.server.service.QueryLogin;
@@ -128,7 +127,6 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryListPetugas querylistpetugas = new QueryListPetugas(){};
         QueryResep queryResep = new QueryResep();
         QueryLaporanKeuanganDokter querylaporankeuangandokter = new QueryLaporanKeuanganDokter() {};
-        QueryLaporanKeuanganReservasi queryreservasi = new QueryLaporanKeuanganReservasi (){};
         
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
@@ -140,7 +138,6 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service6", QueryRekamMedis);
         server.rebind("service10", queryobatapotek);
         server.rebind("service13", queryInventoriObatDokter);
-        server.rebind("service9_a_1", queryreservasi);
         server.rebind("service9_c_1", querylaporankeuanganapotek);
         server.rebind("service9_b_2", querylaporankeuangandokter);
         System.out.println("Server Berjalan");
@@ -211,6 +208,10 @@ public class Server extends javax.swing.JFrame implements Runnable {
                     UpdateList(msg);
                 }
                 hapus(findClient(ID));   
+                break;
+            case "KirimIDPemeriksaanImin":
+                findUserThread(msg.penerima).send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
+                clients[findClient(ID)].send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
                 break;
             case "Pembayaran":
                 UpdateList(msg);

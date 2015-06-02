@@ -97,8 +97,8 @@ public class laporanKeuanganReservasi extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12));
         jLabel2.setText("PILIH KATEGORI    :");
 
-        pilih.setFont(new java.awt.Font("Times New Roman", 0, 12));
-        pilih.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "HARI INI", "PILIH TANGGAL" }));
+        pilih.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        pilih.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PILIHAN", "HARI INI", "PILIH TANGGAL" }));
         pilih.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pilihActionPerformed(evt);
@@ -186,6 +186,7 @@ private void pilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
              tabel.setVisible(true);
             reset();
             a = 0;
+            hariIni ();
             date1.setEnabled(true);}
         
          else if(pilih.getSelectedItem().toString()=="PILIH TANGGAL"){
@@ -213,11 +214,14 @@ private void tampilkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         tabel.setModel(TLKA);
   }
   public void hariIni (){
-       try {
+      Date date = new Date (); 
+       date1.setDate(date);
+      try {
             TLKA.setData(this.LKR.getdata(FormatTanggal(date1.getDate())));
         } catch (RemoteException ex) {
             Logger.getLogger(laporanKeuanganReservasi.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
         tabel.setModel(TLKA);
   }
     public void reset(){

@@ -78,7 +78,7 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
             
-       "INSERT INTO `PEMBAYARAN`(`ID_PEMBAYARAN`, `BIAYA_DOKTER`, `JUMLAH_PEMBAYARAN`) VALUE ('"+PE.getnomer_transaksi()+"',"+PE.getBIAYA_DOKTER()+","+PE.getTOTAL_BIAYA()+")");
+       "INSERT INTO `PEMBAYARAN`(`ID_PEMBAYARAN`, `BIAYA_DOKTER`, `JUMLAH_PEMBAYARAN`, `STATUS_PEMBAYARAN`) VALUE ('"+PE.getnomer_transaksi()+"',"+PE.getBIAYA_DOKTER()+","+PE.getTOTAL_BIAYA()+",'0')");
             System.out.println(statement.toString());
             statement.executeUpdate();   
                   
