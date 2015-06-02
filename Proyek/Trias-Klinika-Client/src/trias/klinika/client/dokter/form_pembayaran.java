@@ -23,12 +23,14 @@ import trias.klinika.api.entitas.RincianPembayaran;
 import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.client.tabel.tabelPembayaran;
 import trias.klinika.api.entitas.RincianPembayaranEntitas;
+import trias.klinika.api.pesan.pesan;
 /**
  *
  * @author ICUN
  */
 public class form_pembayaran extends javax.swing.JInternalFrame {
     private pembayaranService ps ;
+    private UtamaDokter UD;
     private String[] isi;
     private int harga = 0;
     private int totalHarga = 0;
@@ -62,8 +64,9 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         x = x+1;
         return (""+x);
     }
-    public form_pembayaran(pembayaranService ps) throws RemoteException {
+    public form_pembayaran(pembayaranService ps, UtamaDokter UD) throws RemoteException {
         this.ps = ps;
+        this.UD = UD;
         
         initComponents();
         Dropdown();
@@ -378,6 +381,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             } catch (RemoteException ex) {
                 Logger.getLogger(form_pembayaran.class.getName()).log(Level.SEVERE, null, ex);
             }
+            UD.login.kirim(new pesan("Pembayaran",UD.LE.getusername(),"PE0005","Reservasi"));
         }
         else{
             this.setVisible(true);

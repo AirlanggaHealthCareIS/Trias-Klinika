@@ -37,8 +37,14 @@ public class tabelInventoryObatApotek extends AbstractTableModel{
         fireTableDataChanged();
     }
     public void delete (InventoryObatApotekEntitas inventory){
-        list.add(inventory);
-        fireTableDataChanged();
+//        int indek = 0;
+//        for (int i=0;i<list.size();i++) {
+//            if (Dok.getid_dokter().equals(list.get(i).getid_dokter())) {
+//                indek = i;
+//            }
+//        }
+//        list.remove(indek);
+//        fireTableDataChanged();
     }
     public void update (InventoryObatApotekEntitas inventory){
         list.add(inventory);

@@ -33,11 +33,11 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT  o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = 'Apotek' AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis");
+            ResultSet result = statement.executeQuery("SELECT  o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = 'Apotek' AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
-  
+                inventory.setIdObat(result.getString("id_obat"));
                 inventory.setNamaObat(result.getString("nama_obat"));
                 inventory.setDeskripsi(result.getString("deskripsi_obat"));
                 inventory.setHargaObat(result.getInt("harga_obat"));
@@ -74,7 +74,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         System.out.println("Proses Melakukan Penambahan Obat Baru");
         PreparedStatement statement = null;
         try {
-            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT, ID_JENIS)"+ "values (?, ?, ?, ?, ?, ?)");
+            statement = Koneksidatabase.getConnection().prepareStatement("INSERT INTO obat ( ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT, ID_JENIS)"+ "values (?, ?, ?, ?, ?, ?)");
             
             statement.setString(1, inventory.getIdObat());
             statement.setString(2, inventory.getIdSpesialis());
@@ -102,12 +102,13 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         PreparedStatement statement2 = null;
         try{
             statement2 = Koneksidatabase.getConnection().prepareStatement("INSERT INTO detail_obat (ID_DETAIL, ID_OBAT, QTY_OBAT, TGL_MASUK, MASA_PAKAI, RUANGAN)"+ "values (?, ?, ?, ?, ?, ?)");
-            statement2.setString(1, inventory.getIdDetailObat());
+            statement2.setInt(1, inventory.getIdDetailObat());
             statement2.setString(2, inventory.getIdObat());
             statement2.setInt(3, inventory.getQty());
             statement2.setString(4, inventory.getTglMasuk());
             statement2.setString(5, inventory.getMasaPakai());
             statement2.setString(6, inventory.getRuangObat());
+            
             System.out.println(statement2.toString());
             statement2.executeUpdate();
         }
@@ -132,7 +133,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         PreparedStatement statement = null;
         try {
             statement = Koneksidatabase.getConnection().prepareStatement("UPDATE obat SET"+inventory.getNamaObat()+"=? WHERE id_detail_obat =?");
-            statement.setString(1, inventory.getIdDetailObat());
+            statement.setInt(1, inventory.getIdDetailObat());
             statement.executeUpdate();
         }
         catch (SQLException exception){
@@ -146,8 +147,8 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         System.out.println("Proses Melakukan Penghapusan data Obat");
         PreparedStatement statement = null;
         try{
-            statement = Koneksidatabase.getConnection().prepareStatement("DELETE FROM detail_obat WHERE id_detail_obat =?");
-            statement.setString(1,inventory.getIdDetailObat());
+            statement = Koneksidatabase.getConnection().prepareStatement("DELETE FROM detail_obat WHERE id_detail =?");
+            statement.setInt(1,inventory.getIdDetailObat());
             statement.executeUpdate();
         }
         catch (SQLException exception){
@@ -171,7 +172,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         PreparedStatement statement2 = null;
         try{
             statement2 = Koneksidatabase.getConnection().prepareStatement("INSERT INTO detail_obat (ID_DETAIL, ID_OBAT, QTY_OBAT, TGL_MASUK, MASA_PAKAI, RUANGAN)"+ "values (?, ?, ?, ?, ?, ?)");
-            statement2.setString(1, inventory.getIdDetailObat());
+            statement2.setInt(1, inventory.getIdDetailObat());
             statement2.setString(2, inventory.getIdObat());
             statement2.setInt(3, inventory.getQty());
             statement2.setString(4, inventory.getTglMasuk());
@@ -348,27 +349,30 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
     }
 
     @Override
-    public String auto_increment_obat(String aiObat) throws RemoteException {
-        Statement statement = null;
+    public String auto_increment_idobat(String aiObat) throws RemoteException {
+           Statement statement = null;
         
         try {
            
             statement = Koneksidatabase.getConnection().createStatement();
             
             ResultSet result = statement.executeQuery
-            ("SELECT ID_OBAT FROM OBAT");
+            ("SELECT * FROM OBAT");
             
-            
-            result.last();
-            aiObat = result.getString("ID_OBAT");
-            String b = Integer.toString((Integer.parseInt(aiObat.substring(1,5)))+1); //memisahkan angka D dengan 0001
+            if (result.last()== false){
+                aiObat = "O0001";
+            }
+            else {
+                result.last();
+                aiObat = result.getString("ID_OBAT");
+                String b = Integer.toString((Integer.parseInt(aiObat.substring(1,5)))+1); //memisahkan angka D dengan 0001
             //menambahkan angka belakang    
-            for (int i = b.length(); i < 4; i++ ) {
-                b = "0" + b;
-            } 
-            aiObat = aiObat.substring(0, 2) + b;
+                for (int i = b.length(); i < 4; i++ ) {
+                    b = "0" + b;
+                } 
+                aiObat = aiObat.substring(0, 1) + b;
             result.close();
-            
+            }
             return aiObat;
             
         }catch (SQLException exception) {
@@ -383,37 +387,36 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
                 }
             }
                
-    }
-         //To change body of generated methods, choose Tools | Templates.
+    } //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public InventoryObatApotekEntitas getIdObat(String id) throws RemoteException {
-        System.out.println("Client melakukan proses get-all");
-
+    public int auto_increment_iddetail(String aiObat) throws RemoteException {
         Statement statement = null;
-        
-
+        int a = 0;
         try {
-            
+           
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT O.ID_OBAT FROM OBAT AS O WHERE NAMA_OBAT = '"+id+"'");
+            ResultSet result = statement.executeQuery
+            ("SELECT ID_DETAIL FROM DETAIL_OBAT WHERE ID_OBAT = '"+aiObat+"'");
             
+            if(result.last()== false){
+                a = 1;
+            }
+            else {
+                result.last();
+             a = result.getInt("ID_DETAIL");
+            a++;
             
-            InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
-            result.first();
-                
-                IOAE.setIdObat(result.getString("ID_OBAT"));
-                IOAE.setNamaObat(result.getString("NAMA_OBAT"));
-                
             result.close();
             
-            return IOAE;
+            }
+            return a;
             
-        } catch (SQLException exception) {
+        }catch (SQLException exception) {
             exception.printStackTrace();
-            return null;
+            return 0;
         } finally {
             if (statement != null) {
                 try {
@@ -422,9 +425,8 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
                     exception.printStackTrace();
                 }
             }
-        }
-
-        //To change body of generated methods, choose Tools | Templates.
+               
+    } //To change bo //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -34,6 +34,7 @@ public class TabelPasien extends AbstractTableModel{
             case 0 :return "No antrean";
             case 1 :return "ID pasien";
             case 2 :return "ID dokter";
+            case 3 :return "Status Pasien";
             default:return null;
         }
     }
@@ -46,7 +47,7 @@ public class TabelPasien extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -58,6 +59,8 @@ public class TabelPasien extends AbstractTableModel{
                 return list.get(rowIndex).getID_PASIEN();
             case 2:
                 return list.get(rowIndex).getID_DOKTER();
+            case 3:
+                return list.get(rowIndex).getSTATUS_PASIEN_strink();
             default:return null;
         }
     }

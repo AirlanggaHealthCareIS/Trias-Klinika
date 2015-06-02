@@ -57,7 +57,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="Jasa_Pemeriksaan" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="jTextField4" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <Component id="tindakan" min="-2" pref="50" max="-2" attributes="0"/>
                                   <Component id="jTextField5" min="-2" pref="50" max="-2" attributes="0"/>
                                   <Component id="Total_Biaya" min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
@@ -129,7 +129,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tindakan" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jScrollPane1" alignment="1" min="-2" pref="148" max="-2" attributes="0"/>
@@ -270,7 +270,7 @@
         <Property name="text" type="java.lang.String" value="-"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField4">
+    <Component class="javax.swing.JTextField" name="tindakan">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Times New Roman" size="12" style="0"/>

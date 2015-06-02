@@ -30,175 +30,63 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabel = new javax.swing.JTable();
-        kategori = new javax.swing.JComboBox();
         tahun = new javax.swing.JComboBox();
-        bulan = new javax.swing.JComboBox();
-        minggu = new javax.swing.JComboBox();
         grafik = new javax.swing.JButton();
         cetak = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1147, 557));
+        getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 153, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/laporan.png"))); // NOI18N
         jLabel1.setText("Laporan Data Pasien");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(10, 0, 980, 100);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(980, 0, 150, 100);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(51, 153, 0));
-        jLabel3.setText("Data Pasien");
-
-        tabel.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nama Obat", "Jenis Obat", "Quantity Obat", "Harga Obat", "Masa Pakai", "Deskripsi"
-            }
-        ));
-        jScrollPane1.setViewportView(tabel);
-
-        kategori.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Kategori..", "Mingguan", "Bulanan", "Tahunan" }));
-        kategori.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kategoriActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Data Grafik ");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(10, 100, 70, 14);
 
         tahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Tahun..." }));
-
-        bulan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Bulan..." }));
-
-        minggu.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Minggu" }));
+        getContentPane().add(tahun);
+        tahun.setBounds(10, 410, 88, 20);
 
         grafik.setText("Lihat Grafiik");
+        getContentPane().add(grafik);
+        grafik.setBounds(110, 410, 89, 23);
 
         cetak.setText("Cetak");
+        getContentPane().add(cetak);
+        cetak.setBounds(220, 390, 61, 49);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameReservasi.png"))); // NOI18N
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1130, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(970, 970, 970)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(kategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(tahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bulan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(minggu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(grafik)
-                        .addGap(18, 18, 18)
-                        .addComponent(cetak))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(jLabel3)
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(kategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(tahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(bulan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(minggu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(grafik))
-                    .addComponent(cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(0, 0, 1130, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void kategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kategoriActionPerformed
-        // TODO add your handling code here:\
-        if(kategori.getSelectedItem().toString()=="Mingguan"){
-            reset();
-            a = 0;
-            tahun.setEnabled(true);
-            cetak.setEnabled(true);
-            grafik.setEnabled(true);
-        }
-        else if(tahun.getSelectedItem().toString()=="tahun"){
-            reset();
-            a = 1;
-            bulan.setEnabled(true);
-            cetak.setEnabled(true);
-            grafik.setEnabled(true);
-        }
-        else if(bulan.getSelectedItem().toString()=="tahun"){
-            reset();
-            a = 1;
-            minggu.setEnabled(true);
-            cetak.setEnabled(true);
-            grafik.setEnabled(true);
-        }
-        else if(tahun.getSelectedItem().toString()=="tahun"){
-            reset();
-            a = 1;
-            cetak.setEnabled(true);
-            grafik.setEnabled(true);
-        }
-        else if(kategori.getSelectedItem().toString()=="Pilih Kategori"){
-            reset();
-        }
-    }//GEN-LAST:event_kategoriActionPerformed
 public void reset(){
         tahun.setEnabled(false);
-        bulan.setEnabled(false);
-        minggu.setEnabled(false);
         grafik.setEnabled(false);
         cetak.setEnabled(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox bulan;
     private javax.swing.JButton cetak;
     private javax.swing.JButton grafik;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox kategori;
-    private javax.swing.JComboBox minggu;
-    private javax.swing.JTable tabel;
     private javax.swing.JComboBox tahun;
     // End of variables declaration//GEN-END:variables
 }
