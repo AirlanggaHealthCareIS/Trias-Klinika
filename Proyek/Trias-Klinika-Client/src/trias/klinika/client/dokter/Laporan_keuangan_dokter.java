@@ -10,6 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import trias.klinika.api.entitas.LaporanKeuanganDokterEntitas;
 import trias.klinika.api.sevice.LaporanKeuanganDokterService;
 import trias.klinika.client.tabel.TabelLaporanKeuanganDokter;
@@ -78,6 +83,11 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabel_laporan);
 
         lihat_grafik.setText("Lihat Grafik");
+        lihat_grafik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lihat_grafikActionPerformed(evt);
+            }
+        });
 
         Tampikan.setText("Tampilkan");
         Tampikan.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +151,40 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
         }
         tabel_laporan.setModel(TLKD);
     }//GEN-LAST:event_TampikanActionPerformed
+
+    private void lihat_grafikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihat_grafikActionPerformed
+        // TODO add your handling code here:
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        String[] tgl_pemeriksaan = new String [TLKD.getRowCount()];
+        int[] jumlah_pemasukkan = new int [TLKD.getRowCount()];
+        int index = 0;
+        for (int i = 0; i < TLKD.getRowCount(); i++) {
+            if(i == 0){
+                tgl_pemeriksaan[index] = TLKD.get(i).getTGL_PEMERIKSAAN();
+                jumlah_pemasukkan[index] = TLKD.get(i).getJUMLAH_PEMASUKKAN();
+            }
+            else{
+                if(tgl_pemeriksaan[index] == TLKD.get(i).getTGL_PEMERIKSAAN()){
+                jumlah_pemasukkan [i] = jumlah_pemasukkan [i] + TLKD.get(i).getJUMLAH_PEMASUKKAN();
+            }
+                else {
+                    index++;
+                    tgl_pemeriksaan[index] = TLKD.get(i).getTGL_PEMERIKSAAN();
+                    jumlah_pemasukkan[index] = TLKD.get(i).getJUMLAH_PEMASUKKAN();
+                }    
+            }
+        }
+        for (int i = 0; i<tgl_pemeriksaan.length; i++){
+            dataSet.addValue(jumlah_pemasukkan[i], "Jumlah Pemasukkan", tgl_pemeriksaan[i]);
+        }
+        
+        
+        JFreeChart chartline = ChartFactory.createBarChart("Laporan Keuangan", "Tanggal", "Jumlah Pemasukkan", dataSet, PlotOrientation.VERTICAL, true, true, true);
+        ChartFrame frame = new ChartFrame("Pengguna OS Komputer di Indonesia", chartline);
+        frame.setVisible(true);
+        frame.setSize(600,400);
+        frame.setLocationRelativeTo(null);
+    }//GEN-LAST:event_lihat_grafikActionPerformed
 
     public String FormatTanggal(Date date){
     
