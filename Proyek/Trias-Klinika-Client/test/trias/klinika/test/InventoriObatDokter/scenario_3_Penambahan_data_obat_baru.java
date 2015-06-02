@@ -61,7 +61,7 @@ public class scenario_3_Penambahan_data_obat_baru {
         LoginEntitas LE = new LoginEntitas();
         UtamaDokter UD = new UtamaDokter(LE, LO);
         Inventori_Obat_Dokter interfacetambah = new Inventori_Obat_Dokter (service13, UD);
-        interfacetambah.settambahOBbaru();
+        interfacetambah.settambahOBbaru(1);
     }
     
     // TODO add test methods here.

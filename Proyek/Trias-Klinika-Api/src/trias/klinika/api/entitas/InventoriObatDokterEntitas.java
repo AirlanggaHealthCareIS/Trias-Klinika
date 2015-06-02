@@ -18,7 +18,7 @@ public class InventoriObatDokterEntitas implements Serializable {
     private String tglmasapakai;
     private String deskripsi;
     private String idobat;
-    private String iddetailobat;
+    private int iddetailobat;
     private String idspesialis;
     private String iddokter;
     private String ruanganobat;
@@ -88,11 +88,11 @@ public class InventoriObatDokterEntitas implements Serializable {
         this.idobat = idobat;
     }
     
-    public String getiddetailobat(){
+    public int getiddetailobat(){
         return iddetailobat;
     }
     
-    public void setiddetailobat(String iddetailobat){
+    public void setiddetailobat(int iddetailobat){
         this.iddetailobat = iddetailobat;
     }
     
