@@ -263,6 +263,7 @@ private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//G
         try {
             internalFrame4.setSelected(true);
            ir.ID_Pemeriksaan.setText(IDpemeriksaan.getText());
+           ir.setIDPasien();
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }

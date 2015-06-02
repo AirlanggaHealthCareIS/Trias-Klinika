@@ -47,9 +47,6 @@ public class input_resep extends javax.swing.JInternalFrame {
         
         initComponents();
         ResepEntity RE = new ResepEntity();
-        RE = SR.pasien(ID_Pemeriksaan.getText());
-//        IDPasien.setText(RE.getID_pasien());
-        JOptionPane.showMessageDialog(null, "blaaa "+RE,"Sukses",JOptionPane.OK_OPTION);
         auto_increment_NoResep ();
         NoResep.setText(airesep);
         table.setModel(TR);
@@ -403,6 +400,13 @@ public class input_resep extends javax.swing.JInternalFrame {
     }
     
 }
+    public void setIDPasien(){
+        try {
+            IDPasien.setText(SR.pasien(ID_Pemeriksaan.getText()));
+        } catch (RemoteException ex) {
+            Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public ResepEntity setResep(ResepEntity RE){
         RE.setID_obat(obat.getSelectedItem().toString().substring(0, 6));
         RE.setnama_obat(obat.getName());

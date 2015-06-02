@@ -67,7 +67,7 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
         }
     }
     
-     public ResepEntity pasien(String id) throws RemoteException {
+     public String pasien(String id) throws RemoteException {
         System.out.println("Client melakukan proses get-all");
 
         Statement statement = null;
@@ -83,11 +83,11 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
             ResepEntity ResepEntity = new ResepEntity();
             result.first();
                 
-                ResepEntity.setID_pasien(result.getString("ID_PASIEN"));
+                String idp = result.getString("ID_PASIEN");
                 
             result.close();
             
-            return ResepEntity;
+            return idp;
             
         } catch (SQLException exception) {
             exception.printStackTrace();
