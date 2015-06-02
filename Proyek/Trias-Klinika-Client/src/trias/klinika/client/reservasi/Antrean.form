@@ -47,8 +47,6 @@
                   <Group type="102" attributes="0">
                       <Component id="input" min="-2" pref="138" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="PilihIDPasien" min="-2" pref="119" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="PilihDokter" min="-2" pref="132" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="tomboltambah" min="-2" max="-2" attributes="0"/>
@@ -56,9 +54,11 @@
                       <Component id="kirim" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="reset" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cekat" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="174" max="-2" attributes="0"/>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="imin" min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -82,10 +82,10 @@
                       <Component id="tomboltambah" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="PilihDokter" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                          <Component id="PilihIDPasien" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="kirim" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="reset" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="input" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="cekat" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -171,20 +171,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JComboBox" name="PilihIDPasien">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value=" Pilih ID Pasien"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="popupMenuWillBecomeVisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="PilihIDPasienPopupMenuWillBecomeVisible"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PilihIDPasienActionPerformed"/>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="PilihIDPasienFocusGained"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
     </Component>
     <Component class="javax.swing.JTextField" name="imin">
@@ -210,7 +196,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="reset">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Reset ID Pasien"/>
+        <Property name="text" type="java.lang.String" value="Reset Status Pasien"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetActionPerformed"/>
@@ -219,13 +205,20 @@
     <Component class="javax.swing.JTextField" name="input">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="11" style="2"/>
+          <Font name="Tahoma" size="14" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="66" green="66" red="66" type="rgb"/>
+          <Color blue="cc" green="0" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Input ID Pasien"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="cekat">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="print dokter"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cekatActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

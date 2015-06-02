@@ -39,4 +39,3 @@ public class LaporanKeuanganDokterEntitas implements Serializable{
         return JUMLAH_PEMASUKKAN;
     }
 }
-  

@@ -19,12 +19,13 @@ public class InventoryObatApotekEntitas implements Serializable {
     private int harga_obat;
     private String tgl_masuk;
     private String masa_pakai;
-    private String id_detail_obat;
+    private int id_detail_obat;
     private String id_spesialis;
     private String ruang_obat;
     private String id_jenisobat;
     private String deskripsi;
     private String nama_spesialis;
+    
     
     public String getIdObat (){
         return id_obat;
@@ -74,10 +75,10 @@ public class InventoryObatApotekEntitas implements Serializable {
     public void setMasaPakai (String masa_pakai){
         this.masa_pakai = masa_pakai;
     }
-    public String getIdDetailObat (){
+    public int getIdDetailObat (){
         return id_detail_obat;
     }
-    public void setIdDetailObat (String id_detail_obat){
+    public void setIdDetailObat (int id_detail_obat){
         this.id_detail_obat = id_detail_obat;
     }
     public String getIdSpesialis (){

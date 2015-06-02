@@ -28,8 +28,11 @@ private serviceRekam sr;
 private tabelrekammedis rm = new tabelrekammedis();
 rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
 String airekam;
+String IDpasienkirim = "";
 
-
+public rekammedis(String IDPasien){
+    IDpasienkirim = IDPasien;
+}
 
     /** Creates new form rekammedis */
     public rekammedis(serviceRekam sr) throws RemoteException {
@@ -38,7 +41,8 @@ String airekam;
         initComponents();
         PasienEntity pe = new PasienEntity();
         pe = sr.getdata("P0002");
-        ID.setText("P0002");
+        ID.setText(IDpasienkirim);
+        System.out.println("melinda"+IDpasienkirim);
         nama.setText(pe.getNama());
         tanggalLahir.setText(pe.getTanggalLahir());
         alamat.setText(pe.getAlamat());
@@ -55,6 +59,10 @@ String airekam;
         
     }
 
+    public void ambilIDpasienkirim(String IDpasienz){
+        IDpasienkirim=IDpasienz;
+    }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -101,6 +109,7 @@ String airekam;
         jLabel16 = new javax.swing.JLabel();
         reset = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1147, 557));
@@ -116,21 +125,21 @@ String airekam;
         getContentPane().add(alamat);
         alamat.setBounds(110, 230, 180, 30);
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel6.setText("No Telepon       =");
         getContentPane().add(jLabel6);
         jLabel6.setBounds(10, 280, 90, 14);
         getContentPane().add(noTlp);
         noTlp.setBounds(110, 270, 180, 30);
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel7.setText("Gol. Darah         =");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(10, 320, 87, 14);
         getContentPane().add(gol);
         gol.setBounds(110, 310, 180, 30);
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel4.setText("Tanggal Lahir     =");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(10, 200, 87, 14);
@@ -140,22 +149,22 @@ String airekam;
         getContentPane().add(jTextField7);
         jTextField7.setBounds(10, 60, 134, 30);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel5.setText("Alamat               =");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(10, 240, 100, 14);
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel2.setText("ID                       =");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(10, 114, 89, 20);
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel3.setText("Nama                  =");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(10, 160, 89, 14);
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24));
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jLabel1.setText("DATA PASIEN");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(150, 10, 177, 40);
@@ -170,13 +179,13 @@ String airekam;
         getContentPane().add(nama);
         nama.setBounds(110, 150, 180, 30);
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 36));
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(204, 0, 51));
         jLabel8.setText("HISTORY REKAM MEDIS");
         getContentPane().add(jLabel8);
         jLabel8.setBounds(40, 370, 470, 42);
 
-        history.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        history.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         history.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -193,7 +202,7 @@ String airekam;
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(80, 440, 375, 91);
 
-        detail1.setFont(new java.awt.Font("Times New Roman", 0, 12));
+        detail1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         detail1.setText("DETAIL");
         detail1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,7 +275,7 @@ String airekam;
         getContentPane().add(jLabel13);
         jLabel13.setBounds(920, 60, 130, 14);
 
-        rekammedis.setFont(new java.awt.Font("Times New Roman", 0, 24));
+        rekammedis.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         rekammedis.setText("REKAM MEDIS PASIEN");
         getContentPane().add(rekammedis);
         rekammedis.setBounds(695, 11, 295, 41);
@@ -303,7 +312,16 @@ String airekam;
         jLabel17.setMinimumSize(new java.awt.Dimension(1147, 557));
         jLabel17.setPreferredSize(new java.awt.Dimension(1147, 557));
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(0, 0, 1147, 557);
+        jLabel17.setBounds(0, 150, 1147, 557);
+
+        jButton1.setText("next");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(280, 70, 55, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -380,6 +398,11 @@ private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
   
       
 }//GEN-LAST:event_resetActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 public void setHistory (){
 
         int row = history.getSelectedRow();
@@ -480,6 +503,7 @@ private boolean CheckNumber(String a){
     private javax.swing.JTextField gol;
     private javax.swing.JTable history;
     private javax.swing.JTextField irm;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

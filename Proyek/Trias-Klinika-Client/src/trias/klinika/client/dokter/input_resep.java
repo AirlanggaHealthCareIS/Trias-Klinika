@@ -23,12 +23,16 @@ import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.api.sevice.ServiceResep;
 import trias.klinika.client.apotek.InventoryObatApotek;
 import trias.klinika.client.tabel.TabelResep;
+import trias.klinika.client.Home.Login;
+import trias.klinika.client.dokter.UtamaDokter;
+import trias.klinika.api.pesan.pesan;
 /**
  *
  * @author User
  */
 public class input_resep extends javax.swing.JInternalFrame {
     private ServiceResep SR;
+    private UtamaDokter UD;
     private String[] isi;
     private TabelResep TR = new TabelResep();
     private Object ID_Apotek;
@@ -37,16 +41,16 @@ public class input_resep extends javax.swing.JInternalFrame {
     /**
      * Creates new form input_resep
      */
-    public input_resep(ServiceResep SR) throws RemoteException {
+    public input_resep(ServiceResep SR, UtamaDokter UD) throws RemoteException {
         this.SR = SR;
+        this.UD = UD;
         
         initComponents();
         NoResep.setText(airesep);
         table.setModel(TR);
         Dropdown();
-        
+       
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -345,7 +349,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             } catch (RemoteException ex) {
             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
+           UD.login.kirim(new pesan("resep",UD.LE.getusername(),"PE0004","Apoteker"));
         }
         else{
              this.setVisible(true);
@@ -354,7 +358,29 @@ public class input_resep extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_kirimapotekerActionPerformed
 
     private void kirimreservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimreservasiActionPerformed
-        JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);// TODO add your handling code here:
+        int opsi = JOptionPane.showConfirmDialog(null, "Apakah resep yang dimasukan sudah benar?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if (opsi == 0){
+            ResepEntity RE = new ResepEntity();
+            RincianResep RR = new RincianResep();
+            RE.setDataResep(NoResep.getText(), 1);
+            
+            try{
+                
+                SR.Save(RE);
+                
+                for(int i=0;i<TR.getRowCount();i++){
+                    RR.setDataRincian((i+1), TR.getValueAt(i, 1).toString(), NoResep.getText(), Integer.parseInt(TR.getValueAt(i, 3).toString()), TR.getValueAt(i, 5).toString());
+                    SR.save(RR);
+                }
+                JOptionPane.showMessageDialog(null, "Data Berhasil Terkirim ","Sukses",JOptionPane.OK_OPTION);
+            } catch (RemoteException ex) {
+            Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        else{
+             this.setVisible(true);
+             
+                     }
     }//GEN-LAST:event_kirimreservasiActionPerformed
 
     private void Dropdown() throws RemoteException{

@@ -29,23 +29,23 @@ public class QueryLaporanKeuanganReservasi extends UnicastRemoteObject implement
     
     
     @Override
-    public List<laporan_keuangan_reservasiEntity> getlaporan() throws RemoteException {
+    public List<laporan_keuangan_reservasiEntity> getlaporan(String date1, String date2, String id_dokter) throws RemoteException {
        System.out.println("Client melakukan proses get-all");
 
         Statement statement = null;
-        
+            System.out.println("ini date 1 "+date1);
 
             try {
                 statement =  Koneksidatabase.getConnection().createStatement();
-
-            ResultSet result = statement.executeQuery("SELECT d.ID_DOKTER, d.NAMA_DOKTER, p.BIAYA_DOKTER FROM dokter AS d, pembayaran AS p WHERE r.ID_RESEP = p.ID_RESEP");
-            
+                ResultSet result = statement.executeQuery("SELECT d.NAMA_DOKTER, PE.JUMLAH_PEMBAYARAN FROM pemeriksaan AS P, pembayaran AS PE, dokter AS d WHERE P.ID_PEMBAYARAN = PE.ID_PEMBAYARAN AND P.ID_DOKTER = d.ID_DOKTER AND P.TGL_PEMERIKSAAN >= '"+date1+"' AND P.TGL_PEMERIKSAAN <= '"+date2+"'");
+           // ("SELECT `NAMA_DOKTER`,`JUMLAH_PEMBAYARAN` FROM `pemeriksaan` AS `P`, `pembayaran` AS `PE` , `dokter` AS `d` where P.ID_PEMBAYARAN = PE.ID_PEMBAYARAN AND P.ID_DOKTER = d.ID_DOKTER AND P.TGL_PEMERIKSAAN >= '"+2015-03-09+"' AND p.TGL_PEMERIKSAAN <= '"+2015-03-17+"'");
+           // 
             List<laporan_keuangan_reservasiEntity> list = new ArrayList<laporan_keuangan_reservasiEntity>();
-while(result.next()){
+          
+            while(result.next()){
                 laporan_keuangan_reservasiEntity laporanKeuanganReservasi = new laporan_keuangan_reservasiEntity();
-                laporanKeuanganReservasi.setid_dokter(result.getString("ID_DOKTER"));
                 laporanKeuanganReservasi.setnama_dokter(result.getString("NAMA_DOKTER"));
-                laporanKeuanganReservasi.setjumlah(result.getInt("BIAYA_DOKTER"));
+                laporanKeuanganReservasi.setjumlah(result.getInt("JUMLAH_PEMBAYARAN"));
                 
                 list.add(laporanKeuanganReservasi);
             }
@@ -68,23 +68,40 @@ while(result.next()){
     }
 
     @Override
-    public laporan_keuangan_reservasiEntity getdata(String id) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    public List <laporan_keuangan_reservasiEntity> getdata(String date1) throws RemoteException {
+        System.out.println("Client melakukan proses get-all");
 
-    @Override
-    public List<laporan_keuangan_reservasiEntity> getdatarekam(String id) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        Statement statement = null;
+        
 
-    @Override
-    public rekammedisEntyty getdatadetail(String id) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+            try {
+                statement =  Koneksidatabase.getConnection().createStatement();
 
-    @Override
-    public void ok(rekammedisEntyty rekammedisEntyty) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+            ResultSet result = statement.executeQuery("SELECT d.NAMA_DOKTER, PE.JUMLAH_PEMBAYARAN FROM pemeriksaan AS P, pembayaran AS PE, dokter AS d WHERE P.ID_PEMBAYARAN = PE.ID_PEMBAYARAN AND P.ID_DOKTER = d.ID_DOKTER AND P.TGL_PEMERIKSAAN >= '"+date1+"'");
+            
+            List<laporan_keuangan_reservasiEntity> list = new ArrayList<laporan_keuangan_reservasiEntity>();
+            while(result.next()){
+               laporan_keuangan_reservasiEntity laporanKeuanganReservasi = new laporan_keuangan_reservasiEntity();
+                laporanKeuanganReservasi.setnama_dokter(result.getString("NAMA_DOKTER"));
+                laporanKeuanganReservasi.setjumlah(result.getInt("JUMLAH_PEMBAYARAN"));
+                
+                list.add(laporanKeuanganReservasi);
+            }
+
+            result.close();
+            
+            return list;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }}
+
 }
