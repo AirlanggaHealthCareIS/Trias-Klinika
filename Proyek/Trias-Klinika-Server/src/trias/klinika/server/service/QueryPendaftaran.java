@@ -216,7 +216,7 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             String b = Integer.toString((Integer.parseInt(aipasien.substring(1,5)))+1); //memisahkan angka D dengan 0001
                 //menambahkan angka belakang    
             for (int i = b.length(); i < 4; i++ ) {
-            b = "0" + b;
+                 b = "0" + b;
             } 
             aipasien = aipasien.substring(0, 1) + b;
             result.close();
@@ -234,6 +234,76 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
                     exception.printStackTrace();
                 }
             }
-               
-    }    
-    }}
+        }    
+    }
+ public List<EntitasPendaftaran> search_nama(String nama_pasien_kecil) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT * FROM PASIEN WHERE NAMA_PASIEN LIKE '%"+nama_pasien_kecil+"%'AND JENIS_PASIEN = 'Anak'");
+            
+            List<EntitasPendaftaran> list = new ArrayList<EntitasPendaftaran>();
+            
+             while(result.next()){
+                EntitasPendaftaran EP = new EntitasPendaftaran();
+                EP.setDataPasien(result.getString("ID_PASIEN"), result.getString("NAMA_PASIEN"), result.getString("TGL_lAHIR_PASIEN"), result.getString("NO_TELP_PASIEN"), result.getString("ALAMAT_PASIEN"), result.getString("GOL_DARAH"), result.getString("JENIS_PASIEN"), result.getString("NO_KTP_PASIEN"));
+                list.add(EP);
+            }
+            
+            result.close();
+            return list;
+            
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }    
+    }
+    public List<EntitasPendaftaran> getDataPasien() throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+           ("SELECT * from PASIEN where JENIS_PASIEN = 'Anak'");
+            
+            List<EntitasPendaftaran> list = new ArrayList<EntitasPendaftaran>();
+            
+            while(result.next()){
+                EntitasPendaftaran EP = new EntitasPendaftaran();
+                EP.setDataPasien(result.getString("ID_PASIEN"), result.getString("NAMA_PASIEN"), result.getString("TGL_lAHIR_PASIEN"), result.getString("NO_TELP_PASIEN"), result.getString("ALAMAT_PASIEN"), result.getString("GOL_DARAH"), result.getString("JENIS_PASIEN"), result.getString("NO_KTP_PASIEN"));
+                list.add(EP);
+            }
+            
+            result.close();
+            
+            return list;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }           
+        }
+    }   
+}

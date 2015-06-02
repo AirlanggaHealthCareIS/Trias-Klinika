@@ -7,20 +7,26 @@ package trias.klinika.client.tabel;
 
 import java.util.ArrayList;
 import java.util.List;
-import trias.klinika.api.entitas.LaporanKeuanganDokterEntitas;
+import trias.klinika.api.entitas.EntitasPendaftaran;
 import javax.swing.table.AbstractTableModel;
+import trias.klinika.api.entitas.LaporanKeuanganDokterEntitas;
+
 /**
  *
  * @author Satria
  */
-public class TabelLaporanKeuanganDokter extends AbstractTableModel{
-   List<LaporanKeuanganDokterEntitas> list = new ArrayList<LaporanKeuanganDokterEntitas>();
-   public TabelLaporanKeuanganDokter (){
+public class TabelPasienKecil extends AbstractTableModel{
+    List<EntitasPendaftaran> list = new ArrayList<EntitasPendaftaran>();
+   public TabelPasienKecil (){
    }
-   public LaporanKeuanganDokterEntitas get (int row){
+   public EntitasPendaftaran get (int row){
         return list.get(row);
    }
-   public void setData (List<LaporanKeuanganDokterEntitas>list){
+   public void insert (EntitasPendaftaran EP){
+        list.add(EP);
+        fireTableDataChanged();
+    }
+   public void setData (List<EntitasPendaftaran>list){
         this.list = list;
         fireTableDataChanged();
     }
@@ -28,13 +34,9 @@ public class TabelLaporanKeuanganDokter extends AbstractTableModel{
     public String getColumnName (int column){
         switch (column){
             case 0:
-                return "Nomor ID Pemeriksaan";
-            case 1:
-                return "Tanggal Pemeriksaan";
-            case 2:
                 return "Nama Pasien";
-            case 3:
-                return "Jumlah Pemasukkan";
+            case 1:
+                return "Alamat Pasien";
             default :
                 return null;
         }
@@ -45,24 +47,18 @@ public class TabelLaporanKeuanganDokter extends AbstractTableModel{
     }
     @Override
     public int getColumnCount(){
-        return 4;
+        return 2;
     }
     @Override
     public Object getValueAt (int rowIndex, int columnIndex){
-       switch (columnIndex){
+        switch (columnIndex){
             case 0:
-                return list.get(rowIndex).getID_PEMERIKSAAN();
-            case 1:
-                return list.get(rowIndex).getTGL_PEMERIKSAAN();
-            case 2:
                 return list.get(rowIndex).getNAMA_PASIEN();
-            case 3:
-                return list.get(rowIndex).getJUMLAH_PEMASUKKAN();
+            case 1:
+                return list.get(rowIndex).getALAMAT_PASIEN();
             default:
                 return null;
         
         }
-   
     }
 }
-

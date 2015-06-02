@@ -15,6 +15,7 @@ import trias.klinika.api.entitas.EntitasPendaftaran;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
 import trias.klinika.api.sevice.PendaftaranService;
+import trias.klinika.client.tabel.TabelPasienKecil;
 
 /**
  *
@@ -30,14 +31,17 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private PendaftaranService PS;
     private String[] isi;
     private Object golongan_darah;
+    private TabelPasienKecil TPK = new TabelPasienKecil();
     String aipasien;
     String aipemeriksaan;
     String cek;
     int na;
     private LoginEntitas LE;
+    private EntitasPendaftaran EP;
     public TriasKlinika_Pendaftaran(PendaftaranService PS, LoginEntitas LE)throws RemoteException {
         this.PS = PS;
         this.LE = LE;
+        this.TPK = TPK;
         auto_increment_pasien();
         auto_increment_pemeriksaan();
         initComponents();
@@ -45,8 +49,12 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         id_pasien.setText(aipasien);
         id_pemeriksaan.setText(aipemeriksaan);
         tgl_pemeriksaan.setText(setTanggal());
+        TPK.setData(this.PS.getDataPasien());
+        tabel_anak.setModel(TPK);
+        
         Dropdown();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,8 +94,10 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         no_ktp = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_anak = new javax.swing.JTable();
-        kategori = new javax.swing.JComboBox();
+        jenis_pasien = new javax.swing.JComboBox();
         jLabel13 = new javax.swing.JLabel();
+        search = new javax.swing.JToggleButton();
+        nama_pasien_kecil = new javax.swing.JTextField();
 
         setAutoscrolls(true);
         setMaximumSize(new java.awt.Dimension(1147, 557));
@@ -263,15 +273,32 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabel_anak);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 70, 452, 430);
+        jScrollPane1.setBounds(20, 120, 452, 380);
 
-        kategori.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Kategori" }));
-        getContentPane().add(kategori);
-        kategori.setBounds(630, 20, 120, 30);
+        jenis_pasien.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Kategori" }));
+        getContentPane().add(jenis_pasien);
+        jenis_pasien.setBounds(630, 20, 120, 30);
 
         jLabel13.setText("Kategori");
         getContentPane().add(jLabel13);
         jLabel13.setBounds(520, 20, 70, 30);
+
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        getContentPane().add(search);
+        search.setBounds(240, 80, 90, 30);
+
+        nama_pasien_kecil.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nama_pasien_kecilKeyPressed(evt);
+            }
+        });
+        getContentPane().add(nama_pasien_kecil);
+        nama_pasien_kecil.setBounds(110, 80, 90, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -296,7 +323,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             Date date = new Date(tgl_lahir_pasien.getDate().getTime());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String tgl_lahir_pasien = sdf.format(date);
-            EP.setDataPasien(id_pasien.getText(), nama_pasien.getText(), tgl_lahir_pasien, no_telp_pasien.getText(), alamat_pasien.getText(), gol_darah.getSelectedItem().toString());
+            EP.setDataPasien(id_pasien.getText(), nama_pasien.getText(), tgl_lahir_pasien, no_telp_pasien.getText(), alamat_pasien.getText(), gol_darah.getSelectedItem().toString(), jenis_pasien.getSelectedItem().toString(), no_ktp.getText());
             
             
             
@@ -360,6 +387,33 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private void no_ktpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_no_ktpActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_no_ktpActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void nama_pasien_kecilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nama_pasien_kecilKeyPressed
+        // TODO add your handling code here:
+       
+        if(nama_pasien_kecil.getText()== ""){
+           try {
+               TPK.setData(PS.getDataPasien());
+           } catch (RemoteException ex) {
+               Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           tabel_anak.setModel(TPK);
+       } 
+       else {
+           try {
+                TPK.setData(PS.search_nama(nama_pasien_kecil.getText()));
+                tabel_anak.setModel(TPK);
+            } catch (RemoteException ex) {
+                Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       } 
+             
+    }//GEN-LAST:event_nama_pasien_kecilKeyPressed
     private void Dropdown() throws RemoteException{
     isi = PS.pilih_dokter(isi);
     
@@ -377,6 +431,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private void nomor_antrian(int na, String tgl, String id_dokter) throws RemoteException{
        na = PS.nomor_antrian(na, tgl, id_dokter);
     }
+    
     public String setTanggal () {
         Date skrg = new java.util.Date();
         java.text.SimpleDateFormat kal = new
@@ -426,12 +481,14 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox kategori;
+    private javax.swing.JComboBox jenis_pasien;
     private javax.swing.JTextField nama_pasien;
+    private javax.swing.JTextField nama_pasien_kecil;
     private javax.swing.JTextField no_antrian;
     private javax.swing.JTextField no_ktp;
     private javax.swing.JTextField no_telp_pasien;
     private javax.swing.JComboBox pilih_dokter;
+    private javax.swing.JToggleButton search;
     private javax.swing.JTable tabel_anak;
     private com.toedter.calendar.JDateChooser tgl_lahir_pasien;
     private javax.swing.JTextField tgl_pemeriksaan;

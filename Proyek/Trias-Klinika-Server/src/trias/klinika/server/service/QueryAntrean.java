@@ -52,6 +52,12 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
                         else if(a.getSTATUS_PASIEN()==2){
                             a.setSTATUS_PASIEN_strink("Belum Dilayani");
                         }
+                        else if(a.getSTATUS_PASIEN()==3){
+                            a.setSTATUS_PASIEN_strink("Sedang Diperiksa");
+                        }
+                        else if(a.getSTATUS_PASIEN()==4){
+                            a.setSTATUS_PASIEN_strink("Sudah Diperiksa");
+                        }
                     
                     list.add(a);
                 }
@@ -437,6 +443,30 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
                     "UPDATE pemeriksaan SET status_pasien=2 WHERE id_pemeriksaan='"+id_pemeriksaan+"'");
+            statement.executeUpdate();  
+        }
+        catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        finally{
+            if(statement != null){
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+    
+    @Override
+    public void updateStatus2(PemeriksaanEntitas suparmin, String id_pemeriksaan) throws RemoteException {
+        System.out.println("proses update SUPPLIER");
+        
+        PreparedStatement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement(
+                    "UPDATE pemeriksaan SET status_pasien=3 WHERE id_pemeriksaan='"+id_pemeriksaan+"'");
             statement.executeUpdate();  
         }
         catch (SQLException exception) {

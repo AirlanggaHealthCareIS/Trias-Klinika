@@ -135,17 +135,17 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
         server.rebind("service3", QueryAntrean);
-        server.rebind("service7", queryResep);
         server.rebind("service4", queryPembayaran);
-        server.rebind("service12", querylistpembayaran);
         server.rebind("service5", querylistpetugas);
         server.rebind("service6", QueryRekamMedis);
-        server.rebind("service10", queryobatapotek);
-        server.rebind("service13", queryInventoriObatDokter);
+        server.rebind("service7", queryResep);
         server.rebind("service9_a_1", queryLaporanKeuanganReservasi);
         server.rebind("service9_c_1", querylaporankeuanganapotek);
         server.rebind("service9_b_2", querylaporankeuangandokter);
+        server.rebind("service10", queryobatapotek);
         server.rebind("service11_1", queryNotifikasiObatExpired);
+        server.rebind("service12", querylistpembayaran);
+        server.rebind("service13", queryInventoriObatDokter);
         System.out.println("Server Berjalan");
         
         clients = new ServerThread [50];
@@ -213,8 +213,14 @@ public class Server extends javax.swing.JFrame implements Runnable {
                 if(msg.isi.substring(0, 1).equals("D")){
                     UpdateList(msg);
                 }
-                hapus(ID);   
+                hapus(findClient(ID));   
                 break;
+            case "KirimIDPemeriksaanImin":
+                findUserThread(msg.penerima).send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
+                clients[findClient(ID)].send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
+                break;
+            case "Pembayaran":
+                UpdateList(msg);
         }
     }
     

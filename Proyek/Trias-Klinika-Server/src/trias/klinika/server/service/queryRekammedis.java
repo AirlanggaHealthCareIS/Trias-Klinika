@@ -174,10 +174,7 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
             exception.printStackTrace();
         } finally {
             if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException exception) {
-                }
+                statement.close();
             }
         } 
     }

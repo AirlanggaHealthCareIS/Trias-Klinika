@@ -22,5 +22,14 @@ public interface ServiceResep extends Remote{
     void save(RincianResep RR) throws RemoteException;
     RincianResep getdetail  (RincianResep RR) throws RemoteException;
     ResepEntity getdetail (ResepEntity RE) throws RemoteException;
+    ResepEntity ID_Pasien (ResepEntity RE) throws RemoteException;
     String auto_increment_NoResep(String  airesep) throws RemoteException;
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws RemoteException
+     */
+    ResepEntity pasien(String id) throws RemoteException;
 }

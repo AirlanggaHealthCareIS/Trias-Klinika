@@ -20,19 +20,14 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.api.sevice.LaporanKeuanganDokterService;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
-import trias.klinika.api.sevice.NotifikasiObatExpiredService;
 import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.client.tabel.tabelrekammedis;
 import trias.klinika.client.dokter.rekammedis;
@@ -56,7 +51,6 @@ public class UtamaDokter extends javax.swing.JFrame {
     final serviceRekam service6;
     final ServiceResep service7;
     final LaporanKeuanganDokterService service9_b_2;
-    final NotifikasiObatExpiredService service11_1;
     Inventori_Obat_Dokter iod ;
     form_pembayaran fp;
     rekammedis sr;
@@ -88,7 +82,6 @@ public class UtamaDokter extends javax.swing.JFrame {
         service6 = (serviceRekam)registry.lookup("service6");
         service7 = (ServiceResep)registry.lookup("service7");
         service9_b_2 = (LaporanKeuanganDokterService)registry.lookup("service9_b_2");
-        service11_1 = (NotifikasiObatExpiredService)registry.lookup("service11_1");
         
         iod = new Inventori_Obat_Dokter(service13, this);
         fp = new form_pembayaran(service4, this);
@@ -130,6 +123,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
+        pm = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -212,6 +206,10 @@ public class UtamaDokter extends javax.swing.JFrame {
         getContentPane().add(nama);
         nama.setBounds(198, 160, 180, 28);
 
+        pm.setText("PE0004");
+        getContentPane().add(pm);
+        pm.setBounds(640, 170, 80, 20);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1366, 750);
@@ -247,6 +245,7 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         try {
             internalFrame4.setSelected(true);
+           ir.ID_Pemeriksaan.setText(pm.getText());
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -343,32 +342,6 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
         }
     }//GEN-LAST:event_LaporanKeuanganDokterActionPerformed
 
-    public void NotifObatExpired() {
-    List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
-    String [] Id_Obat = new String[0];
-    String pesan = "List Obat Yang Terindikasi Kadaluarsa : \n";
-    try {
-        Id_Obat = service11_1.ObatDokterExpired(Id_Obat, setTanggal());
-        if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
-            for (int i=0;i<Id_Obat.length;i++) {
-                list.add(service11_1.getobat(Id_Obat[i]));
-                pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";
-            }
-            pesan = pesan + "Silahkan Melakukan Tindakan Atas Hal Ini";
-            JOptionPane.showMessageDialog(this, pesan, "Notifikasi Obat Expired",2);
-        }
-    } catch (RemoteException ex) {
-        Logger.getLogger(UtamaDokter.class.getName()).log(Level.SEVERE, null, ex);
-    }
-}
-
-public String setTanggal () {
-        Date skrg = new java.util.Date();
-        java.text.SimpleDateFormat kal = new
-        java.text.SimpleDateFormat("yyyy-MM-dd");
-        return kal.format(skrg);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton LaporanKeuanganDokter;
     private javax.swing.JDesktopPane jDesktopPane2;
@@ -381,5 +354,6 @@ public String setTanggal () {
     private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
+    private javax.swing.JTextField pm;
     // End of variables declaration//GEN-END:variables
 }
