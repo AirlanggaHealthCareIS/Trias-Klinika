@@ -96,8 +96,8 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         tabel_anak = new javax.swing.JTable();
         jenis_pasien = new javax.swing.JComboBox();
         jLabel13 = new javax.swing.JLabel();
-        search = new javax.swing.JToggleButton();
         nama_pasien_kecil = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
 
         setAutoscrolls(true);
         setMaximumSize(new java.awt.Dimension(1147, 557));
@@ -273,7 +273,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabel_anak);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(20, 120, 452, 380);
+        jScrollPane1.setBounds(20, 80, 452, 420);
 
         jenis_pasien.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Kategori" }));
         getContentPane().add(jenis_pasien);
@@ -283,22 +283,17 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel13);
         jLabel13.setBounds(520, 20, 70, 30);
 
-        search.setText("Search");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
-            }
-        });
-        getContentPane().add(search);
-        search.setBounds(240, 80, 90, 30);
-
         nama_pasien_kecil.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nama_pasien_kecilKeyPressed(evt);
             }
         });
         getContentPane().add(nama_pasien_kecil);
-        nama_pasien_kecil.setBounds(110, 80, 90, 30);
+        nama_pasien_kecil.setBounds(340, 20, 90, 30);
+
+        jLabel14.setText("Mancari Pasien");
+        getContentPane().add(jLabel14);
+        jLabel14.setBounds(250, 20, 90, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -388,11 +383,6 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_no_ktpActionPerformed
 
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_searchActionPerformed
-
     private void nama_pasien_kecilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nama_pasien_kecilKeyPressed
         // TODO add your handling code here:
        
@@ -472,6 +462,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -488,7 +479,6 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private javax.swing.JTextField no_ktp;
     private javax.swing.JTextField no_telp_pasien;
     private javax.swing.JComboBox pilih_dokter;
-    private javax.swing.JToggleButton search;
     private javax.swing.JTable tabel_anak;
     private com.toedter.calendar.JDateChooser tgl_lahir_pasien;
     private javax.swing.JTextField tgl_pemeriksaan;
