@@ -223,6 +223,84 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
         }
     }
    
+   public String auto_increment_obat(String  aiobat) throws RemoteException {
+        Statement statement = null;
+        
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT * FROM obat");
+            
+            
+            result.last();
+            aiobat = result.getString("id_obat");
+            String b = Integer.toString((Integer.parseInt(aiobat.substring(1,5)))+1);
+            //menambahkan angka belakang    
+            for (int i = b.length(); i < 4; i++ ) {
+                b = "0" + b;
+            } 
+            aiobat = aiobat.substring(0, 1) + b;
+            result.close();
+            
+            return aiobat;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return aiobat;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    }
+    }
+   
+   @Override
+    public int auto_increment_iddetail(String aiObat) throws RemoteException {
+        Statement statement = null;
+        int a = 0;
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT ID_DETAIL FROM DETAIL_OBAT WHERE ID_OBAT = '"+aiObat+"'");
+            
+            if(result.last()== false){
+                a = 1;
+            }
+            else {
+                result.last();
+             a = result.getInt("ID_DETAIL");
+            a++;
+            
+            result.close();
+            
+            }
+            return a;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return 0;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+               
+    } //To change bo //To change body of generated methods, choose Tools | Templates.
+    }
+   
+   
    @Override
     public void insertObatBaru(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException {
         System.out.println("Dokter melakukan proses insert");

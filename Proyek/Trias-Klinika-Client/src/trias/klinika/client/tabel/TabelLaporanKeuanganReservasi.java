@@ -39,11 +39,9 @@ public class TabelLaporanKeuanganReservasi extends AbstractTableModel{
     public String getColumnName(int column) {
         switch (column){
             case 0:
-                return "TGL_PEMERIKSAAN";
+                return "NAMA_DOKTER";
             case 1:
-                return "ID_DOKTER";
-            case 2:
-                return "TOTAL_HARGA";
+                return "JUMLAH_PEMBAYARAN";
             default :
                 return null;
         }
@@ -53,10 +51,8 @@ public class TabelLaporanKeuanganReservasi extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
        switch (columnIndex){
             case 0:
-                return list.get(rowIndex).gettanggaal();
+                return list.get(rowIndex).getnama_dokter();
             case 1:
-                return list.get(rowIndex).getid_dokter();
-            case 2:
                 return list.get(rowIndex).getjumlah();
             default :
                 return null;
@@ -64,7 +60,7 @@ public class TabelLaporanKeuanganReservasi extends AbstractTableModel{
     }
     @Override
     public int getColumnCount() {
-        return 3;
+        return 2;
     }
     
 }

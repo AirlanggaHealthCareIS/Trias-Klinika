@@ -22,26 +22,29 @@ import trias.klinika.api.entitas.InventoriObatDokterEntitas;
  */
 public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     int a;
+    String aiobat;
+    private int aiDetail;
     
     private InventoriObatDokterService IODS;
     private String[] isi;
     private tabelinventoriobtdokter tiod = new tabelinventoriobtdokter();
     private InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-
     /**
      * Creates new form Inventori_Obat_Dokter
      */
     
     public Inventori_Obat_Dokter(InventoriObatDokterService IODS, UtamaDokter UD) throws RemoteException {
         this.IODS = IODS;
-        
         try {
             tiod.setData(this.IODS.getobat(this.IODS.Spesialis(UD.LE.getusername())));
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
+        
         initComponents();
         textruang.setText(this.IODS.Spesialis(UD.LE.getusername()));
+        
+        IDO.setText(aiobat);
         
         Dropdown();
         tabel.setModel(tiod);
@@ -60,6 +63,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                     texttglmasuk.setDate(java.sql.Date.valueOf(IODE.gettglmasuk()));
                     texttglmasapakai.setDate(java.sql.Date.valueOf(IODE.gettglmasapakai()));
                     deskripsi.setText(IODE.getdeskripsi());
+                    textmin.setText(Integer.toString(IODE.getkuantitiobat()));
                     }
             }
         });
@@ -82,15 +86,15 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        dropmin = new javax.swing.JComboBox();
         textmin = new javax.swing.JTextField();
         okmin = new javax.swing.JButton();
         OK2 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         dropadd = new javax.swing.JComboBox();
-        droplama = new javax.swing.JComboBox();
+        dropobat = new javax.swing.JComboBox();
         judul = new javax.swing.JLabel();
         NO = new javax.swing.JLabel();
         textNO = new javax.swing.JTextField();
@@ -146,21 +150,13 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabel);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 120, 1110, 100);
+        jScrollPane1.setBounds(10, 110, 1110, 100);
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 0));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/-.png"))); // NOI18N
         jLabel4.setText("Pengurangan Data Obat");
-
-        dropmin.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        dropmin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat..." }));
-        dropmin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dropminActionPerformed(evt);
-            }
-        });
 
         textmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,6 +180,8 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel7.setText("Kuantitas:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -193,12 +191,12 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(dropmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(textmin, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(OK2)))
-                .addGap(338, 338, 338)
+                .addGap(377, 377, 377)
                 .addComponent(okmin)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -210,9 +208,9 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okmin)
-                    .addComponent(dropmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(OK2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(OK2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(0, 174, Short.MAX_VALUE))
         );
 
@@ -250,16 +248,16 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             }
         });
 
-        droplama.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        droplama.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat..." }));
-        droplama.addItemListener(new java.awt.event.ItemListener() {
+        dropobat.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        dropobat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Obat..." }));
+        dropobat.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                droplamaItemStateChanged(evt);
+                dropobatItemStateChanged(evt);
             }
         });
-        droplama.addActionListener(new java.awt.event.ActionListener() {
+        dropobat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                droplamaActionPerformed(evt);
+                dropobatActionPerformed(evt);
             }
         });
 
@@ -322,7 +320,6 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         TM1.setText("Tgl Masuk");
 
         IDO.setEditable(false);
-        IDO.setText("O0070");
         IDO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IDOActionPerformed(evt);
@@ -356,7 +353,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(dropadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(droplama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dropobat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(textruang, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -403,22 +400,19 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dropadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(droplama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dropobat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(IDO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(judul)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(NO)
-                            .addComponent(textNO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TM1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(texttglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(texttglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(NO)
+                        .addComponent(textNO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TM1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -456,7 +450,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 258, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -470,12 +464,6 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void dropminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropminActionPerformed
-        // TODO add your handling code here:
-        dropmin.getSelectedItem().toString();
-        
-    }//GEN-LAST:event_dropminActionPerformed
 
     private void textminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textminActionPerformed
         // TODO add your handling code here:
@@ -510,7 +498,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             reset();
             a = 0;
             judul.setEnabled(true);
-            droplama.setEnabled(true);
+            dropobat.setEnabled(true);
             KO.setEnabled(true);
             textKO.setEnabled(true);
             HO.setEnabled(true);
@@ -520,6 +508,18 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             OK.setEnabled(true);
             deskripsi.setEnabled(true);
             textdeskripsi.setEnabled(true);
+            textHO.setText(title);
+            dropobat.setSelectedItem(dropobat.getItemAt(0));
+            dropJO.setSelectedItem(dropJO.getItemAt(0));
+            texttglmasuk.setDate(null);
+            texttglmasapakai.setDate(null);
+            aiobat = tiod.get(tabel.getSelectedRow()).getidobat();
+            System.out.println(aiobat);
+            try {
+                IODE = settambahOBbaru(aiobat,auto_increment_detailObat());
+            } catch (RemoteException ex) {
+                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else if(dropadd.getSelectedItem().toString()=="Obat Baru"){
             reset();
@@ -538,20 +538,29 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             deskripsi.setEnabled(true);
             textdeskripsi.setEnabled(true);
             OK.setEnabled(true);
+            texttglmasuk.setDate(null);
+            texttglmasapakai.setDate(null);
+            dropobat.setSelectedItem(dropobat.getItemAt(0));
+            dropJO.setSelectedItem(dropJO.getItemAt(0));
+            try {
+                IDO.setText(auto_increment_obat ());
+            } catch (RemoteException ex) {
+                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else if(dropadd.getSelectedItem().toString()=="Pilih"){
             reset();
         }
     }//GEN-LAST:event_dropaddActionPerformed
 
-    private void droplamaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_droplamaItemStateChanged
+    private void dropobatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_dropobatItemStateChanged
         try {
             InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-            IODE.setidobat(droplama.getSelectedItem().toString().substring(0, 5));
+            IODE.setidobat(dropobat.getSelectedItem().toString().substring(0, 5));
             IODE = IODS.dataobat(IODE);
             textNO.setText(IODE.getnamaobat());
             int index = 0;
-            System.out.println("janvok = "+dropJO.getItemCount());
+            System.out.println("bisa = "+dropJO.getItemCount());
             for(int i=0;i<dropJO.getItemCount();i++){
                 System.out.println(dropJO.getItemAt(i).toString().substring(0, 6));
                 if (dropJO.getItemAt(i).toString().substring(0, 6).equals(IODE.getidjenisobat())){
@@ -565,11 +574,11 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         }
         
 
-    }//GEN-LAST:event_droplamaItemStateChanged
+    }//GEN-LAST:event_dropobatItemStateChanged
 
-    private void droplamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_droplamaActionPerformed
+    private void dropobatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropobatActionPerformed
         
-    }//GEN-LAST:event_droplamaActionPerformed
+    }//GEN-LAST:event_dropobatActionPerformed
 
     private void textNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNOActionPerformed
         // TODO add your handling code here:
@@ -610,7 +619,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_dropJOActionPerformed
 
     public void reset(){
-        droplama.setEnabled(false);
+        dropobat.setEnabled(false);
         judul.setEnabled(false);
         NO.setEnabled(false);
         textNO.setEnabled(false);
@@ -622,20 +631,20 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         textKO.setText("");
         HO.setEnabled(false);
         HO.setText("");
+        textHO.setText("");
         texttglmasuk.setEnabled(false);
-        MP.setEnabled(false);
         texttglmasapakai.setEnabled(false);
         deskripsi.setEnabled(false);
         textdeskripsi.setEnabled(false);
         textdeskripsi.setText("");
         OK.setEnabled(false);
     }
+    
     private void Dropdown() throws RemoteException{
         isi = IODS.Dropdownobat(isi);
     
         for (int i=0;i<isi.length;i++){
-            dropmin.addItem(isi[i]);
-            droplama.addItem(isi[i]);
+            dropobat.addItem(isi[i]);
         }
     }
     
@@ -668,14 +677,19 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             IODE.settglmasapakai(tgl1);
             IODE.setdeskripsi(textdeskripsi.getText());
             IODE.setiddetailobat("1");
-            IODE.setidspesialis("S0002");
+            IODE.setidspesialis(textruang.getText());
             IODE.setruanganobat("Dokter");
     }
     
     public void setpengurangan(){
         InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-        
         IODE.setnamaobat(textmin.getText());
+    }
+    private String auto_increment_obat () throws RemoteException { 
+       return IODS.auto_increment_obat(aiobat);
+    }
+    private int auto_increment_detailObat () throws RemoteException {
+        return IODS.auto_increment_iddetail(aiobat);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -691,14 +705,14 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     private javax.swing.JLabel deskripsi;
     private javax.swing.JComboBox dropJO;
     private javax.swing.JComboBox dropadd;
-    private javax.swing.JComboBox droplama;
-    private javax.swing.JComboBox dropmin;
+    private javax.swing.JComboBox dropobat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
