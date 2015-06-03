@@ -19,6 +19,8 @@ import trias.klinika.api.entitas.laporan_keuangan_reservasiEntity;
 import trias.klinika.api.sevice.laporankeuanganReservasiService;
 import trias.klinika.client.tabel.TabelLaporanKeuanganReservasi;
 import trias.klinika.client.tabel.TabelLaporanReservasi;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -201,28 +203,75 @@ private void pilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
 
 private void tampilkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tampilkanActionPerformed
 // TODO add your handling code here:
-     pilihTanggal();
+     if (pilih.getSelectedItem().toString()== "HARI INI"){
+        hariIni();
+     }
+     else {
+         pilihTanggal(); 
+     }
 }//GEN-LAST:event_tampilkanActionPerformed
-     public void pilihTanggal(){
-     try {
-            // TODO add your handling code here:
-         System.out.println(date1.getDate().toString());
-            TLKA.setData(this.LKR.getlaporan(FormatTanggal(date1.getDate()), FormatTanggal(date2.getDate()), UR.LE.getusername()));
-        } catch (RemoteException ex) {
-            Logger.getLogger(laporanKeuanganReservasi.class.getName()).log(Level.SEVERE, null, ex);
+public void pilihTanggal(){
+      List<laporan_keuangan_reservasiEntity> list = new ArrayList<laporan_keuangan_reservasiEntity>();
+            try {
+                list = this.LKR.getlaporan(FormatTanggal(date1.getDate()), FormatTanggal(date2.getDate()), UR.LE.getusername());
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
+    List<laporan_keuangan_reservasiEntity> list1 = new ArrayList<laporan_keuangan_reservasiEntity>();
+    int index = 0;
+    for (int i=0;i<list.size();i++){
+        if (i==0) {
+            list1.add(index, list.get(i));
         }
+        else {
+            if (list.get(i).getnama_dokter().equals(list1.get(index).getnama_dokter())) {
+                list1.get(index).setjumlah(list.get(i).getjumlah()+list1.get(index).getjumlah());
+            }
+            else {
+                index++;
+                list1.add(index, list.get(i));
+            }
+        }
+    }
+    TLKA.setData(list1);
         tabel.setModel(TLKA);
   }
   public void hariIni (){
       Date date = new Date (); 
-       date1.setDate(date);
-      try {
-            TLKA.setData(this.LKR.getdata(FormatTanggal(date1.getDate())));
-        } catch (RemoteException ex) {
-            Logger.getLogger(laporanKeuanganReservasi.class.getName()).log(Level.SEVERE, null, ex);
+      date1.setDate(date);
+      List<laporan_keuangan_reservasiEntity> list = new ArrayList<laporan_keuangan_reservasiEntity>();
+            try {
+                list = this.LKR.getdata(FormatTanggal(date1.getDate()));
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
+    List<laporan_keuangan_reservasiEntity> list1 = new ArrayList<laporan_keuangan_reservasiEntity>();
+    int index = 0;
+    for (int i=0;i<list.size();i++){
+        if (i==0) {
+            list1.add(index, list.get(i));
         }
-       
+        else {
+            if (list.get(i).getnama_dokter().equals(list1.get(index).getnama_dokter())) {
+                list1.get(index).setjumlah(list.get(i).getjumlah()+list1.get(index).getjumlah());
+            }
+            else {
+                index++;
+                list1.add(index, list.get(i));
+            }
+        }
+    }
+    TLKA.setData(list1);
         tabel.setModel(TLKA);
+//      Date date = new Date (); 
+//       date1.setDate(date);
+//      try {
+//            TLKA.setData(this.LKR.getdata(FormatTanggal(date1.getDate())));
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(laporanKeuanganReservasi.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//       
+//        tabel.setModel(TLKA);
   }
     public void reset(){
             date1.setEnabled(false);
@@ -234,7 +283,8 @@ private void tampilkanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             System.out.println(sdf.format(date));
             return sdf.format(date);
   
-    }       
+    }
+  
             
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cetak;
