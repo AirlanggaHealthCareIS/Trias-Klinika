@@ -92,6 +92,10 @@ public class UtamaDokter extends javax.swing.JFrame {
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
+        IDpemeriksaan.setVisible(false);
+        rekamedistombol.setEnabled(false);
+        byr.setEnabled(false);
+        rsp.setEnabled(false);
         
         ImageIcon ico = new ImageIcon("src/image/imin.png");
         setIconImage(ico.getImage());
@@ -101,6 +105,13 @@ public class UtamaDokter extends javax.swing.JFrame {
         setLocation(
         (screenSize.width - frameSize.width) / 2,
         (screenSize.height - frameSize.height) / 2);
+        
+        if(sr.ID.getText()!=""){
+            rekamedistombol.setEnabled(true);
+            byr.setEnabled(true);
+            rsp.setEnabled(true);
+        
+        }
     }
 
     /**
@@ -116,13 +127,14 @@ public class UtamaDokter extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
+        byr = new javax.swing.JToggleButton();
+        rekamedistombol = new javax.swing.JToggleButton();
+        rsp = new javax.swing.JToggleButton();
         LaporanKeuanganDokter = new javax.swing.JToggleButton();
         logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
+        IDpemeriksaan = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -147,32 +159,32 @@ public class UtamaDokter extends javax.swing.JFrame {
         jPanel1.add(jToggleButton1);
         jToggleButton1.setBounds(10, 0, 139, 46);
 
-        jToggleButton2.setText("Pembayaran");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        byr.setText("Pembayaran");
+        byr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
+                byrActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton2);
-        jToggleButton2.setBounds(10, 50, 139, 41);
+        jPanel1.add(byr);
+        byr.setBounds(10, 50, 139, 41);
 
-        jToggleButton3.setText("Rekam Medis");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+        rekamedistombol.setText("Rekam Medis");
+        rekamedistombol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
+                rekamedistombolActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton3);
-        jToggleButton3.setBounds(10, 100, 139, 41);
+        jPanel1.add(rekamedistombol);
+        rekamedistombol.setBounds(10, 100, 139, 41);
 
-        jToggleButton4.setText("Resep");
-        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+        rsp.setText("Resep");
+        rsp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton4ActionPerformed(evt);
+                rspActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton4);
-        jToggleButton4.setBounds(10, 150, 139, 41);
+        jPanel1.add(rsp);
+        rsp.setBounds(10, 150, 139, 41);
 
         LaporanKeuanganDokter.setText("Laporan");
         LaporanKeuanganDokter.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +217,12 @@ public class UtamaDokter extends javax.swing.JFrame {
         getContentPane().add(nama);
         nama.setBounds(198, 160, 180, 28);
 
+        IDpemeriksaan.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        IDpemeriksaan.setForeground(new java.awt.Color(255, 255, 51));
+        IDpemeriksaan.setText("jLabel3");
+        getContentPane().add(IDpemeriksaan);
+        IDpemeriksaan.setBounds(600, 160, 180, 30);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1366, 750);
@@ -220,30 +238,31 @@ public class UtamaDokter extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+    private void byrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byrActionPerformed
         try {
             internalFrame2.setSelected(true);
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
         
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+    }//GEN-LAST:event_byrActionPerformed
 
-private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekamedistombolActionPerformed
     try {
         internalFrame3.setSelected(true);
+        sr.ID.setText(IDpemeriksaan.getText());
     } catch(Exception ex) {
         JOptionPane.showMessageDialog(null, ex);
     }
-}//GEN-LAST:event_jToggleButton3ActionPerformed
+}//GEN-LAST:event_rekamedistombolActionPerformed
 
-    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+    private void rspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rspActionPerformed
         try {
             internalFrame4.setSelected(true);
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-    }//GEN-LAST:event_jToggleButton4ActionPerformed
+    }//GEN-LAST:event_rspActionPerformed
 
     public void internal_frame() {
         internalFrame1.add(iod.getContentPane());
@@ -337,16 +356,23 @@ private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GE
     }//GEN-LAST:event_LaporanKeuanganDokterActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IDpemeriksaan;
     private javax.swing.JToggleButton LaporanKeuanganDokter;
+    private javax.swing.JToggleButton byr;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
+    private javax.swing.JToggleButton rekamedistombol;
+    private javax.swing.JToggleButton rsp;
     // End of variables declaration//GEN-END:variables
+public void kirimanAntreanImin (String Id, String Nama) {
+        JOptionPane.showMessageDialog(null, "Pasien baru siap diperiksa");
+
+            IDpemeriksaan.setText(Id);
+
+    }
 }

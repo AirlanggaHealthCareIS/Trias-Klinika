@@ -46,6 +46,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     final  ListPetugasService service5;   
     TriasKlinika_Pendaftaran daft;
     Antrean Ant;
+    intro introw;
     TriasKlinika_ListPembayaran LP;
     
     private ListPembayaranService LPS;
@@ -53,6 +54,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     private PendaftaranService PS;
     private String[] isi;
     LoginEntitas LE;
+    private JInternalFrame internalFrame0 = new JInternalFrame("Frame Itro");
     private JInternalFrame internalFrame1 = new JInternalFrame("Frame Antrean");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pendaftaran");
     private JInternalFrame internalFrame3 = new JInternalFrame("Frame List Pembayaran");
@@ -79,15 +81,16 @@ public class utamaReservasi extends javax.swing.JFrame {
         service3 = (AntreanServis)registry.lookup("service3");
         service5 = (ListPetugasService)registry.lookup("service5");    
         daft = new TriasKlinika_Pendaftaran(service2, LE);
-        Ant = new Antrean(service5,service3);
+        Ant = new Antrean(service5,service3,this);
         LP = new TriasKlinika_ListPembayaran(service12);
+        introw = new intro();
         internal_frame();
         nama.setText(LE.getnamauser());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
-        
         ImageIcon ico = new ImageIcon("src/image/imin.png");
         setIconImage(ico.getImage());
+        
  
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //        Dimension frameSize = getSize();
@@ -264,6 +267,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             internalFrame1.setSelected(true);
+            Ant.jTextField1.setText(LE.getusername());
         }
         catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -282,18 +286,18 @@ public class utamaReservasi extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
     public void internal_frame (){
         
-        internalFrame1.add(Ant.getContentPane());
-        internalFrame1.pack();
-        internalFrame1.setSize(1146,577);
-        internalFrame1.setVisible(true);
-        jDesktopPane2.add(internalFrame1);
-        BasicInternalFrameUI ui1 = (BasicInternalFrameUI)internalFrame1.getUI();
-        Container north1 = (Container)ui1.getNorthPane();
-        north1.remove(0);
-        north1.validate();
-        north1.repaint();
-        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
-            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
+        internalFrame0.add(introw.getContentPane());
+        internalFrame0.pack();
+        internalFrame0.setSize(1146,577);
+        internalFrame0.setVisible(true);
+        jDesktopPane2.add(internalFrame0);
+        BasicInternalFrameUI ui0 = (BasicInternalFrameUI)internalFrame0.getUI();
+        Container north0 = (Container)ui0.getNorthPane();
+        north0.remove(0);
+        north0.validate();
+        north0.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame0.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame0.getUI()).getNorthPane().removeMouseListener(listener);
         }
      
         internalFrame2.add(daft.getContentPane());
@@ -310,6 +314,20 @@ public class utamaReservasi extends javax.swing.JFrame {
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame2.getUI()).getNorthPane().removeMouseListener(listener);
         }
            
+        internalFrame1.add(Ant.getContentPane());
+        internalFrame1.pack();
+        internalFrame1.setSize(1146,577);
+        internalFrame1.setVisible(true);
+        jDesktopPane2.add(internalFrame1);
+        BasicInternalFrameUI ui1 = (BasicInternalFrameUI)internalFrame1.getUI();
+        Container north1 = (Container)ui1.getNorthPane();
+        north1.remove(0);
+        north1.validate();
+        north1.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame1.getUI()).getNorthPane().removeMouseListener(listener);
+        }
+        
         internalFrame3.add(LP.getContentPane());
         internalFrame3.pack();
         internalFrame3.setSize(1146,577);

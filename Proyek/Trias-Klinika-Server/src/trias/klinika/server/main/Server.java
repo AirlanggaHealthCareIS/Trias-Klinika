@@ -209,6 +209,10 @@ public class Server extends javax.swing.JFrame implements Runnable {
                 }
                 hapus(findClient(ID));   
                 break;
+            case "KirimIDPemeriksaanImin":
+                findUserThread(msg.penerima).send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
+                clients[findClient(ID)].send(new pesan(msg.tipe, msg.pengirim, msg.isi, msg.penerima));
+                break;
             case "Pembayaran":
                 UpdateList(msg);
         }
