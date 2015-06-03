@@ -216,7 +216,7 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             String b = Integer.toString((Integer.parseInt(aipasien.substring(1,5)))+1); //memisahkan angka D dengan 0001
                 //menambahkan angka belakang    
             for (int i = b.length(); i < 4; i++ ) {
-            b = "0" + b;
+                 b = "0" + b;
             } 
             aipasien = aipasien.substring(0, 1) + b;
             result.close();

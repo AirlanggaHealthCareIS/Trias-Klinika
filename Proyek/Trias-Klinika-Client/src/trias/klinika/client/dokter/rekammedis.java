@@ -41,8 +41,6 @@ public rekammedis(String IDPasien){
         initComponents();
         PasienEntity pe = new PasienEntity();
         pe = sr.getdata("P0002");
-        ID.setText(IDpasienkirim);
-        System.out.println("melinda"+IDpasienkirim);
         nama.setText(pe.getNama());
         tanggalLahir.setText(pe.getTanggalLahir());
         alamat.setText(pe.getAlamat());
@@ -494,7 +492,7 @@ private boolean CheckNumber(String a){
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ID;
+    public javax.swing.JTextField ID;
     private javax.swing.JTextField alamat;
     private javax.swing.JTextField alergi;
     private javax.swing.JTextField catatan;

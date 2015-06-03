@@ -46,10 +46,14 @@ public class input_resep extends javax.swing.JInternalFrame {
         this.UD = UD;
         
         initComponents();
+        ResepEntity RE = new ResepEntity();
+        auto_increment_NoResep ();
         NoResep.setText(airesep);
         table.setModel(TR);
         Dropdown();
-       
+
+        IDDokter.setText(UD.LE.getusername());
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,7 +72,7 @@ public class input_resep extends javax.swing.JInternalFrame {
         IDPasien = new javax.swing.JTextField();
         IDDokter = new javax.swing.JTextField();
         apotek = new javax.swing.JLabel();
-        ID_Apoteker = new javax.swing.JTextField();
+        ID_Pemeriksaan = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -96,7 +100,6 @@ public class input_resep extends javax.swing.JInternalFrame {
         jLabel2.setText("NO Resep ");
 
         NoResep.setEditable(false);
-        NoResep.setText("RE1112");
 
         jLabel3.setText("ID Pasien");
 
@@ -110,9 +113,9 @@ public class input_resep extends javax.swing.JInternalFrame {
 
         apotek.setText("ID Pemeriksaan");
 
-        ID_Apoteker.addActionListener(new java.awt.event.ActionListener() {
+        ID_Pemeriksaan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ID_ApotekerActionPerformed(evt);
+                ID_PemeriksaanActionPerformed(evt);
             }
         });
 
@@ -127,18 +130,21 @@ public class input_resep extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel5))
-                        .addGap(54, 54, 54)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(IDDokter)
-                            .addComponent(NoResep, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                                .addComponent(NoResep, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(IDDokter))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(apotek))
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(IDPasien)
-                            .addComponent(ID_Apoteker))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ID_Pemeriksaan, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                            .addComponent(IDPasien))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -148,11 +154,14 @@ public class input_resep extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(NoResep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(apotek)
-                    .addComponent(ID_Apoteker, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(apotek))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(ID_Pemeriksaan, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(IDPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -299,10 +308,8 @@ public class input_resep extends javax.swing.JInternalFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/Logo.png"))); // NOI18N
         getContentPane().add(jLabel8);
         jLabel8.setBounds(924, 10, 160, 90);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameDokter.png"))); // NOI18N
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(-10, 0, 1140, 580);
+        jLabel6.setBounds(760, 20, 0, 0);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -393,6 +400,13 @@ public class input_resep extends javax.swing.JInternalFrame {
     }
     
 }
+    public void setIDPasien(){
+        try {
+            IDPasien.setText(SR.pasien(ID_Pemeriksaan.getText()));
+        } catch (RemoteException ex) {
+            Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public ResepEntity setResep(ResepEntity RE){
         RE.setID_obat(obat.getSelectedItem().toString().substring(0, 6));
         RE.setnama_obat(obat.getName());
@@ -416,9 +430,9 @@ public class input_resep extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_hapusActionPerformed
 
-    private void ID_ApotekerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ID_ApotekerActionPerformed
+    private void ID_PemeriksaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ID_PemeriksaanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ID_ApotekerActionPerformed
+    }//GEN-LAST:event_ID_PemeriksaanActionPerformed
 
     private void IDPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDPasienActionPerformed
         // TODO add your handling code here:
@@ -429,8 +443,8 @@ public class input_resep extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IDDokter;
-    private javax.swing.JTextField IDPasien;
-    private javax.swing.JTextField ID_Apoteker;
+    public javax.swing.JTextField IDPasien;
+    public javax.swing.JTextField ID_Pemeriksaan;
     private javax.swing.JTextField NoResep;
     private javax.swing.JLabel apotek;
     private javax.swing.JButton hapus;

@@ -5,6 +5,7 @@ package trias.klinika.server.service;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import com.sun.org.apache.regexp.internal.RE;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.PreparedStatement;
@@ -55,6 +56,42 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
         } catch (SQLException exception) {
             exception.printStackTrace();
             return pk;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+    
+     public String pasien(String id) throws RemoteException {
+        System.out.println("Client melakukan proses get-all");
+
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT ID_PASIEN FROM pemeriksaan WHERE ID_PEMERIKSAAN = '"+id+"'");
+            
+            
+            ResepEntity ResepEntity = new ResepEntity();
+            result.first();
+                
+                String idp = result.getString("ID_PASIEN");
+                
+            result.close();
+            
+            return idp;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
         } finally {
             if (statement != null) {
                 try {
@@ -137,7 +174,7 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
             statement = Koneksidatabase.getConnection().createStatement();
             
             ResultSet result = statement.executeQuery
-            ("SELECT ID_RESEP FROM RESEP");
+            ("SELECT * FROM RESEP");
             
             
             result.last();
@@ -145,10 +182,11 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
             String b = Integer.toString((Integer.parseInt(airesep.substring(2,6)))+1); //memisahkan angka D dengan 0001
                 //menambahkan angka belakang    
             for (int i = b.length(); i < 4; i++ ) {
-            b = "0" + b;
+                b = "0" + b;
             } 
-            airesep = airesep.substring(0, 1) + b;
+            airesep = airesep.substring(0, 2) + b;
             result.close();
+            
             return airesep;
             
             
@@ -166,4 +204,10 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
                
     }    
     }
+
+    @Override
+    public ResepEntity ID_Pasien(ResepEntity RE) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

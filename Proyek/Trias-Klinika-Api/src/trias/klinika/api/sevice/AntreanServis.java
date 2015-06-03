@@ -20,6 +20,7 @@ public interface AntreanServis extends Remote{
     PasienEntity insertIDPasien (PasienEntity a) throws RemoteException;
     PemeriksaanEntitas insertPemeriksaan (PemeriksaanEntitas a) throws RemoteException;
     void updateStatus(PemeriksaanEntitas suparmin, String id_pemeriksaan) throws RemoteException;
+    void updateStatus2(PemeriksaanEntitas suparmin, String id_pemeriksaan) throws RemoteException;
     PasienEntity getpasienkanan(String id) throws RemoteException;
     List<PemeriksaanEntitas> getpasienkiri(String id, String tgl) throws RemoteException;
     

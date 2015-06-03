@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import trias.klinika.api.entitas.InventoriObatDokterEntitas;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.server.utilitas.Koneksidatabase;
@@ -38,7 +40,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.QTY_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis FROM obat as o, detail_obat as do, jenis_obat as jo where o.id_obat = do.id_obat and o.id_jenis = jo.id_jenis and do.ruangan = 'Dokter' and o.id_spesialis = '"+id_spesialis+"' ");
+            ResultSet result = statement.executeQuery("SELECT o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.id_detail, do.QTY_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis FROM obat as o, detail_obat as do, jenis_obat as jo where o.id_obat = do.id_obat and o.id_jenis = jo.id_jenis and do.ruangan = 'Dokter' and o.id_spesialis = '"+id_spesialis+"' ");
             
             List<InventoriObatDokterEntitas> list = new ArrayList<InventoriObatDokterEntitas>();
 
@@ -52,7 +54,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
                 inventoriObatDokterEntitas.settglmasuk(result.getString("tgl_masuk"));
                 inventoriObatDokterEntitas.settglmasapakai(result.getString("masa_pakai"));
                 inventoriObatDokterEntitas.setjenisobat(result.getString("nama_jenis"));
-                
+                inventoriObatDokterEntitas.setiddetailobat(result.getInt("id_detail"));
                 list.add(inventoriObatDokterEntitas);
             }
 
@@ -86,7 +88,6 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             statement = Koneksidatabase.getConnection().createStatement();
             
             ResultSet result = statement.executeQuery("SELECT ID_SPESIALIS FROM dokter WHERE ID_DOKTER = '"+id_dokter+"'");
-            System.out.println(result.toString());
             
             result.first();
             return result.getString("ID_SPESIALIS");
@@ -308,8 +309,8 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
         PreparedStatement statement = null;
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT, ID_JENIS)"
-                    + "values (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO obat (ID_OBAT, ID_SPESIALIS, NAMA_OBAT, HARGA_OBAT, DESKRIPSI_OBAT, ID_JENIS, TOTAL_JUMLAH)"
+                    + "values (?, ?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, inventoriobatDokterEntitas.getidobat());
             statement.setString(2, inventoriobatDokterEntitas.getidspesialis());
@@ -317,7 +318,7 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
             statement.setInt(4, inventoriobatDokterEntitas.gethargaobat());
             statement.setString(5, inventoriobatDokterEntitas.getdeskripsi());
             statement.setString(6, inventoriobatDokterEntitas.getidjenisobat());
-            System.out.println(statement.toString());
+            statement.setInt(7, 0);
             
 
             statement.executeUpdate();
@@ -340,13 +341,12 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
                     "INSERT INTO detail_obat (ID_DETAIL, ID_OBAT, QTY_OBAT, TGL_MASUK, MASA_PAKAI, RUANGAN)"
                     + "values (?, ?, ?, ?, ?, ?)");
 
-            statement1.setString(1, inventoriobatDokterEntitas.getiddetailobat());
+            statement1.setInt(1, inventoriobatDokterEntitas.getiddetailobat());
             statement1.setString(2, inventoriobatDokterEntitas.getidobat());
             statement1.setInt(3, inventoriobatDokterEntitas.getkuantitiobat());
             statement1.setString(4, inventoriobatDokterEntitas.gettglmasuk());
             statement1.setString(5, inventoriobatDokterEntitas.gettglmasapakai());
             statement1.setString(6, inventoriobatDokterEntitas.getruanganobat());
-            System.out.println(statement1.toString());
 
             statement1.executeUpdate();
 
@@ -365,14 +365,14 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
     }
    
    @Override
-    public String[] Dropdownobat(String [] ob) throws RemoteException {
+    public String[] Dropdownobat(String [] ob, String id_spesialis) throws RemoteException {
         Statement statement = null;
         
         try {
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT ID_OBAT,NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = 'S0001'");
+            ResultSet result = statement.executeQuery("SELECT ID_OBAT,NAMA_OBAT FROM OBAT WHERE ID_SPESIALIS = '"+id_spesialis+"'");
             
             result.last();
             ob = new String [result.getRow()];
@@ -440,10 +440,58 @@ public class QueryInventoriObatDokter extends UnicastRemoteObject implements Inv
 
     @Override
     public void insertObatLama(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement statement1 = null;
+        try {
+            statement1 = Koneksidatabase.getConnection().prepareStatement(
+                    "INSERT INTO detail_obat (ID_DETAIL, ID_OBAT, QTY_OBAT, TGL_MASUK, MASA_PAKAI, RUANGAN)"
+                    + "values (?, ?, ?, ?, ?, ?)");
+
+            statement1.setInt(1, inventoriobatDokterEntitas.getiddetailobat());
+            statement1.setString(2, inventoriobatDokterEntitas.getidobat());
+            statement1.setInt(3, inventoriobatDokterEntitas.getkuantitiobat());
+            statement1.setString(4, inventoriobatDokterEntitas.gettglmasuk());
+            statement1.setString(5, inventoriobatDokterEntitas.gettglmasapakai());
+            statement1.setString(6, inventoriobatDokterEntitas.getruanganobat());
+
+            statement1.executeUpdate();
+
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            if (statement1 != null) {
+                try {
+                    statement1.close();
+                } catch (SQLException exception) {
+                }
+            }
+        }
     }
 
-    
+   @Override
+   public void updatekuantitas(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException {
+        PreparedStatement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement(
+                    "UPDATE detail_obat SET QTY_OBAT = "+inventoriobatDokterEntitas.getkuantitiobat()+" WHERE ID_OBAT = '"+inventoriobatDokterEntitas.getidobat()+"' AND ID_DETAIL = "+inventoriobatDokterEntitas.getiddetailobat());
+            statement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryListPetugas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
    
-    
+   @Override
+   public void deleteobat(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException {
+        PreparedStatement statement = null;
+        
+        try {
+            statement = Koneksidatabase.getConnection().prepareStatement(
+                    "delete FROM detail_obat WHERE ID_OBAT = '"+inventoriobatDokterEntitas.getidobat()+"' AND ID_DETAIL = "+inventoriobatDokterEntitas.getiddetailobat());
+            statement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryListPetugas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
 }

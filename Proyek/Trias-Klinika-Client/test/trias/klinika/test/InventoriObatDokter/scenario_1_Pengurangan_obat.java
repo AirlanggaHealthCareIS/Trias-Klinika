@@ -63,7 +63,7 @@ public class scenario_1_Pengurangan_obat {
         LoginEntitas LE = new LoginEntitas();
         UtamaDokter UD = new UtamaDokter(LE, LO);
         Inventori_Obat_Dokter interfacetambah = new Inventori_Obat_Dokter (service13, UD);
-        interfacetambah.setpengurangan();
+        //interfacetambah.setpengurangan();
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

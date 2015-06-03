@@ -26,6 +26,17 @@ public class tabelinventoriobtdokter extends AbstractTableModel {
         list.add(IOD);
         fireTableDataChanged();
     }
+    
+    public void delete (int row) {
+        list.remove(row);
+        fireTableDataChanged();
+    }
+    
+    public void update(int kuantitas, int row) {
+        list.get(row).setkuantitiobat(kuantitas);
+        fireTableDataChanged();
+    }
+    
     public void setData(List<InventoriObatDokterEntitas> list) {
         this.list = list;
         fireTableDataChanged();

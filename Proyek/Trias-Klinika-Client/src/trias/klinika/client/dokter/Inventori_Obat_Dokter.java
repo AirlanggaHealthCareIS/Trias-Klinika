@@ -23,7 +23,6 @@ import trias.klinika.api.entitas.InventoriObatDokterEntitas;
 public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     int a;
     String aiobat;
-    private int aiDetail;
     
     private InventoriObatDokterService IODS;
     private String[] isi;
@@ -43,9 +42,6 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         
         initComponents();
         textruang.setText(this.IODS.Spesialis(UD.LE.getusername()));
-        
-        IDO.setText(aiobat);
-        
         Dropdown();
         tabel.setModel(tiod);
         
@@ -101,8 +97,8 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         JO = new javax.swing.JLabel();
         KO = new javax.swing.JLabel();
         textKO = new javax.swing.JTextField();
-        OK = new javax.swing.JButton();
         HO = new javax.swing.JLabel();
+        OK = new javax.swing.JButton();
         MP = new javax.swing.JLabel();
         deskripsi = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -255,11 +251,6 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                 dropobatItemStateChanged(evt);
             }
         });
-        dropobat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dropobatActionPerformed(evt);
-            }
-        });
 
         judul.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         judul.setText("Penambahan Data Obat");
@@ -285,6 +276,9 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             }
         });
 
+        HO.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        HO.setText("Harga Obat");
+
         OK.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         OK.setText("OK");
         OK.addActionListener(new java.awt.event.ActionListener() {
@@ -292,9 +286,6 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
                 OKActionPerformed(evt);
             }
         });
-
-        HO.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        HO.setText("Harga Obat");
 
         MP.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         MP.setText("Masa Pakai");
@@ -474,20 +465,30 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_okminActionPerformed
 
     private void OK2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OK2ActionPerformed
-        // TODO add your handling code here:
         if(textmin.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Masukan data yang mau di kurangi");
         }
         else {
-            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-            
-            setpengurangan();
-            
-            tiod.insert(IODE);
-            try {
-                IODS.insertObatBaru(IODE);
-            } catch (RemoteException ex) {
-                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+            if (Integer.parseInt(textmin.getText()) > tiod.get(tabel.getSelectedRow()).getkuantitiobat()) {
+                JOptionPane.showMessageDialog(this, "Jumlah Stok yang dikurangi melebihi Stok pada basis data");
+            }
+            else if (Integer.parseInt(textmin.getText()) == tiod.get(tabel.getSelectedRow()).getkuantitiobat()) {
+                try {
+                    int row = tabel.getSelectedRow();
+                    IODS.deleteobat(tiod.get(row));
+                    tiod.delete(row);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else {
+                try {
+                    int row = tabel.getSelectedRow();
+                    tiod.update(tiod.get(row).getkuantitiobat()-Integer.parseInt(textmin.getText()),row);
+                    IODS.updatekuantitas(tiod.get(row));
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_OK2ActionPerformed
@@ -508,18 +509,12 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             OK.setEnabled(true);
             deskripsi.setEnabled(true);
             textdeskripsi.setEnabled(true);
-            textHO.setText(title);
+            textdeskripsi.setEnabled(false);
+            textHO.setEnabled(false);
             dropobat.setSelectedItem(dropobat.getItemAt(0));
             dropJO.setSelectedItem(dropJO.getItemAt(0));
             texttglmasuk.setDate(null);
             texttglmasapakai.setDate(null);
-            aiobat = tiod.get(tabel.getSelectedRow()).getidobat();
-            System.out.println(aiobat);
-            try {
-                IODE = settambahOBbaru(aiobat,auto_increment_detailObat());
-            } catch (RemoteException ex) {
-                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         else if(dropadd.getSelectedItem().toString()=="Obat Baru"){
             reset();
@@ -540,6 +535,8 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
             OK.setEnabled(true);
             texttglmasuk.setDate(null);
             texttglmasapakai.setDate(null);
+            textdeskripsi.setEnabled(true);
+            textHO.setEnabled(true);
             dropobat.setSelectedItem(dropobat.getItemAt(0));
             dropJO.setSelectedItem(dropJO.getItemAt(0));
             try {
@@ -554,31 +551,28 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_dropaddActionPerformed
 
     private void dropobatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_dropobatItemStateChanged
-        try {
-            InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-            IODE.setidobat(dropobat.getSelectedItem().toString().substring(0, 5));
-            IODE = IODS.dataobat(IODE);
-            textNO.setText(IODE.getnamaobat());
-            int index = 0;
-            System.out.println("bisa = "+dropJO.getItemCount());
-            for(int i=0;i<dropJO.getItemCount();i++){
-                System.out.println(dropJO.getItemAt(i).toString().substring(0, 6));
-                if (dropJO.getItemAt(i).toString().substring(0, 6).equals(IODE.getidjenisobat())){
-                    index = i;
+        if (!"Pilih Obat...".equals(dropobat.getSelectedItem().toString())) {
+            try {
+                InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
+                IODE.setidobat(dropobat.getSelectedItem().toString().substring(0, 5));
+                IODE = IODS.dataobat(IODE);
+                IDO.setText(dropobat.getSelectedItem().toString().substring(0,5));
+                textNO.setText(IODE.getnamaobat());
+                textHO.setText(Integer.toString(IODE.gethargaobat()));
+                textdeskripsi.setText(IODE.getdeskripsi());
+                int index = 0;
+                for(int i=0;i<dropJO.getItemCount();i++){
+                    System.out.println(dropJO.getItemAt(i).toString().substring(0, 6));
+                    if (dropJO.getItemAt(i).toString().substring(0, 6).equals(IODE.getidjenisobat())){
+                        index = i;
+                    }
                 }
-                System.out.println(index);
+                dropJO.setSelectedItem(dropJO.getItemAt(index));
+            } catch (RemoteException ex) {
+                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
             }
-            dropJO.setSelectedItem(dropJO.getItemAt(index));
-        } catch (RemoteException ex) {
-            Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-
     }//GEN-LAST:event_dropobatItemStateChanged
-
-    private void dropobatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropobatActionPerformed
-        
-    }//GEN-LAST:event_dropobatActionPerformed
 
     private void textNOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNOActionPerformed
         // TODO add your handling code here:
@@ -591,17 +585,29 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     private void OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKActionPerformed
         if(textNO.getText().isEmpty()||dropJO.getSelectedItem().toString()=="jenis obat"||textKO.getText().isEmpty()||textHO.getText().isEmpty()||texttglmasuk.getDate()==null||texttglmasapakai.getDate()==null||textdeskripsi.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Salah satu data belum di isi");
-
         }
         else {
-            settambahOBbaru();
-
-            tiod.insert(IODE);
-            try {
-                IODS.insertObatBaru(IODE);
-            } catch (RemoteException ex) {
-                Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+            if ("Obat Baru".equals(dropadd.getSelectedItem().toString())) {
+                settambahOBbaru(1);
+                try {
+                    IODS.insertObatBaru(IODE);
+                    for (int i=1;i<dropobat.getItemCount();i++) {
+                        dropobat.removeItemAt(i);
+                    }
+                    Dropdown();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            else {
+                try {
+                    settambahOBbaru(auto_increment_detailObat(IDO.getText()));
+                    IODS.insertObatLama(IODE);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Inventori_Obat_Dokter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            tiod.insert(IODE);
         }
 
     }//GEN-LAST:event_OKActionPerformed
@@ -641,7 +647,7 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
     }
     
     private void Dropdown() throws RemoteException{
-        isi = IODS.Dropdownobat(isi);
+        isi = IODS.Dropdownobat(isi, textruang.getText());
     
         for (int i=0;i<isi.length;i++){
             dropobat.addItem(isi[i]);
@@ -656,39 +662,34 @@ public class Inventori_Obat_Dokter extends javax.swing.JInternalFrame {
         }
     }
     
-    public void settambahOBbaru (){
-        
-            IODE.setidobat(IDO.getText());
-            IODE.setnamaobat(textNO.getText());
-            IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0,6));
-            String a = dropJO.getSelectedItem().toString();
-            IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
-            IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
-            IODE.sethargaobat(Integer.parseInt(textHO.getText()));
-            Date date = new Date(texttglmasuk.getDate().getTime());
-            System.out.println(date.toString());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String tgl = sdf.format(date);
-            IODE.settglmasuk(tgl);
-            System.out.println(tgl);
-            Date date1 = new Date(texttglmasapakai.getDate().getTime());
-            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-            String tgl1 = sdf1.format(date1);
-            IODE.settglmasapakai(tgl1);
-            IODE.setdeskripsi(textdeskripsi.getText());
-            IODE.setiddetailobat("1");
-            IODE.setidspesialis(textruang.getText());
-            IODE.setruanganobat("Dokter");
+    public void settambahOBbaru (int idDetail){
+        IODE.setidobat(IDO.getText());
+        IODE.setnamaobat(textNO.getText());
+        IODE.setidjenisobat(dropJO.getSelectedItem().toString().substring(0,6));
+        String a = dropJO.getSelectedItem().toString();
+        IODE.setjenisobat(dropJO.getSelectedItem().toString().substring(9));
+        IODE.setkuantitiobat(Integer.parseInt(textKO.getText()));
+        IODE.sethargaobat(Integer.parseInt(textHO.getText()));
+        Date date = new Date(texttglmasuk.getDate().getTime());
+        System.out.println(date.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String tgl = sdf.format(date);
+        IODE.settglmasuk(tgl);
+        System.out.println(tgl);
+        Date date1 = new Date(texttglmasapakai.getDate().getTime());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        String tgl1 = sdf1.format(date1);
+        IODE.settglmasapakai(tgl1);
+        IODE.setdeskripsi(textdeskripsi.getText());
+        IODE.setiddetailobat(idDetail);
+        IODE.setidspesialis(textruang.getText());
+        IODE.setruanganobat("Dokter");
     }
     
-    public void setpengurangan(){
-        InventoriObatDokterEntitas IODE = new InventoriObatDokterEntitas();
-        IODE.setnamaobat(textmin.getText());
-    }
     private String auto_increment_obat () throws RemoteException { 
        return IODS.auto_increment_obat(aiobat);
     }
-    private int auto_increment_detailObat () throws RemoteException {
+    private int auto_increment_detailObat (String aiobat) throws RemoteException {
         return IODS.auto_increment_iddetail(aiobat);
     }
     

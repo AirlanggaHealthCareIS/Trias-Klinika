@@ -23,8 +23,10 @@ public interface InventoriObatDokterService extends Remote {
     String Spesialis(String id_dokter) throws RemoteException;
     void insertObatBaru(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
     void insertObatLama(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
-    String[] Dropdownobat(String [] ob) throws RemoteException;
+    String[] Dropdownobat(String [] ob, String id_spesialis) throws RemoteException;
     String[] Dropdownjenis(String [] ob) throws RemoteException;
     String auto_increment_obat(String  aiobat) throws RemoteException;
     int auto_increment_iddetail (String aiObat) throws RemoteException;
+    void updatekuantitas(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
+    void deleteobat(InventoriObatDokterEntitas inventoriobatDokterEntitas) throws RemoteException;
 }
