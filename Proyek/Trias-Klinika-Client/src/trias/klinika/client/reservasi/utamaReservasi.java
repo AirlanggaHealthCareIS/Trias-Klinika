@@ -27,6 +27,7 @@ import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.api.sevice.AntreanServis;
+import trias.klinika.api.sevice.laporankeuanganReservasiService;
 import trias.klinika.client.Home.Login;
 import trias.klinika.client.tabel.TabelDokter;
 import trias.klinika.client.Home.Splash;
@@ -43,11 +44,13 @@ public class utamaReservasi extends javax.swing.JFrame {
     final  PendaftaranService service2;
     final  ListPembayaranService service12;
     final  AntreanServis service3;
-    final  ListPetugasService service5;   
+    final  ListPetugasService service5;
+    final laporankeuanganReservasiService service9_a_1;
     TriasKlinika_Pendaftaran daft;
     Antrean Ant;
     intro introw;
     TriasKlinika_ListPembayaran LP;
+    laporanKeuanganReservasi KR ;
     
     private ListPembayaranService LPS;
     private AntreanServis AS;
@@ -59,6 +62,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pendaftaran");
     private JInternalFrame internalFrame3 = new JInternalFrame("Frame List Pembayaran");
     private JInternalFrame internalFrame4 = new JInternalFrame("Laporan Pasien");
+    private JInternalFrame internalFrame5 = new JInternalFrame ("laporan Reservasi");
     Login login;
     
     /**
@@ -79,7 +83,9 @@ public class utamaReservasi extends javax.swing.JFrame {
         service2 = (PendaftaranService)registry.lookup("service2");
         service12 = (ListPembayaranService)registry.lookup("service12");
         service3 = (AntreanServis)registry.lookup("service3");
-        service5 = (ListPetugasService)registry.lookup("service5");    
+        service5 = (ListPetugasService)registry.lookup("service5"); 
+        service9_a_1 = (laporankeuanganReservasiService)registry.lookup("service9_a_1");
+        KR = new laporanKeuanganReservasi (service9_a_1,this);
         daft = new TriasKlinika_Pendaftaran(service2, LE);
         Ant = new Antrean(service5,service3,this);
         LP = new TriasKlinika_ListPembayaran(service12);
@@ -116,6 +122,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        reservasi = new javax.swing.JToggleButton();
         nama = new javax.swing.JLabel();
         jDesktopPane2 = new javax.swing.JDesktopPane();
         logout = new javax.swing.JButton();
@@ -152,19 +159,30 @@ public class utamaReservasi extends javax.swing.JFrame {
             }
         });
 
+        reservasi.setText("Laporan Reservasi");
+        reservasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservasiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(reservasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(20, 20, 20))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,10 +195,12 @@ public class utamaReservasi extends javax.swing.JFrame {
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(174, 174, 174))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(reservasi, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(108, 108, 108))
         );
 
-        nama.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        nama.setFont(new java.awt.Font("Times New Roman", 0, 18));
         nama.setText("jLabel1");
 
         jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
@@ -200,7 +220,7 @@ public class utamaReservasi extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 35, Short.MAX_VALUE)
                         .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +228,7 @@ public class utamaReservasi extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nama)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1292, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,6 +304,17 @@ public class utamaReservasi extends javax.swing.JFrame {
             Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_logoutActionPerformed
+
+private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservasiActionPerformed
+// TODO add your handling code here:
+        try {
+            internalFrame5.setSelected(true);
+        
+    } catch(Exception ex) {
+        JOptionPane.showMessageDialog(null, ex);
+    }
+                                             
+}//GEN-LAST:event_reservasiActionPerformed
     public void internal_frame (){
         
         internalFrame0.add(introw.getContentPane());
@@ -341,8 +372,21 @@ public class utamaReservasi extends javax.swing.JFrame {
         for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().getMouseListeners()){
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().removeMouseListener(listener);
         }
+        internalFrame5.add(KR.getContentPane());
+        internalFrame5.pack();
+        internalFrame5.setSize(1146,577);
+        internalFrame5.setVisible(true);
+        jDesktopPane2.add(internalFrame5);
+        BasicInternalFrameUI ui5 = (BasicInternalFrameUI)internalFrame5.getUI();
+        Container north5 = (Container)ui3.getNorthPane();
+        north3.remove(0);
+        north3.validate();
+        north3.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().removeMouseListener(listener);
+  
     }
-    
+    }
     public void updatelist (String Id, String Nama) {
         JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
         try {
@@ -377,5 +421,6 @@ public class utamaReservasi extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
+    private javax.swing.JToggleButton reservasi;
     // End of variables declaration//GEN-END:variables
 }

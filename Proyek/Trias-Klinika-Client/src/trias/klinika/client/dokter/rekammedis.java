@@ -402,7 +402,6 @@ private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
         
     }//GEN-LAST:event_jButton1ActionPerformed
 public void setHistory (){
-
         int row = history.getSelectedRow();
         rekammedisEntyty re = new rekammedisEntyty ();
             try {
