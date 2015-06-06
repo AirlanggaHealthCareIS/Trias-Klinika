@@ -111,7 +111,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        pindah = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         NamaPasien = new javax.swing.JTextField();
         NamaDokter = new javax.swing.JTextField();
@@ -155,11 +155,11 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel7.setText("Total Biaya");
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jButton1.setText("Tidak Hadir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        pindah.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        pindah.setText("Tidak Hadir");
+        pindah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                pindahActionPerformed(evt);
             }
         });
 
@@ -271,7 +271,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
                                     .addComponent(Total_Biaya, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(pindah)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2)))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -340,7 +340,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
                             .addComponent(Total_Biaya, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(pindah)
                             .addComponent(jButton2))
                         .addGap(349, 349, 349))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -354,10 +354,12 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void pindahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pindahActionPerformed
         // TODO add your handling code here:
+        TLP2.insert(TLP.get(tabelAntre.getSelectedRow()));
+        TLP.delete(tabelAntre.getSelectedRow());
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_pindahActionPerformed
 
     private void tabelAntreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelAntreMouseClicked
         // TODO add your handling code here:
@@ -371,7 +373,6 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
     private javax.swing.JTextField NamaDokter;
     private javax.swing.JTextField NamaPasien;
     private javax.swing.JTextField Total_Biaya;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -389,6 +390,7 @@ public class TriasKlinika_ListPembayaran extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JButton pindah;
     private javax.swing.JTable tabelAntre;
     private javax.swing.JTable tabelTelat;
     private javax.swing.JTextField tindakan;

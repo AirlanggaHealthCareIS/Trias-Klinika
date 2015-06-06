@@ -22,5 +22,5 @@ public interface pembayaranService extends Remote {
     int biaya (int harga, String id)throws RemoteException;
     String d (String id) throws RemoteException;
     String ID (String idp) throws RemoteException; 
-    public void Update (String id_pemeriksaan, String id_pembayaran) throws RemoteException;
+    void Update (String id_pemeriksaan, String id_pembayaran) throws RemoteException;
 }

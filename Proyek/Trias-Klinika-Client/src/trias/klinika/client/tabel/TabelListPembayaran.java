@@ -27,6 +27,10 @@ public class TabelListPembayaran extends AbstractTableModel {
         list.add(LPE);
         fireTableDataChanged();
      }
+     public void delete(int row){
+        list.remove(row);
+        fireTableDataChanged();
+    }
      public void setData(List<ListPembayaranEntitas> list) {
         this.list = list;
         fireTableDataChanged();

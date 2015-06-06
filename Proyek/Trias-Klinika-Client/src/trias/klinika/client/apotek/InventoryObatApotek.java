@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
@@ -399,13 +400,15 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         if(row == -1){
             return;
         }
+        IOAE = tioa.get(row);
         tioa.delete(IOAE);
         
         IOAS.deleteObat(IOAE);
         refresh();
+        JOptionPane.showMessageDialog(this, "Proses Penghapusan obat berhasil");
         }
        catch (RemoteException exception){
-        JOptionPane.showMessageDialog(this, "Proses Penghapusan obat berhasil");    
+            
         }
         
     }//GEN-LAST:event_deleteActionPerformed
@@ -414,12 +417,12 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
         JOptionPane.showConfirmDialog(null, "Apakah anda sudah yakin?","", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         // TODO add your handling code here:
         InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas ();
-        setUpdateObat();
+        setUpdateObat(IOAE);
         tioa.update(IOAE);
         try{
         IOAS.updateObat(IOAE);
         refresh();
-        //PreparedStatement statement = new PreparedStatement();
+        
         }
         catch (RemoteException ex){
                 Logger.getLogger(InventoryObatApotek.class.getName()).log(Level.SEVERE, null, ex);
@@ -510,9 +513,11 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             return IOAE;
             
     }
-    public void setUpdateObat (){
-        InventoryObatApotekEntitas IOAE = new InventoryObatApotekEntitas();
+    public InventoryObatApotekEntitas setUpdateObat (InventoryObatApotekEntitas IOAE){
+        
         IOAE.setDeskripsi(deskripsi.getText());
+
+            IOAE.setIdObat(tioa.get(table_obat.getSelectedRow()).getIdObat());
         java.util.Date date1 = new java.util.Date(masa_pakai.getDate().getTime());
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
             String tgl1 = sdf1.format(date1);
@@ -523,7 +528,8 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
             String tgl = sdf.format(date);
             IOAE.setTglMasuk(tgl);
             System.out.println(tgl);
-        IOAE.setHargaObat(Integer.parseInt(harga.getText()));  
+        IOAE.setHargaObat(Integer.parseInt(harga.getText())); 
+        return IOAE;
     }
     public void setCekKritis(){
         try {

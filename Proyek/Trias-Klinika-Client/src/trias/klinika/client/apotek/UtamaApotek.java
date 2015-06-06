@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package trias.klinika.client.apotek;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -38,6 +37,7 @@ import trias.klinika.client.Home.Login;
 import trias.klinika.client.Home.Splash;
 import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
 import trias.klinika.client.apotek.intro;
+import trias.klinika.client.reservasi.utamaReservasi;
 /**
  *
  * @author Azmil
@@ -54,6 +54,7 @@ public class UtamaApotek extends javax.swing.JFrame {
     LaporanKeuanganApotek laporankeuanganapotek;
     private InventoryObatApotekService IOAS;
     private LaporanKeuanganService LKS;
+    PelayananApotek PA;
     private JInternalFrame internalFrame0 = new JInternalFrame("Frame Itro");
     private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
@@ -80,7 +81,7 @@ public class UtamaApotek extends javax.swing.JFrame {
         laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
         introw = new intro();
         internal_frame();
-        nama.setText(localhost);
+        
         nama1.setText("SELAMAT DATANG "+LE.getnamauser().toUpperCase());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
@@ -141,7 +142,6 @@ public class UtamaApotek extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        nama = new javax.swing.JTextField();
         internalFrame = new javax.swing.JDesktopPane();
         nama1 = new javax.swing.JLabel();
         logout = new javax.swing.JButton();
@@ -152,11 +152,6 @@ public class UtamaApotek extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1147, 768));
         getContentPane().setLayout(null);
-
-        nama.setText("APOTEK");
-        nama.setEnabled(false);
-        getContentPane().add(nama);
-        nama.setBounds(480, 10, 250, 30);
 
         internalFrame.setPreferredSize(new java.awt.Dimension(1147, 570));
 
@@ -187,7 +182,7 @@ public class UtamaApotek extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(20, 350, 180, 50);
+        logout.setBounds(20, 340, 180, 40);
 
         laporankeuangan.setText("Laporan Keuangan Apotek");
         laporankeuangan.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +191,7 @@ public class UtamaApotek extends javax.swing.JFrame {
             }
         });
         getContentPane().add(laporankeuangan);
-        laporankeuangan.setBounds(20, 200, 180, 50);
+        laporankeuangan.setBounds(20, 200, 180, 40);
 
         inventory.setText("Inventory Obat Apotek");
         inventory.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +200,7 @@ public class UtamaApotek extends javax.swing.JFrame {
             }
         });
         getContentPane().add(inventory);
-        inventory.setBounds(20, 270, 180, 50);
+        inventory.setBounds(20, 270, 180, 40);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -320,6 +315,14 @@ public String setTanggal () {
         java.text.SimpleDateFormat("yyyy-MM-dd");
         return kal.format(skrg);
     }
+//public void kirimObat (String Id, String Nama){
+//        JOptionPane.showMessageDialog(null, " Masuk Obat!!! "+Nama);
+//        try {
+//            LP.TLP.insert(service12.AmbilData(Id));
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(utamaReservasi.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane internalFrame;
@@ -327,7 +330,19 @@ public String setTanggal () {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton laporankeuangan;
     private javax.swing.JButton logout;
-    private javax.swing.JTextField nama;
     private javax.swing.JLabel nama1;
     // End of variables declaration//GEN-END:variables
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
