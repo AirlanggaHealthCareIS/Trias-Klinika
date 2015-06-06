@@ -1,0 +1,10 @@
+feature :notifikasi pembayaran
+skenario 1 :reservasi berhasil menerima pesan struk pembayaran
+given :reservasi sudah berada pada tampilan awal
+
+when :sistem mengirim pesan pembayaran yang berisi struk pembayaran
+then :memanggil metodh pesan()
+and  :menampilkan notifikasi pembayaran
+then :petugas menekan tombol "ok"
+
+
