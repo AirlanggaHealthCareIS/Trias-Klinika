@@ -42,6 +42,7 @@ import trias.klinika.client.Home.Login;
 import trias.klinika.client.Home.Splash;
 import trias.klinika.client.dokter.input_resep;
 import trias.klinika.client.apotek.intro;
+import trias.klinika.api.sevice.NotifikasiStokObatDokterService;
 /**
  *
  * @author Lenovo
@@ -273,7 +274,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         IDpemeriksaan.setForeground(new java.awt.Color(255, 255, 51));
         IDpemeriksaan.setText("jLabel3");
         getContentPane().add(IDpemeriksaan);
-        IDpemeriksaan.setBounds(600, 160, 180, 30);
+        IDpemeriksaan.setBounds(30, 20, 180, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -381,9 +382,12 @@ public class UtamaDokter extends javax.swing.JFrame {
 
     private void byrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byrActionPerformed
         // TODO add your handling code here:
+        
         try {
             internalFrame2.setSelected(true);
+            fp.id.setText(IDpemeriksaan.getText());
                         sonido("LYNC_joinedconference");
+                        
 
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -408,6 +412,8 @@ public class UtamaDokter extends javax.swing.JFrame {
                         sonido("LYNC_joinedconference");
 
             internalFrame4.setSelected(true);
+            ir.ID_Pemeriksaan.setText(IDpemeriksaan.getText());
+            ir.setIDPasien();
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -439,7 +445,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel IDpemeriksaan;
+    public javax.swing.JLabel IDpemeriksaan;
     private javax.swing.JButton LaporanKeuanganDokter;
     private javax.swing.JButton byr;
     private javax.swing.JButton jButton1;

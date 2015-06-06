@@ -347,6 +347,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             try{
                 
                 SR.Save(RE);
+                SR.Update(UD.IDpemeriksaan.getText(), RE.getID_resep());
                 
                 for(int i=0;i<TR.getRowCount();i++){
                     RR.setDataRincian((i+1), TR.getValueAt(i, 1).toString(), NoResep.getText(), Integer.parseInt(TR.getValueAt(i, 3).toString()), TR.getValueAt(i, 5).toString());
@@ -374,6 +375,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             try{
                 
                 SR.Save(RE);
+                SR.Update(UD.IDpemeriksaan.getText(), RE.getID_resep());
                 
                 for(int i=0;i<TR.getRowCount();i++){
                     RR.setDataRincian((i+1), TR.getValueAt(i, 1).toString(), NoResep.getText(), Integer.parseInt(TR.getValueAt(i, 3).toString()), TR.getValueAt(i, 5).toString());

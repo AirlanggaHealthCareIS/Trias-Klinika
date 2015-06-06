@@ -4,10 +4,24 @@
  */
 package trias.klinika.api.sevice;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.List;
+import trias.klinika.api.entitas.PelayananApotekEntitas;
+import trias.klinika.api.entitas.PelayananApotekEntitas1;
+
 /**
  *
  * @author TOSHIBA
  */
-public class PelayananApotekService {
+public interface PelayananApotekService extends Remote{
+   PelayananApotekEntitas getpelayananapotek(String id) throws RemoteException; 
+  List<PelayananApotekEntitas> getresepbaru(String id) throws RemoteException;
+  List<PelayananApotekEntitas> getDokters() throws RemoteException;
+  // PelayananApotekEntitas getresepbaru(String id) throws RemoteException;
     
-}
+    
+    
+    }
+   
+

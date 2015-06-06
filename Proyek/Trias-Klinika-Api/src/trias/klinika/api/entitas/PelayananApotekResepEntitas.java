@@ -4,15 +4,12 @@
  */
 package trias.klinika.api.entitas;
 
-import java.io.Serializable;
-
 /**
  *
  * @author TOSHIBA
  */
-public class PelayananApotekEntitas implements Serializable{
-   
-     private String ID_PEMERIKSAAN;
+public class PelayananApotekResepEntitas {
+    private String ID_PEMERIKSAAN;
      private String ID_RESEP;
     private String ID_APOTEK;
     private String ID_OBAT;
@@ -96,4 +93,5 @@ public String getNAMA_PASIEN(){
  }
  public void setNAMA_DOKTER(String NAMA_DOKTER){
     this.NAMA_DOKTER = NAMA_DOKTER;
- }}
+ }
+}
