@@ -209,5 +209,15 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
     public ResepEntity ID_Pasien(ResepEntity RE) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void Update (String id_pemeriksaan , String id_resep ) throws RemoteException {
+        PreparedStatement statement = null;
+        
+        try{
+        statement = (PreparedStatement)Koneksidatabase.getConnection().prepareStatement("UPDATE 'pemeriksaan' SET 'ID_RESEP' = '"+id_resep+"' WHERE 'ID_PEMERIKSAAN' = '"+id_pemeriksaan+"'");
+        statement.executeUpdate();        
+    } catch (SQLException ex) {
+        Logger.getLogger(QueryResep.class.getName()).log(Level.SEVERE, null, ex);
+    }
 
-}
+}}

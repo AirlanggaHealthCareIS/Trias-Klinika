@@ -42,6 +42,7 @@ import trias.klinika.client.Home.Login;
 import trias.klinika.client.Home.Splash;
 import trias.klinika.client.dokter.input_resep;
 import trias.klinika.client.apotek.intro;
+import trias.klinika.api.sevice.NotifikasiStokObatDokterService;
 /**
  *
  * @author Lenovo

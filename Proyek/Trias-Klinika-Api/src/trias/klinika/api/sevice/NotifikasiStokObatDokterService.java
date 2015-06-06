@@ -10,10 +10,12 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import trias.klinika.api.entitas.InventoriObatDokterEntitas;
+import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 /**
  *
  * @author User
  */
-public interface NotifikasiStokObatDokter {
-    
+public interface NotifikasiStokObatDokterService extends Remote{
+    String[] StokObatDokter(String[] IdObat) throws RemoteException;
+    String[] StokObatDokter(String[] IdObat, String tanggal ) throws RemoteException;
 }

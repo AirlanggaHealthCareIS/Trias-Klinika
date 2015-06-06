@@ -25,4 +25,5 @@ public interface ServiceResep extends Remote{
     ResepEntity ID_Pasien (ResepEntity RE) throws RemoteException;
     String auto_increment_NoResep(String  airesep) throws RemoteException;
     String pasien(String id) throws RemoteException;
+     public void Update (String id_pemeriksaan , String id_resep ) throws RemoteException;
 }
