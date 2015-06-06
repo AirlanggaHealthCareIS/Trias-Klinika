@@ -3,13 +3,25 @@
  * and open the template in the editor.
  */
 package trias.klinika.client.reservasi;
-
+import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import trias.klinika.api.entitas.LaporanPasienEntitas;
+import trias.klinika.api.sevice.LaporanPasienService;
 /**
  *
  * @author iqbal
  */
 public class Laporan_Pasien extends javax.swing.JInternalFrame {
     int a;
+    private LaporanPasienEntitas LPE = new LaporanPasienEntitas();
 
     /**
      * Creates new form Laporan_Pasien
@@ -31,8 +43,8 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tahun = new javax.swing.JComboBox();
-        grafik = new javax.swing.JButton();
         cetak = new javax.swing.JButton();
+        Spesialis = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
@@ -61,13 +73,13 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         getContentPane().add(tahun);
         tahun.setBounds(10, 410, 88, 20);
 
-        grafik.setText("Lihat Grafiik");
-        getContentPane().add(grafik);
-        grafik.setBounds(110, 410, 89, 23);
-
         cetak.setText("Cetak");
         getContentPane().add(cetak);
         cetak.setBounds(220, 390, 61, 49);
+
+        Spesialis.setText("Spesialis");
+        getContentPane().add(Spesialis);
+        Spesialis.setBounds(110, 410, 73, 23);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameReservasi.png"))); // NOI18N
         getContentPane().add(jLabel4);
@@ -77,12 +89,12 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 public void reset(){
         tahun.setEnabled(false);
-        grafik.setEnabled(false);
+        Spesialis.setEnabled(false);
         cetak.setEnabled(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Spesialis;
     private javax.swing.JButton cetak;
-    private javax.swing.JButton grafik;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
