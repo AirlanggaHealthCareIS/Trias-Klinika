@@ -398,8 +398,8 @@ public class Login extends javax.swing.JFrame implements Runnable {
                     case "KirimIDPemeriksaanImin":
                         menudokter.kirimanAntreanImin(msg.isi, msg.pengirim);
                         break;
-                    case "Resep":
-                        menuapotek.kirimobat(msg.isi, msg.pengirim);
+//                    case "Resep":
+//                        menuapotek.kirimobat(msg.isi, msg.pengirim);
                 }
             }
             catch (IOException ex) {
