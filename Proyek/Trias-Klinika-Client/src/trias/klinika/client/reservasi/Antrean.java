@@ -32,6 +32,16 @@ import trias.klinika.client.tabel.TabelPasien;
 import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
 import trias.klinika.api.pesan.pesan;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 public class Antrean extends javax.swing.JInternalFrame {
 
     public TabelDokter tabeldokter = new TabelDokter();
@@ -47,15 +57,44 @@ public class Antrean extends javax.swing.JInternalFrame {
     private boolean psi = false;
     private utamaReservasi UR;
     
-    public Antrean(ListPetugasService LPS, AntreanServis AS, utamaReservasi UR)throws RemoteException {
+    
+    public Antrean(ListPetugasService LPS, final AntreanServis AS, utamaReservasi UR)throws RemoteException {
 
+        initComponents();
+        boxNombre.getEditor().getEditorComponent().addKeyListener(new KeyAdapter(){
+        
+            public void keyReleased(KeyEvent evt){
+            
+                String cadenaEscrita = boxNombre.getEditor().getItem().toString();
+                
+                if(evt.getKeyCode()>=65 && evt.getKeyCode()<=90 || evt.getKeyCode()>=96&&evt.getKeyCode()<=105 || evt.getKeyCode()==8){
+                    try {
+                        boxNombre.setModel(AS.getLista(cadenaEscrita));
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(boxNombre.getItemCount()>0){
+                        boxNombre.showPopup();
+                        if(evt.getKeyCode()!=8){
+                            ((JTextComponent)boxNombre.getEditor().getEditorComponent()).select(cadenaEscrita.length(), boxNombre.getEditor().getItem().toString().length());
+                        }else{
+                            boxNombre.getEditor().setItem(cadenaEscrita);
+                        }
+                    }else{
+                        boxNombre.addItem(cadenaEscrita);
+                    }
+                }
+                
+            }
+        
+        });
+        
         setTanggal(jLabel1);
         list = new ArrayList<>();
         this.LPS=LPS;
         this.AS=AS;
         this.UR=UR;
-        initComponents();
-        
+                
         tabeldokter.setData(LPS.AmbilDokterOnline());
         tabelkanan.setModel(tabeldokter);
         tomboltambah.setEnabled(false);
@@ -65,9 +104,11 @@ public class Antrean extends javax.swing.JInternalFrame {
         reset.setEnabled(false);
         jTextField1.setVisible(false);
         
+        
+        
     }
-
-         private void initiateComboBox1(){
+    
+        private void initiateComboBox1(){
         PilihDokter.removeAllItems();
              List<Dokter> pd;
         pd = tabeldokter.getDataDokter();
@@ -94,8 +135,8 @@ public class Antrean extends javax.swing.JInternalFrame {
         tomboltambah = new javax.swing.JButton();
         kirim = new javax.swing.JButton();
         reset = new javax.swing.JButton();
-        input = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
+        boxNombre = new javax.swing.JComboBox();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1146, 577));
@@ -249,10 +290,9 @@ public class Antrean extends javax.swing.JInternalFrame {
             }
         });
 
-        input.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        input.setForeground(new java.awt.Color(0, 0, 204));
-
         jTextField1.setText("jTextField1");
+
+        boxNombre.setEditable(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,7 +309,7 @@ public class Antrean extends javax.swing.JInternalFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(boxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -301,7 +341,7 @@ public class Antrean extends javax.swing.JInternalFrame {
                             .addComponent(PilihDokter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(kirim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(boxNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,18 +490,18 @@ public class Antrean extends javax.swing.JInternalFrame {
         kirim.setEnabled(false);
         reset.setEnabled(false);
         try {
-            String idpas = input.getText();
+            String idpas = boxNombre.getSelectedItem().toString();
             String iddok = tabeldokter.getDataDokter().get(PilihDokter.getSelectedIndex()).getid_dokter();
             List<PasienEntity> idpasiens = AS.getlistidpasien();
             
             for (int emboh = 0; emboh < idpasiens.size(); emboh++) {
-                if(idpasiens.get(emboh).getid_pasien().toString().equals(input.getText())){
+                if(idpasiens.get(emboh).getid_pasien().toString().equals(boxNombre.getSelectedItem().toString())){
                     psi = true;
                 }
                 System.out.println("parmintul"+idpasiens.get(emboh).getid_pasien().toString());
             }
             if(!psi){
-                JOptionPane.showMessageDialog(null, "ID Pasien "+ input.getText() +" tidak ada dalam database", "ERROR", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(null, "ID Pasien "+ boxNombre.getSelectedItem().toString() +" tidak ada dalam database", "ERROR", JOptionPane.OK_OPTION);
             
             }
             else if(psi){
@@ -510,20 +550,16 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_iminActionPerformed
 
     private void kirimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimActionPerformed
-
-            PemeriksaanEntitas a = new PemeriksaanEntitas();
+        UR.login.kirim(new pesan("KirimIDPemeriksaanImin", UR.LE.getusername(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_DOKTER()));
+        
         try {
-            
-            UR.login.kirim(new pesan("KirimIDPemeriksaanImin", UR.LE.getusername(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_DOKTER()));
-        JOptionPane.showMessageDialog(null, "ID Pasien" +tabelpasien.get(tabelkiri.getSelectedRow()).getID_PASIEN()+" kayaknya berhasil dikirim ke dokter "+tabeldokter.get(tabelkanan.getSelectedRow()).getnama_dokter());
-        AS.updateStatus2(a, tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN());
-            
+            PemeriksaanEntitas a = new PemeriksaanEntitas();
+            JOptionPane.showMessageDialog(null, "ID Pasien" +tabelpasien.get(tabelkiri.getSelectedRow()).getID_PASIEN()+" kayaknya berhasil dikirim ke dokter "+tabeldokter.get(tabelkanan.getSelectedRow()).getnama_dokter());
+             AS.updateStatus(a, tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN());
+             refresh();
         } catch (RemoteException ex) {
             Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        refresh();
-        
         
     }//GEN-LAST:event_kirimActionPerformed
 
@@ -578,8 +614,8 @@ public class Antrean extends javax.swing.JInternalFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox PilihDokter;
+    private javax.swing.JComboBox boxNombre;
     private javax.swing.JTextField imin;
-    private javax.swing.JTextField input;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;

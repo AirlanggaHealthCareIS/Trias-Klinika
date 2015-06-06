@@ -30,6 +30,7 @@ rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
 String airekam;
 String IDpasienkirim = "";
 
+
 public rekammedis(String IDPasien){
     IDpasienkirim = IDPasien;
 }
@@ -46,6 +47,12 @@ public rekammedis(String IDPasien){
         alamat.setText(pe.getAlamat());
         noTlp.setText(pe.getNoTLP());
         gol.setText(pe.getGolDarah());
+        ID.setEditable(false);
+        nama.setEditable(false);
+        tanggalLahir.setEditable(false);
+        alamat.setEditable(false);
+        noTlp.setEditable(false);
+        gol.setEditable(false);
    
         try {
             rm.setData(this.sr.getdatarekam(ID.getText()));
@@ -107,7 +114,6 @@ public rekammedis(String IDPasien){
         jLabel16 = new javax.swing.JLabel();
         reset = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
         setPreferredSize(new java.awt.Dimension(1147, 557));
@@ -312,15 +318,6 @@ public rekammedis(String IDPasien){
         getContentPane().add(jLabel17);
         jLabel17.setBounds(0, 150, 1147, 557);
 
-        jButton1.setText("next");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(280, 70, 55, 23);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -396,11 +393,6 @@ private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:e
   
       
 }//GEN-LAST:event_resetActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 public void setHistory (){
         int row = history.getSelectedRow();
         rekammedisEntyty re = new rekammedisEntyty ();
@@ -500,7 +492,6 @@ private boolean CheckNumber(String a){
     private javax.swing.JTextField gol;
     private javax.swing.JTable history;
     private javax.swing.JTextField irm;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -12,12 +12,53 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import trias.klinika.api.entitas.PasienEntity;
 import trias.klinika.api.sevice.AntreanServis;
 
 
 public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
     public QueryAntrean() throws RemoteException {
+    }
+    
+    Koneksidatabase conexion = new Koneksidatabase();
+    Statement st;
+    ResultSet res;
+    
+    @Override
+    public DefaultComboBoxModel getLista(String cadenaEscrita) throws RemoteException {
+        System.out.println("Client melakukan proses get-all");
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            try (ResultSet result = statement.executeQuery("SELECT ID_PASIEN FROM PASIEN WHERE ID_PASIEN LIKE '%"+cadenaEscrita+"%'")) {
+                PasienEntity PasienEntity = new PasienEntity();
+                result.first();
+                    
+    //                PasienEntity.setid_pasien(result.getString("ID_PASIEN"));
+                    while(result.next()){
+                    modelo.addElement(result.getString("ID_PASIEN"));
+                    }
+            }
+            
+            return modelo;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
     }
         
     @Override

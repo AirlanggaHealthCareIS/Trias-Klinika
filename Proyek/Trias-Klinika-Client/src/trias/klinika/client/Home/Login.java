@@ -18,6 +18,8 @@ import java.rmi.registry.Registry;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
@@ -53,6 +55,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
     private Date jam;
     private String cek;
    
+   
 
     /**
      * Creates new form Login
@@ -68,6 +71,9 @@ public class Login extends javax.swing.JFrame implements Runnable {
         }
         initComponents();
     }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,6 +166,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         cek = Cek(username.getText(), password.getText());
+        sonido("LYNC_joinedconference");
         if (!"Sukses".equals(cek)) {
             PopUpPesan(cek);
         }
@@ -270,7 +277,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
             case "dokter":{
                 menudokter = new UtamaDokter(users, this);
                 menudokter.setVisible(true);
-                menudokter.NotifObatExpired();
+//                menudokter.NotifObatExpired();
                 break;
             }
             case "reservasi":{
@@ -411,4 +418,18 @@ public class Login extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel user;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
+
+     public Clip clip;
+    public String ruta="/suara/";
+    public void sonido(String archivo)
+    {
+//        JOptionPane.showMessageDialog(null, "hai bro");
+        try{
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo + ".wav")));
+            clip.start();
+        }catch(Exception e){
+            
+        }
+    }
 }

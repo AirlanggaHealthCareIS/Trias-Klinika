@@ -22,8 +22,11 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
@@ -34,6 +37,7 @@ import trias.klinika.api.sevice.NotifikasiObatExpiredService;
 import trias.klinika.client.Home.Login;
 import trias.klinika.client.Home.Splash;
 import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
+import trias.klinika.client.apotek.intro;
 /**
  *
  * @author Azmil
@@ -50,12 +54,16 @@ public class UtamaApotek extends javax.swing.JFrame {
     LaporanKeuanganApotek laporankeuanganapotek;
     private InventoryObatApotekService IOAS;
     private LaporanKeuanganService LKS;
+    private JInternalFrame internalFrame0 = new JInternalFrame("Frame Itro");
     private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventory Obat");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Laporan Keuangan obat");
     LoginEntitas LE;
     Login login;
+    intro introw;
    
-
+    boolean move_left = true;
+    public Clip clip;
+    public String ruta="/suara/";
 
 
     public UtamaApotek(LoginEntitas LE, Login login) throws RemoteException,NotBoundException{
@@ -70,8 +78,10 @@ public class UtamaApotek extends javax.swing.JFrame {
         interfaceObat = new InventoryObatApotek (service10);
         service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
         laporankeuanganapotek = new LaporanKeuanganApotek(service9_c_1);
+        introw = new intro();
         internal_frame();
         nama.setText(localhost);
+        nama1.setText("SELAMAT DATANG "+LE.getnamauser().toUpperCase());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -79,6 +89,47 @@ public class UtamaApotek extends javax.swing.JFrame {
         setLocation(
         (screenSize.width - frameSize.width) / 2,
         (screenSize.height - frameSize.height) / 2);
+        
+        setLocationRelativeTo(null);
+        setResizable(false);
+        
+        java.util.Timer timer = new java.util.Timer();
+        TimerTask task =  new TimerTask(){
+            
+            public void run()
+            {
+                   if(move_left==true)
+                   {
+                       nama1.setLocation(nama1.getLocation().x-5, nama1.getLocation().y);
+                       if(nama1.getLocation().x<0)
+                       {
+                           move_left = false;
+                       }
+                   }
+                   else if(move_left==false)
+                   {
+                       nama1.setLocation(nama1.getLocation().x+5, nama1.getLocation().y);
+                       if(nama1.getLocation().x>1366)
+                       {
+                           move_left = true;
+                       }
+                   }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 100);
+        
+    }
+    
+    public void sonido(String archivo)
+    {
+//        JOptionPane.showMessageDialog(null, "hai bro");
+        try{
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo + ".wav")));
+            clip.start();
+        }catch(Exception e){
+            
+        }
     }
 
     /**
@@ -90,25 +141,17 @@ public class UtamaApotek extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        inventory = new javax.swing.JButton();
         nama = new javax.swing.JTextField();
         internalFrame = new javax.swing.JDesktopPane();
-        laporankeuangan = new javax.swing.JButton();
+        nama1 = new javax.swing.JLabel();
         logout = new javax.swing.JButton();
+        laporankeuangan = new javax.swing.JButton();
+        inventory = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1147, 768));
         getContentPane().setLayout(null);
-
-        inventory.setText("Inventory Obat Apotek");
-        inventory.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inventoryActionPerformed(evt);
-            }
-        });
-        getContentPane().add(inventory);
-        inventory.setBounds(20, 340, 170, 40);
 
         nama.setText("APOTEK");
         nama.setEnabled(false);
@@ -131,14 +174,11 @@ public class UtamaApotek extends javax.swing.JFrame {
         getContentPane().add(internalFrame);
         internalFrame.setBounds(220, 190, 1147, 570);
 
-        laporankeuangan.setText("Laporan Keuangan Apotek");
-        laporankeuangan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                laporankeuanganActionPerformed(evt);
-            }
-        });
-        getContentPane().add(laporankeuangan);
-        laporankeuangan.setBounds(20, 200, 170, 40);
+        nama1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        nama1.setForeground(new java.awt.Color(255, 255, 255));
+        nama1.setText("jLabel1");
+        getContentPane().add(nama1);
+        nama1.setBounds(10, 150, 530, 28);
 
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +187,25 @@ public class UtamaApotek extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout);
-        logout.setBounds(20, 270, 170, 40);
+        logout.setBounds(20, 350, 180, 50);
+
+        laporankeuangan.setText("Laporan Keuangan Apotek");
+        laporankeuangan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laporankeuanganActionPerformed(evt);
+            }
+        });
+        getContentPane().add(laporankeuangan);
+        laporankeuangan.setBounds(20, 200, 180, 50);
+
+        inventory.setText("Inventory Obat Apotek");
+        inventory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inventoryActionPerformed(evt);
+            }
+        });
+        getContentPane().add(inventory);
+        inventory.setBounds(20, 270, 180, 50);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -159,25 +217,31 @@ public class UtamaApotek extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void inventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryActionPerformed
-       try {
-           internalFrame1.setSelected(true);
-       } catch (Exception ex){
-           JOptionPane.showMessageDialog(null, ex);        
-       }
-    }//GEN-LAST:event_inventoryActionPerformed
-
     private void laporankeuanganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laporankeuanganActionPerformed
+        // TODO add your handling code here:
         try{
             internalFrame2.setSelected(true);
+            sonido("LYNC_joinedconference");
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_laporankeuanganActionPerformed
 
-    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+    private void inventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventoryActionPerformed
+        // TODO add your handling code here:
         try {
-            login.getService5().Ubah_Status_Logout(LE);        
+           internalFrame1.setSelected(true);
+           sonido("LYNC_joinedconference");
+       } catch (Exception ex){
+           JOptionPane.showMessageDialog(null, ex);        
+       }
+    }//GEN-LAST:event_inventoryActionPerformed
+
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        // TODO add your handling code here:
+        try {
+            login.getService5().Ubah_Status_Logout(LE); 
+            sonido("LYNC_joinedconference");
             login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Server"));
             login.dispose();
             this.dispose();
@@ -187,6 +251,21 @@ public class UtamaApotek extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutActionPerformed
 
 public void internal_frame (){
+    
+        internalFrame0.add(introw.getContentPane());
+        internalFrame0.pack();
+        internalFrame0.setSize(1146,577);
+        internalFrame0.setVisible(true);
+        internalFrame.add(internalFrame0);
+        BasicInternalFrameUI ui0 = (BasicInternalFrameUI)internalFrame0.getUI();
+        Container north0 = (Container)ui0.getNorthPane();
+        north0.remove(0);
+        north0.validate();
+        north0.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame0.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame0.getUI()).getNorthPane().removeMouseListener(listener);
+        }
+    
     internalFrame1.add(interfaceObat.getContentPane());
     internalFrame1.pack();
     internalFrame1.setSize(1146,577);
@@ -249,5 +328,6 @@ public String setTanggal () {
     private javax.swing.JButton laporankeuangan;
     private javax.swing.JButton logout;
     private javax.swing.JTextField nama;
+    private javax.swing.JLabel nama1;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,6 +17,8 @@ import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import trias.klinika.server.service.QueryAntrean;
 import trias.klinika.server.service.QueryInventoriObatDokter;
 import trias.klinika.server.service.QueryInventoryObatApotek;
@@ -40,6 +42,7 @@ class ServerThread extends Thread {
     public String username = "";
     public ObjectInputStream streamIn  =  null;
     public ObjectOutputStream streamOut = null;
+    
 
     public ServerThread(Server _server, Socket _socket){  
     	super();
@@ -88,7 +91,11 @@ class ServerThread extends Thread {
         if (streamIn != null)  streamIn.close();
         if (streamOut != null) streamOut.close();
     }
+    
+    
 }
+
+
 
 /**
  *
@@ -445,6 +452,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
 
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
         riwayat.add("Server Aktif "+setTanggal()+" "+setJam(jam));
+        sonido("LYNC_joinedconference");
         try {
             this.setTitle(InetAddress.getLocalHost().toString());
         } 
@@ -456,6 +464,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         } catch (RemoteException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
+        status.setEnabled(false);
     }//GEN-LAST:event_statusActionPerformed
 
     /**
@@ -520,6 +529,19 @@ public class Server extends javax.swing.JFrame implements Runnable {
 	    catch(Exception ioe){ 
                 riwayat.add("\nServer accept error: \n");
 	    }
+        }
+    }
+    public Clip clip;
+    public String ruta="/suara/";
+    public void sonido(String archivo)
+    {
+//        JOptionPane.showMessageDialog(null, "hai bro");
+        try{
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo + ".wav")));
+            clip.start();
+        }catch(Exception e){
+            
         }
     }
 }

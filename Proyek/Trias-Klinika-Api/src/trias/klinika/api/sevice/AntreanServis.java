@@ -3,6 +3,7 @@ package trias.klinika.api.sevice;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import trias.klinika.api.entitas.Dokter;
 import trias.klinika.api.entitas.PasienEntity;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
@@ -22,6 +23,7 @@ public interface AntreanServis extends Remote{
     void updateStatus(PemeriksaanEntitas suparmin, String id_pemeriksaan) throws RemoteException;
     void updateStatus2(PemeriksaanEntitas suparmin, String id_pemeriksaan) throws RemoteException;
     PasienEntity getpasienkanan(String id) throws RemoteException;
+    DefaultComboBoxModel getLista(String cadenaEscrita) throws RemoteException;
     List<PemeriksaanEntitas> getpasienkiri(String id, String tgl) throws RemoteException;
     
     List<Dokter> getDokters() throws RemoteException;

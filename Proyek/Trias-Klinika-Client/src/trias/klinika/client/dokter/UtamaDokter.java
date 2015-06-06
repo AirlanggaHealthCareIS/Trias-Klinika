@@ -20,19 +20,17 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import trias.klinika.api.entitas.InventoryObatApotekEntitas;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoriObatDokterService;
 import trias.klinika.api.sevice.LaporanKeuanganDokterService;
 import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
-import trias.klinika.api.sevice.NotifikasiObatExpiredService;
 import trias.klinika.api.sevice.serviceRekam;
 import trias.klinika.client.tabel.tabelrekammedis;
 import trias.klinika.client.dokter.rekammedis;
@@ -43,6 +41,7 @@ import trias.klinika.api.sevice.ServiceResep;
 import trias.klinika.client.Home.Login;
 import trias.klinika.client.Home.Splash;
 import trias.klinika.client.dokter.input_resep;
+import trias.klinika.client.apotek.intro;
 /**
  *
  * @author Lenovo
@@ -56,7 +55,6 @@ public class UtamaDokter extends javax.swing.JFrame {
     final serviceRekam service6;
     final ServiceResep service7;
     final LaporanKeuanganDokterService service9_b_2;
-    final NotifikasiObatExpiredService service11_1;
     Inventori_Obat_Dokter iod ;
     form_pembayaran fp;
     rekammedis sr;
@@ -70,6 +68,13 @@ public class UtamaDokter extends javax.swing.JFrame {
     private String[] isi;
     LoginEntitas LE;
     Login login;
+    intro introw;
+    
+    boolean move_left = true;
+    public Clip clip;
+    public String ruta="/suara/";
+    
+    private JInternalFrame internalFrame0 = new JInternalFrame("Frame Itro");
     private JInternalFrame internalFrame1 = new JInternalFrame("Frame Inventori Obat Dokter");
     private JInternalFrame internalFrame2 = new JInternalFrame("Frame Pembayaran");
     private JInternalFrame internalFrame3 = new JInternalFrame("Data Pasien");
@@ -88,15 +93,15 @@ public class UtamaDokter extends javax.swing.JFrame {
         service6 = (serviceRekam)registry.lookup("service6");
         service7 = (ServiceResep)registry.lookup("service7");
         service9_b_2 = (LaporanKeuanganDokterService)registry.lookup("service9_b_2");
-        service11_1 = (NotifikasiObatExpiredService)registry.lookup("service11_1");
         
+        introw = new intro();
         iod = new Inventori_Obat_Dokter(service13, this);
         fp = new form_pembayaran(service4, this);
         sr = new rekammedis(service6);
         ir = new input_resep(service7, this);
         lkd = new Laporan_keuangan_dokter(service9_b_2, this);
         internal_frame();
-        nama.setText(LE.getnamauser());
+        nama.setText("SELAMAT DATANG "+LE.getnamauser().toUpperCase());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
         IDpemeriksaan.setVisible(false);
@@ -106,17 +111,58 @@ public class UtamaDokter extends javax.swing.JFrame {
         
         ImageIcon ico = new ImageIcon("src/image/imin.png");
         setIconImage(ico.getImage());
+        
+        setLocationRelativeTo(null);
+        setResizable(false);
+        
+        java.util.Timer timer = new java.util.Timer();
+        TimerTask task =  new TimerTask(){
+            
+            public void run()
+            {
+                   if(move_left==true)
+                   {
+                       nama.setLocation(nama.getLocation().x-5, nama.getLocation().y);
+                       if(nama.getLocation().x<0)
+                       {
+                           move_left = false;
+                       }
+                   }
+                   else if(move_left==false)
+                   {
+                       nama.setLocation(nama.getLocation().x+5, nama.getLocation().y);
+                       if(nama.getLocation().x>1366)
+                       {
+                           move_left = true;
+                       }
+                   }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 100);
  
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         setLocation(
         (screenSize.width - frameSize.width) / 2,
         (screenSize.height - frameSize.height) / 2);
+        
         if(sr.ID.getText()!=""){
             rekamedistombol.setEnabled(true);
             byr.setEnabled(true);
             rsp.setEnabled(true);
         
+        }
+    }
+    
+    public void sonido(String archivo)
+    {
+//        JOptionPane.showMessageDialog(null, "hai bro");
+        try{
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo + ".wav")));
+            clip.start();
+        }catch(Exception e){
+            
         }
     }
 
@@ -132,15 +178,15 @@ public class UtamaDokter extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jDesktopPane2 = new javax.swing.JDesktopPane();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        byr = new javax.swing.JToggleButton();
-        rekamedistombol = new javax.swing.JToggleButton();
-        rsp = new javax.swing.JToggleButton();
-        LaporanKeuanganDokter = new javax.swing.JToggleButton();
+        jButton1 = new javax.swing.JButton();
+        byr = new javax.swing.JButton();
+        rekamedistombol = new javax.swing.JButton();
+        rsp = new javax.swing.JButton();
+        LaporanKeuanganDokter = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
-        IDpemeriksaan = new javax.swing.JTextField();
+        IDpemeriksaan = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,16 +200,16 @@ public class UtamaDokter extends javax.swing.JFrame {
 
         jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
         jPanel1.add(jDesktopPane2);
-        jDesktopPane2.setBounds(155, 0, 1147, 557);
+        jDesktopPane2.setBounds(200, 0, 1147, 557);
 
-        jToggleButton1.setText("Inventori Obat Dokter");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Inventory Obat Dokter");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jToggleButton1);
-        jToggleButton1.setBounds(10, 0, 139, 46);
+        jPanel1.add(jButton1);
+        jButton1.setBounds(20, 0, 150, 50);
 
         byr.setText("Pembayaran");
         byr.addActionListener(new java.awt.event.ActionListener() {
@@ -172,7 +218,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(byr);
-        byr.setBounds(10, 50, 139, 41);
+        byr.setBounds(20, 70, 150, 50);
 
         rekamedistombol.setText("Rekam Medis");
         rekamedistombol.addActionListener(new java.awt.event.ActionListener() {
@@ -181,7 +227,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(rekamedistombol);
-        rekamedistombol.setBounds(10, 100, 139, 41);
+        rekamedistombol.setBounds(20, 140, 150, 50);
 
         rsp.setText("Resep");
         rsp.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +236,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(rsp);
-        rsp.setBounds(10, 150, 139, 41);
+        rsp.setBounds(20, 210, 150, 50);
 
         LaporanKeuanganDokter.setText("Laporan");
         LaporanKeuanganDokter.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +245,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(LaporanKeuanganDokter);
-        LaporanKeuanganDokter.setBounds(10, 200, 140, 40);
+        LaporanKeuanganDokter.setBounds(20, 280, 150, 50);
 
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -208,7 +254,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(logout);
-        logout.setBounds(10, 260, 140, 40);
+        logout.setBounds(20, 350, 150, 50);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jPanel1.add(jLabel2);
@@ -221,11 +267,13 @@ public class UtamaDokter extends javax.swing.JFrame {
         nama.setForeground(new java.awt.Color(255, 255, 255));
         nama.setText("jLabel1");
         getContentPane().add(nama);
-        nama.setBounds(198, 160, 180, 28);
+        nama.setBounds(20, 160, 530, 28);
 
-        IDpemeriksaan.setText("PE0004");
+        IDpemeriksaan.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        IDpemeriksaan.setForeground(new java.awt.Color(255, 255, 51));
+        IDpemeriksaan.setText("jLabel3");
         getContentPane().add(IDpemeriksaan);
-        IDpemeriksaan.setBounds(640, 170, 80, 20);
+        IDpemeriksaan.setBounds(600, 160, 180, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -234,42 +282,22 @@ public class UtamaDokter extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        try {
-            internalFrame1.setSelected(true);
-        } catch(Exception ex) {
-          JOptionPane.showMessageDialog(null, ex);
-        }  
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
-    private void byrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byrActionPerformed
-        try {
-            internalFrame2.setSelected(true);
-        } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+    public void internal_frame() {
+        
+        internalFrame0.add(introw.getContentPane());
+        internalFrame0.pack();
+        internalFrame0.setSize(1146,577);
+        internalFrame0.setVisible(true);
+        jDesktopPane2.add(internalFrame0);
+        BasicInternalFrameUI ui0 = (BasicInternalFrameUI)internalFrame0.getUI();
+        Container north0 = (Container)ui0.getNorthPane();
+        north0.remove(0);
+        north0.validate();
+        north0.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame0.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame0.getUI()).getNorthPane().removeMouseListener(listener);
         }
         
-    }//GEN-LAST:event_byrActionPerformed
-
-private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekamedistombolActionPerformed
-    try {
-        internalFrame3.setSelected(true);
-    } catch(Exception ex) {
-        JOptionPane.showMessageDialog(null, ex);
-    }
-}//GEN-LAST:event_rekamedistombolActionPerformed
-
-    private void rspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rspActionPerformed
-        try {
-            internalFrame4.setSelected(true);
-           ir.ID_Pemeriksaan.setText(IDpemeriksaan.getText());
-           ir.setIDPasien();
-        } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-    }//GEN-LAST:event_rspActionPerformed
-
-    public void internal_frame() {
         internalFrame1.add(iod.getContentPane());
         internalFrame1.pack();
         internalFrame1.setSize(1146,577);
@@ -340,9 +368,68 @@ private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//G
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().removeMouseListener(listener);
         }
     }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            internalFrame1.setSelected(true);
+            sonido("LYNC_joinedconference");
+
+        } catch(Exception ex) {
+          JOptionPane.showMessageDialog(null, ex);
+        } 
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void byrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byrActionPerformed
+        // TODO add your handling code here:
+        try {
+            internalFrame2.setSelected(true);
+                        sonido("LYNC_joinedconference");
+
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_byrActionPerformed
+
+    private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekamedistombolActionPerformed
+        // TODO add your handling code here:
+        try {
+        internalFrame3.setSelected(true);
+                    sonido("LYNC_joinedconference");
+
+        sr.ID.setText(IDpemeriksaan.getText());
+    } catch(Exception ex) {
+        JOptionPane.showMessageDialog(null, ex);
+    }
+    }//GEN-LAST:event_rekamedistombolActionPerformed
+
+    private void rspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rspActionPerformed
+        // TODO add your handling code here:
+        try {
+                        sonido("LYNC_joinedconference");
+
+            internalFrame4.setSelected(true);
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_rspActionPerformed
+
+    private void LaporanKeuanganDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaporanKeuanganDokterActionPerformed
+        // TODO add your handling code here:
+         try {
+            internalFrame5.setSelected(true);
+                        sonido("LYNC_joinedconference");
+
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_LaporanKeuanganDokterActionPerformed
+
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+        // TODO add your handling code here:
         try {
             login.getService5().Ubah_Status_Logout(LE);
+                        sonido("LYNC_joinedconference");
+
             login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Reservasi"));
             login.dispose();
             this.dispose();
@@ -351,58 +438,24 @@ private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//G
         }
     }//GEN-LAST:event_logoutActionPerformed
 
-    private void LaporanKeuanganDokterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaporanKeuanganDokterActionPerformed
-        // TODO add your handling code here:
-        try {
-            internalFrame5.setSelected(true);
-        } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-    }//GEN-LAST:event_LaporanKeuanganDokterActionPerformed
-
-    public void NotifObatExpired() {
-        List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
-        String [] Id_Obat = new String[0];
-        String pesan = "List Obat Yang Terindikasi Kadaluarsa : \n";
-        try {
-            Id_Obat = service11_1.ObatDokterExpired(Id_Obat, setTanggal());
-            if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
-                for (int i=0;i<Id_Obat.length;i++) {
-                    list.add(service11_1.getobat(Id_Obat[i]));
-                    pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";
-                }
-                pesan = pesan + "Silahkan Melakukan Tindakan Atas Hal Ini";
-                JOptionPane.showMessageDialog(this, pesan, "Notifikasi Obat Expired",2);
-            }
-        } catch (RemoteException ex) {
-            Logger.getLogger(UtamaDokter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public String setTanggal () {
-        Date skrg = new java.util.Date();
-        java.text.SimpleDateFormat kal = new
-        java.text.SimpleDateFormat("yyyy-MM-dd");
-        return kal.format(skrg);
-    }
-    
-    public void kirimanAntreanImin (String Id, String Nama) {
-        JOptionPane.showMessageDialog(null, "Pasien baru siap diperiksa");
-        IDpemeriksaan.setText(Id);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField IDpemeriksaan;
-    private javax.swing.JToggleButton LaporanKeuanganDokter;
-    private javax.swing.JToggleButton byr;
+    private javax.swing.JLabel IDpemeriksaan;
+    private javax.swing.JButton LaporanKeuanganDokter;
+    private javax.swing.JButton byr;
+    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JButton logout;
     private javax.swing.JLabel nama;
-    private javax.swing.JToggleButton rekamedistombol;
-    private javax.swing.JToggleButton rsp;
+    private javax.swing.JButton rekamedistombol;
+    private javax.swing.JButton rsp;
     // End of variables declaration//GEN-END:variables
+public void kirimanAntreanImin (String Id, String Nama) {
+        JOptionPane.showMessageDialog(null, "Pasien baru siap diperiksa");
+
+            IDpemeriksaan.setText(Id);
+
+    }
 }

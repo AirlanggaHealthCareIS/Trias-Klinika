@@ -19,8 +19,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.PendaftaranService;
@@ -65,6 +68,10 @@ public class utamaReservasi extends javax.swing.JFrame {
     private JInternalFrame internalFrame5 = new JInternalFrame ("laporan Reservasi");
     Login login;
     
+    boolean move_left = true;
+    public Clip clip;
+    public String ruta="/suara/";
+    
     /**
      * Creates new form Utama
      * @param LE
@@ -91,12 +98,40 @@ public class utamaReservasi extends javax.swing.JFrame {
         LP = new TriasKlinika_ListPembayaran(service12);
         introw = new intro();
         internal_frame();
-        nama.setText(LE.getnamauser());
+        nama.setText("SELAMAT DATANG "+LE.getnamauser().toUpperCase());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
         ImageIcon ico = new ImageIcon("src/image/imin.png");
         setIconImage(ico.getImage());
         
+        setLocationRelativeTo(null);
+        setResizable(false);
+        
+        java.util.Timer timer = new java.util.Timer();
+        TimerTask task =  new TimerTask(){
+            
+            public void run()
+            {
+                   if(move_left==true)
+                   {
+                       nama.setLocation(nama.getLocation().x-5, nama.getLocation().y);
+                       if(nama.getLocation().x<0)
+                       {
+                           move_left = false;
+                       }
+                   }
+                   else if(move_left==false)
+                   {
+                       nama.setLocation(nama.getLocation().x+5, nama.getLocation().y);
+                       if(nama.getLocation().x>1366)
+                       {
+                           move_left = true;
+                       }
+                   }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 100);
+ 
  
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //        Dimension frameSize = getSize();
@@ -105,6 +140,18 @@ public class utamaReservasi extends javax.swing.JFrame {
 //        (screenSize.height - frameSize.height) / 2);
    
 //        
+    }
+    
+    public void sonido(String archivo)
+    {
+//        JOptionPane.showMessageDialog(null, "hai bro");
+        try{
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo + ".wav")));
+            clip.start();
+        }catch(Exception e){
+            
+        }
     }
 
     /**
@@ -200,7 +247,8 @@ public class utamaReservasi extends javax.swing.JFrame {
                 .addGap(108, 108, 108))
         );
 
-        nama.setFont(new java.awt.Font("Times New Roman", 0, 18));
+        nama.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        nama.setForeground(new java.awt.Color(0, 0, 204));
         nama.setText("jLabel1");
 
         jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
@@ -218,29 +266,31 @@ public class utamaReservasi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 35, Short.MAX_VALUE)
-                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nama)
-                .addGap(0, 1292, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
+                .addGap(67, 67, 67)
                 .addComponent(nama)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
+                        .addGap(32, 32, 32)
                         .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -257,6 +307,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             internalFrame4.setSelected(true);
+            sonido("LYNC_joinedconference");
         }
         catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -267,6 +318,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             internalFrame3.setSelected(true);
+            sonido("LYNC_joinedconference");
         }
         catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -277,6 +329,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             internalFrame2.setSelected(true);
+            sonido("LYNC_joinedconference");
         }
         catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -287,6 +340,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             internalFrame1.setSelected(true);
+            sonido("LYNC_joinedconference");
             Ant.jTextField1.setText(LE.getusername());
         }
         catch(Exception ex) {
@@ -297,6 +351,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         try {
             login.getService5().Ubah_Status_Logout(LE);
+            sonido("LYNC_joinedconference");
             login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Server"));
             login.dispose();
             this.dispose();
@@ -309,6 +364,7 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 // TODO add your handling code here:
         try {
             internalFrame5.setSelected(true);
+            sonido("LYNC_joinedconference");
         
     } catch(Exception ex) {
         JOptionPane.showMessageDialog(null, ex);
