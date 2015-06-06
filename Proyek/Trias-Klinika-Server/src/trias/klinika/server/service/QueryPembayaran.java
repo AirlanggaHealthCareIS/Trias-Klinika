@@ -5,12 +5,16 @@
  */
 package trias.klinika.server.service;
 
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.Statement;
+import java.util.logging.Level;
 import trias.klinika.api.sevice.pembayaranService;
 import trias.klinika.server.utilitas.Koneksidatabase;
 import trias.klinika.api.entitas.PembayaranEntitas;
@@ -218,6 +222,15 @@ public class QueryPembayaran extends UnicastRemoteObject implements pembayaranSe
         }
        return idp; 
 }
+    public void Update (String id_pemeriksaan, String id_pembayaran) throws RemoteException {
+        PreparedStatement statement = null;
+        try{
+            statement = (PreparedStatement) Koneksidatabase.getConnection().prepareStatement("UPDATE `pemeriksaan` SET `ID_PEMBAYARAN` = '"+id_pembayaran+"'WHERE `ID_PEMERIKSAAN` = '"+id_pemeriksaan+"'");
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryPembayaran.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
     
     
