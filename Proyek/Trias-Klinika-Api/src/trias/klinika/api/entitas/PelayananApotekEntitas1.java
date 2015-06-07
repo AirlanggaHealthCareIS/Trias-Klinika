@@ -1,18 +1,16 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package trias.klinika.api.entitas;
-
 import java.io.Serializable;
-
 /**
  *
- * @author TOSHIBA
+ * @author ICUN
  */
-public class PelayananApotekEntitas implements Serializable{
-   
-     private String ID_PEMERIKSAAN;
+public class PelayananApotekEntitas1 implements Serializable {
+ private String ID_PEMERIKSAAN;
      private String ID_RESEP;
     private String ID_APOTEK;
     private String ID_OBAT;

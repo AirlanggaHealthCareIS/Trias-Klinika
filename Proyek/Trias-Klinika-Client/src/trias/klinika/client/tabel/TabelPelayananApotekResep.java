@@ -16,10 +16,10 @@ import trias.klinika.api.entitas.PelayananApotekEntitas;
 
    
  
-public class TabelPelayananApotek extends AbstractTableModel {
+public class TabelPelayananApotekResep extends AbstractTableModel {
     private List<PelayananApotekEntitas> list = new ArrayList<PelayananApotekEntitas>(); 
     
-    public TabelPelayananApotek(){
+    public TabelPelayananApotekResep(){
         
     }
     public PelayananApotekEntitas get(int row){
@@ -46,9 +46,12 @@ public class TabelPelayananApotek extends AbstractTableModel {
                 return "NAMA_DOKTER";
             case 3:
                 return "NAMA_PASIEN";
-                case 4:
-                return "ID_OBAT";
+            case 4:
+                return "NAMA_OBAT";
+            case 5:
+                return "HARGA_OBAT";
             default :
+                
                 return null;
         }
     }
@@ -61,7 +64,7 @@ public class TabelPelayananApotek extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -75,8 +78,10 @@ public class TabelPelayananApotek extends AbstractTableModel {
                 return list.get(rowIndex).getNAMA_DOKTER();
             case 3:
                   return list.get(rowIndex).getNAMA_PASIEN();
-                case 4:
-                  return list.get(rowIndex).getID_OBAT();
+            case 4:
+                  return list.get(rowIndex).getNAMA_OBAT();
+            case 5:
+                  return list.get(rowIndex).getHARGA_OBAT();
             default :
                 return null;
    

@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.net.*;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -33,6 +34,8 @@ import trias.klinika.server.service.QueryPendaftaran;
 import trias.klinika.server.service.QueryResep;
 import trias.klinika.server.service.queryRekammedis;
 import trias.klinika.server.service.queryLaporanKeuanganApotek;
+import trias.klinika.server.service.QueryLaporanPasien;
+import trias.klinika.server.service.QueryNotifikasiStokObatDokter;
 
 class ServerThread extends Thread { 
 	
@@ -138,6 +141,8 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryLaporanKeuanganDokter querylaporankeuangandokter = new QueryLaporanKeuanganDokter() {};
         QueryNotifikasiObatExpired queryNotifikasiObatExpired = new QueryNotifikasiObatExpired() {};
         QueryLaporanKeuanganReservasi queryLaporanKeuanganReservasi = new QueryLaporanKeuanganReservasi();
+        QueryLaporanPasien queryLaporanPasien = new QueryLaporanPasien();
+        QueryNotifikasiStokObatDokter queryNotifikasiStokObatDokter = new QueryNotifikasiStokObatDokter() {};
         
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
@@ -147,12 +152,14 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service6", QueryRekamMedis);
         server.rebind("service7", queryResep);
         server.rebind("service9_a_1", queryLaporanKeuanganReservasi);
+        server.rebind("service9_a_2", queryLaporanPasien);
         server.rebind("service9_c_1", querylaporankeuanganapotek);
         server.rebind("service9_b_2", querylaporankeuangandokter);
         server.rebind("service10", queryobatapotek);
         server.rebind("service11_1", queryNotifikasiObatExpired);
         server.rebind("service12", querylistpembayaran);
         server.rebind("service13", queryInventoriObatDokter);
+        server.rebind("service14", (Remote) queryNotifikasiStokObatDokter);
         System.out.println("Server Berjalan");
         
         clients = new ServerThread [50];

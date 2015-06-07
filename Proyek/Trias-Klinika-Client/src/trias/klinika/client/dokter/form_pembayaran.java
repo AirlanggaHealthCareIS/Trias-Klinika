@@ -184,10 +184,10 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             }
         });
         biayadok.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 biayadokInputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         biayadok.addActionListener(new java.awt.event.ActionListener() {
@@ -223,10 +223,8 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         });
         getContentPane().add(hapus);
         hapus.setBounds(20, 320, 150, 40);
-
-        jLabel10.setIcon(new javax.swing.ImageIcon("D:\\trias.jpg")); // NOI18N
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(980, 0, 154, 90);
+        jLabel10.setBounds(980, 0, 0, 90);
 
         nomert.setEditable(false);
         nomert.addActionListener(new java.awt.event.ActionListener() {
@@ -243,9 +241,9 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         jLabel3.setBounds(390, 20, 300, 42);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel6.setText("ID Pasien");
+        jLabel6.setText("ID Pemeriksaan");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(840, 150, 70, 17);
+        jLabel6.setBounds(840, 150, 110, 17);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(10, 92, 1111, 2);
 
@@ -271,7 +269,6 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
         jScrollPane1.setBounds(10, 220, 1111, 91);
 
         id.setEditable(false);
-        id.setText("P0001");
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idActionPerformed(evt);
@@ -364,6 +361,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
             try {
 
                 ps.Save(PE);
+                ps.Update(UD.IDpemeriksaan.getText(),PE.getnomer_transaksi());
 
                 for(int i=1;i<=tp.getRowCount();i++){
                     RincianPembayaranEntitas RPE = new RincianPembayaranEntitas();
@@ -462,7 +460,7 @@ public class form_pembayaran extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField biayadok;
     private javax.swing.JButton hapus;
-    private javax.swing.JTextField id;
+    public javax.swing.JTextField id;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;

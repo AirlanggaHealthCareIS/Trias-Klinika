@@ -33,7 +33,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT  o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = 'Apotek' AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis");
+            ResultSet result = statement.executeQuery("SELECT  do.id_detail, o.id_obat, o.nama_obat, o.deskripsi_obat, o.harga_obat, do.qty_obat, do.tgl_masuk, do.masa_pakai, jo.nama_jenis, s.nama_spesialis FROM obat as o, detail_obat as do, jenis_obat as jo, spesialis as s WHERE do.ruangan = 'Apotek' AND o.id_jenis = jo.id_jenis AND o.id_obat = do.id_obat AND s.id_spesialis = o.id_spesialis");
             List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
             while (result.next()){
                 InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
@@ -46,7 +46,8 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
                 inventory.setMasaPakai(result.getString("masa_pakai"));
                 inventory.setJenisObat(result.getString("nama_jenis"));
                 inventory.setNamaSpesialis(result.getString("nama_spesialis"));
-
+                inventory.setIdDetailObat(result.getInt("id_detail"));
+                
                 list.add(inventory);
             }
             result.close();
@@ -109,7 +110,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
             statement2.setString(5, inventory.getMasaPakai());
             statement2.setString(6, inventory.getRuangObat());
             
-            System.out.println(statement2.toString());
+            
             statement2.executeUpdate();
         }
         catch (SQLException exception){
@@ -132,8 +133,9 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         System.out.println("Proses Melakukan Update Data Obat");
         PreparedStatement statement = null;
         try {
-            statement = Koneksidatabase.getConnection().prepareStatement("UPDATE obat SET"+inventory.getNamaObat()+"=? WHERE id_detail_obat =?");
-            statement.setInt(1, inventory.getIdDetailObat());
+            statement = Koneksidatabase.getConnection().prepareStatement("UPDATE obat SET harga_obat ="+inventory.getHargaObat()+",deskripsi_obat = '"+inventory.getDeskripsi()+"' WHERE id_obat ='"+inventory.getIdObat()+"'");
+            
+            System.out.println(statement.toString());
             statement.executeUpdate();
         }
         catch (SQLException exception){
@@ -147,8 +149,9 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
         System.out.println("Proses Melakukan Penghapusan data Obat");
         PreparedStatement statement = null;
         try{
-            statement = Koneksidatabase.getConnection().prepareStatement("DELETE FROM detail_obat WHERE id_detail =?");
+            statement = Koneksidatabase.getConnection().prepareStatement("DELETE FROM detail_obat WHERE id_detail =? AND id_obat =?");
             statement.setInt(1,inventory.getIdDetailObat());
+            statement.setString(2,inventory.getIdObat());
             statement.executeUpdate();
         }
         catch (SQLException exception){
@@ -283,8 +286,7 @@ public class QueryInventoryObatApotek extends UnicastRemoteObject implements Inv
                 inventory.setMasaPakai(result.getString("masa_pakai"));
                 inventory.setJenisObat(result.getString("nama_jenis"));
                 inventory.setNamaSpesialis(result.getString("nama_spesialis"));
-                
-                
+            
                 list.add(inventory);
             }
             result.close();
