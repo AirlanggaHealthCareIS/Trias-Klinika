@@ -476,7 +476,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     String pesan = "List Obat Yang berada dalam keadaan kritis : \n";
     try {
         Id_Obat = service11_3.StokObatDokter(Id_Obat, service13.Spesialis(LE.getusername()));
-        if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
+        if (!"Tidak Ada Stok Obat Kritis".equals(Id_Obat[0])) {
             for (int i=0;i<Id_Obat.length;i++) {
                 list.add(service11_3.getobat(Id_Obat[i], service13.Spesialis(LE.getusername())));
                 pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";

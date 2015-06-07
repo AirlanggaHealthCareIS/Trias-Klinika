@@ -36,6 +36,7 @@ import trias.klinika.server.service.QueryResep;
 import trias.klinika.server.service.queryRekammedis;
 import trias.klinika.server.service.queryLaporanKeuanganApotek;
 import trias.klinika.server.service.QueryLaporanPasien;
+import trias.klinika.server.service.QueryNotifikasiStokObatApotek;
 import trias.klinika.server.service.QueryNotifikasiStokObatDokter;
 import trias.klinika.server.service.QueryPelayananApotek;
 
@@ -143,8 +144,8 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryLaporanKeuanganDokter querylaporankeuangandokter = new QueryLaporanKeuanganDokter() {};
         QueryNotifikasiObatExpired queryNotifikasiObatExpired = new QueryNotifikasiObatExpired() {};
         QueryLaporanKeuanganReservasi queryLaporanKeuanganReservasi = new QueryLaporanKeuanganReservasi();
-
         QueryNotifikasiStokObatDokter queryNotifikasiStokObatDokter = new QueryNotifikasiStokObatDokter() {};
+        QueryNotifikasiStokObatApotek queryNotifikasiStokObatApotek = new QueryNotifikasiStokObatApotek() {};
         QueryLaporanDataObatKeluar queryLaporanDataObatKeluar = new QueryLaporanDataObatKeluar();
 
 //        QueryNotifikasiStokObatDokter queryNotifikasiStokObatDokter = new QueryNotifikasiStokObatDokter();
@@ -168,6 +169,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service9_c_2", queryLaporanDataObatKeluar);
         server.rebind("service10", queryobatapotek);
         server.rebind("service11_1", queryNotifikasiObatExpired);
+        server.rebind("service11_2", queryNotifikasiStokObatApotek);
         server.rebind("service11_3", queryNotifikasiStokObatDokter);
         server.rebind("service12", querylistpembayaran);
         server.rebind("service13", queryInventoriObatDokter);

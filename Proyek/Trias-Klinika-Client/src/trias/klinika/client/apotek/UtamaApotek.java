@@ -18,6 +18,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,7 @@ import trias.klinika.api.sevice.InventoryObatApotekService;
 import trias.klinika.client.tabel.tabelInventoryObatApotek;
 import trias.klinika.api.sevice.LaporanKeuanganService;
 import trias.klinika.api.sevice.NotifikasiObatExpiredService;
+import trias.klinika.api.sevice.NotifikasiStokObatApotekService;
 import trias.klinika.client.Home.Login;
 import trias.klinika.client.Home.Splash;
 import trias.klinika.client.tabel.TabelLaporanKeuanganApotek;
@@ -40,6 +42,7 @@ import trias.klinika.client.tabel.TabelPelayananApotek;
 import trias.klinika.client.apotek.intro;
 import trias.klinika.client.reservasi.utamaReservasi;
 import trias.klinika.api.sevice.PelayananApotekService;
+import trias.klinika.client.dokter.UtamaDokter;
 /**
  *
  * @author Azmil
@@ -53,6 +56,7 @@ public class UtamaApotek extends javax.swing.JFrame {
     final LaporanKeuanganService service9_c_1;
     final InventoryObatApotekService service10;
     final NotifikasiObatExpiredService service11_1;
+    final NotifikasiStokObatApotekService service11_2;
     final PelayananApotekService service8;
     InventoryObatApotek interfaceObat;
     LaporanKeuanganApotek laporankeuanganapotek;
@@ -82,6 +86,7 @@ public class UtamaApotek extends javax.swing.JFrame {
         registry = LocateRegistry.getRegistry(localhost, 4444);
         service10 = (InventoryObatApotekService)registry.lookup("service10");
         service11_1 = (NotifikasiObatExpiredService)registry.lookup("service11_1");
+        service11_2 = (NotifikasiStokObatApotekService)registry.lookup("service11_2");
         interfaceObat = new InventoryObatApotek (service10);
         service9_c_1 = (LaporanKeuanganService)registry.lookup("service9_c_1");
         service8 = (PelayananApotekService) registry.lookup("service8");
@@ -349,7 +354,24 @@ public void NotifObatExpired() {
         Logger.getLogger(UtamaApotek.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
-
+public void NotifikasiStokObatApotek() throws SQLException {
+    List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
+    String [] Id_Obat = new String[0];
+    String pesan = "List Obat Yang berada dalam keadaan kritis : \n";
+    try {
+        Id_Obat = service11_2.StokObatAokter(Id_Obat);
+        if (!"Tidak Ada Stok Obat Kritis".equals(Id_Obat[0])) {
+            for (int i=0;i<Id_Obat.length;i++) {
+                list.add(service11_2.getobat(Id_Obat[i]));
+                pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";
+            }
+            pesan = pesan + "Silahkan Melakukan Tindakan Atas Hal Ini";
+            JOptionPane.showMessageDialog(this, pesan, "Notifikasi Obat Kritis",2);
+        }
+    } catch (RemoteException ex) {
+        Logger.getLogger(UtamaApotek.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+}
 public String setTanggal () {
         Date skrg = new java.util.Date();
         java.text.SimpleDateFormat kal = new
