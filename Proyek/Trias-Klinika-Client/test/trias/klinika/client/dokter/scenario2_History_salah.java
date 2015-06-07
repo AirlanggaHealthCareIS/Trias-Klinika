@@ -55,6 +55,8 @@ public class scenario2_History_salah {
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
         System.out.println("Pilih History Rekam Medis yang ingin dilihat terlebih dahulu");
+       // rekammedis interfaceRekammedis = new rekammedis (service6);
+       // interfaceRekammedis.setCekData1();
 //        rekammedis interfaceRekammedis = new rekammedis (service6);
 //        interfaceRekammedis.setCekData1();
     }

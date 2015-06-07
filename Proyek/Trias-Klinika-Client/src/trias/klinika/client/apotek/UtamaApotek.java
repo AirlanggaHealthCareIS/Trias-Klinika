@@ -230,7 +230,7 @@ public class UtamaApotek extends javax.swing.JFrame {
         jLabel1.setMinimumSize(new java.awt.Dimension(1366, 768));
         jLabel1.setPreferredSize(new java.awt.Dimension(1366, 768));
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 1370, 740);
+        jLabel1.setBounds(-30, -10, 1370, 780);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
