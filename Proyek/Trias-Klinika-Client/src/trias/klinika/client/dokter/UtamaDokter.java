@@ -385,6 +385,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         try {
             internalFrame2.setSelected(true);
                         sonido("LYNC_joinedconference");
+                         fp.id.setText(IDpemeriksaan.getText());
 
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
