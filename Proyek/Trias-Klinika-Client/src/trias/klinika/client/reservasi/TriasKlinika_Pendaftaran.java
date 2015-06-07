@@ -275,7 +275,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 80, 452, 420);
 
-        jenis_pasien.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Kategori" }));
+        jenis_pasien.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Kategori", "Dewasa", "Anak" }));
         getContentPane().add(jenis_pasien);
         jenis_pasien.setBounds(630, 20, 120, 30);
 
@@ -322,7 +322,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             
             
             
-//            PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString().substring(0, 5), tgl_pemeriksaan.getText(), no_antrian.getText());
+            PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString().substring(0, 5), tgl_pemeriksaan.getText(), Integer.parseInt(no_antrian.getText()), 1);
 
             try {
                 PS.Save(EP, PE);
@@ -418,32 +418,29 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private void auto_increment_pemeriksaan () throws RemoteException { 
        aipemeriksaan = PS.auto_increment_pemeriksaan(aipemeriksaan);
     }
-    private void nomor_antrian(int na, String tgl, String id_dokter) throws RemoteException{
-       na = PS.nomor_antrian(na, tgl, id_dokter);
-    }
-    
+      
     public String setTanggal () {
         Date skrg = new java.util.Date();
         java.text.SimpleDateFormat kal = new
-        java.text.SimpleDateFormat("dd/MM/yyyy");
+        java.text.SimpleDateFormat("yyyy/MM/dd");
         return kal.format(skrg);
     }
     public String Cek(String nama_pasien, String alamat_pasien, String tgl_lahir_pasien, String no_telp_pasien, String gol_darah) {
         String a;
         if ("".equals(nama_pasien)) {
-            a = "Masukkan Nama Pasien Terlebih Dahulu";
+            a = "Mohon cek data inputan";
         }
         else if ("".equals(alamat_pasien)) {
-            a = "Masukkan Alamat Pasien Terlebih Dahulu";
+            a = "Mohon cek data inputan";
         }
         else if ("".equals(tgl_lahir_pasien)) {
-            a = "Masukkan Tanggal Lahir Terlebih Dahulu";
+            a = "Mohon cek data inputan";
         }
         else if ("".equals(no_telp_pasien)) {
-            a = "Masukkan No telepon Terlebih Dahulu";
+            a = "Mohon cek data inputan";
         }
         else if ("".equals(gol_darah)) {
-            a = "Pilih Golongan Darah Terlebih Dahulu";
+            a = "Mohon cek data inputan";
         }
         else {
             a = "Sukses";

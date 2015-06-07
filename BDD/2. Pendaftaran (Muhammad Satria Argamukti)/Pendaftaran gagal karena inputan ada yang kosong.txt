@@ -7,4 +7,9 @@ And		: input data “Nomor Telepon” dengan “085A7311121B17”
 And		: input data “Tanggal Lahir” dengan “09/07/1994”
 And		: Memilih “Lazuardi Sp.D.” dari ”Pilih Dokter”
 And		: Menekan tombol “simpan”
-Then		: Muncul Notifikasi “Erorr, Mohon cek data inputan”
+Then		: Sistem memanggil method cek pada class TriasKlinika_Pendaftaran dengan 
+		  parameter "Jimsky", "08512131241", "09/05/1994", "Lazuardi Sp.D.", "", "", "", "",
+when	   	: method cek mengembalikan nilai string 
+	     	  "Mohon cek data inputan"
+then	   	: sistem mengeluarkan notifikasi 
+	     	  "Mohon cek data inputan"

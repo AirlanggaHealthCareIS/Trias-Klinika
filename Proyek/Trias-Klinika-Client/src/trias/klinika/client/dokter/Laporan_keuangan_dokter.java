@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
@@ -29,13 +30,13 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
     private TabelLaporanKeuanganDokter TLKD = new TabelLaporanKeuanganDokter();
     private LaporanKeuanganDokterEntitas LKDE = new LaporanKeuanganDokterEntitas();
     private UtamaDokter UD;
+    String cek;
     /**
      * Creates new form Laporan_keuangan_dokter
      */
     public Laporan_keuangan_dokter(LaporanKeuanganDokterService LKDS, UtamaDokter UD) throws RemoteException{
         this.LKDS = LKDS;
         this.UD = UD;
-        
         initComponents();
     }
 
@@ -143,13 +144,20 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TampikanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TampikanActionPerformed
-        try {
-            // TODO add your handling code here:
-            TLKD.setData(this.LKDS.getDataLaporan(FormatTanggal(tgl_mulai.getDate()), FormatTanggal(tgl_sampai.getDate()), UD.LE.getusername() ));
-        } catch (RemoteException ex) {
-            Logger.getLogger(Laporan_keuangan_dokter.class.getName()).log(Level.SEVERE, null, ex);
+       
+        cek = Cek(tgl_mulai.getDate().toString(), tgl_sampai.getDate().toString());
+        if (!"Sukses".equals(cek)) {
+            JOptionPane.showMessageDialog(this, cek);
         }
-        tabel_laporan.setModel(TLKD);
+        else{
+            try {
+                // TODO add your handling code here:
+                TLKD.setData(this.LKDS.getDataLaporan(FormatTanggal(tgl_mulai.getDate()), FormatTanggal(tgl_sampai.getDate()), UD.LE.getusername() ));
+            } catch (RemoteException ex) {
+                Logger.getLogger(Laporan_keuangan_dokter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tabel_laporan.setModel(TLKD);
+        }    
     }//GEN-LAST:event_TampikanActionPerformed
 
     private void lihat_grafikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihat_grafikActionPerformed
@@ -190,7 +198,20 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
     
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             return sdf.format(date);
-}
+    }
+    public String Cek(String tgl_mulai, String tgl_sampai) {
+        String a;
+        if ("".equals(tgl_mulai)) {
+            a = "Pilih tanggal mulai terlebih dahulu";
+        }
+        else if ("".equals(tgl_sampai)) {
+            a = "Pilih tanggal sampai terlebih dahulu";
+        }
+        else {
+            a = "Sukses";
+        }
+        return a;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton Tampikan;
     private javax.swing.JLabel jLabel1;
