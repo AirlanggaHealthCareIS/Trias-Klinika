@@ -23,6 +23,7 @@ import javax.sound.sampled.Clip;
 import trias.klinika.server.service.QueryAntrean;
 import trias.klinika.server.service.QueryInventoriObatDokter;
 import trias.klinika.server.service.QueryInventoryObatApotek;
+import trias.klinika.server.service.QueryLaporanDataObatKeluar;
 import trias.klinika.server.service.QueryLaporanKeuanganDokter;
 import trias.klinika.server.service.QueryLaporanKeuanganReservasi;
 import trias.klinika.server.service.QueryListPembayaran;
@@ -141,6 +142,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryNotifikasiObatExpired queryNotifikasiObatExpired = new QueryNotifikasiObatExpired() {};
         QueryLaporanKeuanganReservasi queryLaporanKeuanganReservasi = new QueryLaporanKeuanganReservasi();
         QueryNotifikasiStokObatDokter queryNotifikasiStokObatDokter = new QueryNotifikasiStokObatDokter() {};
+        QueryLaporanDataObatKeluar queryLaporanDataObatKeluar = new QueryLaporanDataObatKeluar();
         
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
@@ -152,6 +154,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service9_a_1", queryLaporanKeuanganReservasi);
         server.rebind("service9_c_1", querylaporankeuanganapotek);
         server.rebind("service9_b_2", querylaporankeuangandokter);
+        server.rebind("service9_c_2", queryLaporanDataObatKeluar);
         server.rebind("service10", queryobatapotek);
         server.rebind("service11_1", queryNotifikasiObatExpired);
         server.rebind("service12", querylistpembayaran);
