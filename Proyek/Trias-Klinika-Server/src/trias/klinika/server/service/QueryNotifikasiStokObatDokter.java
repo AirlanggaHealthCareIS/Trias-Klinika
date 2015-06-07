@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import trias.klinika.api.entitas.InventoryObatApotekEntitas;
+import trias.klinika.api.entitas.InventoriObatDokterEntitas;
 import trias.klinika.api.sevice.NotifikasiObatExpiredService;
 import trias.klinika.api.sevice.NotifikasiStokObatDokterService;
 import trias.klinika.server.utilitas.Koneksidatabase;
@@ -22,11 +23,12 @@ import trias.klinika.server.utilitas.Koneksidatabase;
 public class QueryNotifikasiStokObatDokter extends UnicastRemoteObject implements NotifikasiStokObatDokterService {
     public QueryNotifikasiStokObatDokter() throws RemoteException{ 
     }
-    public String[] ObatApotekExpired(String[] IdObat ) throws RemoteException, SQLException {
+
+    public String[] StokObatDokter(String[] IdObat , String ID_SPESIALIS ) throws RemoteException, SQLException {
         Statement statement = null;
         try {
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("select ID_OBAT from detail_obat WHERE RUANGAN = 'Apotek' AND datediff ");
+            ResultSet result = statement.executeQuery("select o.ID_OBAT from obat as o , detail_obat as do WHERE do.RUANGAN = 'Dokter' AND do.QTY_OBAT <= 5 AND o.ID_OBAT = do.ID_OBAT AND o.ID_SPESIALIS = '"+ID_SPESIALIS+"'");
             if (result.last() != false) {
                 result.last();
                 IdObat = new String [result.getRow()];
@@ -39,7 +41,7 @@ public class QueryNotifikasiStokObatDokter extends UnicastRemoteObject implement
             }
             else {
                 IdObat = new String [1];
-                IdObat[0] = "Tidak Ada Obat Expired";
+                IdObat[0] = "Tidak Ada Stok Obat Kritis";
             }
             return IdObat;
         }
@@ -58,48 +60,13 @@ public class QueryNotifikasiStokObatDokter extends UnicastRemoteObject implement
             }
         }
     }
-    public String[] StokObatDokter(String[] IdObat) throws RemoteException {
-        Statement statement = null;
-        try {
-            statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("select ID_OBAT from detail_obat WHERE RUANGAN = 'Dokter' AND datediff ");
-            if (result.last() != false) {
-                result.last();
-                IdObat = new String [result.getRow()];
-                result.first();
-                for (int i=0;i<IdObat.length;i++){
-                    IdObat [i] = result.getString("ID_OBAT");
-                    result.next();
-                }
-                result.close();
-            }
-            else {
-                IdObat = new String [1];
-                IdObat[0] = "Tidak Ada Obat Expired";
-            }
-            return IdObat;
-        }
-        catch (SQLException exception){
-            exception.printStackTrace();
-            return null;
-        }
-        finally {
-            if(statement != null){
-                try{
-                    statement.close();
-                }
-                catch (SQLException exception){
-                    exception.printStackTrace();
-                }
-            }
-        }
-    }
-    public InventoryObatApotekEntitas getobat(String IdObat) throws RemoteException {
+    
+    public InventoryObatApotekEntitas getobat(String IdObat, String ID_SPESIALIS) throws RemoteException {
         System.out.println("Client melakukan proses get-all");
         Statement statement = null;
         try{
             statement = Koneksidatabase.getConnection().createStatement();
-            ResultSet result = statement.executeQuery("SELECT  * FROM obat WHERE ID_OBAT = '"+IdObat+"'");
+            ResultSet result = statement.executeQuery("SELECT * FROM obat as o, detail_obat as do WHERE o.ID_OBAT = '"+IdObat+"' AND do.QTY_OBAT <= 5 AND o.ID_OBAT = do.ID_OBAT AND o.ID_SPESIALIS = '"+ID_SPESIALIS+"'");
             result.first();
             InventoryObatApotekEntitas inventory = new InventoryObatApotekEntitas();
             inventory.setIdObat(result.getString("ID_OBAT"));
@@ -108,7 +75,7 @@ public class QueryNotifikasiStokObatDokter extends UnicastRemoteObject implement
             inventory.setNamaObat(result.getString("NAMA_OBAT"));
             inventory.setHargaObat(result.getInt("HARGA_OBAT"));
             inventory.setDeskripsi(result.getString("DESKRIPSI_OBAT"));
-            inventory.setQty(result.getInt("TOTAL_JUMLAH"));    
+            inventory.setQty(result.getInt("QTY_OBAT"));    
             return inventory;
         }
         catch (SQLException exception){
@@ -126,10 +93,5 @@ public class QueryNotifikasiStokObatDokter extends UnicastRemoteObject implement
             }
         }
          //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String[] StokObatDokter(String[] IdObat, String tanggal) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

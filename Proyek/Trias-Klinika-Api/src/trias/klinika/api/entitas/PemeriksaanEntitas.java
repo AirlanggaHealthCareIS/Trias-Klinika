@@ -26,14 +26,14 @@ public class PemeriksaanEntitas  implements Serializable{
     
     
    
-    public void setDataPemeriksaan(String ID_PEMERIKSAAAN, String ID_RESERVASI, String ID_PASIEN, String ID_DOKTER, String TGL_PEMERIKSAAN, int NO_ANTRIAN ) {
+    public void setDataPemeriksaan(String ID_PEMERIKSAAAN, String ID_RESERVASI, String ID_PASIEN, String ID_DOKTER, String TGL_PEMERIKSAAN, int NO_ANTRIAN, int STATUS_PASIEN ) {
         this.ID_PEMERIKSAAAN= ID_PEMERIKSAAAN;
         this.ID_RESERVASI= ID_RESERVASI;
         this.ID_PASIEN= ID_PASIEN;
         this.ID_DOKTER= ID_DOKTER;
         this.TGL_PEMERIKSAAN= TGL_PEMERIKSAAN;
         this.NO_ANTRIAN= NO_ANTRIAN;
-        
+        this.STATUS_PASIEN= STATUS_PASIEN;
     }
     public String getID_PEMERIKSAAAN() {
         return ID_PEMERIKSAAAN;

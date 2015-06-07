@@ -357,7 +357,7 @@ public class input_resep extends javax.swing.JInternalFrame {
             } catch (RemoteException ex) {
             Logger.getLogger(input_resep.class.getName()).log(Level.SEVERE, null, ex);
         }
-           UD.login.kirim(new pesan("resep",UD.LE.getusername(),"PE0004","Apoteker"));
+           UD.login.kirim(new pesan("Resep",UD.LE.getusername(),"R0001","Apoteker"));
         }
         else{
              this.setVisible(true);

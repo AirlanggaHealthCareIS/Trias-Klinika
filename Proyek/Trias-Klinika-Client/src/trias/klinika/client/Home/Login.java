@@ -277,7 +277,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
             case "dokter":{
                 menudokter = new UtamaDokter(users, this);
                 menudokter.setVisible(true);
-//                menudokter.NotifObatExpired();
+                menudokter.NotifStokObatDokterKritis();
                 break;
             }
             case "reservasi":{
@@ -398,8 +398,8 @@ public class Login extends javax.swing.JFrame implements Runnable {
                     case "KirimIDPemeriksaanImin":
                         menudokter.kirimanAntreanImin(msg.isi, msg.pengirim);
                         break;
-//                    case "Resep":
-//                        menuapotek.kirimobat(msg.isi, msg.pengirim);
+                    case "Resep":
+                        menuapotek.kirimObat(msg.isi, msg.pengirim);
                 }
             }
             catch (IOException ex) {
