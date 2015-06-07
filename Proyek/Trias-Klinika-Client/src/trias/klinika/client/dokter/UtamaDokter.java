@@ -20,11 +20,15 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import trias.klinika.api.entitas.InventoryObatApotekEntitas;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.pesan.pesan;
 import trias.klinika.api.sevice.InventoriObatDokterService;
@@ -43,6 +47,7 @@ import trias.klinika.client.Home.Splash;
 import trias.klinika.client.dokter.input_resep;
 import trias.klinika.client.apotek.intro;
 import trias.klinika.api.sevice.NotifikasiStokObatDokterService;
+import trias.klinika.client.apotek.UtamaApotek;
 /**
  *
  * @author Lenovo
@@ -56,6 +61,7 @@ public class UtamaDokter extends javax.swing.JFrame {
     final serviceRekam service6;
     final ServiceResep service7;
     final LaporanKeuanganDokterService service9_b_2;
+    final NotifikasiStokObatDokterService service11_3;
     Inventori_Obat_Dokter iod ;
     form_pembayaran fp;
     rekammedis sr;
@@ -94,6 +100,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         service6 = (serviceRekam)registry.lookup("service6");
         service7 = (ServiceResep)registry.lookup("service7");
         service9_b_2 = (LaporanKeuanganDokterService)registry.lookup("service9_b_2");
+        service11_3 = (NotifikasiStokObatDokterService)registry.lookup("service11_3");
         
         introw = new intro();
         iod = new Inventori_Obat_Dokter(service13, this);
@@ -464,4 +471,24 @@ public void kirimanAntreanImin (String Id, String Nama) {
             IDpemeriksaan.setText(Id);
 
     }
+public void NotifStokObatDokterKritis() {
+    List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
+    String [] Id_Obat = new String[0];
+    String pesan = "List Obat Yang berada dalam keadaan kritis : \n";
+    try {
+        Id_Obat = service11_3.StokObatDokter(Id_Obat, service13.Spesialis(LE.getusername()));
+        if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
+            for (int i=0;i<Id_Obat.length;i++) {
+                list.add(service11_3.getobat(Id_Obat[i], service13.Spesialis(LE.getusername())));
+                pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";
+            }
+            pesan = pesan + "Silahkan Melakukan Tindakan Atas Hal Ini";
+            JOptionPane.showMessageDialog(this, pesan, "Notifikasi Obat Kritis",2);
+        }
+    } catch (RemoteException ex) {
+        Logger.getLogger(UtamaApotek.class.getName()).log(Level.SEVERE, null, ex);
+    }   catch (SQLException ex) {
+            Logger.getLogger(UtamaDokter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
 }

@@ -277,7 +277,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
             case "dokter":{
                 menudokter = new UtamaDokter(users, this);
                 menudokter.setVisible(true);
-//                menudokter.NotifObatExpired();
+                menudokter.NotifStokObatDokterKritis();
                 break;
             }
             case "reservasi":{
