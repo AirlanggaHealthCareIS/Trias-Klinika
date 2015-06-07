@@ -56,8 +56,8 @@ public class scenario4_Rekammedisbaru_salah {
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
         System.out.println("data yang dimasukkan belum lengkap");    
-        rekammedis interfaceRekammedis = new rekammedis (service6);
-        interfaceRekammedis.setCekdata2();
+//        rekammedis interfaceRekammedis = new rekammedis (service6);
+//        interfaceRekammedis.setCekdata2();
     }
 
     
