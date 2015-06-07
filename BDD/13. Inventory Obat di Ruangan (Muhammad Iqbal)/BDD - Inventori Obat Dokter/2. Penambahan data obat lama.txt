@@ -4,7 +4,6 @@ Given	    = Dokter masuk kehalaman inventori obat dokter
 When	    = Memilih dropdown pilih "lama"
 and	    = Memilih dropdown nama obat "Abate" yang akan di tambah
 and	    = Menginputkan kuantiti obat "50" yang akan di tambah
-and	    = Mengiputkan harga obat "50000" yang akan di tambah
 and	    = Memilih tanggal masuk "5 April 2015"
 and	    = Memilih Masa Pakai "10 september2020"
 and	    = Menekan tombol "OK"

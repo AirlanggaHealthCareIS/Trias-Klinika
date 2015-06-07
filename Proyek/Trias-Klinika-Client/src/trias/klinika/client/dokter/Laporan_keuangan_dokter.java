@@ -10,11 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import org.jfree.chart.ChartFactory;
-//import org.jfree.chart.ChartFrame;
-//import org.jfree.chart.JFreeChart;
-//import org.jfree.chart.plot.PlotOrientation;
-//import org.jfree.data.category.DefaultCategoryDataset;
+import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import trias.klinika.api.entitas.LaporanKeuanganDokterEntitas;
 import trias.klinika.api.sevice.LaporanKeuanganDokterService;
 import trias.klinika.client.tabel.TabelLaporanKeuanganDokter;
@@ -29,13 +30,13 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
     private TabelLaporanKeuanganDokter TLKD = new TabelLaporanKeuanganDokter();
     private LaporanKeuanganDokterEntitas LKDE = new LaporanKeuanganDokterEntitas();
     private UtamaDokter UD;
+    String cek;
     /**
      * Creates new form Laporan_keuangan_dokter
      */
     public Laporan_keuangan_dokter(LaporanKeuanganDokterService LKDS, UtamaDokter UD) throws RemoteException{
         this.LKDS = LKDS;
         this.UD = UD;
-        
         initComponents();
     }
 
@@ -143,54 +144,74 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TampikanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TampikanActionPerformed
-        try {
-            // TODO add your handling code here:
-            TLKD.setData(this.LKDS.getDataLaporan(FormatTanggal(tgl_mulai.getDate()), FormatTanggal(tgl_sampai.getDate()), UD.LE.getusername() ));
-        } catch (RemoteException ex) {
-            Logger.getLogger(Laporan_keuangan_dokter.class.getName()).log(Level.SEVERE, null, ex);
+       
+        cek = Cek(tgl_mulai.getDate().toString(), tgl_sampai.getDate().toString());
+        if (!"Sukses".equals(cek)) {
+            JOptionPane.showMessageDialog(this, cek);
         }
-        tabel_laporan.setModel(TLKD);
+        else{
+            try {
+                // TODO add your handling code here:
+                TLKD.setData(this.LKDS.getDataLaporan(FormatTanggal(tgl_mulai.getDate()), FormatTanggal(tgl_sampai.getDate()), UD.LE.getusername() ));
+            } catch (RemoteException ex) {
+                Logger.getLogger(Laporan_keuangan_dokter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tabel_laporan.setModel(TLKD);
+        }    
     }//GEN-LAST:event_TampikanActionPerformed
 
     private void lihat_grafikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lihat_grafikActionPerformed
         // TODO add your handling code here:
-//        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-//        String[] tgl_pemeriksaan = new String [TLKD.getRowCount()];
-//        int[] jumlah_pemasukkan = new int [TLKD.getRowCount()];
-//        int index = 0;
-//        for (int i = 0; i < TLKD.getRowCount(); i++) {
-//            if(i == 0){
-//                tgl_pemeriksaan[index] = TLKD.get(i).getTGL_PEMERIKSAAN();
-//                jumlah_pemasukkan[index] = TLKD.get(i).getJUMLAH_PEMASUKKAN();
-//            }
-//            else{
-//                if(tgl_pemeriksaan[index] == TLKD.get(i).getTGL_PEMERIKSAAN()){
-//                jumlah_pemasukkan [i] = jumlah_pemasukkan [i] + TLKD.get(i).getJUMLAH_PEMASUKKAN();
-//            }
-//                else {
-//                    index++;
-//                    tgl_pemeriksaan[index] = TLKD.get(i).getTGL_PEMERIKSAAN();
-//                    jumlah_pemasukkan[index] = TLKD.get(i).getJUMLAH_PEMASUKKAN();
-//                }    
-//            }
-//        }
-//        for (int i = 0; i<tgl_pemeriksaan.length; i++){
-//            dataSet.addValue(jumlah_pemasukkan[i], "Jumlah Pemasukkan", tgl_pemeriksaan[i]);
-//        }
-//        
-//        
-//        JFreeChart chartline = ChartFactory.createBarChart("Laporan Keuangan", "Tanggal", "Jumlah Pemasukkan", dataSet, PlotOrientation.VERTICAL, true, true, true);
-//        ChartFrame frame = new ChartFrame("Pengguna OS Komputer di Indonesia", chartline);
-//        frame.setVisible(true);
-//        frame.setSize(600,400);
-//        frame.setLocationRelativeTo(null);
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        String[] tgl_pemeriksaan = new String [TLKD.getRowCount()];
+        int[] jumlah_pemasukkan = new int [TLKD.getRowCount()];
+        int index = 0;
+        for (int i = 0; i < TLKD.getRowCount(); i++) {
+            if(i == 0){
+                tgl_pemeriksaan[index] = TLKD.get(i).getTGL_PEMERIKSAAN();
+                jumlah_pemasukkan[index] = TLKD.get(i).getJUMLAH_PEMASUKKAN();
+            }
+            else{
+                if(tgl_pemeriksaan[index] == TLKD.get(i).getTGL_PEMERIKSAAN()){
+                jumlah_pemasukkan [i] = jumlah_pemasukkan [i] + TLKD.get(i).getJUMLAH_PEMASUKKAN();
+            }
+                else {
+                    index++;
+                    tgl_pemeriksaan[index] = TLKD.get(i).getTGL_PEMERIKSAAN();
+                    jumlah_pemasukkan[index] = TLKD.get(i).getJUMLAH_PEMASUKKAN();
+                }    
+            }
+        }
+        for (int i = 0; i<tgl_pemeriksaan.length; i++){
+            dataSet.addValue(jumlah_pemasukkan[i], "Jumlah Pemasukkan", tgl_pemeriksaan[i]);
+        }
+        
+        
+        JFreeChart chartline = ChartFactory.createBarChart("Laporan Keuangan", "Tanggal", "Jumlah Pemasukkan", dataSet, PlotOrientation.VERTICAL, true, true, true);
+        ChartFrame frame = new ChartFrame("Pengguna OS Komputer di Indonesia", chartline);
+        frame.setVisible(true);
+        frame.setSize(600,400);
+        frame.setLocationRelativeTo(null);
     }//GEN-LAST:event_lihat_grafikActionPerformed
 
     public String FormatTanggal(Date date){
     
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             return sdf.format(date);
-}
+    }
+    public String Cek(String tgl_mulai, String tgl_sampai) {
+        String a;
+        if ("".equals(tgl_mulai)) {
+            a = "Pilih tanggal mulai terlebih dahulu";
+        }
+        else if ("".equals(tgl_sampai)) {
+            a = "Pilih tanggal sampai terlebih dahulu";
+        }
+        else {
+            a = "Sukses";
+        }
+        return a;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton Tampikan;
     private javax.swing.JLabel jLabel1;

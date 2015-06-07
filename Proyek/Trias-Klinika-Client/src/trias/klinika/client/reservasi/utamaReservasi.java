@@ -428,16 +428,29 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().getMouseListeners()){
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().removeMouseListener(listener);
         }
+        internalFrame4.add(Ant.getContentPane());
+        internalFrame4.pack();
+        internalFrame4.setSize(1146,577);
+        internalFrame4.setVisible(true);
+        jDesktopPane2.add(internalFrame4);
+        BasicInternalFrameUI ui4 = (BasicInternalFrameUI)internalFrame4.getUI();
+        Container north4 = (Container)ui4.getNorthPane();
+        north1.remove(0);
+        north1.validate();
+        north1.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().removeMouseListener(listener);
+        }
         internalFrame5.add(KR.getContentPane());
         internalFrame5.pack();
         internalFrame5.setSize(1146,577);
         internalFrame5.setVisible(true);
         jDesktopPane2.add(internalFrame5);
         BasicInternalFrameUI ui5 = (BasicInternalFrameUI)internalFrame5.getUI();
-        Container north5 = (Container)ui3.getNorthPane();
-        north3.remove(0);
-        north3.validate();
-        north3.repaint();
+        Container north5 = (Container)ui5.getNorthPane();
+        north5.remove(0);
+        north5.validate();
+        north5.repaint();
         for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().getMouseListeners()){
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().removeMouseListener(listener);
   

@@ -25,49 +25,47 @@ import trias.klinika.api.entitas.rekammedisEntyty;
  */
 public class rekammedis extends javax.swing.JInternalFrame {
 private serviceRekam sr;
+private UtamaDokter UD;
 private tabelrekammedis rm = new tabelrekammedis();
 rekammedisEntyty rekammedisEntity = new rekammedisEntyty ();
 String airekam;
 String IDpasienkirim = "";
-
-
-public rekammedis(String IDPasien){
-    IDpasienkirim = IDPasien;
-}
+private PasienEntity pe = new PasienEntity();
 
     /** Creates new form rekammedis */
-    public rekammedis(serviceRekam sr) throws RemoteException {
+    public rekammedis(serviceRekam sr, UtamaDokter UD) throws RemoteException {
         this.sr = sr;
+        this.UD = UD;
         
         initComponents();
-        PasienEntity pe = new PasienEntity();
-        pe = sr.getdata("P0002");
-        nama.setText(pe.getNama());
-        tanggalLahir.setText(pe.getTanggalLahir());
-        alamat.setText(pe.getAlamat());
-        noTlp.setText(pe.getNoTLP());
-        gol.setText(pe.getGolDarah());
-        ID.setEditable(false);
-        nama.setEditable(false);
-        tanggalLahir.setEditable(false);
-        alamat.setEditable(false);
-        noTlp.setEditable(false);
-        gol.setEditable(false);
-   
-        try {
-            rm.setData(this.sr.getdatarekam(ID.getText()));
-        } catch (RemoteException exception) {
-            exception.printStackTrace();
-        }
-        history.setModel(rm);
-        
-        
+       
     }
 
-    public void ambilIDpasienkirim(String IDpasienz){
-        IDpasienkirim=IDpasienz;
+    public void awal (){
+        try {
+            pe = sr.getdata(ID.getText());
+           nama.setText(pe.getNama());
+           tanggalLahir.setText(pe.getTanggalLahir());
+           alamat.setText(pe.getAlamat());
+           noTlp.setText(pe.getNoTLP());
+           gol.setText(pe.getGolDarah());
+           ID.setEditable(false);
+           nama.setEditable(false);
+           tanggalLahir.setEditable(false);
+           alamat.setEditable(false);
+           noTlp.setEditable(false);
+           gol.setEditable(false);
+      
+           try {
+               rm.setData(this.sr.getdatarekam(ID.getText(),UD.IDpemeriksaan.getText()));
+           } catch (RemoteException exception) {
+               exception.printStackTrace();
+           }
+           history.setModel(rm);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
     }
-    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -448,6 +446,7 @@ public void setSimpan(){
                 rrm.setCatatan_lain(catatan.getText());
             try {
                 sr.ok(rrm);
+                sr.Update(UD.IDpemeriksaan.getText(), rrm.getId_rekam());
             } catch (RemoteException ex) {
                 ex.printStackTrace();
             }

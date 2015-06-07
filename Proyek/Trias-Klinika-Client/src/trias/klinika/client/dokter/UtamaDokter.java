@@ -4,6 +4,7 @@
  */
 package trias.klinika.client.dokter;
 
+import java.beans.PropertyVetoException;
 import trias.klinika.client.reservasi.*;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -105,14 +106,14 @@ public class UtamaDokter extends javax.swing.JFrame {
         introw = new intro();
         iod = new Inventori_Obat_Dokter(service13, this);
         fp = new form_pembayaran(service4, this);
-        sr = new rekammedis(service6);
+        sr = new rekammedis(service6, this);
         ir = new input_resep(service7, this);
         lkd = new Laporan_keuangan_dokter(service9_b_2, this);
         internal_frame();
         nama.setText("SELAMAT DATANG "+LE.getnamauser().toUpperCase());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
-        IDpemeriksaan.setVisible(false);
+       // IDpemeriksaan.setVisible(false);
         rekamedistombol.setEnabled(false);
         byr.setEnabled(false);
         rsp.setEnabled(false);
@@ -271,7 +272,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 200, 1366, 557);
 
-        nama.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        nama.setFont(new java.awt.Font("Times New Roman", 1, 24));
         nama.setForeground(new java.awt.Color(255, 255, 255));
         nama.setText("jLabel1");
         getContentPane().add(nama);
@@ -281,7 +282,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         IDpemeriksaan.setForeground(new java.awt.Color(255, 255, 51));
         IDpemeriksaan.setText("jLabel3");
         getContentPane().add(IDpemeriksaan);
-        IDpemeriksaan.setBounds(30, 20, 180, 30);
+        IDpemeriksaan.setBounds(20, 20, 180, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -389,12 +390,10 @@ public class UtamaDokter extends javax.swing.JFrame {
 
     private void byrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byrActionPerformed
         // TODO add your handling code here:
-        
         try {
             internalFrame2.setSelected(true);
-            fp.id.setText(IDpemeriksaan.getText());
                         sonido("LYNC_joinedconference");
-                        
+                         fp.id.setText(IDpemeriksaan.getText());
 
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -404,11 +403,12 @@ public class UtamaDokter extends javax.swing.JFrame {
     private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekamedistombolActionPerformed
         // TODO add your handling code here:
         try {
+        sr.ID.setText(service6.getIdPasien(IDpemeriksaan.getText()));
+        sr.awal();
         internalFrame3.setSelected(true);
-                    sonido("LYNC_joinedconference");
+        sonido("LYNC_joinedconference");
 
-        sr.ID.setText(IDpemeriksaan.getText());
-    } catch(Exception ex) {
+    } catch(PropertyVetoException | RemoteException ex) {
         JOptionPane.showMessageDialog(null, ex);
     }
     }//GEN-LAST:event_rekamedistombolActionPerformed
@@ -419,8 +419,6 @@ public class UtamaDokter extends javax.swing.JFrame {
                         sonido("LYNC_joinedconference");
 
             internalFrame4.setSelected(true);
-            ir.ID_Pemeriksaan.setText(IDpemeriksaan.getText());
-            ir.setIDPasien();
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
