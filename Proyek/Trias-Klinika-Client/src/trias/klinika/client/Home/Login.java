@@ -421,11 +421,9 @@ public class Login extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 
-     public Clip clip;
+    public Clip clip;
     public String ruta="/suara/";
-    public void sonido(String archivo)
-    {
-//        JOptionPane.showMessageDialog(null, "hai bro");
+    public void sonido(String archivo) {
         try{
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(getClass().getResourceAsStream(ruta + archivo + ".wav")));

@@ -56,9 +56,9 @@ public class scenario1_History_benar {
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
         System.out.println(" ");    
-        rekammedis interfaceRekammedis = new rekammedis (service6);
+        //rekammedis interfaceRekammedis = new rekammedis (service6);
         
-        interfaceRekammedis.setHistory();
+       // interfaceRekammedis.setHistory();
         
     }
 
