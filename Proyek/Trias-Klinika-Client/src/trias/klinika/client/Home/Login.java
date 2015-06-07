@@ -15,6 +15,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -272,7 +273,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
         }
     }
     
-    public void Eksekusi (LoginEntitas users) throws RemoteException, NotBoundException {
+    public void Eksekusi (LoginEntitas users) throws RemoteException, NotBoundException, SQLException {
         if (null != users.getsebagai()) switch (users.getsebagai()) {
             case "dokter":{
                 menudokter = new UtamaDokter(users, this);
@@ -289,6 +290,7 @@ public class Login extends javax.swing.JFrame implements Runnable {
                 menuapotek = new UtamaApotek(users, this);
                 menuapotek.setVisible(true);
                 menuapotek.NotifObatExpired();
+                menuapotek.NotifikasiStokObatApotek();
                 break;
             }
         }
@@ -379,7 +381,9 @@ public class Login extends javax.swing.JFrame implements Runnable {
                             Eksekusi(users);
                         } catch (RemoteException | NotBoundException ex) {
                             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                        }   
+                        } catch (SQLException ex) {   
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }   
                         service5.Ubah_Status_Login(users);
                         kirim(new pesan("updatelist", users.getnamauser(), users.getusername(), "Reservasi"));
                         break;
