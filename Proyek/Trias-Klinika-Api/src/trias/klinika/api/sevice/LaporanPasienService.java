@@ -4,6 +4,7 @@
  */
 package trias.klinika.api.sevice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import trias.klinika.api.entitas.LaporanPasienEntitas;
@@ -12,6 +13,7 @@ import trias.klinika.api.entitas.LaporanPasienEntitas;
  *
  * @author iqbal
  */
-public interface LaporanPasienService {
-    List<LaporanPasienEntitas> gettglpemeriksaan(String tglpemeriksaan) throws RemoteException;
+public interface LaporanPasienService extends Remote {
+    List<LaporanPasienEntitas> tglpemeriksaan(String tgl_awal, String tgl_akhir) throws RemoteException;
+    public String[] DropdownSpesialis(String[] spesialis) throws RemoteException;
 }

@@ -19,6 +19,7 @@ public class LaporanPasienEntitas {
     private String idreservasi;
     private String tglpemeriksaan;
     private String noantrian;
+    private String namaspesialis;
     
     public String getidpemeriksaan() {
         return idpemeriksaan;
@@ -81,5 +82,12 @@ public class LaporanPasienEntitas {
     }
     public void setnoantrian(String noantrian) {
         this.noantrian = noantrian;
+    }
+    
+    public String getnamaspesialis() {
+        return namaspesialis;
+    }
+    public void setnamaspesialis(String namaspesialis) {
+        this.namaspesialis = namaspesialis;
     }
 }

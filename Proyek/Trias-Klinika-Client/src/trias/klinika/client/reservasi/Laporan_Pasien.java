@@ -21,14 +21,31 @@ import trias.klinika.api.sevice.LaporanPasienService;
  */
 public class Laporan_Pasien extends javax.swing.JInternalFrame {
     int a;
+    private String [] isi;
+    private String [] sp ;
     private LaporanPasienEntitas LPE = new LaporanPasienEntitas();
+    private LaporanPasienService LPS;
+    private int index;
 
     /**
      * Creates new form Laporan_Pasien
      */
-    public Laporan_Pasien() {
+    public Laporan_Pasien(LaporanPasienService LPS) throws RemoteException {
+        this.LPS = LPS;
         initComponents();
+        
+         DropdownSpesialis();
     }
+   
+    
+    private void DropdownSpesialis() throws RemoteException{
+        isi = LPS.DropdownSpesialis(isi);
+    
+        for (int i=0;i<isi.length;i++){
+            spesialis.addItem(isi[i]);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,8 +60,7 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tahun = new javax.swing.JComboBox();
-        cetak = new javax.swing.JButton();
-        Spesialis = new javax.swing.JButton();
+        spesialis = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
@@ -54,7 +70,6 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 153, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/laporan.png"))); // NOI18N
         jLabel1.setText("Laporan Data Pasien");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(10, 0, 980, 100);
@@ -69,36 +84,47 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(10, 100, 70, 14);
 
-        tahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Tahun..." }));
+        tahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Pilih Tahun" }));
+        tahun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tahunActionPerformed(evt);
+            }
+        });
         getContentPane().add(tahun);
-        tahun.setBounds(10, 410, 88, 20);
+        tahun.setBounds(10, 410, 140, 40);
 
-        cetak.setText("Cetak");
-        getContentPane().add(cetak);
-        cetak.setBounds(220, 390, 61, 49);
-
-        Spesialis.setText("Spesialis");
-        getContentPane().add(Spesialis);
-        Spesialis.setBounds(110, 410, 73, 23);
+        spesialis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Spesialis" }));
+        spesialis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spesialisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(spesialis);
+        spesialis.setBounds(170, 410, 140, 40);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameReservasi.png"))); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(0, 0, 1130, 530);
+        jLabel4.setBounds(0, 0, 1140, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tahunActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tahunActionPerformed
+
+    private void spesialisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spesialisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_spesialisActionPerformed
 public void reset(){
-        tahun.setEnabled(false);
-        Spesialis.setEnabled(false);
-        cetak.setEnabled(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Spesialis;
-    private javax.swing.JButton cetak;
+    private javax.swing.JComboBox dropobat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox spesialis;
     private javax.swing.JComboBox tahun;
     // End of variables declaration//GEN-END:variables
 }

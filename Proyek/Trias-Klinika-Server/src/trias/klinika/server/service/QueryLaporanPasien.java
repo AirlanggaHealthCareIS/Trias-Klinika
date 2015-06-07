@@ -20,10 +20,12 @@ import trias.klinika.server.utilitas.Koneksidatabase;
  *
  * @author iqbal
  */
+
 public class QueryLaporanPasien extends UnicastRemoteObject implements LaporanPasienService {
     public QueryLaporanPasien ()throws RemoteException{
     }
-    public List<LaporanPasienEntitas> gettglpemeriksaan(String tglpemeriksaan) throws RemoteException {
+    @Override
+    public List<LaporanPasienEntitas> tglpemeriksaan(String tgl_awal, String tgl_akhir) throws RemoteException {
         Statement statement = null;
         
         try {
@@ -31,7 +33,7 @@ public class QueryLaporanPasien extends UnicastRemoteObject implements LaporanPa
             statement = Koneksidatabase.getConnection().createStatement();
             
             ResultSet result = statement.executeQuery
-           ("SELECT * FROM `pemeriksaan` WHERE `TGL_PEMERIKSAAN` ");
+           ("SELECT * FROM pemeriksaan WHERE TGL_PEMERIKSAAN >='"+tgl_awal+"' AND TGL_PEMERIKSAAN <='"+tgl_akhir+"'");
             
             List<LaporanPasienEntitas> list = new ArrayList<LaporanPasienEntitas>();
             
@@ -61,4 +63,40 @@ public class QueryLaporanPasien extends UnicastRemoteObject implements LaporanPa
     }
     
     }
+    
+    @Override
+    public String[] DropdownSpesialis(String[] spesialis) throws RemoteException {
+        Statement statement = null;
+        try {
+            statement = Koneksidatabase.getConnection().createStatement();
+            ResultSet result = statement.executeQuery("select * from spesialis");
+            result.last();
+            spesialis = new String [result.getRow()];
+            result.first();
+            
+            for (int i=0;i<spesialis.length;i++){
+                spesialis [i] = result.getString("id_spesialis")+"-"+result.getString("nama_spesialis");
+                result.next();
+            }
+            result.close();
+            return spesialis;
+        }
+        catch (SQLException exception){
+            exception.printStackTrace();
+            return null;
+        }
+        finally {
+            if(statement != null){
+                try{
+                    statement.close();
+                }
+                catch (SQLException exception){
+                    exception.printStackTrace();
+                }
+            }
+        }
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }
