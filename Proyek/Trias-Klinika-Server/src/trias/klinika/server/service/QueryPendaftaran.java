@@ -35,8 +35,8 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
         PreparedStatement statement = null;
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO pasien(ID_PASIEN, NAMA_PASIEN, TGL_LAHIR_PASIEN, NO_TELP_PASIEN, ALAMAT_PASIEN, GOL_DARAH)"
-                    + "VALUES (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO pasien(ID_PASIEN, NAMA_PASIEN, TGL_LAHIR_PASIEN, NO_TELP_PASIEN, ALAMAT_PASIEN, GOL_DARAH, NO_KTP_PASIEN, JENIS_PASIEN)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, EP.getID_PASIEN());
             statement.setString(2, EP.getNAMA_PASIEN());
@@ -44,6 +44,8 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             statement.setString(4, EP.getNO_TELP_PASIEN());
             statement.setString(5, EP.getALAMAT_PASIEN());
             statement.setString(6, EP.getGOL_DARAH());
+            statement.setString(7, EP.getN0_KTP());
+            statement.setString(8, EP.getJENIS_PASIEN());
             
             System.out.println(statement.toString());
             statement.executeUpdate();
@@ -61,8 +63,8 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
         }
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_RESERVASI, ID_PASIEN, ID_DOKTER, TGL_PEMERIKSAAN, NO_ANTRIAN ,ID_REKAM_MEDIS, ID_RESEP, ID_PEMBAYARAN)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, null, null, null)");
+                    "INSERT INTO pemeriksaan(ID_PEMERIKSAAN, ID_RESERVASI, ID_PASIEN, ID_DOKTER, TGL_PEMERIKSAAN, NO_ANTRIAN, STATUS_PEMERIKSAAN, ID_REKAM_MEDIS, ID_RESEP, ID_PEMBAYARAN)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, null, null, null)");
 
             statement.setString(1, PE.getID_PEMERIKSAAAN());
             statement.setString(2, PE.getID_RESERVASI());
@@ -70,6 +72,7 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             statement.setString(4, PE.getID_DOKTER());
             statement.setString(5, PE.getTGL_PEMERIKSAAN());
             statement.setInt(6, PE.getNO_ANTRIAN());
+            statement.setInt(7, PE.getSTATUS_PASIEN());
             
             System.out.println(statement.toString());
             statement.executeUpdate();

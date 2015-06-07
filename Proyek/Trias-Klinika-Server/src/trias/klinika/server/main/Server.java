@@ -142,9 +142,10 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryLaporanKeuanganDokter querylaporankeuangandokter = new QueryLaporanKeuanganDokter() {};
         QueryNotifikasiObatExpired queryNotifikasiObatExpired = new QueryNotifikasiObatExpired() {};
         QueryLaporanKeuanganReservasi queryLaporanKeuanganReservasi = new QueryLaporanKeuanganReservasi();
+        QueryNotifikasiStokObatDokter queryNotifikasiStokObatDokter = new QueryNotifikasiStokObatDokter();
         QueryLaporanPasien queryLaporanPasien = new QueryLaporanPasien();
-        QueryNotifikasiStokObatDokter queryNotifikasiStokObatDokter = new QueryNotifikasiStokObatDokter() {};
-        QueryPelayananApotek queryPelayananApotek = new QueryPelayananApotek (){};
+        QueryPelayananApotek queryPelayananApotek = new QueryPelayananApotek();
+
         
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
@@ -160,9 +161,10 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service9_b_2", querylaporankeuangandokter);
         server.rebind("service10", queryobatapotek);
         server.rebind("service11_1", queryNotifikasiObatExpired);
+        server.rebind("service11_3", queryNotifikasiStokObatDokter);
         server.rebind("service12", querylistpembayaran);
         server.rebind("service13", queryInventoriObatDokter);
-        server.rebind("service14", (Remote) queryNotifikasiStokObatDokter);
+        
         System.out.println("Server Berjalan");
         
         clients = new ServerThread [50];

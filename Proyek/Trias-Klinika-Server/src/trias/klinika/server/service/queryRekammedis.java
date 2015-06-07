@@ -66,7 +66,36 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
             }
         }
     }
-     public List<rekammedisEntyty> getdatarekam (String id) throws RemoteException {
+    public String getIdPasien (String id) throws RemoteException {
+         System.out.println("Client melakukan proses get-all");
+
+        Statement statement = null;
+        
+
+        try {
+            
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery("SELECT ID_PASIEN FROM pemeriksaan WHERE ID_PEMERIKSAAN = '"+id+"'");
+
+            result.first();
+            String pasien = result.getString("ID_PASIEN");
+            return pasien;
+            
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+     public List<rekammedisEntyty> getdatarekam (String id, String id_pemeriksaan) throws RemoteException {
         System.out.println("Client melakukan proses get-all");
 
         Statement statement = null;
@@ -76,7 +105,7 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT ID_REKAM_MEDIS, TGL_PEMERIKSAAN FROM pemeriksaan WHERE id_pasien = '"+id+"'");
+            ResultSet result = statement.executeQuery("SELECT ID_REKAM_MEDIS, TGL_PEMERIKSAAN FROM pemeriksaan WHERE id_pasien = '"+id+"' AND ID_REKAM_MEDIS != '"+id_pemeriksaan+"'");
             
             List<rekammedisEntyty> list = new ArrayList<rekammedisEntyty>();
 
@@ -221,4 +250,15 @@ public class queryRekammedis extends UnicastRemoteObject implements serviceRekam
             }
                
     }
-    }}
+    }
+    public void Update (String id_pemeriksaan , String id_rekam_medis)throws RemoteException {
+        PreparedStatement statement = null;
+        try {
+            statement = (PreparedStatement) Koneksidatabase.getConnection().prepareStatement(
+                    "UPDATE `pemeriksaan` SET `ID_REKAM_MEDIS` = '"+id_rekam_medis+"' WHERE `ID_PEMERIKSAAN` = '"+id_pemeriksaan+"'");
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(queryRekammedis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}

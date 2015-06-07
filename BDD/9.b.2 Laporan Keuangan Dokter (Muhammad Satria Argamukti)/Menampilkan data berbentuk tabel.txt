@@ -1,0 +1,15 @@
+Author : Muhammad Satria Argamukti
+
+Laporan keuangan Dokter
+Fitur : Menampilkan Laporan dalam bentuk Tabel
+
+Given	:User berada di tampilan Laporan Keuangan Dokter
+When	:User memilih 02/03/2015 dari tanggal mulai
+And	:User memilih 07/08/2015 dari tanggal sampai
+And	:User menekan tombol "Tampilkan"
+Then	:Sistem memanggil method cek pada kelas LaporanKeuanganDokter dengan parameter
+	 "02/03/2015" and "07/08/2015"
+when	:method cek mengembalikan nilai string "Sukses"
+Then	:Sistem memanggil method setDataLaporan di class LaporanKeuanganDokterEntitas dengan parameter
+	 "02/03/2015","07/08/2015", id_dokter
+
