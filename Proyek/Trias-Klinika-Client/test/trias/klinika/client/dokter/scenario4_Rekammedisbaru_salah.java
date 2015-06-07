@@ -58,6 +58,7 @@ public class scenario4_Rekammedisbaru_salah {
         System.out.println("data yang dimasukkan belum lengkap");    
 //        rekammedis interfaceRekammedis = new rekammedis (service6);
       //  interfaceRekammedis.setCekdata2();
+//        interfaceRekammedis.setCekdata2();
     }
 
     

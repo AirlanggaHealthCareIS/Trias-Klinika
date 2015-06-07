@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 package trias.klinika.server.service;
-import com.mysql.jdbc.PreparedStatement;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

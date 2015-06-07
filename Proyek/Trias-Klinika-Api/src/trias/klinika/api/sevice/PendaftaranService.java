@@ -24,4 +24,5 @@ public  interface PendaftaranService extends Remote  {
     int nomor_antrian(int na, String tgl, String id_dokter) throws RemoteException;
     public List<EntitasPendaftaran> getDataPasien() throws RemoteException;
     public List<EntitasPendaftaran> search_nama(String nama_pasien_kecil) throws RemoteException;
+    public String cek_ktp(String  no_ktp_pasien) throws RemoteException;
 }

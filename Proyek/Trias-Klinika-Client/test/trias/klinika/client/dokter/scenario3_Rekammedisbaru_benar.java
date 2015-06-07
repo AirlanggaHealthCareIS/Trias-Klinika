@@ -59,6 +59,10 @@ public class scenario3_Rekammedisbaru_benar {
         //rekammedis interfaceRekammedis = new rekammedis (service6);
      //   interfaceRekammedis.setSimpan();
         System.out.println("SetData");
+
+//        rekammedis interfaceRekammedis = new rekammedis (service6);
+//        interfaceRekammedis.setSimpan();
+//        System.out.println("SetData");
        
     }
 }

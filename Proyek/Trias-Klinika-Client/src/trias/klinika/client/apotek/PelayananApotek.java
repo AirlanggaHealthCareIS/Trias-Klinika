@@ -25,7 +25,7 @@ import trias.klinika.client.tabel.TabelPelayananApotekResep;
 public final class PelayananApotek extends javax.swing.JInternalFrame {
     int a;
     private PelayananApotekService PAS;
-    private TabelPelayananApotek TPA = new  TabelPelayananApotek();
+    public TabelPelayananApotek TPA = new  TabelPelayananApotek();
     private TabelPelayananApotekResep TPAR = new TabelPelayananApotekResep();
     private PelayananApotekEntitas PAE= new PelayananApotekEntitas();
     private List<PelayananApotekEntitas> list = new ArrayList<>();

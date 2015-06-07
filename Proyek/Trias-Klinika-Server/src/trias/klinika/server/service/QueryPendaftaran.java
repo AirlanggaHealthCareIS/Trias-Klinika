@@ -239,6 +239,40 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             }
         }    
     }
+    public String cek_ktp(String  no_ktp_pasien) throws RemoteException {
+        Statement statement = null;
+        String status = null;
+        try {
+           
+            statement = Koneksidatabase.getConnection().createStatement();
+            
+            ResultSet result = statement.executeQuery
+            ("SELECT * FROM PASIEN WHERE NO_KTP_PASIEN = '"+no_ktp_pasien+"'");
+          
+            if(result.first() == true){
+                status = "sudah ada";
+            }
+            else {
+            status = "tidak ada";
+            }
+            
+            result.close();
+            System.out.println(status);
+            return status;
+            
+        }catch (SQLException exception) {
+            exception.printStackTrace();
+            return status;
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }    
+    }
  public List<EntitasPendaftaran> search_nama(String nama_pasien_kecil) throws RemoteException {
         Statement statement = null;
         

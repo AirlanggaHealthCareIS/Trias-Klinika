@@ -313,7 +313,9 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             if (!"Sukses".equals(cek)) {
             JOptionPane.showMessageDialog(this, cek);
         }
-        else{EntitasPendaftaran EP = new EntitasPendaftaran();
+        else{
+            String status = null;    
+            EntitasPendaftaran EP = new EntitasPendaftaran();
             PemeriksaanEntitas PE = new PemeriksaanEntitas();
             Date date = new Date(tgl_lahir_pasien.getDate().getTime());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -324,12 +326,22 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             
             PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString().substring(0, 5), tgl_pemeriksaan.getText(), Integer.parseInt(no_antrian.getText()), 1);
 
-            try {
+                try {
+                    status = PS.cek_ktp(EP.getN0_KTP());
+                } catch (RemoteException ex) {
+                    Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if ("tidak ada".equals(status)){
+                try {
                 PS.Save(EP, PE);
             } catch (RemoteException ex) {
                 Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Data tersimpan");
+            JOptionPane.showMessageDialog(this, "Data tersimpan");  
+                }
+                else{JOptionPane.showMessageDialog(this, "Nomor Ktp ini sudah ada");
+                }
+            
         }
         }
     }//GEN-LAST:event_tombol_simpanActionPerformed
