@@ -36,6 +36,7 @@ import trias.klinika.server.service.queryRekammedis;
 import trias.klinika.server.service.queryLaporanKeuanganApotek;
 import trias.klinika.server.service.QueryLaporanPasien;
 import trias.klinika.server.service.QueryNotifikasiStokObatDokter;
+import trias.klinika.server.service.QueryPelayananApotek;
 
 class ServerThread extends Thread { 
 	
@@ -143,6 +144,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         QueryLaporanKeuanganReservasi queryLaporanKeuanganReservasi = new QueryLaporanKeuanganReservasi();
         QueryLaporanPasien queryLaporanPasien = new QueryLaporanPasien();
         QueryNotifikasiStokObatDokter queryNotifikasiStokObatDokter = new QueryNotifikasiStokObatDokter() {};
+        QueryPelayananApotek queryPelayananApotek = new QueryPelayananApotek (){};
         
         server.rebind("service1", queryLogin);
         server.rebind("service2", querypendaftaran);
@@ -151,6 +153,7 @@ public class Server extends javax.swing.JFrame implements Runnable {
         server.rebind("service5", querylistpetugas);
         server.rebind("service6", QueryRekamMedis);
         server.rebind("service7", queryResep);
+        server.rebind("service8", queryPelayananApotek);
         server.rebind("service9_a_1", queryLaporanKeuanganReservasi);
         server.rebind("service9_a_2", queryLaporanPasien);
         server.rebind("service9_c_1", querylaporankeuanganapotek);
@@ -235,12 +238,21 @@ public class Server extends javax.swing.JFrame implements Runnable {
                 break;
             case "Pembayaran":
                 UpdateList(msg);
+            case "Resep":
+                kirimObat(msg);
         }
     }
     
     public void UpdateList(pesan msg){
         for(int i=0;i<clientCount;i++){
             if("R".equals(clients[i].username.substring(0, 1))){
+                clients[i].send(msg);
+            }
+        }
+    }
+    public void kirimObat(pesan msg){
+        for(int i=0;i<clientCount;i++){
+            if("A".equals(clients[i].username.substring(0, 1))){
                 clients[i].send(msg);
             }
         }

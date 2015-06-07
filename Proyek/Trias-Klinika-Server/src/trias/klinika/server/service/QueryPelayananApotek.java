@@ -72,7 +72,7 @@ import trias.klinika.server.utilitas.Koneksidatabase;
             
             statement = Koneksidatabase.getConnection().createStatement();
             
-            ResultSet result = statement.executeQuery("SELECT rr.ID_RESEP, p.ID_PEMERIKSAAN,d.NAMA_DOKTER, s.NAMA_PASIEN, o.ID_OBAT FROM RINCIAN_RESEP AS rr, PEMERIKSAAN AS p,OBAT AS o, dokter AS d, pasien AS s WHERE p.ID_DOKTER= d.ID_DOKTER AND ID_RESEP ='"+id+"'");
+            ResultSet result = statement.executeQuery("SELECT rr.ID_RESEP, p.ID_PEMERIKSAAN,d.NAMA_DOKTER, s.NAMA_PASIEN, rr.ID_OBAT_KELUAR FROM RESEP as r, RINCIAN_RESEP AS rr, PEMERIKSAAN AS p, dokter AS d, pasien AS s WHERE r.ID_RESEP = rr.ID_RESEP AND  p.ID_DOKTER= d.ID_DOKTER AND p.ID_RESEP = rr.ID_RESEP AND p.ID_DOKTER = d.ID_DOKTER AND p.ID_PASIEN = s.ID_PASIEN AND p.ID_PEMERIKSAAN = '"+id+"'");
             
             
             PelayananApotekEntitas PAE = new PelayananApotekEntitas();

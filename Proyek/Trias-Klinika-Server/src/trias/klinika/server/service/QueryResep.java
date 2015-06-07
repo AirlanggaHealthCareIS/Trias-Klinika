@@ -214,7 +214,7 @@ public class QueryResep extends UnicastRemoteObject implements ServiceResep {
         PreparedStatement statement = null;
         
         try{
-        statement = (PreparedStatement)Koneksidatabase.getConnection().prepareStatement("UPDATE 'pemeriksaan' SET 'ID_RESEP' = '"+id_resep+"' WHERE 'ID_PEMERIKSAAN' = '"+id_pemeriksaan+"'");
+        statement = (PreparedStatement)Koneksidatabase.getConnection().prepareStatement("UPDATE pemeriksaan SET ID_RESEP = '"+id_resep+"' WHERE ID_PEMERIKSAAN = '"+id_pemeriksaan+"'");
         statement.executeUpdate();        
     } catch (SQLException ex) {
         Logger.getLogger(QueryResep.class.getName()).log(Level.SEVERE, null, ex);
