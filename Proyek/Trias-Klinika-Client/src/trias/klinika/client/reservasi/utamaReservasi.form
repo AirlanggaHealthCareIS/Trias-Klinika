@@ -86,15 +86,18 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButton4" alignment="0" pref="122" max="32767" attributes="1"/>
                               <Component id="jButton1" max="32767" attributes="0"/>
                               <Component id="jButton2" max="32767" attributes="0"/>
-                              <Component id="jButton3" alignment="0" max="32767" attributes="1"/>
+                              <Component id="jButton3" alignment="0" pref="131" max="32767" attributes="1"/>
+                              <Component id="jButton4" alignment="0" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="reservasi" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="LaporanObatKeluar" alignment="0" max="32767" attributes="0"/>
+                              <Component id="reservasi" max="32767" attributes="0"/>
+                          </Group>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -114,7 +117,9 @@
                   <Component id="jButton4" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="reservasi" min="-2" pref="55" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="LaporanObatKeluar" min="-2" pref="55" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -160,6 +165,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reservasiActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JToggleButton" name="LaporanObatKeluar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Laporan Obat Keluar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LaporanObatKeluarActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="nama">
@@ -180,7 +193,9 @@
         </Property>
       </Properties>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JLayeredPaneSupportLayout"/>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
     </Container>
     <Component class="javax.swing.JButton" name="logout">
       <Properties>

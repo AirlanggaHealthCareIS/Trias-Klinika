@@ -16,5 +16,6 @@ import trias.klinika.api.entitas.LaporanDataObatKeluarEntitas;
  */
 public interface LaporanDataObatKeluarService extends Remote {
     List<LaporanDataObatKeluarEntitas> getDataLaporan(String tgl_mulai, String tgl_sampai, String id_dokter) throws RemoteException;
-    
+    String [] DropdownTahun (String [] tahun) throws RemoteException;
+    String [] DropdownBulan (String [] bulan, String tahun) throws RemoteException;
 }

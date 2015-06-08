@@ -7,6 +7,9 @@
             <file>file:/C:/Users/Sahirul/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryLaporanKeuanganDokter.java</file>
             <file>file:/C:/Users/Sahirul/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/main/Server.java</file>
             <file>file:/C:/Users/Sahirul/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryLaporanDataObatKeluar.java</file>
+            <file>file:/C:/Users/Sahirul/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryInventoriObatDokter.java</file>
+            <file>file:/C:/Users/Sahirul/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryInventoryObatApotek.java</file>
+            <file>file:/C:/Users/Sahirul/Documents/GitHub/Trias-Klinika/Proyek/Trias-Klinika-Server/src/trias/klinika/server/service/QueryListPembayaran.java</file>
         </group>
     </open-files>
 </project-private>
