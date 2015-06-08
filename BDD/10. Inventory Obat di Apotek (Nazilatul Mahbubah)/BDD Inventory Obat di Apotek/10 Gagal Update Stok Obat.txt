@@ -8,3 +8,11 @@ And	: Memilih tombol “save”
 Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
 When	: Memilih tombol “tidak”
 Then	: Kembali mengeluarkan form yang akan di update
+
+BDD TDD
+Given	: User berada dalam menu inventory obat apotek
+When	: Memilih obat yang akan di update
+And	: Memilih tombol "update"
+Then 	: Class InventoryObatApotek mengambil method setupdateobat yang mengambil setdeskripsi, set harga dari kelas inventoryobatapotekentitas
+And	: Class tabelInventoryObatApotek mengambil method update yang berfungsi menambahkan isi tabel
+And	: Class queryinventoryobatapotek mengambil method update berfungsi untuk menyimpan dalam database pada query yang telah dibuat
