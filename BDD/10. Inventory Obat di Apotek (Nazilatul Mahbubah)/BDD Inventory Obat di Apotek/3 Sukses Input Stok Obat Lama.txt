@@ -11,7 +11,7 @@ When	: Memilih tombol “ya”
 Then	: Data akan terupdate di database
 And	: Menampilkan obat yang ditambah pada tabel
 
-
+BDD TDD
 Given	: User berada dalam menu inventory obat apotek
 When	: Memilih obat yang akan yang akan ditambah stoknya pada tabel
 And	: Mengisi Form Obat dengan memasukkan qty

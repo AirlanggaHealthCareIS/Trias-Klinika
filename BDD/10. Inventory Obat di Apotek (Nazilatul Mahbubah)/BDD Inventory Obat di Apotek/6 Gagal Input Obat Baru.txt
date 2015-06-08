@@ -14,6 +14,7 @@ When	: Memilih tombol “tidak”
 Then	: Sistem akan kembali ke tampilan form
 And	: Data tidak akan tersimpan dalam database
 
+BDD TDD
 Given	: User berada dalam menu inventory obat apotek
 When	: Mengisi field jenis obat dengan jenis "Syrup"
 And	: Mengisi field quantity dengan "30 buah"

@@ -6,6 +6,7 @@ Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
 When	: Memilih tombol “tidak”
 Then	:  Kembali ke menu inventory
 
+BDD TDD
 Given	: User berada dalam menu inventory obat
 When	: Memilih obat yang akan di hapus
 And	: Memilih tombol “delete”
