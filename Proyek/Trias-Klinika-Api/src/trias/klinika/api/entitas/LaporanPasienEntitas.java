@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author iqbal
  */
-public class LaporanPasienEntitas {
+public class LaporanPasienEntitas implements Serializable {
     private String idpemeriksaan;
     private String idpasien;
     private String idpembayaran;

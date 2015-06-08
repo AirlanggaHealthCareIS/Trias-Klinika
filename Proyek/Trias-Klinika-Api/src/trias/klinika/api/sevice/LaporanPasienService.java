@@ -14,6 +14,8 @@ import trias.klinika.api.entitas.LaporanPasienEntitas;
  * @author iqbal
  */
 public interface LaporanPasienService extends Remote {
-    List<LaporanPasienEntitas> tglpemeriksaan(String tgl_awal, String tgl_akhir) throws RemoteException;
+    List<LaporanPasienEntitas> tglpemeriksaan(String tgl) throws RemoteException;
+    List<LaporanPasienEntitas> tglpemeriksaanSpesialis(String tgl, String Spesialis) throws RemoteException;
     public String[] DropdownSpesialis(String[] spesialis) throws RemoteException;
+    String[] DropdownTahun(String[] Tahun) throws RemoteException;
 }
