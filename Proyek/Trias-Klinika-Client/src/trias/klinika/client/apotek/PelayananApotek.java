@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import trias.klinika.api.entitas.PelayananApotekEntitas;
+import trias.klinika.api.entitas.PelayananApotekEntitas1;
 import trias.klinika.api.entitas.PelayananApotekResepEntitas;
 import trias.klinika.api.sevice.PelayananApotekService;
 import trias.klinika.client.tabel.TabelPelayananApotek;
@@ -39,7 +40,11 @@ public final class PelayananApotek extends javax.swing.JInternalFrame {
     
     
  public PelayananApotek( final PelayananApotekService PAS) throws RemoteException {
-        this.PAS = PAS;
+        
+        
+     
+         list = new ArrayList<>();
+         this.PAS = PAS;
 //        try {
 //            list = this.PAS.getDokters();
 //            TPA.setData(list);
@@ -47,7 +52,16 @@ public final class PelayananApotek extends javax.swing.JInternalFrame {
 //            exception.printStackTrace();
 //        }
         initComponents();
-   tabelkanan.setModel(TPA);
+        TPAR.setData(PAS.getDokters());
+        tabelkanan.setModel(TPAR);
+        
+//        try {
+//            TPA.setData(this.PAS.getresepbaru("R0001"));
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(PelayananApotek.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+            tabelkiri.setModel(TPA);
 
 //             TPA.setData(this.PAS.getDokters());
 //
@@ -165,6 +179,21 @@ public final class PelayananApotek extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabelkiri.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelkiriMouseClicked(evt);
+            }
+        });
+        tabelkiri.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                tabelkiriComponentShown(evt);
+            }
+        });
+        tabelkiri.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                tabelkiriComponentAdded(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabelkiri);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -239,21 +268,22 @@ public final class PelayananApotek extends javax.swing.JInternalFrame {
 
     private void tabelkananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkananMouseClicked
         int row = tabelkanan.rowAtPoint(evt.getPoint());
-        PelayananApotekEntitas PARE = new PelayananApotekEntitas ();
-        try {            
-            PARE = PAS.getpelayananapotek(TPA.get(row).getID_RESEP());
+//        JOptionPane.showMessageDialog(null, "brrrrrrrrrrrrrrr");
+        Object selectedObj = tabelkanan.getValueAt(row, 0);
+        JOptionPane.showMessageDialog(null, "imin "+ selectedObj +"tralalaaa");
+        PelayananApotekEntitas PARE = new PelayananApotekEntitas();
+//        try {           
+//            PARE = PAS.getpelayananapotek(TPA.get(row).getID_RESEP());
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(PelayananApotek.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        try {
+            TPA.setData(this.PAS.getresepbaru(""+selectedObj));
         } catch (RemoteException ex) {
             Logger.getLogger(PelayananApotek.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-            Object selectedObj = tabelkanan.getValueAt(row, 0);
-
-                try {
-                TPAR.setData(this.PAS.getresepbaru(""+selectedObj));
-            } catch (RemoteException ex) {
-                Logger.getLogger(PelayananApotek.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            tabelkiri.setModel(TPAR);
+            tabelkiri.setModel(TPA);
     }//GEN-LAST:event_tabelkananMouseClicked
 
     private void tabelkananComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelkananComponentShown
@@ -263,6 +293,21 @@ public final class PelayananApotek extends javax.swing.JInternalFrame {
     private void tabelkananComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelkananComponentAdded
         awal();        
     }//GEN-LAST:event_tabelkananComponentAdded
+
+    private void tabelkiriComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabelkiriComponentShown
+        // TODO add your handling code here:
+        embuh();
+    }//GEN-LAST:event_tabelkiriComponentShown
+
+    private void tabelkiriComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_tabelkiriComponentAdded
+        // TODO add your handling code here:
+        embuh();
+    }//GEN-LAST:event_tabelkiriComponentAdded
+
+    private void tabelkiriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkiriMouseClicked
+        // TODO add your handling code here:
+        embuh();
+    }//GEN-LAST:event_tabelkiriMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -286,6 +331,18 @@ public void awal() {
          }
         tabelkanan.setModel(TPA);
         System.out.println("unyu 1");
+    }
+
+public void embuh() {
+        try{
+             TPAR.setData(this.PAS.XXX());
+             System.out.println("aa");
+        }catch(RemoteException exception){
+             exception.printStackTrace();
+            System.out.println("bb");
+         }
+        tabelkiri.setModel(TPAR);
+        System.out.println("cc");
     }
 
 }

@@ -3,6 +3,7 @@ Given	: User berada dalam menu inventory obat
 When	: Memilih tombol “expired”
 Then	: Sistem mengurutkan stok obat berdasarkan masa pakai yang mendekati tanggal ketika pengecekan
 
+BDD TDD
 Given	: User berada dalam menu inventory obat apotek
 When	: Menekan tombol cek kadaluarsa
 Then	: Interface inventory obat apotek membutuhkan List Inventory Obat Apotek Entitas yang berisi (idobat, namaobat,hargaobat,deskripsi, tgl_masuk, masa_pakai, hargaobat) menggunakan metode cekExpired ke class QueryInventoryObatApotek

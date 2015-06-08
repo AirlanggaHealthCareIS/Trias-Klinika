@@ -61,7 +61,7 @@ public class scenario_1_Pengurangan_obat {
         System.out.println("pengurangan sukses");
         Login LO = new Login();
         LoginEntitas LE = new LoginEntitas();
-        UtamaDokter UD = new UtamaDokter(LE, LO);
+       UtamaDokter UD = new UtamaDokter(LE, LO);
         Inventori_Obat_Dokter interfacetambah = new Inventori_Obat_Dokter (service13, UD);
         //interfacetambah.setpengurangan();
     }

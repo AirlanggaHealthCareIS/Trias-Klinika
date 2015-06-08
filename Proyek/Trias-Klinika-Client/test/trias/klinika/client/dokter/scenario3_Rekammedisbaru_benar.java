@@ -56,9 +56,13 @@ public class scenario3_Rekammedisbaru_benar {
         registry = LocateRegistry.getRegistry(ip,4444);
         service6 = (serviceRekam) registry.lookup("service6");
         System.out.println(" ");    
-        rekammedis interfaceRekammedis = new rekammedis (service6);
-        interfaceRekammedis.setSimpan();
+        //rekammedis interfaceRekammedis = new rekammedis (service6);
+     //   interfaceRekammedis.setSimpan();
         System.out.println("SetData");
+
+//        rekammedis interfaceRekammedis = new rekammedis (service6);
+//        interfaceRekammedis.setSimpan();
+//        System.out.println("SetData");
        
     }
 }

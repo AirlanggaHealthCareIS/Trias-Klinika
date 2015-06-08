@@ -29,10 +29,7 @@ public interface AntreanServis extends Remote{
     List<Dokter> getDokters() throws RemoteException;
     List<PemeriksaanEntitas> getPemeriksaans() throws RemoteException;
     List<PasienEntity> getlistidpasien() throws RemoteException;
-    List<PemeriksaanEntitas> buatRefreshing(String tgl, String id_dokter) throws RemoteException;
-    Dokter insertDokter (Dokter a) throws RemoteException;
-    Dokter getDokter (int IdDokter) throws RemoteException;
-    
+    List<PemeriksaanEntitas> buatRefreshing(String tgl, String id_dokter) throws RemoteException;  
     String getIDdokter(String nama_dokter) throws RemoteException;
    
     /**

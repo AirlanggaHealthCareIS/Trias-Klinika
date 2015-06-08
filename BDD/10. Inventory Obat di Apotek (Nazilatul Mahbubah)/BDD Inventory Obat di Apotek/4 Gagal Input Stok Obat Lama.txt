@@ -11,6 +11,7 @@ When	: Memilih tombol “tidak”
 Then	: Sistem akan mengembalikan tampilan form obat 
 And	: Data tidak akan tersimpan di database
 
+BDD TDD
 Given	: User berada dalam menu inventory obat apotek
 When	: Memilih obat yang akan yang akan ditambah stoknya pada tabel
 And	: Mengisi Form Obat dengan memasukkan qty

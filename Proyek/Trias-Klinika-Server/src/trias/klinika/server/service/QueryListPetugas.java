@@ -71,6 +71,14 @@ public class QueryListPetugas extends UnicastRemoteObject implements ListPetugas
                     a.setnama_dokter(result.getString("NAMA_DOKTER"));
                     a.setno_telp_dokter(result.getString("NO_TELP_DOKTER"));
                     a.setalamat_dokter(result.getString("ALAMAT_DOKTER"));
+                    
+                    if(a.getstatus_dokter()==1){
+                            a.setstatus_dokter_strink("Tidak Memeriksa Pasien");
+                        }
+                        else if(a.getstatus_dokter()==2){
+                            a.setstatus_dokter_strink("Sedang Memeriksa Pasien");
+                        }
+                    
                     list.add(a);
                 }
             
@@ -107,6 +115,14 @@ public class QueryListPetugas extends UnicastRemoteObject implements ListPetugas
             dok.setnama_dokter(result.getString("NAMA_DOKTER"));
             dok.setno_telp_dokter(result.getString("NO_TELP_DOKTER"));
             dok.setalamat_dokter(result.getString("ALAMAT_DOKTER"));
+            
+            if(dok.getstatus_dokter()==1){
+                            dok.setstatus_dokter_strink("Tidak Memeriksa Pasien");
+                        }
+                        else if(dok.getstatus_dokter()==2){
+                            dok.setstatus_dokter_strink("Sedang Memeriksa Pasien");
+                        }
+            
             return dok;
         } 
         catch (SQLException exception) {

@@ -41,13 +41,10 @@ public class TabelPelayananApotek extends AbstractTableModel {
             case 0:
                 return "ID_RESEP";
             case 1:
-                return "ID_PEMERIKSAAN";
+                return "NAMA_OBAT";
             case 2:
-                return "NAMA_DOKTER";
-            case 3:
-                return "NAMA_PASIEN";
-                case 4:
-                return "ID_OBAT";
+                return "HARGA_OBAT";
+            
             default :
                 return null;
         }
@@ -61,7 +58,7 @@ public class TabelPelayananApotek extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 3;
     }
 
     @Override
@@ -70,13 +67,9 @@ public class TabelPelayananApotek extends AbstractTableModel {
             case 0:
                 return list.get(rowIndex).getID_RESEP();
             case 1:
-                return list.get(rowIndex).getID_PEMERIKSAAN();
+                return list.get(rowIndex).getNAMA_OBAT();
             case 2:
-                return list.get(rowIndex).getNAMA_DOKTER();
-            case 3:
-                  return list.get(rowIndex).getNAMA_PASIEN();
-                case 4:
-                  return list.get(rowIndex).getID_OBAT();
+                return list.get(rowIndex).getHARGA_OBAT();
             default :
                 return null;
    

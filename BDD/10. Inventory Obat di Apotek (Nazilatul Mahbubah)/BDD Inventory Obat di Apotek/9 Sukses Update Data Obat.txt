@@ -7,6 +7,7 @@ Then	: Sistem mengeluarkan notifikasi “apakah anda sudah yakin?”
 When	: Memilih tombol “ya”
 Then	: Data akan terupdate di database
 
+BDD TDD
 Given	: User berada dalam menu inventory obat apotek
 When	: Memilih obat yang akan di update
 And	: Mengisi Form Obat dengan memasukkan deskripsi

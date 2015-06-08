@@ -4,12 +4,12 @@
  */
 package trias.klinika.client.dokter;
 
-import java.beans.PropertyVetoException;
 import trias.klinika.client.reservasi.*;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseListener;
+import java.beans.PropertyVetoException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.JInternalFrame;
@@ -113,7 +113,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         nama.setText("SELAMAT DATANG "+LE.getnamauser().toUpperCase());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
-       // IDpemeriksaan.setVisible(false);
+        IDpemeriksaan.setVisible(true);
         rekamedistombol.setEnabled(false);
         byr.setEnabled(false);
         rsp.setEnabled(false);
@@ -218,34 +218,37 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(20, 0, 150, 50);
+        jButton1.setBounds(20, 10, 150, 50);
 
         byr.setText("Pembayaran");
+        byr.setEnabled(false);
         byr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 byrActionPerformed(evt);
             }
         });
         jPanel1.add(byr);
-        byr.setBounds(20, 70, 150, 50);
+        byr.setBounds(20, 220, 150, 50);
 
         rekamedistombol.setText("Rekam Medis");
+        rekamedistombol.setEnabled(false);
         rekamedistombol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rekamedistombolActionPerformed(evt);
             }
         });
         jPanel1.add(rekamedistombol);
-        rekamedistombol.setBounds(20, 140, 150, 50);
+        rekamedistombol.setBounds(20, 80, 150, 50);
 
         rsp.setText("Resep");
+        rsp.setEnabled(false);
         rsp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rspActionPerformed(evt);
             }
         });
         jPanel1.add(rsp);
-        rsp.setBounds(20, 210, 150, 50);
+        rsp.setBounds(20, 150, 150, 50);
 
         LaporanKeuanganDokter.setText("Laporan");
         LaporanKeuanganDokter.addActionListener(new java.awt.event.ActionListener() {
@@ -254,7 +257,7 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(LaporanKeuanganDokter);
-        LaporanKeuanganDokter.setBounds(20, 280, 150, 50);
+        LaporanKeuanganDokter.setBounds(20, 290, 150, 50);
 
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -263,16 +266,16 @@ public class UtamaDokter extends javax.swing.JFrame {
             }
         });
         jPanel1.add(logout);
-        logout.setBounds(20, 350, 150, 50);
+        logout.setBounds(20, 360, 150, 50);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 0, 1370, 560);
+        jLabel2.setBounds(-10, -190, 1390, 740);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 200, 1366, 557);
 
-        nama.setFont(new java.awt.Font("Times New Roman", 1, 24));
+        nama.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         nama.setForeground(new java.awt.Color(255, 255, 255));
         nama.setText("jLabel1");
         getContentPane().add(nama);
@@ -280,9 +283,9 @@ public class UtamaDokter extends javax.swing.JFrame {
 
         IDpemeriksaan.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         IDpemeriksaan.setForeground(new java.awt.Color(255, 255, 51));
-        IDpemeriksaan.setText("jLabel3");
+        IDpemeriksaan.setText("Belum ada pasien masuk");
         getContentPane().add(IDpemeriksaan);
-        IDpemeriksaan.setBounds(20, 20, 180, 30);
+        IDpemeriksaan.setBounds(30, 20, 270, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -392,9 +395,8 @@ public class UtamaDokter extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             internalFrame2.setSelected(true);
-                        sonido("LYNC_joinedconference");
-                         fp.id.setText(IDpemeriksaan.getText());
-
+            fp.id.setText(IDpemeriksaan.getText());
+            sonido("LYNC_joinedconference");
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -403,22 +405,22 @@ public class UtamaDokter extends javax.swing.JFrame {
     private void rekamedistombolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rekamedistombolActionPerformed
         // TODO add your handling code here:
         try {
-        sr.ID.setText(service6.getIdPasien(IDpemeriksaan.getText()));
-        sr.awal();
-        internalFrame3.setSelected(true);
-        sonido("LYNC_joinedconference");
-
-    } catch(PropertyVetoException | RemoteException ex) {
-        JOptionPane.showMessageDialog(null, ex);
-    }
+            sr.ID.setText(service6.getIdPasien(IDpemeriksaan.getText()));
+            sr.awal();
+            internalFrame3.setSelected(true);
+            sonido("LYNC_joinedconference");
+        } catch(PropertyVetoException | RemoteException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_rekamedistombolActionPerformed
 
     private void rspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rspActionPerformed
         // TODO add your handling code here:
         try {
-                        sonido("LYNC_joinedconference");
-
             internalFrame4.setSelected(true);
+            ir.ID_Pemeriksaan.setText(IDpemeriksaan.getText());
+            ir.setIDPasien();
+            sonido("LYNC_joinedconference");
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -439,8 +441,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             login.getService5().Ubah_Status_Logout(LE);
-                        sonido("LYNC_joinedconference");
-
+            sonido("LYNC_joinedconference");
             login.kirim(new pesan("logout", login.getUsers().getnamauser(), login.getUsers().getusername(), "Reservasi"));
             login.dispose();
             this.dispose();
@@ -463,19 +464,19 @@ public class UtamaDokter extends javax.swing.JFrame {
     private javax.swing.JButton rekamedistombol;
     private javax.swing.JButton rsp;
     // End of variables declaration//GEN-END:variables
-public void kirimanAntreanImin (String Id, String Nama) {
+    public void kirimanAntreanImin (String Id, String Nama) {
         JOptionPane.showMessageDialog(null, "Pasien baru siap diperiksa");
-
             IDpemeriksaan.setText(Id);
-
+            rekamedistombol.setEnabled(true);
     }
-public void NotifStokObatDokterKritis() {
+    
+    public void NotifStokObatDokterKritis() {
     List<InventoryObatApotekEntitas> list = new ArrayList<InventoryObatApotekEntitas>();
     String [] Id_Obat = new String[0];
     String pesan = "List Obat Yang berada dalam keadaan kritis : \n";
     try {
         Id_Obat = service11_3.StokObatDokter(Id_Obat, service13.Spesialis(LE.getusername()));
-        if (!"Tidak Ada Obat Expired".equals(Id_Obat[0])) {
+        if (!"Tidak Ada Stok Obat Kritis".equals(Id_Obat[0])) {
             for (int i=0;i<Id_Obat.length;i++) {
                 list.add(service11_3.getobat(Id_Obat[i], service13.Spesialis(LE.getusername())));
                 pesan = pesan + (i+1) + ".  "+list.get(i).getNamaObat()+"   Dengan Sisa Stok = "+list.get(i).getQty()+"\n";

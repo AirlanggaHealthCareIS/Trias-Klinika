@@ -37,9 +37,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
             statement = Koneksidatabase.getConnection().createStatement();
             try (ResultSet result = statement.executeQuery("SELECT ID_PASIEN FROM PASIEN WHERE ID_PASIEN LIKE '%"+cadenaEscrita+"%'")) {
                 PasienEntity PasienEntity = new PasienEntity();
-                result.first();
-                    
-    //                PasienEntity.setid_pasien(result.getString("ID_PASIEN"));
+                result.beforeFirst();
                     while(result.next()){
                     modelo.addElement(result.getString("ID_PASIEN"));
                     }
@@ -126,7 +124,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         try {
             statement = Koneksidatabase.getConnection().createStatement();
                     ResultSet result = statement.executeQuery(
-                    "SELECT NO_ANTRIAN FROM  `pemeriksaan`  WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"'");
+                    "SELECT NO_ANTRIAN FROM  `pemeriksaan`  WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"' ORDER BY NO_ANTRIAN ASC");
             if(result.first()==false){
                 na=1;
             }
@@ -524,37 +522,7 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         }
     }
     
-//    @Override
-//    public PemeriksaanEntitas apdetsetatus(String tgl, String id_dokter) throws RemoteException {
-//        System.out.println("proses insert pemeriksaan");
-//        PreparedStatement statement = null;
-//        try{
-//            statement = Koneksidatabase.getConnection().prepareStatement(
-//                    "(UPDATE pemeriksaan SET status_pasien=2 WHERE ID_DOKTER ='"+id_dokter+"' AND TGL_PEMERIKSAAN='"+tgl+"')");
-//            statement.setString(1, a.getID_PEMERIKSAAAN());
-//            statement.setString(2, a.getID_PASIEN());
-//            statement.setString(3, a.getID_DOKTER());
-//            statement.setString(4, a.getID_RESERVASI());
-//            statement.setString(5, a.getTGL_PEMERIKSAAN());
-//            statement.setInt(6, a.getNO_ANTRIAN()); 
-//            statement.setInt(7, a.getSTATUS_PASIEN()); 
-//            System.out.println(statement.toString()); 
-//            statement.execute();
-//            return a;
-//        }
-//        catch(SQLException exception){
-//            exception.printStackTrace();
-//            return null;
-//        }
-//        finally{
-//            if(statement != null){
-//                try {
-//                    statement.close();
-//                } catch (SQLException exception) {
-//                }
-//            }
-//        }
-//    }
+
 
     @Override
     public int getIDPasien() throws RemoteException{
@@ -564,7 +532,6 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
                     "SELECT * FROM PASIEN");
-//            statement.setString(1,a);
             ResultSet result = statement.executeQuery();
             
             int a=0;
@@ -679,15 +646,5 @@ public class QueryAntrean extends UnicastRemoteObject implements AntreanServis{
                 }
             }
         }
-    }
-
-    @Override
-    public Dokter insertDokter(Dokter a) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Dokter getDokter(int IdDokter) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

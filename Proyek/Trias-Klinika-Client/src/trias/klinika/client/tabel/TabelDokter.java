@@ -48,6 +48,7 @@ public class TabelDokter extends AbstractTableModel{
         switch (column){
             case 0 :return "id dokter";
             case 1 :return "nama dokter";
+            case 2 :return "status dokter";
             default:return null;
         }
     }
@@ -60,7 +61,7 @@ public class TabelDokter extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -70,6 +71,8 @@ public class TabelDokter extends AbstractTableModel{
                 return list.get(rowIndex).getid_dokter();
             case 1:
                 return list.get(rowIndex).getnama_dokter();
+            case 2:
+                return list.get(rowIndex).getstatus_dokter_strink();
             default:return null;
         }
     }
