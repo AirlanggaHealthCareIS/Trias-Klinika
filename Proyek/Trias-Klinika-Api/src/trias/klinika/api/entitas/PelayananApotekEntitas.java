@@ -46,7 +46,7 @@ public class PelayananApotekEntitas implements Serializable{
  public int getHARGA_OBAT(){
      return HARGA_OBAT;
  }
- public void setHARGA_OBAT(int HARGA){
+ public void setHARGA_OBAT(int HARGA_OBAT){
      this.HARGA_OBAT = HARGA_OBAT;
  }
    

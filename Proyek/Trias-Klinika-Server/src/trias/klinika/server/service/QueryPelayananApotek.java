@@ -34,7 +34,7 @@ import trias.klinika.server.utilitas.Koneksidatabase;
         try {
             statement = Koneksidatabase.getConnection().createStatement();
             List<PelayananApotekEntitas> list;
-            try (ResultSet result = statement.executeQuery("SELECT rr.ID_RESEP, p.ID_PEMERIKSAAN,d.NAMA_DOKTER, s.NAMA_PASIEN, o.ID_OBAT FROM RINCIAN_RESEP AS rr, PEMERIKSAAN AS p,OBAT AS o, dokter AS d, pasien AS s WHERE p.ID_DOKTER= d.ID_DOKTER AND rr.ID_RESEP= p.ID_RESEP")) {
+            try (ResultSet result = statement.executeQuery("SELECT p.ID_RESEP, p.ID_PEMERIKSAAN, d.NAMA_DOKTER, s.NAMA_PASIEN FROM PEMERIKSAAN AS p, dokter AS d, pasien AS s WHERE p.ID_DOKTER = d.ID_DOKTER AND p.ID_PASIEN= s.ID_PASIEN")) {
                 list = new ArrayList<>();
                 while(result.next()){
                     PelayananApotekEntitas a = new PelayananApotekEntitas();
@@ -42,7 +42,6 @@ import trias.klinika.server.utilitas.Koneksidatabase;
                     a.setID_PEMERIKSAAN(result.getString("ID_PEMERIKSAAN"));
                     a.setNAMA_DOKTER(result.getString("NAMA_DOKTER"));
                     a.setNAMA_PASIEN(result.getString("NAMA_PASIEN"));
-                    a.setID_OBAT(result.getString("ID_OBAT"));
                     list.add(a);
                 }
             }
@@ -105,11 +104,14 @@ import trias.klinika.server.utilitas.Koneksidatabase;
         try {
             statement = Koneksidatabase.getConnection().createStatement();
             List<PelayananApotekEntitas> list;
-            try (ResultSet result = statement.executeQuery("SELECT rr.ID_RESEP, d.NAMA_DOKTER, s.NAMA_PASIEN, o.ID_OBAT, o.NAMA_OBAT, o.HARGA_OBAT FROM OBAT AS o, rincian_resep as rr, PASIEN AS s, DOKTER AS d WHERE   o.id_obat = rr.id_obat_keluar AND rr.ID_RESEP='"+id+"'")) {
+            try (ResultSet result = statement.executeQuery("SELECT rr.ID_RESEP, o.NAMA_OBAT, o.HARGA_OBAT FROM OBAT AS o, rincian_resep AS rr WHERE o.id_obat = rr.id_obat_keluar AND rr.ID_RESEP ='"+id+"'")) {
                 list = new ArrayList<>();
                 while(result.next()){
                     PelayananApotekEntitas a = new PelayananApotekEntitas();
                    a.setID_RESEP(result.getString("ID_RESEP"));
+                   a.setNAMA_OBAT(result.getString("NAMA_OBAT"));
+                   a.setHARGA_OBAT(result.getInt("HARGA_OBAT"));
+                   
                     list.add(a);
                 }
             }
