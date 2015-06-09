@@ -35,8 +35,8 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
         PreparedStatement statement = null;
         try {
             statement = Koneksidatabase.getConnection().prepareStatement(
-                    "INSERT INTO pasien(ID_PASIEN, NAMA_PASIEN, TGL_LAHIR_PASIEN, NO_TELP_PASIEN, ALAMAT_PASIEN, GOL_DARAH, NO_KTP_PASIEN, JENIS_PASIEN)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO pasien(ID_PASIEN, NAMA_PASIEN, TGL_LAHIR_PASIEN, NO_TELP_PASIEN, ALAMAT_PASIEN, GOL_DARAH, NO_KTP_PASIEN, JENIS_KELAMIN, JENIS_PASIEN)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, EP.getID_PASIEN());
             statement.setString(2, EP.getNAMA_PASIEN());
@@ -45,7 +45,8 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             statement.setString(5, EP.getALAMAT_PASIEN());
             statement.setString(6, EP.getGOL_DARAH());
             statement.setString(7, EP.getN0_KTP());
-            statement.setString(8, EP.getJENIS_PASIEN());
+            statement.setString(8, EP.getJENIS_KELAMIN());
+            statement.setString(9, EP.getJENIS_PASIEN());
             
             System.out.println(statement.toString());
             statement.executeUpdate();
@@ -136,13 +137,13 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             
             ResultSet result = statement.executeQuery
             ("SELECT NO_ANTRIAN FROM PEMERIKSAAN WHERE ID_DOKTER = '"+id_dokter+"' AND TGL_PEMERIKSAAN = '"+tgl+"'");
-            
-            if(result.first() == false) {
+            System.out.println(id_dokter);
+            System.out.println(tgl);
+            if(result.last() == false) {
                 na = 1;
             }
             else{
                 result.last();
-            
                 na = result.getInt("NO_ANTRIAN")+1;
                 System.out.println(na);
             }
@@ -287,7 +288,7 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             
              while(result.next()){
                 EntitasPendaftaran EP = new EntitasPendaftaran();
-                EP.setDataPasien(result.getString("ID_PASIEN"), result.getString("NAMA_PASIEN"), result.getString("TGL_lAHIR_PASIEN"), result.getString("NO_TELP_PASIEN"), result.getString("ALAMAT_PASIEN"), result.getString("GOL_DARAH"), result.getString("JENIS_PASIEN"), result.getString("NO_KTP_PASIEN"));
+                EP.setDataPasien(result.getString("ID_PASIEN"), result.getString("NAMA_PASIEN"), result.getString("TGL_lAHIR_PASIEN"), result.getString("NO_TELP_PASIEN"), result.getString("ALAMAT_PASIEN"), result.getString("GOL_DARAH"), result.getString("JENIS_PASIEN"),result.getString("JENIS_KELAMIN"), result.getString("NO_KTP_PASIEN"));
                 list.add(EP);
             }
             
@@ -322,7 +323,7 @@ public class QueryPendaftaran extends UnicastRemoteObject implements Pendaftaran
             
             while(result.next()){
                 EntitasPendaftaran EP = new EntitasPendaftaran();
-                EP.setDataPasien(result.getString("ID_PASIEN"), result.getString("NAMA_PASIEN"), result.getString("TGL_lAHIR_PASIEN"), result.getString("NO_TELP_PASIEN"), result.getString("ALAMAT_PASIEN"), result.getString("GOL_DARAH"), result.getString("JENIS_PASIEN"), result.getString("NO_KTP_PASIEN"));
+                EP.setDataPasien(result.getString("ID_PASIEN"), result.getString("NAMA_PASIEN"), result.getString("TGL_lAHIR_PASIEN"), result.getString("NO_TELP_PASIEN"), result.getString("ALAMAT_PASIEN"), result.getString("GOL_DARAH"), result.getString("JENIS_PASIEN"),result.getString("JENIS_KELAMIN"), result.getString("NO_KTP_PASIEN"));
                 list.add(EP);
             }
             

@@ -4,13 +4,28 @@ package trias.klinika.client.reservasi;
 
 
 
-
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable; 
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.text.StyleConstants.FontFamily;
 import trias.klinika.api.entitas.EntitasPendaftaran;
 import trias.klinika.api.entitas.LoginEntitas;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
@@ -51,7 +66,6 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         tgl_pemeriksaan.setText(setTanggal());
         TPK.setData(this.PS.getDataPasien());
         tabel_anak.setModel(TPK);
-        
         Dropdown();
     }
     
@@ -98,6 +112,8 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         nama_pasien_kecil = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jenis_kelamin = new javax.swing.JComboBox();
 
         setAutoscrolls(true);
         setMaximumSize(new java.awt.Dimension(1147, 557));
@@ -107,7 +123,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Pilih Dokter");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(820, 160, 60, 30);
+        jLabel5.setBounds(820, 180, 110, 30);
 
         id_pemeriksaan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +131,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(id_pemeriksaan);
-        id_pemeriksaan.setBounds(940, 60, 100, 30);
+        id_pemeriksaan.setBounds(940, 80, 100, 30);
 
         tombol_simpan.setText("Simpan");
         tombol_simpan.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +144,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Nomor Antrian");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(820, 210, 80, 30);
+        jLabel10.setBounds(820, 230, 110, 30);
 
         cetak_id_card.setText("Cetak ID Card");
         cetak_id_card.addActionListener(new java.awt.event.ActionListener() {
@@ -137,13 +153,13 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(cetak_id_card);
-        cetak_id_card.setBounds(870, 400, 110, 40);
+        cetak_id_card.setBounds(850, 400, 110, 40);
         getContentPane().add(no_antrian);
-        no_antrian.setBounds(940, 210, 100, 30);
+        no_antrian.setBounds(940, 230, 100, 30);
 
         jLabel11.setText("Tanggal Pemeriksaan");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(820, 110, 110, 30);
+        jLabel11.setBounds(820, 130, 110, 30);
 
         gol_darah.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Golongan", "O", "AB", "A", "B" }));
         gol_darah.addActionListener(new java.awt.event.ActionListener() {
@@ -156,7 +172,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Golongan Darah");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(520, 380, 77, 30);
+        jLabel7.setBounds(520, 380, 100, 30);
 
         id_pasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,19 +197,19 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nama Pasien ");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(520, 170, 70, 30);
+        jLabel1.setBounds(520, 170, 100, 30);
 
         jLabel2.setText("Tanggal Lahir");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(520, 320, 64, 30);
+        jLabel2.setBounds(520, 320, 100, 30);
 
         jLabel3.setText("Nomor Telepon");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(520, 270, 72, 30);
+        jLabel3.setBounds(520, 270, 100, 30);
 
         jLabel4.setText("Alamat ");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(520, 220, 36, 30);
+        jLabel4.setBounds(520, 220, 100, 30);
 
         nama_pasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,11 +235,11 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(pilih_dokter);
-        pilih_dokter.setBounds(940, 160, 150, 30);
+        pilih_dokter.setBounds(940, 180, 150, 30);
 
         jLabel6.setText("ID Pemeriksaan");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(820, 60, 80, 30);
+        jLabel6.setBounds(820, 80, 110, 30);
 
         jLabel9.setText("ID Reservasi");
         getContentPane().add(jLabel9);
@@ -245,7 +261,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(tgl_pemeriksaan);
-        tgl_pemeriksaan.setBounds(940, 110, 100, 30);
+        tgl_pemeriksaan.setBounds(940, 130, 100, 30);
 
         jLabel12.setText("Nomor KTP");
         getContentPane().add(jLabel12);
@@ -281,7 +297,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
 
         jLabel13.setText("Kategori");
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(520, 20, 70, 30);
+        jLabel13.setBounds(520, 20, 100, 30);
 
         nama_pasien_kecil.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -295,6 +311,14 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel14);
         jLabel14.setBounds(250, 20, 90, 30);
 
+        jLabel15.setText("Jenis Kelamin");
+        getContentPane().add(jLabel15);
+        jLabel15.setBounds(820, 20, 110, 30);
+
+        jenis_kelamin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Jenis", "Laki-laki", "Wanita" }));
+        getContentPane().add(jenis_kelamin);
+        jenis_kelamin.setBounds(940, 20, 110, 30);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -306,13 +330,21 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
 
         if (pilih_dokter.getSelectedItem()== "Pilih Dokter"){
-            JOptionPane.showMessageDialog(this, "Harus pilih dokter");
+            try {
+                JOptionPane.showMessageDialog(this, "Harus pilih dokter");
+                cetak("ID Pasien       "+"="+id_pasien.getText(), "Nama Pasien     ="+nama_pasien.getText(),"Alamat Pasien   ="+alamat_pasien.getText(), "Kategori        ="+jenis_pasien.getSelectedItem().toString(), "Kartu Pasien");
+            } catch (DocumentException ex) {
+                Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else {
             cek = Cek(nama_pasien.getText(), tgl_lahir_pasien.getDate().toString(), no_telp_pasien.getText(), alamat_pasien.getText(), gol_darah.getSelectedItem().toString());
             if (!"Sukses".equals(cek)) {
             JOptionPane.showMessageDialog(this, cek);
         }
+            
         else{
             String status = null;    
             EntitasPendaftaran EP = new EntitasPendaftaran();
@@ -320,27 +352,27 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
             Date date = new Date(tgl_lahir_pasien.getDate().getTime());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String tgl_lahir_pasien = sdf.format(date);
-            EP.setDataPasien(id_pasien.getText(), nama_pasien.getText(), tgl_lahir_pasien, no_telp_pasien.getText(), alamat_pasien.getText(), gol_darah.getSelectedItem().toString(), jenis_pasien.getSelectedItem().toString(), no_ktp.getText());
+            EP.setDataPasien(id_pasien.getText(), nama_pasien.getText(), tgl_lahir_pasien, no_telp_pasien.getText(), alamat_pasien.getText(), gol_darah.getSelectedItem().toString(), jenis_pasien.getSelectedItem().toString(),jenis_kelamin.getSelectedItem().toString(), no_ktp.getText());
             
             
             
             PE.setDataPemeriksaan(id_pemeriksaan.getText(), id_reservasi.getText(), id_pasien.getText(), pilih_dokter.getSelectedItem().toString().substring(0, 5), tgl_pemeriksaan.getText(), Integer.parseInt(no_antrian.getText()), 1);
 
-                try {
-                    status = PS.cek_ktp(EP.getN0_KTP());
-                } catch (RemoteException ex) {
-                    Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if ("tidak ada".equals(status)){
-                try {
-                PS.Save(EP, PE);
+            try {
+                status = PS.cek_ktp(EP.getN0_KTP());
             } catch (RemoteException ex) {
                 Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "Data tersimpan");  
+            if ("tidak ada".equals(status)){
+                try {
+                PS.Save(EP, PE);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                else{JOptionPane.showMessageDialog(this, "Nomor Ktp ini sudah ada");
-                }
+                JOptionPane.showMessageDialog(this, "Data tersimpan");
+            }
+            else{JOptionPane.showMessageDialog(this, "Nomor Ktp ini sudah ada");
+            }
             
         }
         }
@@ -379,7 +411,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
        if (pilih_dokter.getSelectedItem()!= "Pilih Dokter"){
            
            try {
-               na = PS.nomor_antrian(na, tgl_pemeriksaan.toString(), pilih_dokter.getSelectedItem().toString().substring(0, 5));
+               na = PS.nomor_antrian(na, tgl_pemeriksaan.getText(), pilih_dokter.getSelectedItem().toString().substring(0, 5));
                        } catch (RemoteException ex) {
                Logger.getLogger(TriasKlinika_Pendaftaran.class.getName()).log(Level.SEVERE, null, ex);
            }
@@ -459,6 +491,33 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
         }
         return a;
     }
+        private void cetak(String id_pasien, String nama_pasien, String alamat_pasien, String kategori_pasien, String dest) throws DocumentException, FileNotFoundException, BadElementException, IOException {
+
+            String IMG1 = "back.jpg";
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(dest));
+            document.open();
+            PdfPTable table = new PdfPTable(1);
+            table.setTotalWidth(400);
+            table.setLockedWidth(true);
+            PdfPCell cell = new PdfPCell();
+            Font font = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK);
+            Paragraph p = new Paragraph(" ", font);
+            cell.addElement(p);
+            p = new Paragraph(id_pasien+"\n"+nama_pasien+"\n"+alamat_pasien+"\n"+kategori_pasien, font);
+            p.setAlignment(cell.ALIGN_CENTER);
+            cell.addElement(p);
+            Image image = Image.getInstance(IMG1);
+            cell.setFixedHeight(400 * image.getScaledHeight() / image.getScaledWidth());
+            table.addCell(cell);
+            document.add(table);
+            document.close();
+            try {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + dest);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamat_pasien;
     private javax.swing.JCheckBox cetak_id_card;
@@ -472,6 +531,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -481,6 +541,7 @@ public class TriasKlinika_Pendaftaran extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox jenis_kelamin;
     private javax.swing.JComboBox jenis_pasien;
     private javax.swing.JTextField nama_pasien;
     private javax.swing.JTextField nama_pasien_kecil;

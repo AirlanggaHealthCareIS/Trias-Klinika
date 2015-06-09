@@ -25,12 +25,19 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
     private TabelLaporanDataObatKeluar TLDOK = new TabelLaporanDataObatKeluar();
     private LaporanDataObatKeluarEntitas LDOKE = new LaporanDataObatKeluarEntitas();
     private utamaReservasi UR;
+    private String [] tahun;
+    private String [] bulan;
         /**
      * Creates new form TriasKlinika_LaporanDataObatKeluar
      */
     
-    public TriasKlinika_LaporanDataObatKeluar(LaporanDataObatKeluarService LDOKS, utamaReservasi UR) {
+    
+    public TriasKlinika_LaporanDataObatKeluar(LaporanDataObatKeluarService LDOKS, utamaReservasi UR) throws RemoteException {
+        this.LDOKS = LDOKS;
+        this.UR = UR;
         initComponents();
+        DropdownTahun();
+        BulanDD.setVisible(false);
     }
 
     /**
@@ -53,8 +60,8 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
+        TahunDD = new javax.swing.JComboBox();
+        BulanDD = new javax.swing.JComboBox();
         tgl_sampai = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,9 +83,14 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabel_laporan);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Harian", "Bulanan", "Tahunan", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Harian", "Bulanan", "Tahunan" }));
 
         jButton1.setText("Tampilkan");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Lihat Grafik");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -93,9 +105,14 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
 
         jLabel4.setText("Sampai");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        TahunDD.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Pilih Tahun--" }));
+        TahunDD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TahunDDActionPerformed(evt);
+            }
+        });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        BulanDD.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--Pilih Bulan--" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,8 +142,8 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
                                         .addComponent(tgl_mulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(TahunDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BulanDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -153,13 +170,13 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(TahunDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tgl_mulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BulanDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tgl_sampai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,18 +188,44 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
         try {
             TLDOK.setData(this.LDOKS.getDataLaporan(FormatTanggal(tgl_mulai.getDate()), FormatTanggal(tgl_sampai.getDate()), UR.LE.getusername()));
         } catch (RemoteException ex) {
             Logger.getLogger(Laporan_keuangan_dokter.class.getName()).log(Level.SEVERE, null, ex);
         }
         tabel_laporan.setModel(TLDOK);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void TahunDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TahunDDActionPerformed
+        try {
+            // TODO add your handling code here:
+            BulanDD.setVisible(true);
+            DropdownBulan();
+        } catch (RemoteException ex) {
+            Logger.getLogger(TriasKlinika_LaporanDataObatKeluar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_TahunDDActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
+    private void DropdownTahun () throws RemoteException{
+        tahun = LDOKS.DropdownTahun(tahun);
+        for (int i=0;i<tahun.length;i++){
+            TahunDD.addItem(tahun[i]);
+        }
+    }
+    private void DropdownBulan () throws RemoteException{
+        bulan = LDOKS.DropdownBulan(bulan, TahunDD.getSelectedItem().toString());
+        for (int i=0;i<bulan.length;i++){
+            BulanDD.addItem(bulan[i]);
+        }
+    }
     public String FormatTanggal(Date date){
     
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -190,12 +233,12 @@ public class TriasKlinika_LaporanDataObatKeluar extends javax.swing.JFrame {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox BulanDD;
+    private javax.swing.JComboBox TahunDD;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

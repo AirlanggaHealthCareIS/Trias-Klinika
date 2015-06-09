@@ -78,7 +78,7 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="1">
-            <StringItem index="0" value=" Pilih Tahun"/>
+            <StringItem index="0" value="Pilih Tahun"/>
           </StringArray>
         </Property>
       </Properties>
@@ -95,11 +95,12 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="1">
-            <StringItem index="0" value=" Spesialis"/>
+            <StringItem index="0" value="Spesialis"/>
           </StringArray>
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="spesialisMouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="spesialisActionPerformed"/>
       </Events>
       <Constraints>

@@ -5,7 +5,9 @@
 package trias.klinika.client.reservasi;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
@@ -23,9 +25,10 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
     int a;
     private String [] isi;
     private String [] sp ;
-    private LaporanPasienEntitas LPE = new LaporanPasienEntitas();
+    private List<LaporanPasienEntitas> list = new ArrayList<LaporanPasienEntitas>();
     private LaporanPasienService LPS;
-    private int index;
+    private ChartFrame frame;
+    private boolean awal = true;
 
     /**
      * Creates new form Laporan_Pasien
@@ -33,8 +36,9 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
     public Laporan_Pasien(LaporanPasienService LPS) throws RemoteException {
         this.LPS = LPS;
         initComponents();
-        
-         DropdownSpesialis();
+        spesialis.setVisible(false);
+        DropdownTahun();
+        DropdownSpesialis();
     }
    
     
@@ -43,6 +47,14 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
     
         for (int i=0;i<isi.length;i++){
             spesialis.addItem(isi[i]);
+        }
+    }
+    
+    private void DropdownTahun() throws RemoteException{
+        sp = LPS.DropdownTahun(sp);
+        
+        for (int i=0;i<sp.length;i++){
+            tahun.addItem(sp[i]);
         }
     }
     
@@ -84,7 +96,7 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(10, 100, 70, 14);
 
-        tahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Pilih Tahun" }));
+        tahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Tahun" }));
         tahun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tahunActionPerformed(evt);
@@ -93,7 +105,12 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         getContentPane().add(tahun);
         tahun.setBounds(10, 410, 140, 40);
 
-        spesialis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " Spesialis" }));
+        spesialis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Spesialis" }));
+        spesialis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spesialisMouseClicked(evt);
+            }
+        });
         spesialis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 spesialisActionPerformed(evt);
@@ -110,16 +127,77 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tahunActionPerformed
-        // TODO add your handling code here:
+        System.out.println(tahun.getSelectedItem().toString());
+        if (!"Pilih Tahun".equals(tahun.getSelectedItem().toString())){
+            if (awal) {
+                awal = false;
+            }
+            else {   
+                frame.dispose();
+            }
+            spesialis.setVisible(true);
+            try {
+                list = LPS.tglpemeriksaan(tahun.getSelectedItem().toString());
+            } catch (RemoteException ex) {
+                Logger.getLogger(Laporan_Pasien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+            String [] bulan = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+            int [] jumlah_pasien = {0,0,0,0,0,0,0,0,0,0,0,0};
+            for (int i = 0; i < list.size(); i++) {
+                jumlah_pasien[Integer.parseInt(list.get(i).gettglpemeriksaan().substring(5,7))-1]++;
+            }
+            for (int i = 0; i<bulan.length; i++){
+                dataSet.addValue(jumlah_pasien[i], "Jumlah Pasien", bulan[i]);
+            }
+            JFreeChart chartline = ChartFactory.createBarChart("Laporan Jumlah Pasien", "Bulan", "Jumlah Pasien", dataSet, PlotOrientation.VERTICAL, true, true, true);
+            frame = new ChartFrame("Jumlah Pasien Pada Tahun"+tahun.getSelectedItem().toString(), chartline);
+            frame.setBounds(175, 325, 1143,284);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            frame.setAlwaysOnTop(true);
+        }
+        else {
+            reset();
+        }
     }//GEN-LAST:event_tahunActionPerformed
 
     private void spesialisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spesialisActionPerformed
-        // TODO add your handling code here:
+        if (!"Spesialis".equals(spesialis.getSelectedItem().toString())) {
+            try {
+                list = LPS.tglpemeriksaanSpesialis(tahun.getSelectedItem().toString(),spesialis.getSelectedItem().toString().substring(0, 5));
+            } catch (RemoteException ex) {
+                Logger.getLogger(Laporan_Pasien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+            String [] bulan = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+            int [] jumlah_pasien = {0,0,0,0,0,0,0,0,0,0,0,0};
+            for (int i = 0; i < list.size(); i++) {
+                jumlah_pasien[Integer.parseInt(list.get(i).gettglpemeriksaan().substring(5,7))-1]++;
+            }
+            for (int i = 0; i<bulan.length; i++){
+                dataSet.addValue(jumlah_pasien[i], "Jumlah Pasien", bulan[i]);
+            }
+            JFreeChart chartline = ChartFactory.createBarChart("Laporan Jumlah Pasien", "Bulan", "Jumlah Pasien", dataSet, PlotOrientation.VERTICAL, true, true, true);
+            frame = new ChartFrame("Jumlah Pasien Pada Tahun"+tahun.getSelectedItem().toString()+" Dengan Spesialis "+spesialis.getSelectedItem().toString().substring(6), chartline);
+            frame.setBounds(175, 325, 1143,284);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            frame.setAlwaysOnTop(true);
+        }
     }//GEN-LAST:event_spesialisActionPerformed
-public void reset(){
+
+    private void spesialisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spesialisMouseClicked
+        frame.dispose();
+    }//GEN-LAST:event_spesialisMouseClicked
+
+    public void reset(){
+        spesialis.setVisible(false);
+        if (!awal) {
+            frame.dispose();
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox dropobat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
