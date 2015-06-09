@@ -52,7 +52,7 @@ public class utamaReservasi extends javax.swing.JFrame {
     final laporankeuanganReservasiService service9_a_1;
     final LaporanPasienService service9_a_2;
     TriasKlinika_Pendaftaran daft;
-    Antrean Ant;
+    Setting Ant;
     intro introw;
     TriasKlinika_ListPembayaran LP;
     laporanKeuanganReservasi KR ;
@@ -98,7 +98,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         service9_a_2 = (LaporanPasienService)registry.lookup("service9_a_2");
         KR = new laporanKeuanganReservasi (service9_a_1,this);
         daft = new TriasKlinika_Pendaftaran(service2, LE);
-        Ant = new Antrean(service5,service3,this);
+        Ant = new Setting(service5,service3,this);
         LP = new TriasKlinika_ListPembayaran(service12);
         LPE = new Laporan_Pasien(service9_a_2);
         introw = new intro();
@@ -175,10 +175,11 @@ public class utamaReservasi extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         reservasi = new javax.swing.JToggleButton();
-        logout = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         nama = new javax.swing.JLabel();
         jDesktopPane2 = new javax.swing.JDesktopPane();
+        logout = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -233,14 +234,14 @@ public class utamaReservasi extends javax.swing.JFrame {
         jPanel1.add(reservasi);
         reservasi.setBounds(10, 313, 121, 55);
 
-        logout.setText("Logout");
-        logout.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setText("Setting");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(logout);
-        logout.setBounds(10, 386, 121, 51);
+        jPanel1.add(jButton5);
+        jButton5.setBounds(10, 390, 120, 50);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         jPanel1.add(jLabel2);
@@ -260,6 +261,15 @@ public class utamaReservasi extends javax.swing.JFrame {
         jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
         getContentPane().add(jDesktopPane2);
         jDesktopPane2.setBounds(169, 177, 1147, 552);
+
+        logout.setText("Logout");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(logout);
+        logout.setBounds(10, 670, 121, 51);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -336,6 +346,10 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     }
                                              
 }//GEN-LAST:event_reservasiActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
     public void internal_frame (){
         
         internalFrame0.add(introw.getContentPane());
@@ -453,6 +467,7 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

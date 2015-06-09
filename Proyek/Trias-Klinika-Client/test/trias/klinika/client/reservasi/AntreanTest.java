@@ -53,12 +53,12 @@ public class AntreanTest {
 //    }
 
     /**
-     * Test of awal method, of class Antrean.
+     * Test of awal method, of class Setting.
      */
     @org.junit.Test
     public void testAwal() {
         System.out.println("awal");
-        Antrean instance = null;
+        Setting instance = null;
         instance.awal();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
