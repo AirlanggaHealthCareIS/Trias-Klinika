@@ -16,7 +16,8 @@ public class Dokter implements Serializable {
     private int status_dokter;
     private String nama_dokter;
     private String no_telp_dokter;
-    private String alamat_dokter;   
+    private String alamat_dokter;
+    private String status_dokter_strink;
     
    
     public String getid_dokter() {
@@ -69,6 +70,12 @@ public class Dokter implements Serializable {
         public void setalamat_dokter(String alamat_dokter) {
         this.alamat_dokter = alamat_dokter;
     }
-        
+        public String getstatus_dokter_strink() {
+        return status_dokter_strink;
+    }
+
+        public void setstatus_dokter_strink(String status_dokter_strink) {
+        this.status_dokter_strink = status_dokter_strink;
+    }
    
 }

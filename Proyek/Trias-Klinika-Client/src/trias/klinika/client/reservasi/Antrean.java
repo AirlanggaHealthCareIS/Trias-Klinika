@@ -33,6 +33,7 @@ import trias.klinika.client.dokter.rekammedis;
 import trias.klinika.api.entitas.PemeriksaanEntitas;
 import trias.klinika.api.pesan.pesan;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -41,7 +42,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.text.JTextComponent;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 public class Antrean extends javax.swing.JInternalFrame {
 
     public TabelDokter tabeldokter = new TabelDokter();
@@ -61,6 +66,8 @@ public class Antrean extends javax.swing.JInternalFrame {
     public Antrean(ListPetugasService LPS, final AntreanServis AS, utamaReservasi UR)throws RemoteException {
 
         initComponents();
+        
+        tabelkiri.setModel(tabelpasien);
         boxNombre.getEditor().getEditorComponent().addKeyListener(new KeyAdapter(){
         
             public void keyReleased(KeyEvent evt){
@@ -89,6 +96,7 @@ public class Antrean extends javax.swing.JInternalFrame {
         
         });
         
+        
         setTanggal(jLabel1);
         list = new ArrayList<>();
         this.LPS=LPS;
@@ -104,7 +112,8 @@ public class Antrean extends javax.swing.JInternalFrame {
         reset.setEnabled(false);
         jTextField1.setVisible(false);
         
-        
+        lebarKolom();
+        lebarKolomdokter();
         
     }
     
@@ -186,13 +195,13 @@ public class Antrean extends javax.swing.JInternalFrame {
 
         tabelkiri.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "No Antrean", "ID Pasien", "ID Dokter"
+                "No Antrean", "ID Pasien", "ID Dokter", "Status Dokter"
             }
         ));
         tabelkiri.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -243,7 +252,7 @@ public class Antrean extends javax.swing.JInternalFrame {
                 {null, null, null}
             },
             new String [] {
-                "1", "2", "3"
+                "ID Dokter", "Nama Dokter", "Status Dokter"
             }
         ));
         tabelkanan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -550,15 +559,23 @@ public class Antrean extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_iminActionPerformed
 
     private void kirimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kirimActionPerformed
-        UR.login.kirim(new pesan("KirimIDPemeriksaanImin", UR.LE.getusername(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_DOKTER()));
-        
-        try {
+    
+        if("Sedang Mengantri".equals(tabelpasien.get(tabelkiri.getSelectedRow()).getSTATUS_PASIEN_strink()) || "Belum Dilayani".equals(tabelpasien.get(tabelkiri.getSelectedRow()).getSTATUS_PASIEN_strink())){
             PemeriksaanEntitas a = new PemeriksaanEntitas();
-            JOptionPane.showMessageDialog(null, "ID Pasien" +tabelpasien.get(tabelkiri.getSelectedRow()).getID_PASIEN()+" kayaknya berhasil dikirim ke dokter "+tabeldokter.get(tabelkanan.getSelectedRow()).getnama_dokter());
-             AS.updateStatus(a, tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN());
+            JOptionPane.showMessageDialog(null, "ID Pasien " +tabelpasien.get(tabelkiri.getSelectedRow()).getID_PASIEN()+" berhasil dikirim ke dokter "+tabeldokter.get(tabelkanan.getSelectedRow()).getnama_dokter());
+          UR.login.kirim(new pesan("KirimIDPemeriksaanImin", UR.LE.getusername(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN(), tabelpasien.get(tabelkiri.getSelectedRow()).getID_DOKTER()));
+          try {
+             AS.updateStatus2(a, tabelpasien.get(tabelkiri.getSelectedRow()).getID_PEMERIKSAAAN());
              refresh();
         } catch (RemoteException ex) {
             Logger.getLogger(Antrean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        else if("Sedang Diperiksa".equals(tabelpasien.get(tabelkiri.getSelectedRow()).getSTATUS_PASIEN_strink())){
+            JOptionPane.showMessageDialog(null, "ID Pasien "+tabelpasien.get(tabelkiri.getSelectedRow()).getID_PASIEN()+" sedang diperiksa");
+        }
+        else if("Sudah Diperiksa".equals(tabelpasien.get(tabelkiri.getSelectedRow()).getSTATUS_PASIEN_strink())){
+            JOptionPane.showMessageDialog(null, "ID Pasien "+tabelpasien.get(tabelkiri.getSelectedRow()).getID_PASIEN()+" sudah diperiksa");
         }
         
     }//GEN-LAST:event_kirimActionPerformed
@@ -611,6 +628,40 @@ public class Antrean extends javax.swing.JInternalFrame {
         }
     }
     
+    private void segerkanan (){
+        try {
+            int antri=0;
+            List<Dokter> daptar = LPS.AmbilDokterOnline();
+            tabeldokter.setData(daptar);
+            tabelkanan.setModel(tabeldokter);
+        } catch (RemoteException exception) {
+            exception.printStackTrace();
+        }
+    }
+   
+    public void lebarKolom(){ 
+        TableColumn column;
+        tabelkiri.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF); 
+        column = tabelkiri.getColumnModel().getColumn(0); 
+        column.setPreferredWidth(75);
+        column = tabelkiri.getColumnModel().getColumn(1); 
+        column.setPreferredWidth(75); 
+        column = tabelkiri.getColumnModel().getColumn(2); 
+        column.setPreferredWidth(75); 
+        column = tabelkiri.getColumnModel().getColumn(3); 
+        column.setPreferredWidth(180); 
+    }
+    
+    public void lebarKolomdokter(){ 
+        TableColumn column;
+        tabelkanan.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF); 
+        column = tabelkanan.getColumnModel().getColumn(0); 
+        column.setPreferredWidth(75);
+        column = tabelkanan.getColumnModel().getColumn(1); 
+        column.setPreferredWidth(125); 
+        column = tabelkanan.getColumnModel().getColumn(2); 
+        column.setPreferredWidth(175); 
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox PilihDokter;

@@ -300,16 +300,18 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="KO" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="KO" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="textKO" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="textHO" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="deskripsi" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                           <Component id="HO" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="textKO" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="textHO" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="deskripsi" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Component id="jScrollPane3" min="-2" pref="208" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -361,7 +363,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="textHO" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="HO" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="HO" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -465,14 +467,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textKOActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="HO">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="12" style="0"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Harga Obat"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="OK">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -569,6 +563,14 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="Spesialis"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="HO">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Harga Obat"/>
               </Properties>
             </Component>
           </SubComponents>

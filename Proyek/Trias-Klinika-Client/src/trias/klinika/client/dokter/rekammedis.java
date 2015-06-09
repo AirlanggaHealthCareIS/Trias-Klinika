@@ -41,6 +41,10 @@ private PasienEntity pe = new PasienEntity();
        
     }
 
+    rekammedis(serviceRekam service6) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public void awal (){
         try {
             pe = sr.getdata(ID.getText());

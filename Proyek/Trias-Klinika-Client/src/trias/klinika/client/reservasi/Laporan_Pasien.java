@@ -5,7 +5,9 @@
 package trias.klinika.client.reservasi;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
@@ -21,14 +23,41 @@ import trias.klinika.api.sevice.LaporanPasienService;
  */
 public class Laporan_Pasien extends javax.swing.JInternalFrame {
     int a;
-    private LaporanPasienEntitas LPE = new LaporanPasienEntitas();
+    private String [] isi;
+    private String [] sp ;
+    private List<LaporanPasienEntitas> list = new ArrayList<LaporanPasienEntitas>();
+    private LaporanPasienService LPS;
+    private ChartFrame frame;
+    private boolean awal = true;
 
     /**
      * Creates new form Laporan_Pasien
      */
-    public Laporan_Pasien() {
+    public Laporan_Pasien(LaporanPasienService LPS) throws RemoteException {
+        this.LPS = LPS;
         initComponents();
+        spesialis.setVisible(false);
+        DropdownTahun();
+        DropdownSpesialis();
     }
+   
+    
+    private void DropdownSpesialis() throws RemoteException{
+        isi = LPS.DropdownSpesialis(isi);
+    
+        for (int i=0;i<isi.length;i++){
+            spesialis.addItem(isi[i]);
+        }
+    }
+    
+    private void DropdownTahun() throws RemoteException{
+        sp = LPS.DropdownTahun(sp);
+        
+        for (int i=0;i<sp.length;i++){
+            tahun.addItem(sp[i]);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,8 +72,7 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tahun = new javax.swing.JComboBox();
-        cetak = new javax.swing.JButton();
-        Spesialis = new javax.swing.JButton();
+        spesialis = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(1147, 557));
@@ -54,7 +82,6 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 153, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/laporan.png"))); // NOI18N
         jLabel1.setText("Laporan Data Pasien");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(10, 0, 980, 100);
@@ -69,36 +96,113 @@ public class Laporan_Pasien extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(10, 100, 70, 14);
 
-        tahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Tahun..." }));
+        tahun.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pilih Tahun" }));
+        tahun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tahunActionPerformed(evt);
+            }
+        });
         getContentPane().add(tahun);
-        tahun.setBounds(10, 410, 88, 20);
+        tahun.setBounds(10, 410, 140, 40);
 
-        cetak.setText("Cetak");
-        getContentPane().add(cetak);
-        cetak.setBounds(220, 390, 61, 49);
-
-        Spesialis.setText("Spesialis");
-        getContentPane().add(Spesialis);
-        Spesialis.setBounds(110, 410, 73, 23);
+        spesialis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Spesialis" }));
+        spesialis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spesialisMouseClicked(evt);
+            }
+        });
+        spesialis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spesialisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(spesialis);
+        spesialis.setBounds(170, 410, 140, 40);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/J-IntFrameReservasi.png"))); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(0, 0, 1130, 530);
+        jLabel4.setBounds(0, 0, 1140, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public void reset(){
-        tahun.setEnabled(false);
-        Spesialis.setEnabled(false);
-        cetak.setEnabled(false);
+
+    private void tahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tahunActionPerformed
+        System.out.println(tahun.getSelectedItem().toString());
+        if (!"Pilih Tahun".equals(tahun.getSelectedItem().toString())){
+            if (awal) {
+                awal = false;
+            }
+            else {   
+                frame.dispose();
+            }
+            spesialis.setVisible(true);
+            try {
+                list = LPS.tglpemeriksaan(tahun.getSelectedItem().toString());
+            } catch (RemoteException ex) {
+                Logger.getLogger(Laporan_Pasien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+            String [] bulan = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+            int [] jumlah_pasien = {0,0,0,0,0,0,0,0,0,0,0,0};
+            for (int i = 0; i < list.size(); i++) {
+                jumlah_pasien[Integer.parseInt(list.get(i).gettglpemeriksaan().substring(5,7))-1]++;
+            }
+            for (int i = 0; i<bulan.length; i++){
+                dataSet.addValue(jumlah_pasien[i], "Jumlah Pasien", bulan[i]);
+            }
+            JFreeChart chartline = ChartFactory.createBarChart("Laporan Jumlah Pasien", "Bulan", "Jumlah Pasien", dataSet, PlotOrientation.VERTICAL, true, true, true);
+            frame = new ChartFrame("Jumlah Pasien Pada Tahun"+tahun.getSelectedItem().toString(), chartline);
+            frame.setBounds(175, 325, 1143,284);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            frame.setAlwaysOnTop(true);
+        }
+        else {
+            reset();
+        }
+    }//GEN-LAST:event_tahunActionPerformed
+
+    private void spesialisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spesialisActionPerformed
+        if (!"Spesialis".equals(spesialis.getSelectedItem().toString())) {
+            try {
+                list = LPS.tglpemeriksaanSpesialis(tahun.getSelectedItem().toString(),spesialis.getSelectedItem().toString().substring(0, 5));
+            } catch (RemoteException ex) {
+                Logger.getLogger(Laporan_Pasien.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+            String [] bulan = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+            int [] jumlah_pasien = {0,0,0,0,0,0,0,0,0,0,0,0};
+            for (int i = 0; i < list.size(); i++) {
+                jumlah_pasien[Integer.parseInt(list.get(i).gettglpemeriksaan().substring(5,7))-1]++;
+            }
+            for (int i = 0; i<bulan.length; i++){
+                dataSet.addValue(jumlah_pasien[i], "Jumlah Pasien", bulan[i]);
+            }
+            JFreeChart chartline = ChartFactory.createBarChart("Laporan Jumlah Pasien", "Bulan", "Jumlah Pasien", dataSet, PlotOrientation.VERTICAL, true, true, true);
+            frame = new ChartFrame("Jumlah Pasien Pada Tahun"+tahun.getSelectedItem().toString()+" Dengan Spesialis "+spesialis.getSelectedItem().toString().substring(6), chartline);
+            frame.setBounds(175, 325, 1143,284);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            frame.setAlwaysOnTop(true);
+        }
+    }//GEN-LAST:event_spesialisActionPerformed
+
+    private void spesialisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spesialisMouseClicked
+        frame.dispose();
+    }//GEN-LAST:event_spesialisMouseClicked
+
+    public void reset(){
+        spesialis.setVisible(false);
+        if (!awal) {
+            frame.dispose();
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Spesialis;
-    private javax.swing.JButton cetak;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox spesialis;
     private javax.swing.JComboBox tahun;
     // End of variables declaration//GEN-END:variables
 }

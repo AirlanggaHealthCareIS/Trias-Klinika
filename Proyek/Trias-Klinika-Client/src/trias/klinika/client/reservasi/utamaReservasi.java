@@ -30,6 +30,7 @@ import trias.klinika.api.sevice.PendaftaranService;
 import trias.klinika.api.sevice.ListPembayaranService;
 import trias.klinika.api.sevice.ListPetugasService;
 import trias.klinika.api.sevice.AntreanServis;
+import trias.klinika.api.sevice.LaporanDataObatKeluarService;
 import trias.klinika.api.sevice.laporankeuanganReservasiService;
 import trias.klinika.client.Home.Login;
 import trias.klinika.client.tabel.TabelDokter;
@@ -49,12 +50,15 @@ public class utamaReservasi extends javax.swing.JFrame {
     final  AntreanServis service3;
     final  ListPetugasService service5;
     final laporankeuanganReservasiService service9_a_1;
+    final LaporanDataObatKeluarService service9_c_2;
     TriasKlinika_Pendaftaran daft;
     Antrean Ant;
     intro introw;
     TriasKlinika_ListPembayaran LP;
     laporanKeuanganReservasi KR ;
+    TriasKlinika_LaporanDataObatKeluar LDOK ;
     
+    private LaporanDataObatKeluarService LDOKS;
     private ListPembayaranService LPS;
     private AntreanServis AS;
     private PendaftaranService PS;
@@ -66,6 +70,8 @@ public class utamaReservasi extends javax.swing.JFrame {
     private JInternalFrame internalFrame3 = new JInternalFrame("Frame List Pembayaran");
     private JInternalFrame internalFrame4 = new JInternalFrame("Laporan Pasien");
     private JInternalFrame internalFrame5 = new JInternalFrame ("laporan Reservasi");
+    private JInternalFrame internalFrame6 = new JInternalFrame ("Laporan Obat Keluar");
+    
     Login login;
     
     boolean move_left = true;
@@ -92,7 +98,9 @@ public class utamaReservasi extends javax.swing.JFrame {
         service3 = (AntreanServis)registry.lookup("service3");
         service5 = (ListPetugasService)registry.lookup("service5"); 
         service9_a_1 = (laporankeuanganReservasiService)registry.lookup("service9_a_1");
+        service9_c_2 = (LaporanDataObatKeluarService)registry.lookup("service9_c_2");
         KR = new laporanKeuanganReservasi (service9_a_1,this);
+        LDOK = new TriasKlinika_LaporanDataObatKeluar (service9_c_2,this);
         daft = new TriasKlinika_Pendaftaran(service2, LE);
         Ant = new Antrean(service5,service3,this);
         LP = new TriasKlinika_ListPembayaran(service12);
@@ -170,18 +178,14 @@ public class utamaReservasi extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         reservasi = new javax.swing.JToggleButton();
-        logout = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        LaporanObatKeluar = new javax.swing.JToggleButton();
         nama = new javax.swing.JLabel();
         jDesktopPane2 = new javax.swing.JDesktopPane();
-        jLabel1 = new javax.swing.JLabel();
+        logout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1366, 768));
         setUndecorated(true);
-        getContentPane().setLayout(null);
-
-        jPanel1.setLayout(null);
 
         jButton1.setText("Antrean");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -189,8 +193,6 @@ public class utamaReservasi extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(10, 34, 122, 52);
 
         jButton2.setText("Pendaftaran");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -198,8 +200,6 @@ public class utamaReservasi extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2);
-        jButton2.setBounds(10, 104, 122, 51);
 
         jButton3.setText("List Pembayaran");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -207,8 +207,6 @@ public class utamaReservasi extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3);
-        jButton3.setBounds(10, 175, 122, 50);
 
         jButton4.setText("Laporan Pasien");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -216,8 +214,6 @@ public class utamaReservasi extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4);
-        jButton4.setBounds(10, 243, 122, 50);
 
         reservasi.setText("Laporan Reservasi");
         reservasi.addActionListener(new java.awt.event.ActionListener() {
@@ -225,8 +221,57 @@ public class utamaReservasi extends javax.swing.JFrame {
                 reservasiActionPerformed(evt);
             }
         });
-        jPanel1.add(reservasi);
-        reservasi.setBounds(10, 313, 121, 55);
+
+        LaporanObatKeluar.setText("Laporan Obat Keluar");
+        LaporanObatKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LaporanObatKeluarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LaporanObatKeluar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(reservasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(reservasi, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LaporanObatKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
+        );
+
+        nama.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        nama.setForeground(new java.awt.Color(0, 0, 204));
+        nama.setText("jLabel1");
+
+        jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
 
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -234,44 +279,59 @@ public class utamaReservasi extends javax.swing.JFrame {
                 logoutActionPerformed(evt);
             }
         });
-        jPanel1.add(logout);
-        logout.setBounds(10, 386, 121, 51);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(-10, -50, 180, 520);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nama)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(nama)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 145, 170, 470);
         jPanel1.getAccessibleContext().setAccessibleName("Laporan Pasien");
         jPanel1.getAccessibleContext().setAccessibleDescription("");
-
-        nama.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        nama.setForeground(new java.awt.Color(0, 0, 204));
-        nama.setText("jLabel1");
-        getContentPane().add(nama);
-        nama.setBounds(10, 67, 107, 42);
-
-        jDesktopPane2.setMinimumSize(new java.awt.Dimension(1147, 557));
-        getContentPane().add(jDesktopPane2);
-        jDesktopPane2.setBounds(169, 177, 1147, 552);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/splash.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(-10, -150, 1450, 1010);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-//        try{
-//            internalFrame4.setSelected(true);
-//            sonido("LYNC_joinedconference");
-//        }
-//        catch(Exception ex) {
-//            JOptionPane.showMessageDialog(null, ex);
-//        }
+        try{
+            internalFrame4.setSelected(true);
+            sonido("LYNC_joinedconference");
+        }
+        catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -331,6 +391,18 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     }
                                              
 }//GEN-LAST:event_reservasiActionPerformed
+
+    private void LaporanObatKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LaporanObatKeluarActionPerformed
+        // TODO add your handling code here:
+        try{
+            internalFrame6.setSelected(true);
+            sonido("LYNC_joinedconference");
+        }
+        catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
+    }//GEN-LAST:event_LaporanObatKeluarActionPerformed
     public void internal_frame (){
         
         internalFrame0.add(introw.getContentPane());
@@ -388,7 +460,6 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().getMouseListeners()){
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame3.getUI()).getNorthPane().removeMouseListener(listener);
         }
-        
         internalFrame4.add(Ant.getContentPane());
         internalFrame4.pack();
         internalFrame4.setSize(1146,577);
@@ -396,13 +467,12 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         jDesktopPane2.add(internalFrame4);
         BasicInternalFrameUI ui4 = (BasicInternalFrameUI)internalFrame4.getUI();
         Container north4 = (Container)ui4.getNorthPane();
-        north4.remove(0);
-        north4.validate();
-        north4.repaint();
+        north1.remove(0);
+        north1.validate();
+        north1.repaint();
         for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().getMouseListeners()){
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame4.getUI()).getNorthPane().removeMouseListener(listener);
         }
-        
         internalFrame5.add(KR.getContentPane());
         internalFrame5.pack();
         internalFrame5.setSize(1146,577);
@@ -415,8 +485,20 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         north5.repaint();
         for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().getMouseListeners()){
             ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame5.getUI()).getNorthPane().removeMouseListener(listener);
-  
-    }
+        }
+        internalFrame6.add(LDOK.getContentPane());
+        internalFrame6.pack();
+        internalFrame6.setSize(1146,577);
+        internalFrame6.setVisible(true);
+        jDesktopPane2.add(internalFrame6);
+        BasicInternalFrameUI ui6 = (BasicInternalFrameUI)internalFrame6.getUI();
+        Container north6 = (Container)ui6.getNorthPane();
+        north1.remove(0);
+        north1.validate();
+        north1.repaint();
+        for(MouseListener listener : ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame6.getUI()).getNorthPane().getMouseListeners()){
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) internalFrame6.getUI()).getNorthPane().removeMouseListener(listener);
+        }
     }
     public void updatelist (String Id, String Nama) {
         JOptionPane.showMessageDialog(null, Nama+" Sudah Aktif dan Siap Menerima Pasien");
@@ -444,13 +526,12 @@ private void reservasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton LaporanObatKeluar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton logout;
     private javax.swing.JLabel nama;

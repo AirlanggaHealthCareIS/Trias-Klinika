@@ -70,6 +70,7 @@ public class InventoryObatApotek extends javax.swing.JInternalFrame {
                     }
                     jenis_obat.setSelectedItem(jenis_obat.getItemAt(index));
                     index = 0;
+                    
                     for (int i=0; i<spesialis.getItemCount();i++){
                         if(spesialis.getItemAt(i).toString().substring(6).equals(IOAE.getNamaSpesialis())){
                             index=i;

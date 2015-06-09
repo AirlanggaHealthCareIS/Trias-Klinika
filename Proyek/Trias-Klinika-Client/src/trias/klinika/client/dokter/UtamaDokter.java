@@ -113,7 +113,7 @@ public class UtamaDokter extends javax.swing.JFrame {
         nama.setText("SELAMAT DATANG "+LE.getnamauser().toUpperCase());
         Dimension dim = (Toolkit.getDefaultToolkit()).getScreenSize();
         setSize(dim);
-        IDpemeriksaan.setVisible(false);
+        IDpemeriksaan.setVisible(true);
         rekamedistombol.setEnabled(false);
         byr.setEnabled(false);
         rsp.setEnabled(false);
