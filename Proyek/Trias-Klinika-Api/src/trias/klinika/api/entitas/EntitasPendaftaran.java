@@ -20,6 +20,7 @@ public class EntitasPendaftaran implements Serializable {
     private String ALAMAT_PASIEN;
     private String GOL_DARAH;
     private String JENIS_PASIEN;
+    private String JENIS_KELAMIN;
     private String NO_KTP;
    
     
@@ -27,7 +28,7 @@ public class EntitasPendaftaran implements Serializable {
         return ID_PASIEN;
     }
     
-    public void setDataPasien(String ID_PASIEN, String NAMA_PASIEN, String TGL_LAHIR_PASIEN, String NO_TELP_PASIEN, String ALAMAT_PASIEN, String GOL_DARAH, String JENIS_PASIEN, String NO_KTP) {
+    public void setDataPasien(String ID_PASIEN, String NAMA_PASIEN, String TGL_LAHIR_PASIEN, String NO_TELP_PASIEN, String ALAMAT_PASIEN, String GOL_DARAH, String JENIS_PASIEN, String JENIS_KELAMIN, String NO_KTP) {
         this.ID_PASIEN= ID_PASIEN;
         this.NAMA_PASIEN= NAMA_PASIEN;
         this.TGL_LAHIR_PASIEN= TGL_LAHIR_PASIEN;
@@ -35,6 +36,7 @@ public class EntitasPendaftaran implements Serializable {
         this.ALAMAT_PASIEN= ALAMAT_PASIEN;
         this.GOL_DARAH= GOL_DARAH;
         this.JENIS_PASIEN= JENIS_PASIEN;
+        this.JENIS_KELAMIN= JENIS_KELAMIN;
         this.NO_KTP= NO_KTP;
         
     }
@@ -64,6 +66,10 @@ public class EntitasPendaftaran implements Serializable {
     
     public String getJENIS_PASIEN() {
         return JENIS_PASIEN;
+    }
+    
+    public String getJENIS_KELAMIN() {
+        return JENIS_KELAMIN;
     }
     
     public String getN0_KTP() {

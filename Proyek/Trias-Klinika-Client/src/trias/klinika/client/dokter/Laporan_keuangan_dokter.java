@@ -5,6 +5,12 @@
  */
 package trias.klinika.client.dokter;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -144,8 +150,7 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TampikanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TampikanActionPerformed
-       
-        cek = Cek(tgl_mulai.getDate().toString(), tgl_sampai.getDate().toString());
+        cek = Cek(tgl_mulai.getDate(), tgl_sampai.getDate());
         if (!"Sukses".equals(cek)) {
             JOptionPane.showMessageDialog(this, cek);
         }
@@ -188,7 +193,7 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
         
         
         JFreeChart chartline = ChartFactory.createBarChart("Laporan Keuangan", "Tanggal", "Jumlah Pemasukkan", dataSet, PlotOrientation.VERTICAL, true, true, true);
-        ChartFrame frame = new ChartFrame("Pengguna OS Komputer di Indonesia", chartline);
+        ChartFrame frame = new ChartFrame("Laporan Pemasukan Keuangan Anda", chartline);
         frame.setVisible(true);
         frame.setSize(600,400);
         frame.setLocationRelativeTo(null);
@@ -199,12 +204,12 @@ public class Laporan_keuangan_dokter extends javax.swing.JInternalFrame {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             return sdf.format(date);
     }
-    public String Cek(String tgl_mulai, String tgl_sampai) {
+    public String Cek(Date tgl_mulai, Date tgl_sampai) {
         String a;
-        if ("".equals(tgl_mulai)) {
+        if (tgl_mulai == null) {
             a = "Pilih tanggal mulai terlebih dahulu";
         }
-        else if ("".equals(tgl_sampai)) {
+        else if (tgl_sampai == null) {
             a = "Pilih tanggal sampai terlebih dahulu";
         }
         else {
