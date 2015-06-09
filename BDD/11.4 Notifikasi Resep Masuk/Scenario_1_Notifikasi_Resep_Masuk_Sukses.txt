@@ -1,0 +1,4 @@
+BDD TDD
+Given	:Dokter berada pada menu resep
+When	:Menekan tombol kirim ke apoteker
+Then	:

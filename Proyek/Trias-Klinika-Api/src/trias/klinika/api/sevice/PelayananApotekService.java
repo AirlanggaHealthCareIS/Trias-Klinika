@@ -18,6 +18,7 @@ public interface PelayananApotekService extends Remote{
    PelayananApotekEntitas getpelayananapotek(String id) throws RemoteException; 
   List<PelayananApotekEntitas> getresepbaru(String id) throws RemoteException;
   List<PelayananApotekEntitas> getDokters() throws RemoteException;
+  List<PelayananApotekEntitas> XXX() throws RemoteException;
   // PelayananApotekEntitas getresepbaru(String id) throws RemoteException;
     
     
