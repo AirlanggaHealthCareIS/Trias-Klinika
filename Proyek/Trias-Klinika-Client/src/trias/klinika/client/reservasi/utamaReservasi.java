@@ -252,7 +252,7 @@ public class utamaReservasi extends javax.swing.JFrame {
         jPanel1.getAccessibleContext().setAccessibleDescription("");
 
         nama.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        nama.setForeground(new java.awt.Color(0, 0, 204));
+        nama.setForeground(new java.awt.Color(255, 255, 255));
         nama.setText("jLabel1");
         getContentPane().add(nama);
         nama.setBounds(10, 67, 940, 42);
