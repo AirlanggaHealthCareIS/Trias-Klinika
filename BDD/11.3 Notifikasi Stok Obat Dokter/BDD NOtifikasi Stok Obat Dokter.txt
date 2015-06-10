@@ -1,0 +1,7 @@
+feature	: stok obat dokter
+skenario: dokter menerima notifikasi obat kritis
+
+given	: dokter masuk halaman utama dokter
+when 	: sistem memeriksa stok obat yang ada di inventory obat dokter
+and	: menampilkan notifikasi stok obat kritis
+then	: dokter menekan tombol ok

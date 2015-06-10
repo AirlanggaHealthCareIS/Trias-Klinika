@@ -3,7 +3,11 @@ Story	 : Digunakan untuk menginputkan ressep yang dikirim oleh dokter ke apoteke
 
 Skenario penambahan resep
 given	 : Dokter masuk ke menu resep
+then	 : menampilkan layout menu resep
 when	 : mengisi form resep dengan memasukan ID_OBAT, NAMA_OBAT, JUMLAH, SATUAN_JENIS, HARGA, KETERANGAN
 and	 : menekan tombol tambah
 then	 : class input_resep mengambil setID di class ResepEntity yang berisi ID_OBAT, NAMA_OBAT, JUMLAH, SATUAN_JENIS, HARGA, KETERANGAN
 and	 : class input_resep menampilkan ID_OBAT, NAMA_OBAT, JUMLAH, SATUAN_JENIS, HARGA, KETERANGAN ke tabel resep dengan method insert
+then	 : menampilkan notifikasi "apakah biaya yang diinputkan sudah benar?"
+and	 : menekan tombol konfirmasi benar
+then 	 : menampilkan notifikasi pengiriman sukses
