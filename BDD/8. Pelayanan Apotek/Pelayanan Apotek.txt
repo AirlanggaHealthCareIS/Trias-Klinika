@@ -1,0 +1,10 @@
+Scenario: user melayani pasien setiap pembelian obat dari resep dokter
+Given   : user berada dalam menu pelayanan apotek
+when    : Interface pelayanan apotek mendapatkan notifikasi resep masuk
+Than    : Menampilkan data yang masuk dari notifikasi dalam tabel
+When    : menekan baris yang ingin ditampilkan
+Than    : Menampilkan rincian dari resep pada baris yang ditekan
+When    : Menekan tombol print
+Than    : convert PDF
+When    : Menekan tombol delete
+Than    : Menghapus baris dari tabel yang atas

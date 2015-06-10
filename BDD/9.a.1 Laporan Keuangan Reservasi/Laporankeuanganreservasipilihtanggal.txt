@@ -1,0 +1,9 @@
+Laporan Keuangan reservasi
+	Feature		: Laporan Keuangan Reservasi
+	Scenario	: Memilih laporan keuangan pilih tanggal
+	Given		: Reservasi telah berada di laporan keuangan reservasi
+	When		: Reservasi memilih pilihan "PILIH TANGGAL"
+	Then		: Sistem memanggil method setDate
+	When		: Reservasi memilih tombol "TAMPILKAN"
+	Then		: Sistem memanggil method "pilihTanggal"
+	And		: Sistem menampilkan data laporan keuangan tanggal yang diinginkan

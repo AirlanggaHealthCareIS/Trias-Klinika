@@ -1,0 +1,9 @@
+Laporan Keuangan reservasi
+	Feature		: Laporan Keuangan Reservasi
+	Scenario	: Memilih laporan keuangan harian / hari ini
+	Given		: Reservasi telah berada di laporan keuangan reservasi
+	When		: Reservasi memilih pilihan "HARI INI"
+	Then		: Sistem memanggil method setDate
+	When		: Reservasi memilih tombol "TAMPILKAN"
+	Then		: Sistem memanggil method "hariIni"
+	And		: Sistem menampilkan data laporan keuangan hari ini
