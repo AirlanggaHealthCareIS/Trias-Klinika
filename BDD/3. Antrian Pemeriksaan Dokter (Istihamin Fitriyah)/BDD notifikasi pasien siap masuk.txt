@@ -1,0 +1,11 @@
+Story	   : Notifikasi Pasien Siap Masuk
+Feature	   : User mengirim ID Pasien ke dokter yang dituju
+Scenario 1 : Login sukses dan user = dokter
+
+Given	   : user berada di halaman antrean
+when	   : user memilih ID pasien pada tabel antrean
+then	   : sistem memanggil method kirim pada class antrean dengan 
+             parameter "D0001" dan "PE0006"
+when	   : method cek mengembalikan nilai string "Berhasil"
+then	   : sistem menampilkan notifikasi berhasil terkirim ke dokter D0001 pada halaman reservasi
+and	   : sistem menampilkan notifikasi pasien dengan ID pemeriksaan PE0006 siap diperiksa
